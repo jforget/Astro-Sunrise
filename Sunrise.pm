@@ -7,6 +7,7 @@ Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
 =head1 SYNOPSIS
 
  use Astro::Sunrise;
+#use Astro::Sunrise qw(:constants);
 
  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);
@@ -38,7 +39,7 @@ Default is 0.
 There are a number of sun altitides to chose from.  The default is
 -0.833 because this is what most countries use. Feel free to
 specify it if you need to. Here is the list of values to specify
-altitude (ALT) with:
+altitude (ALT) with, including symbolic constants for each.
 
 =over
 
@@ -54,23 +55,23 @@ Sun's upper limb touches a mathematical horizon
 
 Center of Sun's disk touches the horizon; atmospheric refraction accounted for
 
-=item B<-0.833> degrees
+=item B<-0.833> degrees, DEFAULT
 
 Sun's supper limb touches the horizon; atmospheric refraction accounted for
 
-=item B<-6> degrees
+=item B<-6> degrees, CIVIL
 
 Civil twilight (one can no longer read outside without artificial illumination)
 
-=item B<-12> degrees
+=item B<-12> degrees, NAUTICAL
 
 Nautical twilight (navigation using a sea horizon no longer possible)
 
-=item B<-15> degrees
+=item B<-15> degrees, AMATEUR
 
 Amateur astronomical twilight (the sky is dark enough for most astronomical observations)
 
-=item B<-18> degrees
+=item B<-18> degrees, ASTRONOMICAL
 
 Astronomical twilight (the sky is completely dark)
 
@@ -83,15 +84,18 @@ use POSIX qw(floor);
 use Math::Trig;
 use Carp;
 use DateTime;
-use vars qw( $VERSION @ISA @EXPORT @EXPORT_OK $RADEG $DEGRAD );
+use vars qw( $VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS $RADEG $DEGRAD );
 
 require Exporter;
 
 @ISA       = qw( Exporter );
 @EXPORT    = qw( sunrise sun_rise sun_set );
-@EXPORT_OK = qw();
-
-$VERSION =  '0.85';
+@EXPORT_OK = qw( DEFAULT CIVIL NAUTICAL AMATEUR ASTRONOMICAL );
+%EXPORT_TAGS = ( 
+	constants => [ @EXPORT_OK ],
+	);
+	
+$VERSION =  '0.90';
 $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
 my $INV360     = ( 1.0 / 360.0 );
@@ -525,20 +529,51 @@ sub convert_hour   {
 
   my ($hour_rise_ut, $hour_set_ut, $TZ, $isdst) = @_;
 
-    my $min_rise  = abs(int( ( $hour_rise_ut - int($hour_rise_ut) ) * 60 ) );
-    my $min_set   = abs(int( ( $hour_set_ut - int($hour_set_ut) ) * 60 ) );
+  my $rise_local = $hour_rise_ut + $TZ;
+  my $set_local = $hour_set_ut + $TZ;
+  if ($isdst) {
+    $rise_local +=1;
+    $set_local +=1;
+  }
 
-    my $hour_rise = ( int($hour_rise_ut) + ( $TZ + $isdst ) );
-    my $hour_set  = ( int($hour_set_ut) + ( $TZ + $isdst ) );
-    if ( $min_rise < 10 ) {
-        $min_rise = sprintf( "%02d", $min_rise );
-    }
+  # Rise and set should be between 0 and 24;
+  if ($rise_local<0) {
+    $rise_local+=24;
+  } elsif ($rise_local>24) {
+    $rise_local -=24;
+  }
+  if ($set_local<0) {
+    $set_local+=24;
+  } elsif ($set_local>24) {
+    $set_local -=24;
+  }
 
-    if ( $min_set < 10 ) {
-        $min_set = sprintf( "%02d", $min_set );
-    }
+  my $hour_rise =  int ($rise_local);
+  my $hour_set  =  int($set_local);
 
-    return ( "$hour_rise:$min_rise", "$hour_set:$min_set" );
+  my $min_rise  = floor(($rise_local-$hour_rise)*60+0.5);
+  my $min_set   = floor(($set_local-$hour_set)*60+0.5);
+
+  if ($min_rise>=60) {
+    $min_rise -=60;
+    $hour_rise+=1;
+    $hour_rise-=24 if ($hour_rise>=24);
+  }
+  if ($min_set>=60) {
+    $min_set -=60;
+    $hour_set+=1;
+    $hour_set-=24 if ($hour_set>=24);
+  }
+
+  if ( $min_rise < 10 ) {
+    $min_rise = sprintf( "%02d", $min_rise );
+  }
+  if ( $min_set < 10 ) {
+    $min_set = sprintf( "%02d", $min_set );
+  }
+
+  return ( "$hour_rise:$min_rise", "$hour_set:$min_set" );
+
 }
 
 =over
@@ -645,6 +680,11 @@ sub sun_set
    return $sun_set;
    }
 
+sub DEFAULT      () { -0.833 }
+sub CIVIL        () { - 6 }
+sub NAUTICAL     () { -12 }
+sub AMATEUR      () { -15 }
+sub ASTRONOMICAL () { -18 }
 
 =head1 AUTHOR
 
@@ -660,6 +700,11 @@ Also adding options for different altitudes.
 
 Joshua Hoblitt [jhoblitt@ifa.hawaii.edu]
 For providing the patch to convert to DateTime
+
+Chris Phillips for providing patch for conversion to 
+local time.
+
+Brian D Foy for providing patch for constants :)
 
 =head1 CREDITS
 

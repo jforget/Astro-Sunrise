@@ -41,3 +41,6 @@ Revision history for Perl extension sunrise.
       Fixed bug in local time conversion (the same bug for 0.05)
       Changed dependency from Time::Piece to DateTime (Per Joshua Hoblitt)
       Updated Documentation to reflect DateTime dependency
+0.90  Updated the convert_hour sub, This was badly broken Patch from
+      Chris Phillps applied. Added Constants for Altitude provided by
+      Brian dfoy.

@@ -1,18 +1,17 @@
 use strict;
 use Test;
 use Astro::Sunrise;
-use Time::Piece;
-#use Time::Seconds;
+use DateTime;
 
 BEGIN { plan tests => 10 }
 
 my ($sunrise, $sunset) = sunrise(2000, 6, 20, -118, 33, -8, 1);
 
 # test 1
-ok ($sunrise eq '5:43');
+ok ($sunrise eq '5:44');
 
 # test 2
-ok ($sunset eq '20:03');
+ok ($sunset eq '20:04');
 
 # tests 3, 4, 5
 my $sunrise_1 = sun_rise( -118, 33  );
@@ -35,13 +34,15 @@ ok( $sunset_2 eq $sunset_3 );
 ok( $sunset_3 eq $sunset_4 );
 
 # test 9
-my $then = localtime( 961502400 );
+my $then = DateTime->new (
+                    year => 2000,
+		    month => 6,
+		    day => 20,
+		    time_zone =>'America/Los_Angeles',
+		    );
+my $offset = ( ($then->offset) /60 /60);
+
 ($sunrise, $sunset) = sunrise($then->year, $then->mon, $then->mday,
-                              -118, 33, $then->tzoffset->hours, 0);
-my $diff = $then - localtime;
-
-$sunrise_1 = sun_rise( -118, 33, undef, $diff->days );
-$sunset_1 = sun_set( -118, 33, undef, $diff->days );
-
-ok( $sunrise eq $sunrise_1 );
-ok( $sunset eq $sunset_1 );
+                              -118, 33, $offset, 0);
+ok ($sunrise eq '5:44');
+ok ($sunset eq '20:04');
