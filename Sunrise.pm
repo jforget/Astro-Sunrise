@@ -45,7 +45,7 @@ require Exporter;
 @EXPORT    = qw( sunrise );
 @EXPORT_OK = qw();
 
-$VERSION = '0.04';
+$VERSION = '0.05';
 $RADEG  = ( 180 / pi );
 $DEGRAD = ( pi / 180 );
 
@@ -130,11 +130,17 @@ sub sunrise {
     }
     my $hour_rise = $UT_Sun_in_south - $LHA;
     my $hour_set  = $UT_Sun_in_south + $LHA;
+    # Convert to local time
+    $hour_rise = $hour_rise +  $TZ + $isdst; 
+    $hour_set  = $hour_set +  $TZ + $isdst;
+    # Extract integer hours and minutes   
     my $min_rise  = abs(int( ( $hour_rise - int($hour_rise) ) * 60 ));
     my $min_set   = abs(int( ( $hour_set - int($hour_set) ) * 60 ));
 
-    $hour_rise = ( int($hour_rise) + ( $TZ + $isdst ) );
-    $hour_set  = ( int($hour_set) + ( $TZ + $isdst ) );
+    #$hour_rise = ( int($hour_rise) + ( $TZ + $isdst ) );
+    #$hour_set  = ( int($hour_set) + ( $TZ + $isdst ) );
+    $hour_rise = ( int($hour_rise) );
+    $hour_set = ( int($hour_set) ); 
     if ( $min_rise < 10 ) {
         $min_rise = sprintf( "%02d", $min_rise );
     }
@@ -202,6 +208,10 @@ Thanks very much to:
 =item Rich Bowen (rbowen@rbowen.com)
 
 for suggestions
+
+=item Adrian Blockley [adrian.blockley@environ.wa.gov.au] 
+
+for finding a bug in the conversion to local time
 
 =head1 COPYRIGHT and LICENSE
 
