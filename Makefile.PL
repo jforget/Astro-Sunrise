@@ -4,5 +4,5 @@ use ExtUtils::MakeMaker;
 WriteMakefile(
     'NAME'	=> 'Astro::Sunrise',
     'VERSION_FROM' => 'Sunrise.pm', # finds $VERSION
-    'PREREQ_PM' =>{ 'Time::Object' => 0, },
+    'PREREQ_PM' =>{ 'Time::Piece' => 1.08, },
 );

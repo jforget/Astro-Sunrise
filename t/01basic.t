@@ -1,8 +1,8 @@
 use strict;
 use Test;
 use Astro::Sunrise;
-use Time::Object;
-use Time::Seconds;
+use Time::Piece;
+#use Time::Seconds;
 
 BEGIN { plan tests => 10 }
 

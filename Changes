@@ -35,3 +35,5 @@ Revision history for Perl extension sunrise.
 0.7   Fri Feb 14 2003
       Fixed a bug in dependency, Added Iteration function, Added
       documentation for subs
+0.8   Changed the dependency from Time::Object to Time::Piece
+      (shame on me)

@@ -82,8 +82,8 @@ use strict;
 use POSIX;
 use Math::Trig;
 use Carp;
-use Time::Object;
-use Time::Seconds;
+use Time::Piece;
+#use Time::Seconds;
 use vars qw( $VERSION @ISA @EXPORT @EXPORT_OK $RADEG $DEGRAD );
 
 require Exporter;
@@ -92,7 +92,7 @@ require Exporter;
 @EXPORT    = qw( sunrise sun_rise sun_set );
 @EXPORT_OK = qw();
 
-$VERSION = qw($Revision: 0.7 $) [1];
+$VERSION = qw($Revision: 0.8 $) [1];
 $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
 my $INV360     = ( 1.0 / 360.0 );
@@ -239,11 +239,11 @@ sub sun_rise_set {
 
     my $t;
     if ( $cost >= 1.0 ) {
-        carp "Sun never rises!!\n" if $^W;
+        carp "Sun never rises!!\n";
         $t = 0.0;    # Sun always below altit
     }
     elsif ( $cost <= -1.0 ) {
-        carp "Sun never sets!!\n" if $^W;
+        carp "Sun never sets!!\n";
         $t = 12.0;    # Sun always above altit
     }
     else {
