@@ -4,8 +4,21 @@ Revision history for Perl extension sunrise.
 	- original version; created by h2xs 1.18
 0.02  Tues Jun 20 08:30:00 2000
         - Added code to convert to local time. R.Hill
+
 0.03  Thurs Feb 15 08:30:00 2001
         - Added copyright information
         - fixed bug for converting to local time
-        - updated documentation
+        - updated documentation R.Hill
+
+0.04  Sun Mar 11 13:51:22 2001
+    - I've moved the POD around and added a function documentation block for
+      the sunrise() function. And I moved all the variables out of the use
+      vars block at the top, making them my variables, wherever possible.
+      I added a small test suite that leaves a lot of room for future expansion.
+
+      Finally, I moved all of those tiny subs out of the sunrise() function
+      into their own space. They are not really private subs, and they are
+      referencing values as global variables anyway. Oh, yeah, and I generated
+      the README with pod2text so that the README on CPAN will be a little
+      more informative. R.Bowen
 
