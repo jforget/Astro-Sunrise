@@ -4,3 +4,8 @@ Revision history for Perl extension sunrise.
 	- original version; created by h2xs 1.18
 0.02  Tues Jun 20 08:30:00 2000
         - Added code to convert to local time. R.Hill
+0.03  Thurs Feb 15 08:30:00 2001
+        - Added copyright information
+        - fixed bug for converting to local time
+        - updated documentation
+

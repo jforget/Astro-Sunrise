@@ -14,6 +14,6 @@ use Astro::Sunrise;
 #print "ok 1\n";
 
 
-@suntime=sunrise(2000, 6, 20, -118, 33, -8, 1);
+@suntime=sunrise(2000, 8, 17, 149, 35, 10, 0);
 print "@suntime";
 
