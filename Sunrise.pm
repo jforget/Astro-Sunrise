@@ -79,11 +79,10 @@ Astronomical twilight (the sky is completely dark)
 =cut
 use strict;
 #use warnings;
-use POSIX;
+use POSIX qw(floor);
 use Math::Trig;
 use Carp;
-use Time::Piece;
-#use Time::Seconds;
+use DateTime;
 use vars qw( $VERSION @ISA @EXPORT @EXPORT_OK $RADEG $DEGRAD );
 
 require Exporter;
@@ -92,7 +91,7 @@ require Exporter;
 @EXPORT    = qw( sunrise sun_rise sun_set );
 @EXPORT_OK = qw();
 
-$VERSION = qw($Revision: 0.8 $) [1];
+$VERSION =  '0.85';
 $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
 my $INV360     = ( 1.0 / 360.0 );
@@ -526,8 +525,8 @@ sub convert_hour   {
 
   my ($hour_rise_ut, $hour_set_ut, $TZ, $isdst) = @_;
 
-    my $min_rise  = int( ( $hour_rise_ut - int($hour_rise_ut) ) * 60 );
-    my $min_set   = int( ( $hour_set_ut - int($hour_set_ut) ) * 60 );
+    my $min_rise  = abs(int( ( $hour_rise_ut - int($hour_rise_ut) ) * 60 ) );
+    my $min_set   = abs(int( ( $hour_set_ut - int($hour_set_ut) ) * 60 ) );
 
     my $hour_rise = ( int($hour_rise_ut) + ( $TZ + $isdst ) );
     my $hour_set  = ( int($hour_set_ut) + ( $TZ + $isdst ) );
@@ -555,7 +554,7 @@ sub convert_hour   {
 =item C<$sun_rise = sun_rise( longitude, latitude, ALT, day_offset );>
 
 Returns the sun rise time for the given location.  The first form
-uses today's date (from Time::Object) and the default altitude.  The second
+uses today's date (from DateTime) and the default altitude.  The second
 form adds specifying a custom altitude.  The third form allows for specifying
 an integer day offset from today, either positive or negative.
 
@@ -579,20 +578,16 @@ sub sun_rise
    my $alt = shift || -0.833;
    my $offset = int( shift || 0 );
 
-   my $today = localtime;
-   #
-   # Not sure why appending a 'D' to the offset didn't work.  So converted
-   # the days into seconds...
-   #
-   $today = $today + $offset * 86400;
+   my $today = DateTime->today->set_time_zone( 'local' );
+   $today->add( days => $offset );
 
    my( $sun_rise, undef ) = sunrise( $today->year, $today->mon, $today->mday,
                                      $longitude, $latitude,
-                                     $today->tzoffset->hours,
+                                     ( $today->offset / 3600 ),
                                      #
-                                     # DST is always 0 because Time::Object
-                                     # currently (v 1.00) adds one to the
-                                     # tzoffset during DST hours
+                                     # DST is always 0 because DateTime
+                                     # currently (v 0.16) adds one to the
+                                     # offset during DST hours
                                      0,
                                      $alt );
    return $sun_rise;
@@ -611,7 +606,7 @@ sub sun_rise
 =item C<$sun_set = sun_set( longitude, latitude, ALT, day_offset );>
 
 Returns the sun set time for the given location.  The first form
-uses today's date (from Time::Object) and the default altitude.  The second
+uses today's date (from DateTime) and the default altitude.  The second
 form adds specifying a custom altitude.  The third form allows for specifying
 an integer day offset from today, either positive or negative.
 
@@ -635,20 +630,16 @@ sub sun_set
    my $alt = shift || -0.833;
    my $offset = int( shift || 0 );
 
-   my $today = localtime;
-   #
-   # Not sure why appending a 'D' to the offset didn't work.  So converted
-   # the days into seconds...
-   #
-   $today = $today + $offset * 86400;
+   my $today = DateTime->today->set_time_zone( 'local' );
+   $today->add( days => $offset );
 
    my( undef, $sun_set ) = sunrise( $today->year, $today->mon, $today->mday,
                                     $longitude, $latitude,
-                                    $today->tzoffset->hours,
+                                    ( $today->offset / 3600 ),
                                     #
-                                    # DST is always 0 because Time::Object
-                                    # currently (v 1.00) adds one to the
-                                    # tzoffset during DST hours
+                                    # DST is always 0 because DateTime
+                                    # currently (v 0.16) adds one to the
+                                    # offset during DST hours
                                     0,
                                     $alt );
    return $sun_set;
@@ -665,7 +656,10 @@ rkhill@firstlight.net
 Robert Creager [Astro-Sunrise@LogicalChaos.org]
 For providing help with converting Paul's C code to perl
 For providing code for sun_rise, sun_set sub's
-Also adding options for different altitudes
+Also adding options for different altitudes.
+
+Joshua Hoblitt [jhoblitt@ifa.hawaii.edu]
+For providing the patch to convert to DateTime
 
 =head1 CREDITS
 

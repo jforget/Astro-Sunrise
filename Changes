@@ -37,3 +37,7 @@ Revision history for Perl extension sunrise.
       documentation for subs
 0.8   Changed the dependency from Time::Object to Time::Piece
       (shame on me)
+0.85  Wed Aug 14 2003
+      Fixed bug in local time conversion (the same bug for 0.05)
+      Changed dependency from Time::Piece to DateTime (Per Joshua Hoblitt)
+      Updated Documentation to reflect DateTime dependency

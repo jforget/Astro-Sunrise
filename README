@@ -149,7 +149,11 @@ SPECIAL THANKS
             Robert Creager [Astro-Sunrise@LogicalChaos.org] For providing
             help with converting Paul's C code to perl For providing code
             for sun_rise, sun_set sub's Also adding options for different
-            altitudes
+            altitudes.
+
+	    Joshua Hoblitt [jhoblitt@ifa.hawaii.edu]
+            For providing the patch to convert to DateTime
+
 
 CREDITS
         Paul Schlyer, Stockholm, Sweden
