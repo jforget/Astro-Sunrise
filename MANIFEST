@@ -3,6 +3,6 @@ MANIFEST
 Makefile.PL
 README
 Sunrise.pm
-
 t/00load.t
 t/01basic.t
+t/02constants.t

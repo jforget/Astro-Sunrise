@@ -44,3 +44,6 @@ Revision history for Perl extension sunrise.
 0.90  Updated the convert_hour sub, This was badly broken Patch from
       Chris Phillps applied. Added Constants for Altitude provided by
       Brian dfoy.
+0.91  Major update to the test script 001basic.t I have added many tests
+      for cities around the world. Changed the convert_hour sub to format
+      the hour (add a zero).

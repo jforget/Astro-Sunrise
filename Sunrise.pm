@@ -95,7 +95,7 @@ require Exporter;
 	constants => [ @EXPORT_OK ],
 	);
 	
-$VERSION =  '0.90';
+$VERSION =  '0.91';
 $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
 my $INV360     = ( 1.0 / 360.0 );
@@ -571,7 +571,8 @@ sub convert_hour   {
   if ( $min_set < 10 ) {
     $min_set = sprintf( "%02d", $min_set );
   }
-
+  $hour_rise = sprintf( "%02d", $hour_rise );
+  $hour_set  = sprintf( "%02d", $hour_set );
   return ( "$hour_rise:$min_rise", "$hour_set:$min_set" );
 
 }
