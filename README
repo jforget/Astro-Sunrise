@@ -1,49 +1,133 @@
 NAME
-    Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
+    Astro::Sunrise - Perl extension for computing the sunrise/sunset on a
+    given day
 
 SYNOPSIS
-      use Astro::Sunrise;
-      
-      ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
+     use Astro::Sunrise;
+
+     ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
+     ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);
+
+     $sunrise = sun_rise(longitude,latitude);
+     $sunset = sun_set(longitude,latitude);
+
+     $sunrise = sun_rise(longitude,latitude,ALT);
+     $sunset = sun_set(longitude,latitude,ALT);
+
+     $sunrise = sun_rise(longitude,latitude,ALT,day_offset);
+     $sunset = sun_set(longitude,latitude,ALT,day_offset);
 
 DESCRIPTION
-  
-   This module will return the sunrise/sunset for a given day. 
-   
-   Eastern longitude is entered as a positive number
-   Western longitude is entered as a negative number
-   Northern latitude is entered as a positive number
-   Southern latitude is entered as a negative number
-       There are a number of altitides to chose from, I have chosen
-       -0.833 because this is what most countries use. Feel free to 
-       change it if you need to. Here is the list:
-       h = 0 degrees: Center of Sun's disk touches a mathematical horizon
-       h = -0.25 degrees: Sun's upper limb touches a mathematical horizon
-       h = -0.583 degrees: Center of Sun's disk touches the horizon; atmospheric refraction accounted for
-       h = -0.833 degrees: Sun's supper limb touches the horizon; atmospheric refraction accounted for
-       h = -6 degrees: Civil twilight (one can no longer read outside without artificial illumination)
-       h = -12 degrees: Nautical twilight (navigation using a sea horizon no longer possible)
-       h = -15 degrees: Amateur astronomical twilight (the sky is dark enough for most astronomical observations)
-       h = -18 degrees: Astronomical twilight (the sky is completely dark)
+    This module will return the sunrise/sunset for a given day.
 
-  sunrise
+     Eastern longitude is entered as a positive number
+     Western longitude is entered as a negative number
+     Northern latitude is entered as a positive number
+     Southern latitude is entered as a negative number
 
-        ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
-        ($sunrise, $sunset) = sunrise( 2001, 3, 10, 17.384, 98.625, -5, 0 );
+    There are a number of sun altitides to chose from. The default is -0.833
+    because this is what most countries use. Feel free to specify it if you
+    need to. Here is the list of values to specify altitude (ALT) with:
 
-    Returns the sunrise and sunset times, in HH:MM format. (Note: Time Zone is the offset from GMT and DST is daylight
-    savings time, 1 means DST is in effect and 0 is not.
+    0 degrees
+        Center of Sun's disk touches a mathematical horizon
+
+    -0.25 degrees
+        Sun's upper limb touches a mathematical horizon
+
+    -0.583 degrees
+        Center of Sun's disk touches the horizon; atmospheric refraction
+        accounted for
+
+    -0.833 degrees
+        Sun's supper limb touches the horizon; atmospheric refraction
+        accounted for
+
+    -6 degrees
+        Civil twilight (one can no longer read outside without artificial
+        illumination)
+
+    -12 degrees
+        Nautical twilight (navigation using a sea horizon no longer
+        possible)
+
+    -15 degrees
+        Amateur astronomical twilight (the sky is dark enough for most
+        astronomical observations)
+
+    -18 degrees
+        Astronomical twilight (the sky is completely dark)
+
+USAGE
+    sunrise
+        "($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time
+        Zone,DST);"
+        "($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time
+        Zone,DST,ALT);"
+            Returns the sunrise and sunset times, in HH:MM format. (Note:
+            Time Zone is the offset from GMT and DST is daylight savings
+            time, 1 means DST is in effect and 0 is not). In the first form,
+            a default altitude of -.0833 is used. In the second form, the
+            altitude is specified as the last argument. Note that adding 1
+            to the Time Zone during DST and specifying DST as 0 is the same
+            as indicating the Time Zone correctly and specifying DST as 1.
+
+        *For Example*
+             ($sunrise, $sunset) = sunrise( 2001, 3, 10, 17.384, 98.625, -5, 0 );
+             ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18);
+
+    sun_rise
+        "$sun_rise = sun_rise( longitude, latitude );"
+        "$sun_rise = sun_rise( longitude, latitude, ALT );"
+        "$sun_rise = sun_rise( longitude, latitude, ALT, day_offset );"
+            Returns the sun rise time for the given location. The first form
+            uses today's date (from Time::Object) and the default altitude.
+            The second form adds specifying a custom altitude. The third
+            form allows for specifying an integer day offset from today,
+            either positive or negative.
+
+        *For Example*
+             $sunrise = sun_rise( -105.181, 41.324 );
+             $sunrise = sun_rise( -105.181, 41.324, -15 );
+             $sunrise = sun_rise( -105.181, 41.324, -12, +3 );
+             $sunrise = sun_rise( -105.181, 41.324, undef, -12);
+
+    sun_set
+        "$sun_set = sun_set( longitude, latitude );"
+        "$sun_set = sun_set( longitude, latitude, ALT );"
+        "$sun_set = sun_set( longitude, latitude, ALT, day_offset );"
+            Returns the sun set time for the given location. The first form
+            uses today's date (from Time::Object) and the default altitude.
+            The second form adds specifying a custom altitude. The third
+            form allows for specifying an integer day offset from today,
+            either positive or negative.
+
+        *For Example*
+             $sunrise = sun_set( -105.181, 41.324 );
+             $sunrise = sun_set( -105.181, 41.324, -15 );
+             $sunrise = sun_set( -105.181, 41.324, -12, +3 );
+             $sunrise = sun_set( -105.181, 41.324, undef, -12);
 
 AUTHOR
-    Ron Hill rkhill@pacbell.net
+    Ron Hill rkhill@firstlight.net
 
-    Many thanks also go to Paul Schlyer, Stockholm, Sweden for his excellent web page on the subject.
+SPECIAL THANKS
+    Robert Creager [Astro-Sunrise@LogicalChaos.org] For providing help with
+    converting Paul's C code to perl For providing code for sun_rise,
+    sun_set sub's Also adding options for different altitudes
 
 CREDITS
-    Thanks very much to:
+    Paul Schlyer, Stockholm, Sweden
+    for his excellent web page on the subject.
 
-    Rich Bowen (rbowen@rbowen.com) for suggestions
-    Adrian Blockley [adrian.blockley@environ.wa.gov.au] for finding a bug in the conversion to local time
+    Rich Bowen (rbowen@rbowen.com)
+    for suggestions
+
+    Adrian Blockley [adrian.blockley@environ.wa.gov.au]
+    for finding a bug in the conversion to local time
+
+    Lightly verified against
+    http://aa.usno.navy.mil/data/docs/RS_OneYear.html
 
 COPYRIGHT and LICENSE
     Here is the copyright information provided by Paul Schlyer:
@@ -56,19 +140,26 @@ COPYRIGHT and LICENSE
 
     Released to the public domain by Paul Schlyter, December 1992
 
-    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
-    documentation files (the "Software"), to deal in the Software without restriction, including without limitation the
-    rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit
-    persons to whom the Software is furnished to do so, subject to the following conditions:
+    Permission is hereby granted, free of charge, to any person obtaining a
+    copy of this software and associated documentation files (the
+    "Software"), to deal in the Software without restriction, including
+    without limitation the rights to use, copy, modify, merge, publish,
+    distribute, sublicense, and/or sell copies of the Software, and to
+    permit persons to whom the Software is furnished to do so, subject to
+    the following conditions:
 
-    The above copyright notice and this permission notice shall be included in all copies or substantial portions of the
-    Software.
+    The above copyright notice and this permission notice shall be included
+    in all copies or substantial portions of the Software.
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
-    WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE
-    LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
-    OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+    IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+    DEALINGS IN THE SOFTWARE.
 
+BUGS
 SEE ALSO
     perl(1).
 

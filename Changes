@@ -24,3 +24,12 @@ Revision history for Perl extension sunrise.
 0.05  Wed Oct 17 7:00:00 2001
        - Fixed bug for converting to local time for points east of GMT
          Thanks to Adrian Blockley [adrian.blockley@environ.wa.gov.au] 
+0.06  Wed Feb 5 2003
+      Performed a complete rewrite of the module to conform with
+      Paul's C code. Fixed a nasty bug the computing the number of days elapsed
+      since 2000 Jan 0.0.
+      Added warnings for no sunrise/sunset
+      Added Rob's enhancements using the time object modules
+      Added new subs sun_rise,sun_set per Rob's recomendation
+      Added Rob's enhancements for selecting different Alt's
+
