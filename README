@@ -1,0 +1,8 @@
+To install this module type
+perl Makefile.PL
+make
+make test
+make install
+To see the documentation for the module type
+perldoc Astro::Sunrise
+ 
