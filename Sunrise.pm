@@ -10,6 +10,7 @@ Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
 
  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);
+ ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);
 
  $sunrise = sun_rise(longitude,latitude);
  $sunset = sun_set(longitude,latitude);
@@ -28,6 +29,11 @@ This module will return the sunrise/sunset for a given day.
  Western longitude is entered as a negative number
  Northern latitude is entered as a positive number
  Southern latitude is entered as a negative number
+
+inter is set to either 0 or 1.
+If set to 0 no Iteration will occur.
+If set to 1 Iteration will occur.
+Default is 0.
 
 There are a number of sun altitides to chose from.  The default is
 -0.833 because this is what most countries use. Feel free to
@@ -86,7 +92,7 @@ require Exporter;
 @EXPORT    = qw( sunrise sun_rise sun_set );
 @EXPORT_OK = qw();
 
-$VERSION = qw($Revision: 0.6 $) [1];
+$VERSION = qw($Revision: 0.7 $) [1];
 $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
 my $INV360     = ( 1.0 / 360.0 );
@@ -105,6 +111,8 @@ my $upper_limb = '1';
 
 =item C<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);>
 
+
+
 Returns the sunrise and sunset times, in HH:MM format.
 (Note: Time Zone is the offset from GMT and DST is daylight
 savings time, 1 means DST is in effect and 0 is not).  In the first form,
@@ -113,28 +121,110 @@ is specified as the last argument.  Note that adding 1 to the
 Time Zone during DST and specifying DST as 0 is the same as indicating the
 Time Zone correctly and specifying DST as 1.
 
+=item F<Notes on Iteration>
+
+=over
+
+=item F<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);>
+
+The orginal method only gives an approximate value of the Sun's rise/set times. 
+The error rarely exceeds one or two minutes, but at high latitudes, when the Midnight Sun 
+soon will start or just has ended, the errors may be much larger. If you want higher accuracy, 
+you must then use the iteration feature. This feature is new as of version 0.7. Here is
+what I have tried to accomplish with this.
+
+a) Compute sunrise or sunset as always, with one exception: to convert LHA from degrees to hours,
+   divide by 15.04107 instead of 15.0 (this accounts for the difference between the solar day 
+   and the sidereal day.
+
+b) Re-do the computation but compute the Sun's RA and Decl, and also GMST0, for the moment 
+   of sunrise or sunset last computed.
+
+c) Iterate b) until the computed sunrise or sunset no longer changes significantly. 
+   Usually 2 iterations are enough, in rare cases 3 or 4 iterations may be needed.
+
 =item I<For Example>
 
  ($sunrise, $sunset) = sunrise( 2001, 3, 10, 17.384, 98.625, -5, 0 );
  ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18);
-
+ ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18, 1);
 =back
 
 =back
 
 =cut
 
-sub sunrise {
+sub sunrise  {
+my ( $year, $month, $day, $lon, $lat, $TZ, $isdst, $alt, $iter ) = @_;
+   my $altit      = $alt || -0.833;
+   my $iteration = defined($iter) ? $iter:0 ;
+   
+   if ($iteration)   {
+   # This is the initial start
 
-    my ( $year, $month, $day, $lon, $lat, $TZ, $isdst, $alt ) = @_;
-    my $altit      = $alt || -0.833;
-    my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
+   my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
+   my ($tmp_rise_1,$tmp_set_1) = sun_rise_set($d, $lon, $lat,$altit,15.04107);
+
+   # Now we have the initial rise/set times next recompute d using the exact moment
+   # recompute sunrise
+   
+   my $tmp_rise_2=9;
+   my $tmp_rise_3 = 0;
+   until (equal($tmp_rise_2, $tmp_rise_3, 8) )   {
+
+         my $d_sunrise_1 = $d + $tmp_rise_1/24.0;
+         ($tmp_rise_2,undef) = sun_rise_set($d_sunrise_1, $lon, $lat,$altit,15.04107);
+         $tmp_rise_1 = $tmp_rise_3;
+         my $d_sunrise_2 = $d + $tmp_rise_2/24.0;
+         ($tmp_rise_3,undef) = sun_rise_set($d_sunrise_2, $lon, $lat,$altit,15.04107);
+       
+         #print "tmp_rise2 is: $tmp_rise_2 tmp_rise_3 is:$tmp_rise_3\n";
+         
+   }
+
+   
+#######################################################################################
+# end sunrise
+###################################################################################
+
+
+my $tmp_set_2=9;
+my $tmp_set_3=0;
+
+   until (equal($tmp_set_2, $tmp_set_3, 8) )   {
+
+         my $d_sunset_1 = $d + $tmp_set_1/24.0;
+         (undef,$tmp_set_2) = sun_rise_set($d_sunset_1, $lon, $lat,$altit,15.04107);
+         $tmp_set_1 = $tmp_set_3;
+         my $d_sunset_2 = $d + $tmp_set_2/24.0;
+         (undef,$tmp_set_3) = sun_rise_set($d_sunset_2, $lon, $lat,$altit,15.04107);
+        
+         #print "tmp_set_1 is: $tmp_set_1 tmp_set_3 is:$tmp_set_3\n";
+         
+   }
+   
+   
+   return convert_hour($tmp_rise_3,$tmp_set_3,$TZ, $isdst);
+
+   }else{
+   my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
+   my ($h1,$h2) = sun_rise_set($d, $lon, $lat,$altit,15.0);
+   return convert_hour($h1,$h2,$TZ, $isdst);
+   }
+}
+
+
+sub sun_rise_set {
+    my ($d, $lon, $lat,$altit) =@_;
+    #my ( $year, $month, $day, $lon, $lat, $TZ, $isdst, $alt ) = @_;
+    #my $altit      = $alt || -0.833;
+    #my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
 
     my $sidtime = revolution( GMST0($d) + 180.0 + $lon );
 
     my ( $sRA, $sdec ) = sun_RA_dec($d);
-    my $tsouth  = 12.0 - rev180( $sidtime - $$sRA ) / 15.0;
-    my $sradius = 0.2666 / $$sRA;
+    my $tsouth  = 12.0 - rev180( $sidtime - $sRA ) / 15.0;
+    my $sradius = 0.2666 / $sRA;
 
     if ($upper_limb) {
         $altit -= $sradius;
@@ -144,8 +234,8 @@ sub sunrise {
     # the specified altitude altit: 
 
     my $cost =
-      ( sind($altit) - sind($lat) * sind($$sdec) ) /
-      ( cosd($lat) * cosd($$sdec) );
+      ( sind($altit) - sind($lat) * sind($sdec) ) /
+      ( cosd($lat) * cosd($sdec) );
 
     my $t;
     if ( $cost >= 1.0 ) {
@@ -162,27 +252,33 @@ sub sunrise {
 
     # Store rise and set times - in hours UT 
 
-    my $hour_rise = $tsouth - $t;
-    my $hour_set  = $tsouth + $t;
-    my $min_rise  = int( ( $hour_rise - int($hour_rise) ) * 60 );
-    my $min_set   = int( ( $hour_set - int($hour_set) ) * 60 );
-
-    $hour_rise = ( int($hour_rise) + ( $TZ + $isdst ) );
-    $hour_set  = ( int($hour_set) + ( $TZ + $isdst ) );
-    if ( $min_rise < 10 ) {
-        $min_rise = sprintf( "%02d", $min_rise );
-    }
-
-    if ( $min_set < 10 ) {
-        $min_set = sprintf( "%02d", $min_set );
-    }
-
-    return ( "$hour_rise:$min_rise", "$hour_set:$min_set" );
+    my $hour_rise_ut = $tsouth - $t;
+    my $hour_set_ut  = $tsouth + $t;
+    return($hour_rise_ut, $hour_set_ut);
+    #return convert_hour($hour_rise_ut,$hour_set_ut,$TZ, $isdst);
 }
 
 #########################################################################################################
 sub GMST0 {
-
+#
+#
+# FUNCTIONAL SEQUENCE for GMST0 
+#
+# _GIVEN
+# Day number
+#
+# _THEN
+#
+# computes GMST0, the Greenwich Mean Sidereal Time  
+# at 0h UT (i.e. the sidereal time at the Greenwhich meridian at  
+# 0h UT).  GMST is then the sidereal time at Greenwich at any     
+# time of the day..
+# 
+#
+# _RETURN
+#
+# Sidtime
+#
     my ($d) = @_;
 
     my $sidtim0 =
@@ -194,14 +290,27 @@ sub GMST0 {
 
 sub sunpos {
 
+#
+#
+# FUNCTIONAL SEQUENCE for sunpos
+#
+# _GIVEN
+#  day number
+#
+# _THEN
+#
+# Computes the Sun's ecliptic longitude and distance */
+# at an instant given in d, number of days since     */
+# 2000 Jan 0.0. 
+# 
+#
+# _RETURN
+#
+# ecliptic longitude and distance
+# ie. $True_solar_longitude, $Solar_distance
+#
     my ($d) = @_;
 
-    #******************************************************
-    # Computes the Sun's ecliptic longitude and distance 
-    # at an instant given in d, number of days since     
-    # 2000 Jan 0.0.  The Sun's ecliptic latitude is not  
-    # computed, since it's always very near 0.           
-    #******************************************************
     #                       Mean anomaly of the Sun 
     #                       Mean longitude of perihelion 
     #                         Note: Sun's mean longitude = M + w 
@@ -237,19 +346,36 @@ sub sunpos {
         $True_solar_longitude -= 360.0;    # Make it 0..360 degrees
     }
 
-    return ( \$Solar_distance, \$True_solar_longitude );
+    return ( $Solar_distance, $True_solar_longitude );
 }
 
 sub sun_RA_dec {
 
+#
+#
+# FUNCTIONAL SEQUENCE for sun_RA_dec 
+#
+# _GIVEN
+# day number, $r and $lon (from sunpos) 
+#
+# _THEN
+#
+# compute RA and dec
+# 
+#
+# _RETURN
+#
+# Sun's Right Ascension (RA) and Declination (dec)
+# 
+#
     my ($d) = @_;
 
     # Compute Sun's ecliptical coordinates 
     my ( $r, $lon ) = sunpos($d);
 
     # Compute ecliptic rectangular coordinates (z=0) 
-    my $x = $$r * cosd($$lon);
-    my $y = $$r * sind($$lon);
+    my $x = $r * cosd($lon);
+    my $y = $r * sind($lon);
 
     # Compute obliquity of ecliptic (inclination of Earth's axis) 
     my $obl_ecl = 23.4393 - 3.563E-7 * $d;
@@ -262,11 +388,29 @@ sub sun_RA_dec {
     my $RA  = atan2d( $y, $x );
     my $dec = atan2d( $z, sqrt( $x * $x + $y * $y ) );
 
-    return ( \$RA, \$dec );
+    return ( $RA, $dec );
 
 }    # sun_RA_dec
 
 sub days_since_2000_Jan_0 {
+
+#
+#
+# FUNCTIONAL SEQUENCE for days_since_2000_Jan_0 
+#
+# _GIVEN
+# year, month, day
+#
+# _THEN
+#
+# process the year month and day (counted in days)
+# Day 0.0 is at Jan 1 2000 0.0 UT
+# Note that ALL divisions here should be INTEGER divisions
+#
+# _RETURN
+#
+# day number
+#
     use integer;
     my ( $year, $month, $day ) = @_;
 
@@ -308,19 +452,94 @@ sub atan2d {
 }
 
 sub revolution {
+#
+#
+# FUNCTIONAL SEQUENCE for revolution
+#
+# _GIVEN
+# any angle
+#
+# _THEN
+#
+# reduces any angle to within the first revolution 
+# by subtracting or adding even multiples of 360.0
+# 
+#
+# _RETURN
+#
+# the value of the input is >= 0.0 and < 360.0
+#
+
     my $x = $_[0];
     return ( $x - 360.0 * floor( $x * $INV360 ) );
 }
 
 sub rev180 {
-
+#
+#
+# FUNCTIONAL SEQUENCE for rev180
+#
+# _GIVEN
+# 
+# any angle
+#
+# _THEN
+#
+# Reduce input to within +180..+180 degrees
+# 
+#
+# _RETURN
+#
+# angle that was reduced
+#
     my ($x) = @_;
-
-    #*********************************************
-    # Reduce angle to within +180..+180 degrees 
-    #*********************************************
-
+    
     return ( $x - 360.0 * floor( $x * $INV360 + 0.5 ) );
+}
+
+sub equal {
+    my ($A, $B, $dp) = @_;
+
+    return sprintf("%.${dp}g", $A) eq sprintf("%.${dp}g", $B);
+  }
+
+
+sub convert_hour   {
+
+#
+#
+# FUNCTIONAL SEQUENCE for convert_hour 
+#
+# _GIVEN
+# Hour_rise, Hour_set, Time zone offset, DST setting
+# hours are in UT
+#
+# _THEN
+#
+# convert to local time
+# 
+#
+# _RETURN
+#
+# hour:min rise and set 
+#
+
+  my ($hour_rise_ut, $hour_set_ut, $TZ, $isdst) = @_;
+
+    my $min_rise  = int( ( $hour_rise_ut - int($hour_rise_ut) ) * 60 );
+    my $min_set   = int( ( $hour_set_ut - int($hour_set_ut) ) * 60 );
+
+    my $hour_rise = ( int($hour_rise_ut) + ( $TZ + $isdst ) );
+    my $hour_set  = ( int($hour_set_ut) + ( $TZ + $isdst ) );
+    if ( $min_rise < 10 ) {
+        $min_rise = sprintf( "%02d", $min_rise );
+    }
+
+    if ( $min_set < 10 ) {
+        $min_set = sprintf( "%02d", $min_set );
+    }
+
+    return ( "$hour_rise:$min_rise", "$hour_set:$min_set" );
 }
 
 =over

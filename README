@@ -7,6 +7,7 @@ SYNOPSIS
 
      ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
      ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);
+     ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);
 
      $sunrise = sun_rise(longitude,latitude);
      $sunset = sun_set(longitude,latitude);
@@ -24,6 +25,9 @@ DESCRIPTION
      Western longitude is entered as a negative number
      Northern latitude is entered as a positive number
      Southern latitude is entered as a negative number
+
+    inter is set to either 0 or 1. If set to 0 no Iteration will occur. If
+    set to 1 Iteration will occur. Default is 0.
 
     There are a number of sun altitides to chose from. The default is -0.833
     because this is what most countries use. Feel free to specify it if you
@@ -72,94 +76,125 @@ USAGE
             to the Time Zone during DST and specifying DST as 0 is the same
             as indicating the Time Zone correctly and specifying DST as 1.
 
-        *For Example*
-             ($sunrise, $sunset) = sunrise( 2001, 3, 10, 17.384, 98.625, -5, 0 );
-             ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18);
+        Notes on Iteration
+            ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time
+            Zone,DST,ALT,inter);
+                The orginal method only gives an approximate value of the
+                Sun's rise/set times. The error rarely exceeds one or two
+                minutes, but at high latitudes, when the Midnight Sun soon
+                will start or just has ended, the errors may be much larger.
+                If you want higher accuracy, you must then use the iteration
+                feature. This feature is new as of version 0.7. Here is what
+                I have tried to accomplish with this.
 
-    sun_rise
-        "$sun_rise = sun_rise( longitude, latitude );"
-        "$sun_rise = sun_rise( longitude, latitude, ALT );"
-        "$sun_rise = sun_rise( longitude, latitude, ALT, day_offset );"
-            Returns the sun rise time for the given location. The first form
-            uses today's date (from Time::Object) and the default altitude.
-            The second form adds specifying a custom altitude. The third
-            form allows for specifying an integer day offset from today,
-            either positive or negative.
+                a) Compute sunrise or sunset as always, with one exception:
+                to convert LHA from degrees to hours, divide by 15.04107
+                instead of 15.0 (this accounts for the difference between
+                the solar day and the sidereal day.
 
-        *For Example*
-             $sunrise = sun_rise( -105.181, 41.324 );
-             $sunrise = sun_rise( -105.181, 41.324, -15 );
-             $sunrise = sun_rise( -105.181, 41.324, -12, +3 );
-             $sunrise = sun_rise( -105.181, 41.324, undef, -12);
+                b) Re-do the computation but compute the Sun's RA and Decl,
+                and also GMST0, for the moment of sunrise or sunset last
+                computed.
 
-    sun_set
-        "$sun_set = sun_set( longitude, latitude );"
-        "$sun_set = sun_set( longitude, latitude, ALT );"
-        "$sun_set = sun_set( longitude, latitude, ALT, day_offset );"
-            Returns the sun set time for the given location. The first form
-            uses today's date (from Time::Object) and the default altitude.
-            The second form adds specifying a custom altitude. The third
-            form allows for specifying an integer day offset from today,
-            either positive or negative.
+                c) Iterate b) until the computed sunrise or sunset no longer
+                changes significantly. Usually 2 iterations are enough, in
+                rare cases 3 or 4 iterations may be needed.
 
-        *For Example*
-             $sunrise = sun_set( -105.181, 41.324 );
-             $sunrise = sun_set( -105.181, 41.324, -15 );
-             $sunrise = sun_set( -105.181, 41.324, -12, +3 );
-             $sunrise = sun_set( -105.181, 41.324, undef, -12);
+            *For Example*
+                 ($sunrise, $sunset) = sunrise( 2001, 3, 10, 17.384, 98.625, -5, 0 );
+                 ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18);
+                 ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18, 1);
+                =back
+
+            sun_rise
+                "$sun_rise = sun_rise( longitude, latitude );"
+                "$sun_rise = sun_rise( longitude, latitude, ALT );"
+                "$sun_rise = sun_rise( longitude, latitude, ALT, day_offset
+                );"
+                    Returns the sun rise time for the given location. The
+                    first form uses today's date (from Time::Object) and the
+                    default altitude. The second form adds specifying a
+                    custom altitude. The third form allows for specifying an
+                    integer day offset from today, either positive or
+                    negative.
+
+                *For Example*
+                     $sunrise = sun_rise( -105.181, 41.324 );
+                     $sunrise = sun_rise( -105.181, 41.324, -15 );
+                     $sunrise = sun_rise( -105.181, 41.324, -12, +3 );
+                     $sunrise = sun_rise( -105.181, 41.324, undef, -12);
+
+            sun_set
+                "$sun_set = sun_set( longitude, latitude );"
+                "$sun_set = sun_set( longitude, latitude, ALT );"
+                "$sun_set = sun_set( longitude, latitude, ALT, day_offset
+                );"
+                    Returns the sun set time for the given location. The
+                    first form uses today's date (from Time::Object) and the
+                    default altitude. The second form adds specifying a
+                    custom altitude. The third form allows for specifying an
+                    integer day offset from today, either positive or
+                    negative.
+
+                *For Example*
+                     $sunrise = sun_set( -105.181, 41.324 );
+                     $sunrise = sun_set( -105.181, 41.324, -15 );
+                     $sunrise = sun_set( -105.181, 41.324, -12, +3 );
+                     $sunrise = sun_set( -105.181, 41.324, undef, -12);
 
 AUTHOR
-    Ron Hill rkhill@firstlight.net
+            Ron Hill rkhill@firstlight.net
 
 SPECIAL THANKS
-    Robert Creager [Astro-Sunrise@LogicalChaos.org] For providing help with
-    converting Paul's C code to perl For providing code for sun_rise,
-    sun_set sub's Also adding options for different altitudes
+            Robert Creager [Astro-Sunrise@LogicalChaos.org] For providing
+            help with converting Paul's C code to perl For providing code
+            for sun_rise, sun_set sub's Also adding options for different
+            altitudes
 
 CREDITS
-    Paul Schlyer, Stockholm, Sweden
-    for his excellent web page on the subject.
+        Paul Schlyer, Stockholm, Sweden
+            for his excellent web page on the subject.
 
-    Rich Bowen (rbowen@rbowen.com)
-    for suggestions
+        Rich Bowen (rbowen@rbowen.com)
+            for suggestions
 
-    Adrian Blockley [adrian.blockley@environ.wa.gov.au]
-    for finding a bug in the conversion to local time
+        Adrian Blockley [adrian.blockley@environ.wa.gov.au]
+            for finding a bug in the conversion to local time
 
-    Lightly verified against
-    http://aa.usno.navy.mil/data/docs/RS_OneYear.html
+        Lightly verified against
+        http://aa.usno.navy.mil/data/docs/RS_OneYear.html
 
 COPYRIGHT and LICENSE
-    Here is the copyright information provided by Paul Schlyer:
+        Here is the copyright information provided by Paul Schlyer:
 
-    Written as DAYLEN.C, 1989-08-16
+        Written as DAYLEN.C, 1989-08-16
 
-    Modified to SUNRISET.C, 1992-12-01
+        Modified to SUNRISET.C, 1992-12-01
 
-    (c) Paul Schlyter, 1989, 1992
+        (c) Paul Schlyter, 1989, 1992
 
-    Released to the public domain by Paul Schlyter, December 1992
+        Released to the public domain by Paul Schlyter, December 1992
 
-    Permission is hereby granted, free of charge, to any person obtaining a
-    copy of this software and associated documentation files (the
-    "Software"), to deal in the Software without restriction, including
-    without limitation the rights to use, copy, modify, merge, publish,
-    distribute, sublicense, and/or sell copies of the Software, and to
-    permit persons to whom the Software is furnished to do so, subject to
-    the following conditions:
+        Permission is hereby granted, free of charge, to any person
+        obtaining a copy of this software and associated documentation files
+        (the "Software"), to deal in the Software without restriction,
+        including without limitation the rights to use, copy, modify, merge,
+        publish, distribute, sublicense, and/or sell copies of the Software,
+        and to permit persons to whom the Software is furnished to do so,
+        subject to the following conditions:
 
-    The above copyright notice and this permission notice shall be included
-    in all copies or substantial portions of the Software.
+        The above copyright notice and this permission notice shall be
+        included in all copies or substantial portions of the Software.
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-    OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-    IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-    FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-    DEALINGS IN THE SOFTWARE.
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+        EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+        NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+        CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+        TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+        SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 BUGS
 SEE ALSO
-    perl(1).
+        perl(1).
 
