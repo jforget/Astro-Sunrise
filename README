@@ -79,7 +79,7 @@ USAGE
         Notes on Iteration
             ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time
             Zone,DST,ALT,inter);
-                The orginal method only gives an approximate value of the
+                The original method only gives an approximate value of the
                 Sun's rise/set times. The error rarely exceeds one or two
                 minutes, but at high latitudes, when the Midnight Sun soon
                 will start or just has ended, the errors may be much larger.
@@ -156,7 +156,7 @@ SPECIAL THANKS
 
 
 CREDITS
-        Paul Schlyer, Stockholm, Sweden
+        Paul Schlyter, Stockholm, Sweden
             for his excellent web page on the subject.
 
         Rich Bowen (rbowen@rbowen.com)
