@@ -36,7 +36,7 @@ If set to 0 no Iteration will occur.
 If set to 1 Iteration will occur.
 Default is 0.
 
-There are a number of sun altitides to chose from.  The default is
+There are a number of sun altitudes to chose from.  The default is
 -0.833 because this is what most countries use. Feel free to
 specify it if you need to. Here is the list of values to specify
 altitude (ALT) with, including symbolic constants for each.
@@ -158,22 +158,22 @@ c) Iterate b) until the computed sunrise or sunset no longer changes significant
 =cut
 
 sub sunrise  {
-my ( $year, $month, $day, $lon, $lat, $TZ, $isdst, $alt, $iter ) = @_;
-   my $altit      = $alt || -0.833;
-   my $iteration = defined($iter) ? $iter:0 ;
+  my ( $year, $month, $day, $lon, $lat, $TZ, $isdst, $alt, $iter ) = @_;
+  my $altit     = $alt || -0.833;
+  my $iteration = defined($iter) ? $iter:0 ;
    
-   if ($iteration)   {
-   # This is the initial start
+  if ($iteration)   {
+    # This is the initial start
 
-   my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
-   my ($tmp_rise_1,$tmp_set_1) = sun_rise_set($d, $lon, $lat,$altit,15.04107);
+    my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
+    my ($tmp_rise_1,$tmp_set_1) = sun_rise_set($d, $lon, $lat,$altit,15.04107);
 
-   # Now we have the initial rise/set times next recompute d using the exact moment
-   # recompute sunrise
-   
-   my $tmp_rise_2=9;
-   my $tmp_rise_3 = 0;
-   until (equal($tmp_rise_2, $tmp_rise_3, 8) )   {
+    # Now we have the initial rise/set times next recompute d using the exact moment
+    # recompute sunrise
+
+    my $tmp_rise_2 = 9;
+    my $tmp_rise_3 = 0;
+    until (equal($tmp_rise_2, $tmp_rise_3, 8) )   {
 
          my $d_sunrise_1 = $d + $tmp_rise_1/24.0;
          ($tmp_rise_2,undef) = sun_rise_set($d_sunrise_1, $lon, $lat,$altit,15.04107);
@@ -182,19 +182,12 @@ my ( $year, $month, $day, $lon, $lat, $TZ, $isdst, $alt, $iter ) = @_;
          ($tmp_rise_3,undef) = sun_rise_set($d_sunrise_2, $lon, $lat,$altit,15.04107);
        
          #print "tmp_rise2 is: $tmp_rise_2 tmp_rise_3 is:$tmp_rise_3\n";
-         
-   }
+    }
 
-   
-#######################################################################################
-# end sunrise
-###################################################################################
+    my $tmp_set_2 = 9;
+    my $tmp_set_3 = 0;
 
-
-my $tmp_set_2=9;
-my $tmp_set_3=0;
-
-   until (equal($tmp_set_2, $tmp_set_3, 8) )   {
+    until (equal($tmp_set_2, $tmp_set_3, 8) )   {
 
          my $d_sunset_1 = $d + $tmp_set_1/24.0;
          (undef,$tmp_set_2) = sun_rise_set($d_sunset_1, $lon, $lat,$altit,15.04107);
@@ -204,17 +197,21 @@ my $tmp_set_3=0;
         
          #print "tmp_set_1 is: $tmp_set_1 tmp_set_3 is:$tmp_set_3\n";
          
-   }
+    }
    
    
-   return convert_hour($tmp_rise_3,$tmp_set_3,$TZ, $isdst);
+    return convert_hour($tmp_rise_3, $tmp_set_3, $TZ, $isdst);
 
-   }else{
-   my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
-   my ($h1,$h2) = sun_rise_set($d, $lon, $lat,$altit,15.0);
-   return convert_hour($h1,$h2,$TZ, $isdst);
-   }
+  }
+  else {
+    my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
+    my ($h1,$h2) = sun_rise_set($d, $lon, $lat, $altit, 15.0);
+    return convert_hour($h1, $h2, $TZ, $isdst);
+  }
 }
+#######################################################################################
+# end sunrise
+###################################################################################
 
 
 sub sun_rise_set {
@@ -268,7 +265,6 @@ sub sun_rise_set {
 }
 
 #########################################################################################################
-sub GMST0 {
 #
 #
 # FUNCTIONAL SEQUENCE for GMST0 
@@ -288,6 +284,7 @@ sub GMST0 {
 #
 # Sidtime
 #
+sub GMST0 {
     my ($d) = @_;
 
     my $sidtim0 =
@@ -297,7 +294,6 @@ sub GMST0 {
 
 }
 
-sub sunpos {
 
 #
 #
@@ -318,6 +314,7 @@ sub sunpos {
 # ecliptic longitude and distance
 # ie. $True_solar_longitude, $Solar_distance
 #
+sub sunpos {
     my ($d) = @_;
 
     #                       Mean anomaly of the Sun 
@@ -358,7 +355,6 @@ sub sunpos {
     return ( $Solar_distance, $True_solar_longitude );
 }
 
-sub sun_RA_dec {
 
 #
 #
@@ -377,6 +373,7 @@ sub sun_RA_dec {
 # Sun's Right Ascension (RA), Declination (dec) and distance (r)
 # 
 #
+sub sun_RA_dec {
     my ($d) = @_;
 
     # Compute Sun's ecliptical coordinates 
@@ -401,7 +398,6 @@ sub sun_RA_dec {
 
 }    # sun_RA_dec
 
-sub days_since_2000_Jan_0 {
 
 #
 #
@@ -420,6 +416,7 @@ sub days_since_2000_Jan_0 {
 #
 # day number
 #
+sub days_since_2000_Jan_0 {
     use integer;
     my ( $year, $month, $day ) = @_;
 
@@ -460,7 +457,6 @@ sub atan2d {
     ( $RADEG * atan2( $_[0], $_[1] ) );
 }
 
-sub revolution {
 #
 #
 # FUNCTIONAL SEQUENCE for revolution
@@ -479,11 +475,11 @@ sub revolution {
 # the value of the input is >= 0.0 and < 360.0
 #
 
+sub revolution {
     my $x = $_[0];
     return ( $x - 360.0 * floor( $x * $INV360 ) );
 }
 
-sub rev180 {
 #
 #
 # FUNCTIONAL SEQUENCE for rev180
@@ -501,6 +497,7 @@ sub rev180 {
 #
 # angle that was reduced
 #
+sub rev180 {
     my ($x) = @_;
     
     return ( $x - 360.0 * floor( $x * $INV360 + 0.5 ) );
@@ -513,7 +510,6 @@ sub equal {
   }
 
 
-sub convert_hour   {
 
 #
 #
@@ -533,6 +529,7 @@ sub convert_hour   {
 # hour:min rise and set 
 #
 
+sub convert_hour   {
   my ($hour_rise_ut, $hour_set_ut, $TZ, $isdst) = @_;
 
   my $rise_local = $hour_rise_ut + $TZ;
@@ -545,12 +542,14 @@ sub convert_hour   {
   # Rise and set should be between 0 and 24;
   if ($rise_local<0) {
     $rise_local+=24;
-  } elsif ($rise_local>24) {
+  }
+  elsif ($rise_local>24) {
     $rise_local -=24;
   }
   if ($set_local<0) {
     $set_local+=24;
-  } elsif ($set_local>24) {
+  }
+  elsif ($set_local>24) {
     $set_local -=24;
   }
 
@@ -716,7 +715,7 @@ Brian D Foy for providing patch for constants :)
 =head1 CREDITS
 
 
-=item  Paul Schlyer, Stockholm, Sweden 
+=item  Paul Schlyter, Stockholm, Sweden 
 
 for his excellent web page on the subject.
 
@@ -770,4 +769,5 @@ perl(1).
 
 =cut
 
-1;
+1950;
+# Hint: by BW, with GS, WH and EVS
