@@ -130,7 +130,7 @@ Time Zone correctly and specifying DST as 1.
 
 =item F<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);>
 
-The orginal method only gives an approximate value of the Sun's rise/set times. 
+The original method only gives an approximate value of the Sun's rise/set times. 
 The error rarely exceeds one or two minutes, but at high latitudes, when the Midnight Sun 
 soon will start or just has ended, the errors may be much larger. If you want higher accuracy, 
 you must then use the iteration feature. This feature is new as of version 0.7. Here is
@@ -151,6 +151,8 @@ c) Iterate b) until the computed sunrise or sunset no longer changes significant
  ($sunrise, $sunset) = sunrise( 2001, 3, 10, 17.384, 98.625, -5, 0 );
  ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18);
  ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18, 1);
+=back
+
 =back
 
 =back
@@ -714,6 +716,7 @@ Brian D Foy for providing patch for constants :)
 
 =head1 CREDITS
 
+=over 4
 
 =item  Paul Schlyter, Stockholm, Sweden 
 
