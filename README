@@ -29,7 +29,7 @@ DESCRIPTION
     inter is set to either 0 or 1. If set to 0 no Iteration will occur. If
     set to 1 Iteration will occur. Default is 0.
 
-    There are a number of sun altitides to chose from. The default is -0.833
+    There are a number of sun altitudes to chose from. The default is -0.833
     because this is what most countries use. Feel free to specify it if you
     need to. Here is the list of values to specify altitude (ALT) with:
 
@@ -169,7 +169,7 @@ CREDITS
         http://aa.usno.navy.mil/data/docs/RS_OneYear.html
 
 COPYRIGHT and LICENSE
-        Here is the copyright information provided by Paul Schlyer:
+        Here is the copyright information provided by Paul Schlyter:
 
         Written as DAYLEN.C, 1989-08-16
 
