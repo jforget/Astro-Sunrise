@@ -223,11 +223,17 @@ sub sun_rise_set {
     #my $altit      = $alt || -0.833;
     #my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
 
+    # Compute local sidereal time of this moment
     my $sidtime = revolution( GMST0($d) + 180.0 + $lon );
 
-    my ( $sRA, $sdec ) = sun_RA_dec($d);
+    # Compute Sun's RA + Decl + distance at this moment
+    my ( $sRA, $sdec, $sr ) = sun_RA_dec($d);
+
+    # Compute time when Sun is at south - in hours UT
     my $tsouth  = 12.0 - rev180( $sidtime - $sRA ) / 15.0;
-    my $sradius = 0.2666 / $sRA;
+
+    # Compute the Sun's apparent radius, degrees
+    my $sradius = 0.2666 / $sr;
 
     if ($upper_limb) {
         $altit -= $sradius;
@@ -368,7 +374,7 @@ sub sun_RA_dec {
 #
 # _RETURN
 #
-# Sun's Right Ascension (RA) and Declination (dec)
+# Sun's Right Ascension (RA), Declination (dec) and distance (r)
 # 
 #
     my ($d) = @_;
@@ -391,7 +397,7 @@ sub sun_RA_dec {
     my $RA  = atan2d( $y, $x );
     my $dec = atan2d( $z, sqrt( $x * $x + $y * $y ) );
 
-    return ( $RA, $dec );
+    return ( $RA, $dec, $r );
 
 }    # sun_RA_dec
 
