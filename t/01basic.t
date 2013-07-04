@@ -157,12 +157,12 @@ Nagoya, Japan 35 7 N 136 56 E sunrise: 04:37 sunset: 19:11
 Nairobi, Kenya 1 25 S 36 55 E sunrise: 05:32 sunset: 17:36
 Nanjing_Nanking, China 32 3 N 118 53 E sunrise: 03:57 sunset: 18:15
 Naples, Italy 40 50 N 14 15 E sunrise: 03:30 sunset: 18:40
-Newcastle-on-Tyne, England 54 58 N 1 37 W 03:27 sunset: 20:49
+Newcastle-on-Tyne, England 54 58 N 1 37 W sunrise: 03:25 sunset: 20:52
 Odessa, Ukraine 46 27 N 30 48 E sunrise: 04:02 sunset: 19:55
 Osaka, Japan 34 32 N 135 30 E sunrise: 04:44 sunset: 19:15
 Oslo, Norway 59 57 N 10 42 E sunrise: 01:50 sunset: 20:48
 Panama_City, Panama 8 58 N 79 32 W sunrise: 05:59 sunset: 18:40
-Paramaribo, Suriname 5 45 N 55 15 W  sunrise: 06:28 sunset: 18:58
+Paramaribo, Suriname 5 45 N 55 15 W sunrise: 06:28 sunset: 18:58
 Paris, France 48 48 N 2 20 E sunrise: 03:45 sunset: 20:00
 Perth, Australia 31 57 S 115 52 E sunrise: 06:15 sunset: 16:21
 Plymouth, England 50 25 N 4 5 W sunrise: 04:03 sunset: 20:33
