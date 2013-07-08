@@ -47,3 +47,9 @@ Revision history for Perl extension sunrise.
 0.91  Major update to the test script 001basic.t I have added many tests
       for cities around the world. Changed the convert_hour sub to format
       the hour (add a zero).
+0.92  Monday 8 July 2013
+      New co-maint JFORGET
+      Fix tickets 47049 and 83394 :wrong calculations on 19/20/21 March
+      Fix ticket 9377: documentation improvement
+      Minor formatting changes and spelling fixes
+
