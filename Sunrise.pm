@@ -102,7 +102,7 @@ require Exporter;
 	constants => [ @EXPORT_OK ],
 	);
 	
-$VERSION =  '0.91';
+$VERSION =  '0.92';
 $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
 my $INV360     = ( 1.0 / 360.0 );

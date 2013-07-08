@@ -49,7 +49,7 @@ Revision history for Perl extension sunrise.
       the hour (add a zero).
 0.92  Monday 8 July 2013
       New co-maint JFORGET
-      Fix tickets 47049 and 83394 :wrong calculations on 19/20/21 March
+      Fix tickets 47049 and 83394: wrong calculations on 19/20/21 March
       Fix ticket 9377: documentation improvement
       Minor formatting changes and spelling fixes
 
