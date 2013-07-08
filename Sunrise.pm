@@ -26,11 +26,18 @@ Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
 
 This module will return the sunrise/sunset for a given day.
 
+Months are numbered 1 to 12, in the usual way, not 0 to 11 as in
+C and in Perl's localtime.
+
  Eastern longitude is entered as a positive number
  Western longitude is entered as a negative number
  Northern latitude is entered as a positive number
  Southern latitude is entered as a negative number
 
+Please note that the longitude is specified before the latitude.
+
+The time zone is given as the numeric value of the offset from UTC.
+ 
 inter is set to either 0 or 1.
 If set to 0 no Iteration will occur.
 If set to 1 Iteration will occur.
@@ -57,7 +64,7 @@ Center of Sun's disk touches the horizon; atmospheric refraction accounted for
 
 =item B<-0.833> degrees, DEFAULT
 
-Sun's supper limb touches the horizon; atmospheric refraction accounted for
+Sun's upper limb touches the horizon; atmospheric refraction accounted for
 
 =item B<-6> degrees, CIVIL
 
@@ -151,6 +158,7 @@ c) Iterate b) until the computed sunrise or sunset no longer changes significant
  ($sunrise, $sunset) = sunrise( 2001, 3, 10, 17.384, 98.625, -5, 0 );
  ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18);
  ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18, 1);
+
 =back
 
 =back
@@ -655,10 +663,10 @@ an integer day offset from today, either positive or negative.
 
 =item I<For Example>
 
- $sunrise = sun_set( -105.181, 41.324 );
- $sunrise = sun_set( -105.181, 41.324, -15 );
- $sunrise = sun_set( -105.181, 41.324, -12, +3 );
- $sunrise = sun_set( -105.181, 41.324, undef, -12);
+ $sunset = sun_set( -105.181, 41.324 );
+ $sunset = sun_set( -105.181, 41.324, -15 );
+ $sunset = sun_set( -105.181, 41.324, -12, +3 );
+ $sunset = sun_set( -105.181, 41.324, undef, -12);
 
 =back
 
