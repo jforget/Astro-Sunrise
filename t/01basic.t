@@ -6,7 +6,8 @@ use Astro::Sunrise;
 use DateTime;
 use Test::More;
 
-use Test::Simple tests => 237;
+my @data = load_data();
+plan(tests => 5 + 2 * @data); # I prefer having Perl counting my tests than myself
 
 use vars qw($long $lat $offset);
 
@@ -14,7 +15,8 @@ my $test_year  = '2003';
 my $test_month = '6';
 my $test_day   = '21';
 
-while (<DATA>) {
+
+for (@data) {
 /(\w+),\s+(\w+)\s+(\d+)\s+(\d+)\s+(\w)\s+(\d+)\s+(\d+)\s+(\w)\s+sunrise:\s+(\d+:\d+)\s+sunset:\s+(\d+:\d+)/;
     if ( $5 eq 'N' ) {
         $lat = sprintf( "%.3f", ( $3 + ( $4 / 60 ) ) );
@@ -44,8 +46,8 @@ while (<DATA>) {
       sunrise( $test_year, $test_month, $test_day, $long, $lat, $offset, 0 );
 
 
-is ($sunrise, $9, "Sunrise for $1, $2");
-is ($sunset , $10, "Sunset for $1, $2");
+    is ($sunrise, $9, "Sunrise for $1, $2");
+    is ($sunset , $10, "Sunset for $1, $2");
 
 }
 
@@ -75,7 +77,8 @@ is ($sunset,  '20:05', "Test DateTime sunset interface");
 
 
 
-__DATA__
+sub load_data {
+    return split "\n", <<'EOD';
 Aberdeen, Scotland 57 9 N 2 9 W sunrise: 03:09 sunset: 21:11
 Adelaide, Australia 34 55 S 138 36 E sunrise: 06:52 sunset: 16:43
 Algiers, Algeria 36 50 N 3 0 E sunrise: 04:28 sunset: 19:12
@@ -192,3 +195,5 @@ Vladivostok, Russia 43 10 N 132 0 E sunrise: 03:30 sunset: 18:57
 Warsaw, Poland 52 14 N 21 0 E sunrise: 03:12 sunset: 20:03
 Wellington, New_Zealand 41 17 S 174 47 E sunrise: 06:45 sunset: 16:00
 Zurich, Switzerland 47 21 N 8 31 E sunrise: 03:27 sunset: 19:28
+EOD
+}
