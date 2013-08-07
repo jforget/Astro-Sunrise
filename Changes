@@ -52,4 +52,5 @@ Revision history for Perl extension sunrise.
       Fix tickets 47049 and 83394: wrong calculations on 19/20/21 March
       Fix ticket 9377: documentation improvement
       Minor formatting changes and spelling fixes
-
+0.93  ???
+      Stylistic and kwalitee issues: license

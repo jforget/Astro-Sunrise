@@ -1,3 +1,40 @@
+Astro::Sunrise version 0.93
+===========================
+
+This module commpute the sunrise and sunset for a given day.
+
+The simplest way to install the module is by using your favorite
+utility: CPAN shell, cpanplus, cpanminus, dist-zilla, etc.
+
+To install this module from a cloned git repository or from a tarball
+type the following:
+
+   perl Makefile.PL
+   make
+   make test
+   make install
+
+
+DEPENDENCIES
+
+This module requires these other modules and libraries:
+
+  DateTime.pm
+  DateTime::Set
+
+COPYRIGHT AND LICENCE
+
+Copyright (C) 2000, 2001, 2002, 2003, 2013 Ron Hill and Jean Forget
+
+This library is free software; you can redistribute it and/or modify
+it under the same terms as Perl 5.16.3. For more details, see the full
+text of the licenses in the LICENSE file.
+
+This program is distributed in the hope that it will be useful, but it
+is provided “as is” and without any express or implied warranties. For
+details, see the full text of the licenses in the file LICENSE.
+
+Based on a public domain C program sunriset.c (c) Paul Schlyter, 1989, 1992
 NAME
     Astro::Sunrise - Perl extension for computing the sunrise/sunset on a
     given day
