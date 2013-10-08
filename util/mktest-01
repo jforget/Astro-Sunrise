@@ -46,7 +46,7 @@ double round3(double x)
 {
   return floor(0.5 + 1000 * x) / 1000;
 }
-test(char * where, int lgd, int lgm, char lgc, int ltd, int ltm, int ltc)
+test(char * city, char * country, int lgd, int lgm, char lgc, int ltd, int ltm, int ltc)
 {
   double lg, lt;
   double rise, set;
@@ -91,7 +91,7 @@ test(char * where, int lgd, int lgm, char lgc, int ltd, int ltm, int ltc)
        rise_h ++;
        set_h  ++;
      }
-   printf("%s %d %d %c %d %d %c sunrise: %02d:%02d sunset: %02d:%02d\n", where, ltd, ltm, ltc, lgd, lgm, lgc, rise_h, rise_m, set_h, set_m);
+   printf("%-20s %-20s %2d %2d %c %3d %2d %c sunrise: %02d:%02d sunset: %02d:%02d\n", city, country, ltd, ltm, ltc, lgd, lgm, lgc, rise_h, rise_m, set_h, set_m);
 
 }
 main ()
@@ -101,10 +101,11 @@ EOF
 open my $fd, '<', $fic_d
   or die "opening $fic_d $!";
 while (<$fd>) {
-  last if /^__DATA__/;
+  last if /^\s*return\s+split/;
 }
 while (<$fd>) {
-  my ($where, $ltd, $ltm, $ltc, $lgd, $lgm, $lgc) = $_ =~ /^([-_A-Za-z]+\s*,\s*[-_A-Za-z]+)
+  my ($city, $country, $ltd, $ltm, $ltc, $lgd, $lgm, $lgc) = $_ =~ /^([-_A-Za-z]+\s*,)
+                                                         \s*([-_A-Za-z]+)
                                                          \s+(\d+)
                                                          \s+(\d+)
                                                          \s+([NS])
@@ -112,7 +113,7 @@ while (<$fd>) {
                                                          \s+(\d+)
                                                          \s+([EW])/x;
   next unless $lgc;
-  say $ft qq<test("$where", $lgd, $lgm, '$lgc', $ltd, $ltm, '$ltc');>;
+  say $ft qq<test("$city", "$country", $lgd, $lgm, '$lgc', $ltd, $ltm, '$ltc');>;
 }
 close $fd
   or die "closing $fic_d $!";
