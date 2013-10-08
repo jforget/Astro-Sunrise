@@ -1,4 +1,5 @@
 /* +++Date last modified: 05-Jul-1997 */
+/* Updated comments, 05-Aug-2013 */
 
 /*
 
@@ -283,16 +284,16 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       /* Compute d of 12h local mean solar time */
       d = days_since_2000_Jan_0(year,month,day) + 0.5 - lon/360.0;
 
-      /* Compute local sidereal time of this moment */
+      /* Compute the local sidereal time of this moment */
       sidtime = revolution( GMST0(d) + 180.0 + lon );
 
-      /* Compute Sun's RA + Decl at this moment */
+      /* Compute Sun's RA, Decl and distance at this moment */
       sun_RA_dec( d, &sRA, &sdec, &sr );
 
       /* Compute time when Sun is at south - in hours UT */
       tsouth = 12.0 - rev180(sidtime - sRA)/15.0;
 
-      /* Compute the Sun's apparent radius, degrees */
+      /* Compute the Sun's apparent radius in degrees */
       sradius = 0.2666 / sr;
 
       /* Do correction to upper limb, if necessary */
@@ -358,7 +359,7 @@ double __daylen__( int year, int month, int day, double lon, double lat,
       /* Compute obliquity of ecliptic (inclination of Earth's axis) */
       obl_ecl = 23.4393 - 3.563E-7 * d;
 
-      /* Compute Sun's position */
+      /* Compute Sun's ecliptic longitude and distance */
       sunpos( d, &slon, &sr );
 
       /* Compute sine and cosine of Sun's declination */
@@ -423,6 +424,11 @@ void sunpos( double d, double *lon, double *r )
 }
 
 void sun_RA_dec( double d, double *RA, double *dec, double *r )
+/******************************************************/
+/* Computes the Sun's equatorial coordinates RA, Decl */
+/* and also its distance, at an instant given in d,   */
+/* the number of days since 2000 Jan 0.0.             */
+/******************************************************/
 {
       double lon, obl_ecl, x, y, z;
 
