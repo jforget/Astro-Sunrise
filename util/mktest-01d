@@ -1,0 +1,162 @@
+#!/usr/bin/perl
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
+#
+#     Building the source for test-01d,
+#     which in turn will build the expected result for 01basic.t for DT::E::Sunrise
+#     Copyright (C) 2013 Jean Forget
+#
+#     This program is distributed under the same terms as Perl 5.16.3:
+#     GNU Public License version 1 or later and Perl Artistic License
+#
+#     You can find the text of the licenses in the F<LICENSE> file or at
+#     L<http://www.perlfoundation.org/artistic_license_1_0>
+#     and L<http://www.gnu.org/licenses/gpl-1.0.html>.
+#
+#     Here is the summary of GPL:
+#
+#     This program is free software; you can redistribute it and/or modify
+#     it under the terms of the GNU General Public License as published by
+#     the Free Software Foundation; either version 1, or (at your option)
+#     any later version.
+#
+#     This program is distributed in the hope that it will be useful,
+#     but WITHOUT ANY WARRANTY; without even the implied warranty of
+#     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#     GNU General Public License for more details.
+#
+#     You should have received a copy of the GNU General Public License
+#     along with this program; if not, write to the Free Software Foundation,
+#     Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+#
+
+use v5.10;
+use strict;
+use warnings;
+
+my $fic_c    = 'sunriset.c';
+my $fic_d    = '../../DateTime-Event-Sunrise/t/01basic.t';
+my $fic_test = 'test-01d.c';
+
+open my $ft, '>', $fic_test
+  or die "opening $fic_test $!";
+open my $fc, '<', $fic_c
+  or die "opening $fic_c $!";
+
+# Copying Paul Schlyter's code, excluding the main function
+my $copie = 1;
+while (<$fc>) {
+  if (/^main()/) {
+    $copie = 0;
+    next;
+  }
+  if ($copie) {
+    print $ft $_;
+    next;
+  }
+  if (/^}/) {
+    $copie = 1;
+    next;
+  }
+}
+close $fc
+  or die "closing $fic_c $!";
+
+# New C code, including the main function
+# This code mimics what happens in t/01basic.t, so the expected result
+# will be computed by Paul Schlyter's code and the "got" result will be computed
+# by the Perl module. So 01basic.t checks the consistency of the C and Perl algorithms.
+print $ft <<'EOF';
+// Beginning of code not from Paul Schlyter
+double round3(double x)
+{
+  return floor(0.5 + 1000 * x) / 1000;
+}
+test(char * city, char * country, int lgd, int lgm, char lgc, int ltd, int ltm, int ltc)
+{
+  double lg, lt;
+  double rise, set;
+  int rs, rise_h, rise_m, rise_s, set_h, set_m, set_s;
+  switch(lgc)
+    {
+      case 'E':
+        lg = round3(lgd + lgm / 60.0);
+        break;
+      case 'W':
+        lg = - round3(lgd + lgm / 60.0);
+        break;
+    }
+  switch(ltc)
+    {
+      case 'N':
+        lt = round3(ltd + ltm / 60.0);
+        break;
+      case 'S':
+        lt = - round3(ltd + ltm / 60.0);
+        break;
+    }
+   rs = __sunriset__(2003, 6, 21, lg, lt, -0.833, 1, &rise, &set);
+   rise_h  = floor(rise);
+   rise_m  = floor(60 * (rise - rise_h));
+   rise_s  = floor(60 * (60 * (rise - rise_h) - rise_m));
+   set_h   = floor(set);
+   set_m   = floor(60 * (set - set_h));
+   set_s   = floor(60 * (60 * (set - set_h) - set_m));
+   rise_h += floor(lg / 15);
+   set_h  += floor(lg / 15);
+   if (rise_m >= 60) 
+     {
+       rise_m -= +60;
+       rise_h ++;
+     }
+   if (set_m >= 60) 
+     {
+       set_m -= +60;
+       set_h ++;
+     }
+   if (lgc == 'W')
+     {
+       rise_h ++;
+       set_h  ++;
+     }
+   printf("%-20s %-20s %2d %2d %c %3d %2d %c sunrise: %02d:%02d:%02d sunset: %02d:%02d:%02d\n", city, country, ltd, ltm, ltc, lgd, lgm, lgc, rise_h, rise_m, rise_s, set_h, set_m, set_s);
+
+}
+main ()
+{
+
+EOF
+open my $fd, '<', $fic_d
+  or die "opening $fic_d $!";
+while (<$fd>) {
+  last if /^\s*return\s+split/;
+}
+while (<$fd>) {
+  my ($city, $country, $ltd, $ltm, $ltc, $lgd, $lgm, $lgc) = $_ =~ /^([-_A-Za-z]+\s*,)
+                                                         \s*([-_A-Za-z]+)
+                                                         \s+(\d+)
+                                                         \s+(\d+)
+                                                         \s+([NS])
+                                                         \s+(\d+)
+                                                         \s+(\d+)
+                                                         \s+([EW])/x;
+  next unless $lgc;
+  say $ft qq<test("$city", "$country", $lgd, $lgm, '$lgc', $ltd, $ltm, '$ltc');>;
+}
+close $fd
+  or die "closing $fic_d $!";
+print $ft "}\n";
+close $ft
+  or die "closing $fic_test $!";
+exit(0);
+
+=head1 NAME
+
+mktest -- Making C source file for building DateTime::Event::Sunrise Perl test file
+
+=head1 USAGE
+
+  ./mktest-01d
+  cc test-01d.c -lm -o test-01d
+  ./test-01d > result-01d
+
+and then copy-paste from result-01d to ../DT-E-Sunrise/t/01basic.t
