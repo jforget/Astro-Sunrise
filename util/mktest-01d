@@ -95,21 +95,27 @@ test(char * city, char * country, int lgd, int lgm, char lgc, int ltd, int ltm, 
         break;
     }
    rs = __sunriset__(2003, 6, 21, lg, lt, -0.833, 0, &rise, &set);
+   rise += floor(lg / 15);
+   set  += floor(lg / 15);
    if (rise < 0)
      {
        rs = __sunriset__(2003, 6, 20, lg, lt, -0.833, 0, &rise, &dummy);
+       rise += floor(lg / 15);
      }
    if (rise >= 24)
      {
        rs = __sunriset__(2003, 6, 20, lg, lt, -0.833, 0, &rise, &dummy);
+       rise += floor(lg / 15);
      }
    if (set < 0)
      {
        rs = __sunriset__(2003, 6, 22, lg, lt, -0.833, 0, &dummy, &set);
+       set  += floor(lg / 15);
      }
    if (set >= 24)
      {
        rs = __sunriset__(2003, 6, 20, lg, lt, -0.833, 0, &dummy, &set);
+       set  += floor(lg / 15);
      }
    rise_h  = floor(rise);
    rise_m  = floor(60 * (rise - rise_h));
@@ -117,8 +123,6 @@ test(char * city, char * country, int lgd, int lgm, char lgc, int ltd, int ltm, 
    set_h   = floor(set);
    set_m   = floor(60 * (set - set_h));
    set_s   = floor(60 * (60 * (set - set_h) - set_m));
-   rise_h += floor(lg / 15);
-   set_h  += floor(lg / 15);
    if (rise_m >= 60) 
      {
        rise_m -= +60;
