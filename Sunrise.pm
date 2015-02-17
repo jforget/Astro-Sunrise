@@ -636,6 +636,7 @@ sub sun_rise
    my $offset = int( shift || 0 );
 
    my $today = DateTime->today->set_time_zone( 'local' );
+   $today->set( hour => 12 );
    $today->add( days => $offset );
 
    my( $sun_rise, undef ) = sunrise( $today->year, $today->mon, $today->mday,
@@ -688,6 +689,7 @@ sub sun_set
    my $offset = int( shift || 0 );
 
    my $today = DateTime->today->set_time_zone( 'local' );
+   $today->set( hour => 12 );
    $today->add( days => $offset );
 
    my( undef, $sun_set ) = sunrise( $today->year, $today->mon, $today->mday,
