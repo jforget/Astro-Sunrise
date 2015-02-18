@@ -54,3 +54,4 @@ Revision history for Perl extension sunrise.
       Minor formatting changes and spelling fixes
 0.93  ???
       Stylistic and kwalitee issues: license
+      Fix ticket 62593 (patch from Slaven Rezic)
