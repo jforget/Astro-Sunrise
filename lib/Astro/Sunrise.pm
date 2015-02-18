@@ -747,6 +747,10 @@ for suggestions
 
 for finding a bug in the conversion to local time
 
+=item Slaven Rezic
+
+for finding and fixing a bug with DST
+
 =back
 
 Lightly verified against http://aa.usno.navy.mil/data/docs/RS_OneYear.html
