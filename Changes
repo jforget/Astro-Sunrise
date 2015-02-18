@@ -56,5 +56,6 @@ Revision history for Perl extension sunrise.
       Fix ticket 9377: documentation improvement
       Minor formatting changes and spelling fixes
 0.93  ???
-      Stylistic and kwalitee issues: license
+      Stylistic and kwalitee issues: license, distro structure, etc.
       Fix ticket 62593 (patch from Slaven Rezic)
+      Parameters to sunrise can be passed by name (using a hashref)

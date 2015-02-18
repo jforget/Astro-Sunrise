@@ -32,9 +32,17 @@ my $INV360     = ( 1.0 / 360.0 );
 my $upper_limb = '1';
 
 sub sunrise  {
-  my ( $year, $month, $day, $lon, $lat, $TZ, $isdst, $alt, $iter ) = @_;
-  my $altit     = $alt || -0.833;
-  my $iteration = defined($iter) ? $iter:0 ;
+  my %arg;
+  if (ref($_[0]) eq 'HASH') {
+    %arg = %{$_[0]};
+  }
+  else {
+    @arg{ qw/year month day lon lat tz isdst alt precise/ } = @_;
+  }
+  my (        $year, $month, $day, $lon, $lat, $TZ, $isdst)
+    = @arg{ qw/year   month   day   lon   lat   tz   isdst/ };
+  my $altit     = defined($arg{alt}    ) ? $arg{alt}     : -0.833;
+  my $iteration = defined($arg{precise}) ? $arg{precise} : 0 ;
    
   if ($iteration)   {
     # This is the initial start
@@ -601,29 +609,64 @@ Astronomical twilight (the sky is completely dark)
 
 =head1 USAGE
 
-=over
+=head2 B<sunrise>
 
-=item B<sunrise>
+  ($sunrise, $sunset) = sunrise( { year => $year,      month   => $month,     day => $day,
+                                   lon  => $longitude, lat     => $latitude,
+                                   tz   => $tz_offset, isdst   => $is_dst,
+                                   alt  => $altitude,  precise => $iteration);
 
-=over
+  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
 
-=item C<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);>
+  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);
 
-=item C<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);>
-
-
+  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);
 
 Returns the sunrise and sunset times, in HH:MM format.
-(Note: Time Zone is the offset from GMT and DST is daylight
-savings time, 1 means DST is in effect and 0 is not).  In the first form,
-a default altitude of -.0833 is used.  In the second form, the altitude
-is specified as the last argument.  Note that adding 1 to the
-Time Zone during DST and specifying DST as 0 is the same as indicating the
-Time Zone correctly and specifying DST as 1.
 
-=item F<Notes on Iteration>
+The first form uses a hash reference to pass arguments by name.
+The other forms are kept for backward compatibility. The arguments are:
 
-=item C<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);>
+=over 4
+
+=item year, month, day
+
+The three elements of the date for which you want to compute the sunrise and sunset.
+Months are numbered 1 to 12, in the usual way, not 0 to 11 as in C and in Perl's localtime.
+
+=item lon, lat
+
+The longitude and latitude of the place for which you want to compute the sunrise and sunset.
+They are given in decimal degrees. For example:
+
+    lon => -3.6,  #  3° 36' W
+    lat => 37.17, # 37° 10' N
+
+ Eastern longitude is entered as a positive number
+ Western longitude is entered as a negative number
+ Northern latitude is entered as a positive number
+ Southern latitude is entered as a negative number
+
+=item TZ
+
+Time Zone is the offset from GMT
+
+=item isdst
+
+1 if daylight saving time is in effect, 0 if not.
+
+=item alt
+
+Altitude of the sun, in decimal degrees. Usually a negative number,
+because the sun should be I<under> the mathematical horizon.
+
+This parameter is optional. Its default value is -0.833.
+
+=item precise
+
+Choice between a precise algorithm and a simpler algorithm.
+The default value is 0, that is, the simpler algorithm.
+Any true value switches to the precise algorithm.
 
 The original method only gives an approximate value of the Sun's rise/set times. 
 The error rarely exceeds one or two minutes, but at high latitudes, when the Midnight Sun 
@@ -641,15 +684,15 @@ b) Re-do the computation but compute the Sun's RA and Decl, and also GMST0, for 
 c) Iterate b) until the computed sunrise or sunset no longer changes significantly. 
    Usually 2 iterations are enough, in rare cases 3 or 4 iterations may be needed.
 
-=item I<For Example>
+=back
+
+=head3 I<For Example>
 
  ($sunrise, $sunset) = sunrise( 2001, 3, 10, 17.384, 98.625, -5, 0 );
  ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18);
  ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18, 1);
 
-=back
-
-=item B<sun_rise>
+=head2 B<sun_rise>
 
 =over
 
@@ -673,7 +716,7 @@ an integer day offset from today, either positive or negative.
 
 =back
 
-=item B<sun_set>
+=head2 B<sun_set>
 
 =over
 
@@ -696,9 +739,6 @@ an integer day offset from today, either positive or negative.
  $sunset = sun_set( -105.181, 41.324, undef, -12);
 
 =back
-
-=back
-
 
 =head1 AUTHOR
 
