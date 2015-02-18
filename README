@@ -1,3 +1,5 @@
+-*- encoding: utf-8; indent-tabs-mode: nil -*-
+
 Astro::Sunrise version 0.93
 ===========================
 
@@ -188,7 +190,7 @@ SPECIAL THANKS
             for sun_rise, sun_set sub's Also adding options for different
             altitudes.
 
-	    Joshua Hoblitt [jhoblitt@ifa.hawaii.edu]
+            Joshua Hoblitt [jhoblitt@ifa.hawaii.edu]
             For providing the patch to convert to DateTime
 
 

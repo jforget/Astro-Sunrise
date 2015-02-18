@@ -1,3 +1,4 @@
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Perl extension for computing the sunrise/sunset on a given day
 #     Copyright (C) 1999-2003, 2013 Ron Hill and Jean Forget
@@ -105,9 +106,9 @@ require Exporter;
 @EXPORT    = qw( sunrise sun_rise sun_set );
 @EXPORT_OK = qw( DEFAULT CIVIL NAUTICAL AMATEUR ASTRONOMICAL );
 %EXPORT_TAGS = ( 
-	constants => [ @EXPORT_OK ],
-	);
-	
+        constants => [ @EXPORT_OK ],
+        );
+        
 $VERSION =  '0.93';
 $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
