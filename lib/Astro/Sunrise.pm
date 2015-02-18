@@ -522,24 +522,24 @@ Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
 =head1 SYNOPSIS
 
  use Astro::Sunrise;
-#use Astro::Sunrise qw(:constants);
+ #use Astro::Sunrise qw(:constants);
 
  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);
  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);
 
  $sunrise = sun_rise(longitude,latitude);
- $sunset = sun_set(longitude,latitude);
+ $sunset  = sun_set (longitude,latitude);
 
  $sunrise = sun_rise(longitude,latitude,ALT);
- $sunset = sun_set(longitude,latitude,ALT);
+ $sunset  = sun_set (longitude,latitude,ALT);
 
  $sunrise = sun_rise(longitude,latitude,ALT,day_offset);
- $sunset = sun_set(longitude,latitude,ALT,day_offset);
+ $sunset  = sun_set (longitude,latitude,ALT,day_offset);
 
 =head1 DESCRIPTION
 
-This module will return the sunrise/sunset for a given day.
+This module will return the sunrise and sunset for a given day.
 
 Months are numbered 1 to 12, in the usual way, not 0 to 11 as in
 C and in Perl's localtime.
@@ -552,7 +552,7 @@ C and in Perl's localtime.
 Please note that the longitude is specified before the latitude.
 
 The time zone is given as the numeric value of the offset from UTC.
- 
+
 inter is set to either 0 or 1.
 If set to 0 no Iteration will occur.
 If set to 1 Iteration will occur.
@@ -623,9 +623,7 @@ Time Zone correctly and specifying DST as 1.
 
 =item F<Notes on Iteration>
 
-=over
-
-=item F<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);>
+=item C<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);>
 
 The original method only gives an approximate value of the Sun's rise/set times. 
 The error rarely exceeds one or two minutes, but at high latitudes, when the Midnight Sun 
@@ -651,12 +649,6 @@ c) Iterate b) until the computed sunrise or sunset no longer changes significant
 
 =back
 
-=back
-
-=back
-
-=over
-
 =item B<sun_rise>
 
 =over
@@ -680,11 +672,6 @@ an integer day offset from today, either positive or negative.
  $sunrise = sun_rise( -105.181, 41.324, undef, -12);
 
 =back
-
-=back
-
-
-=over
 
 =item B<sun_set>
 
@@ -717,6 +704,8 @@ an integer day offset from today, either positive or negative.
 
 Ron Hill
 rkhill@firstlight.net
+
+Co-maintainer: Jean Forget (JFORGET at cpan dot org)
 
 =head1 SPECIAL THANKS
 
@@ -786,7 +775,7 @@ Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 
 =head2 Original C program
 
-Here is the copyright information provided by Paul Schlyer:
+Here is the copyright information provided by Paul Schlyter:
 
 Written as DAYLEN.C, 1989-08-16
 
@@ -819,5 +808,9 @@ THE SOFTWARE.
 =head1 SEE ALSO
 
 perl(1).
+
+L<DateTime::Event::Sunrise>
+
+L<DateTime::Event::Jewish::Sunrise>
 
 =cut
