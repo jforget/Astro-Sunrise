@@ -1,97 +1,12 @@
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Perl extension for computing the sunrise/sunset on a given day
-#     Copyright (C) 1999-2003, 2013 Ron Hill and Jean Forget
+#     Copyright (C) 1999-2003, 2013, 2015 Ron Hill and Jean Forget
 #
 #     See the license in the embedded documentation below.
 #
 package Astro::Sunrise;
 
-=head1 NAME
-
-Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
-
-=head1 SYNOPSIS
-
- use Astro::Sunrise;
-#use Astro::Sunrise qw(:constants);
-
- ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
- ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);
- ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);
-
- $sunrise = sun_rise(longitude,latitude);
- $sunset = sun_set(longitude,latitude);
-
- $sunrise = sun_rise(longitude,latitude,ALT);
- $sunset = sun_set(longitude,latitude,ALT);
-
- $sunrise = sun_rise(longitude,latitude,ALT,day_offset);
- $sunset = sun_set(longitude,latitude,ALT,day_offset);
-
-=head1 DESCRIPTION
-
-This module will return the sunrise/sunset for a given day.
-
-Months are numbered 1 to 12, in the usual way, not 0 to 11 as in
-C and in Perl's localtime.
-
- Eastern longitude is entered as a positive number
- Western longitude is entered as a negative number
- Northern latitude is entered as a positive number
- Southern latitude is entered as a negative number
-
-Please note that the longitude is specified before the latitude.
-
-The time zone is given as the numeric value of the offset from UTC.
- 
-inter is set to either 0 or 1.
-If set to 0 no Iteration will occur.
-If set to 1 Iteration will occur.
-Default is 0.
-
-There are a number of sun altitudes to chose from.  The default is
--0.833 because this is what most countries use. Feel free to
-specify it if you need to. Here is the list of values to specify
-altitude (ALT) with, including symbolic constants for each.
-
-=over
-
-=item B<0> degrees
-
-Center of Sun's disk touches a mathematical horizon
-
-=item B<-0.25> degrees
-
-Sun's upper limb touches a mathematical horizon
-
-=item B<-0.583> degrees
-
-Center of Sun's disk touches the horizon; atmospheric refraction accounted for
-
-=item B<-0.833> degrees, DEFAULT
-
-Sun's upper limb touches the horizon; atmospheric refraction accounted for
-
-=item B<-6> degrees, CIVIL
-
-Civil twilight (one can no longer read outside without artificial illumination)
-
-=item B<-12> degrees, NAUTICAL
-
-Nautical twilight (navigation using a sea horizon no longer possible)
-
-=item B<-15> degrees, AMATEUR
-
-Amateur astronomical twilight (the sky is dark enough for most astronomical observations)
-
-=item B<-18> degrees, ASTRONOMICAL
-
-Astronomical twilight (the sky is completely dark)
-
-=back
-
-=cut
 use strict;
 #use warnings;
 use POSIX qw(floor);
@@ -115,64 +30,6 @@ $DEGRAD  = ( pi / 180 );
 my $INV360     = ( 1.0 / 360.0 );
 
 my $upper_limb = '1';
-
-=head1 USAGE
-
-=over
-
-=item B<sunrise>
-
-=over
-
-=item C<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);>
-
-=item C<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);>
-
-
-
-Returns the sunrise and sunset times, in HH:MM format.
-(Note: Time Zone is the offset from GMT and DST is daylight
-savings time, 1 means DST is in effect and 0 is not).  In the first form,
-a default altitude of -.0833 is used.  In the second form, the altitude
-is specified as the last argument.  Note that adding 1 to the
-Time Zone during DST and specifying DST as 0 is the same as indicating the
-Time Zone correctly and specifying DST as 1.
-
-=item F<Notes on Iteration>
-
-=over
-
-=item F<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);>
-
-The original method only gives an approximate value of the Sun's rise/set times. 
-The error rarely exceeds one or two minutes, but at high latitudes, when the Midnight Sun 
-soon will start or just has ended, the errors may be much larger. If you want higher accuracy, 
-you must then use the iteration feature. This feature is new as of version 0.7. Here is
-what I have tried to accomplish with this.
-
-a) Compute sunrise or sunset as always, with one exception: to convert LHA from degrees to hours,
-   divide by 15.04107 instead of 15.0 (this accounts for the difference between the solar day 
-   and the sidereal day.
-
-b) Re-do the computation but compute the Sun's RA and Decl, and also GMST0, for the moment 
-   of sunrise or sunset last computed.
-
-c) Iterate b) until the computed sunrise or sunset no longer changes significantly. 
-   Usually 2 iterations are enough, in rare cases 3 or 4 iterations may be needed.
-
-=item I<For Example>
-
- ($sunrise, $sunset) = sunrise( 2001, 3, 10, 17.384, 98.625, -5, 0 );
- ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18);
- ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18, 1);
-
-=back
-
-=back
-
-=back
-
-=cut
 
 sub sunrise  {
   my ( $year, $month, $day, $lon, $lat, $TZ, $isdst, $alt, $iter ) = @_;
@@ -599,36 +456,6 @@ sub convert_hour   {
 
 }
 
-=over
-
-=item B<sun_rise>
-
-=over
-
-=item C<$sun_rise = sun_rise( longitude, latitude );>
-
-=item C<$sun_rise = sun_rise( longitude, latitude, ALT );>
-
-=item C<$sun_rise = sun_rise( longitude, latitude, ALT, day_offset );>
-
-Returns the sun rise time for the given location.  The first form
-uses today's date (from DateTime) and the default altitude.  The second
-form adds specifying a custom altitude.  The third form allows for specifying
-an integer day offset from today, either positive or negative.
-
-=item I<For Example>
-
- $sunrise = sun_rise( -105.181, 41.324 );
- $sunrise = sun_rise( -105.181, 41.324, -15 );
- $sunrise = sun_rise( -105.181, 41.324, -12, +3 );
- $sunrise = sun_rise( -105.181, 41.324, undef, -12);
-
-=back
-
-=back
-
-=cut
-
 sub sun_rise
    {
    my $longitude = shift;
@@ -651,36 +478,6 @@ sub sun_rise
                                      $alt );
    return $sun_rise;
    }
-
-=over
-
-=item B<sun_set>
-
-=over
-
-=item C<$sun_set = sun_set( longitude, latitude );>
-
-=item C<$sun_set = sun_set( longitude, latitude, ALT );>
-
-=item C<$sun_set = sun_set( longitude, latitude, ALT, day_offset );>
-
-Returns the sun set time for the given location.  The first form
-uses today's date (from DateTime) and the default altitude.  The second
-form adds specifying a custom altitude.  The third form allows for specifying
-an integer day offset from today, either positive or negative.
-
-=item I<For Example>
-
- $sunset = sun_set( -105.181, 41.324 );
- $sunset = sun_set( -105.181, 41.324, -15 );
- $sunset = sun_set( -105.181, 41.324, -12, +3 );
- $sunset = sun_set( -105.181, 41.324, undef, -12);
-
-=back
-
-=back
-
-=cut
 
 sub sun_set
    {
@@ -710,6 +507,211 @@ sub CIVIL        () { - 6 }
 sub NAUTICAL     () { -12 }
 sub AMATEUR      () { -15 }
 sub ASTRONOMICAL () { -18 }
+
+# Ending a module with whatever, which risks to be zero, is wrong.
+# Ending a module with 1 is boring. So, let us end it with:
+1950;
+# Hint: directed by BW, with GS, WH and EVS
+
+__END__
+
+=head1 NAME
+
+Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
+
+=head1 SYNOPSIS
+
+ use Astro::Sunrise;
+#use Astro::Sunrise qw(:constants);
+
+ ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
+ ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);
+ ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);
+
+ $sunrise = sun_rise(longitude,latitude);
+ $sunset = sun_set(longitude,latitude);
+
+ $sunrise = sun_rise(longitude,latitude,ALT);
+ $sunset = sun_set(longitude,latitude,ALT);
+
+ $sunrise = sun_rise(longitude,latitude,ALT,day_offset);
+ $sunset = sun_set(longitude,latitude,ALT,day_offset);
+
+=head1 DESCRIPTION
+
+This module will return the sunrise/sunset for a given day.
+
+Months are numbered 1 to 12, in the usual way, not 0 to 11 as in
+C and in Perl's localtime.
+
+ Eastern longitude is entered as a positive number
+ Western longitude is entered as a negative number
+ Northern latitude is entered as a positive number
+ Southern latitude is entered as a negative number
+
+Please note that the longitude is specified before the latitude.
+
+The time zone is given as the numeric value of the offset from UTC.
+ 
+inter is set to either 0 or 1.
+If set to 0 no Iteration will occur.
+If set to 1 Iteration will occur.
+Default is 0.
+
+There are a number of sun altitudes to chose from.  The default is
+-0.833 because this is what most countries use. Feel free to
+specify it if you need to. Here is the list of values to specify
+altitude (ALT) with, including symbolic constants for each.
+
+=over
+
+=item B<0> degrees
+
+Center of Sun's disk touches a mathematical horizon
+
+=item B<-0.25> degrees
+
+Sun's upper limb touches a mathematical horizon
+
+=item B<-0.583> degrees
+
+Center of Sun's disk touches the horizon; atmospheric refraction accounted for
+
+=item B<-0.833> degrees, DEFAULT
+
+Sun's upper limb touches the horizon; atmospheric refraction accounted for
+
+=item B<-6> degrees, CIVIL
+
+Civil twilight (one can no longer read outside without artificial illumination)
+
+=item B<-12> degrees, NAUTICAL
+
+Nautical twilight (navigation using a sea horizon no longer possible)
+
+=item B<-15> degrees, AMATEUR
+
+Amateur astronomical twilight (the sky is dark enough for most astronomical observations)
+
+=item B<-18> degrees, ASTRONOMICAL
+
+Astronomical twilight (the sky is completely dark)
+
+=back
+
+=head1 USAGE
+
+=over
+
+=item B<sunrise>
+
+=over
+
+=item C<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);>
+
+=item C<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);>
+
+
+
+Returns the sunrise and sunset times, in HH:MM format.
+(Note: Time Zone is the offset from GMT and DST is daylight
+savings time, 1 means DST is in effect and 0 is not).  In the first form,
+a default altitude of -.0833 is used.  In the second form, the altitude
+is specified as the last argument.  Note that adding 1 to the
+Time Zone during DST and specifying DST as 0 is the same as indicating the
+Time Zone correctly and specifying DST as 1.
+
+=item F<Notes on Iteration>
+
+=over
+
+=item F<($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);>
+
+The original method only gives an approximate value of the Sun's rise/set times. 
+The error rarely exceeds one or two minutes, but at high latitudes, when the Midnight Sun 
+soon will start or just has ended, the errors may be much larger. If you want higher accuracy, 
+you must then use the iteration feature. This feature is new as of version 0.7. Here is
+what I have tried to accomplish with this.
+
+a) Compute sunrise or sunset as always, with one exception: to convert LHA from degrees to hours,
+   divide by 15.04107 instead of 15.0 (this accounts for the difference between the solar day 
+   and the sidereal day.
+
+b) Re-do the computation but compute the Sun's RA and Decl, and also GMST0, for the moment 
+   of sunrise or sunset last computed.
+
+c) Iterate b) until the computed sunrise or sunset no longer changes significantly. 
+   Usually 2 iterations are enough, in rare cases 3 or 4 iterations may be needed.
+
+=item I<For Example>
+
+ ($sunrise, $sunset) = sunrise( 2001, 3, 10, 17.384, 98.625, -5, 0 );
+ ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18);
+ ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18, 1);
+
+=back
+
+=back
+
+=back
+
+=over
+
+=item B<sun_rise>
+
+=over
+
+=item C<$sun_rise = sun_rise( longitude, latitude );>
+
+=item C<$sun_rise = sun_rise( longitude, latitude, ALT );>
+
+=item C<$sun_rise = sun_rise( longitude, latitude, ALT, day_offset );>
+
+Returns the sun rise time for the given location.  The first form
+uses today's date (from DateTime) and the default altitude.  The second
+form adds specifying a custom altitude.  The third form allows for specifying
+an integer day offset from today, either positive or negative.
+
+=item I<For Example>
+
+ $sunrise = sun_rise( -105.181, 41.324 );
+ $sunrise = sun_rise( -105.181, 41.324, -15 );
+ $sunrise = sun_rise( -105.181, 41.324, -12, +3 );
+ $sunrise = sun_rise( -105.181, 41.324, undef, -12);
+
+=back
+
+=back
+
+
+=over
+
+=item B<sun_set>
+
+=over
+
+=item C<$sun_set = sun_set( longitude, latitude );>
+
+=item C<$sun_set = sun_set( longitude, latitude, ALT );>
+
+=item C<$sun_set = sun_set( longitude, latitude, ALT, day_offset );>
+
+Returns the sun set time for the given location.  The first form
+uses today's date (from DateTime) and the default altitude.  The second
+form adds specifying a custom altitude.  The third form allows for specifying
+an integer day offset from today, either positive or negative.
+
+=item I<For Example>
+
+ $sunset = sun_set( -105.181, 41.324 );
+ $sunset = sun_set( -105.181, 41.324, -15 );
+ $sunset = sun_set( -105.181, 41.324, -12, +3 );
+ $sunset = sun_set( -105.181, 41.324, undef, -12);
+
+=back
+
+=back
+
 
 =head1 AUTHOR
 
@@ -819,6 +821,3 @@ THE SOFTWARE.
 perl(1).
 
 =cut
-
-1950;
-# Hint: directed by BW, with GS, WH and EVS
