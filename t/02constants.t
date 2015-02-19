@@ -26,6 +26,7 @@
 #     Inc., <http://www.fsf.org/>.
 #
 use strict;
+use warnings;
 use Test;
 use Astro::Sunrise qw(:constants);
 

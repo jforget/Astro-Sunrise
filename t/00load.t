@@ -26,6 +26,7 @@
 #     Inc., <http://www.fsf.org/>.
 #
 use strict;
+use warnings;
 use Test;
 
 BEGIN {$| = 1; plan tests => 1 }

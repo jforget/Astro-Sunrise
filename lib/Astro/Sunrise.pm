@@ -8,7 +8,7 @@
 package Astro::Sunrise;
 
 use strict;
-#use warnings;
+use warnings;
 use POSIX qw(floor);
 use Math::Trig;
 use Carp;

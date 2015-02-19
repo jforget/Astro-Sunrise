@@ -30,6 +30,7 @@
 #
 
 use strict;
+use warnings;
 use Test::More;
 
 if (!eval q{ require Time::Fake; 1;}) {
