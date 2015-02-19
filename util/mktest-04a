@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
-#     Building the source for test-05,
-#     which in turn will build the expected result for 05polar.t
-#     Copyright (C) 2014 Jean Forget
+#     Building the source for test-04a,
+#     which in turn will build the expected result for 04basic.t
+#     Copyright (C) 2013 Jean Forget
 #
 #     This program is distributed under the same terms as Perl 5.16.3:
 #     GNU Public License version 1 or later and Perl Artistic License
@@ -34,7 +34,7 @@ use strict;
 use warnings;
 
 my $fic_c    = 'sunriset.c';
-my $fic_test = 'test-05.c';
+my $fic_test = 'test-04a.c';
 
 open my $ft, '>', $fic_test
   or die "opening $fic_test $!";
@@ -61,9 +61,9 @@ close $fc
   or die "closing $fic_c $!";
 
 # New C code, including the main function
-# This code mimics what happens in t/05polar.t, so the expected result
+# This code mimics what happens in t/04basic.t, so the expected result
 # will be computed by Paul Schlyter's code and the "got" result will be computed
-# by the Perl module. So 05polar.t checks the consistency of the C and Perl algorithms.
+# by the Perl module. So 04basic.t checks the consistency of the C and Perl algorithms.
 print $ft <<'EOF';
 // Beginning of code not from Paul Schlyter
 double round3(double x)
@@ -120,16 +120,10 @@ test(int year, int month, int day, char * city, int ltd, int ltm, char ltc, int 
      }
 */
    printf("%4d %2d %2d %-20s %2d %2d %c %3d %2d %c %-10s %d ", year, month, day, city, ltd, ltm, ltc, lgd, lgm, lgc, height_alpha, upper_limb);
-   if (rs < 0) {
-     printf("1 0 0 ");
+   printf("sunrise: %02d:%02d sunset: %02d:%02d", rise_h, rise_m, set_h, set_m);
+   if (rs != 0) {
+     printf(" polar night or midnight sun");
    }
-   else if (rs > 0) {
-     printf("0 0 1 ");
-   }
-   else {
-     printf("0 1 0 ");
-   }
-   printf("sunrise: %02d:%02d:%02d sunset: %02d:%02d:%02d", rise_h, rise_m, rise_s, set_h, set_m, set_s);
   printf("\n");
 
 }
@@ -137,19 +131,20 @@ main ()
 {
 
 EOF
-for my $loc ([ "North_Pole",  89, 59, 'N',  0,  0, 'E'],
-             [ "Halley_Base", 75, 35, 'S', 26, 39, 'W'],
-             [ "South_Pole",  89, 59, 'S',  0,  0, 'W'],
+for my $date ([ 2013,  1,  1],
+              [ 2013,  3, 21],
+              [ 2013,  6, 21],
+              [ 2013,  8, 31],
+              [ 2013,  9, 21],
+              [ 2013, 12, 31],
              ) {
-  for my $date ([ 2013,  1,  1],
-                [ 2013,  3, 21],
-                [ 2013,  6, 21],
-                [ 2013,  8, 31],
-                [ 2013,  9, 21],
-                [ 2013, 12, 31],
+  for my $loc ([ "Greenwich", 51, 28, 'N',  0,  0, 'E'],
+               [ "Reykjavik", 64,  4, 'N', 21, 58, 'W'],
+               [ "Quito",      0, 15, 'S', 78, 35, 'W'],
+               [ "El_Hierro", 27, 44, 'N', 18,  3, 'W'],
               ) {
     my ($city, $ltd, $ltm, $ltc, $lgd, $lgm, $lgc) = @$loc;
-    for my $height (qw(0 -0.583 -0.833 -12 -18)) {
+    for my $height (qw(10 0 -0.583 -0.833 -12 -18)) {
       for my $upper_limb (0, 1) {
         printf $ft qq<test(%4d, %2d, %2d, "%s", %2d, %2d, '%s', %3d, %2d, '%s', %f, %d, "%s");\n>, @$date, @$loc, $height, $upper_limb, "$height";
       }
@@ -168,8 +163,8 @@ mktest -- Making C source file for building Astro::Sunrise Perl test file
 
 =head1 USAGE
 
-  ./mktest-05
-  cc test-05.c -lm -o test-05
-  ./test-05 > result-05
+  ./mktest-04a
+  cc test-04a.c -lm -o test-04a
+  ./test-04a > result-04a
 
-and then copy-paste from result-05 to t/05polar.t
+and then copy-paste from result-04a to t/04basic.t
