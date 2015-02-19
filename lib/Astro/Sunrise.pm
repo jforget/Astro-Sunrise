@@ -523,6 +523,8 @@ sub ASTRONOMICAL () { -18 }
 
 __END__
 
+=encoding utf8
+
 =head1 NAME
 
 Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
