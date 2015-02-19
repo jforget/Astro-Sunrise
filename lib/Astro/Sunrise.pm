@@ -606,10 +606,11 @@ Astronomical twilight (the sky is completely dark)
 
 =head2 B<sunrise>
 
-  ($sunrise, $sunset) = sunrise( { year => $year,      month   => $month,     day => $day,
-                                   lon  => $longitude, lat     => $latitude,
-                                   tz   => $tz_offset, isdst   => $is_dst,
-                                   alt  => $altitude,  precise => $iteration);
+  ($sunrise, $sunset) = sunrise( { year    => $year,      month      => $month,     day => $day,
+                                   lon     => $longitude, lat        => $latitude,
+                                   tz      => $tz_offset, isdst      => $is_dst,
+                                   alt     => $altitude,  upper_limb => $upper_limb);
+                                   precise => $iteration);
 
   ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
 
