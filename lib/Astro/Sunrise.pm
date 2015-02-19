@@ -524,21 +524,23 @@ Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
 
 =head1 SYNOPSIS
 
- use Astro::Sunrise;
- #use Astro::Sunrise qw(:constants);
+  # When will the sun rise on YAPC::Europe 2015?
+  use Astro::Sunrise;
+  my ($sunrise, $sunset = sunrise(year => 2015, month => 9, day => 2, # YAPC::EU starts on 2nd September 2015
+                                  lon  => -3.6, lat   => 37.17        # Granada is 37°10'N, 3°36'W
+                                  tz   => 1,    dst   => 1);          # This is still summer, therefore DST
 
- ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
- ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);
- ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);
+  # When does the sun rise today in Salt Lake City?
+  use Astro::Sunrise;
+  use DateTime;
+  $sunrise_today = sun_rise(-111.88, 40.75) # 40°45'N, 111°53'W
 
- $sunrise = sun_rise(longitude,latitude);
- $sunset  = sun_set (longitude,latitude);
-
- $sunrise = sun_rise(longitude,latitude,ALT);
- $sunset  = sun_set (longitude,latitude,ALT);
-
- $sunrise = sun_rise(longitude,latitude,ALT,day_offset);
- $sunset  = sun_set (longitude,latitude,ALT,day_offset);
+  # And when does it set tomorrow at Salt Lake City?
+  use Astro::Sunrise;
+  use DateTime;
+  $sunset_tomorrow = sun_set(-111.88, 40.75, # 40°45'N, 111°53'W
+                             -0.833,         # standard value for the sun altitude at sunset
+                             1);             # day offset up to tomorrow
 
 =head1 DESCRIPTION
 
@@ -556,9 +558,9 @@ Please note that the longitude is specified before the latitude.
 
 The time zone is given as the numeric value of the offset from UTC.
 
-inter is set to either 0 or 1.
+The C<precise> parameter is set to either 0 or 1.
 If set to 0 no Iteration will occur.
-If set to 1 Iteration will occur.
+If set to 1 Iteration will occur, which will give a more precise result.
 Default is 0.
 
 There are a number of sun altitudes to chose from.  The default is
@@ -610,7 +612,7 @@ Astronomical twilight (the sky is completely dark)
                                    lon     => $longitude, lat        => $latitude,
                                    tz      => $tz_offset, isdst      => $is_dst,
                                    alt     => $altitude,  upper_limb => $upper_limb);
-                                   precise => $iteration);
+                                   precise => $precise);
 
   ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
 
