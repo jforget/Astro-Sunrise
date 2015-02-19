@@ -100,7 +100,6 @@ test(int year, int month, int day, char * city, int ltd, int ltm, char ltc, int 
    set_h   = floor(set);
    set_m   = floor(60 * (set - set_h));
    set_s   = floor(60 * (60 * (set - set_h) - set_m));
-/*
    rise_h += floor(lg / 15);
    set_h  += floor(lg / 15);
    if (rise_m >= 60) 
@@ -118,7 +117,6 @@ test(int year, int month, int day, char * city, int ltd, int ltm, char ltc, int 
        rise_h ++;
        set_h  ++;
      }
-*/
    printf("%4d %2d %2d %-20s %2d %2d %c %3d %2d %c %-10s %d ", year, month, day, city, ltd, ltm, ltc, lgd, lgm, lgc, height_alpha, upper_limb);
    printf("sunrise: %02d:%02d sunset: %02d:%02d", rise_h, rise_m, set_h, set_m);
    if (rs != 0) {
