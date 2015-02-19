@@ -29,8 +29,6 @@ $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
 my $INV360     = ( 1.0 / 360.0 );
 
-my $upper_limb = '1';
-
 sub sunrise  {
   my %arg;
   if (ref($_[0]) eq 'HASH') {
@@ -43,12 +41,13 @@ sub sunrise  {
     = @arg{ qw/year   month   day   lon   lat   tz   isdst/ };
   my $altit     = defined($arg{alt}    ) ? $arg{alt}     : -0.833;
   my $iteration = defined($arg{precise}) ? $arg{precise} : 0 ;
+  $arg{upper_limb} ||= 0;
    
   if ($iteration)   {
     # This is the initial start
 
     my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
-    my ($tmp_rise_1,$tmp_set_1) = sun_rise_set($d, $lon, $lat,$altit,15.04107);
+    my ($tmp_rise_1, $tmp_set_1) = sun_rise_set($d, $lon, $lat, $altit, 15.04107, $arg{upper_limb});
 
     # Now we have the initial rise/set times next recompute d using the exact moment
     # recompute sunrise
@@ -57,13 +56,13 @@ sub sunrise  {
     my $tmp_rise_3 = 0;
     until (equal($tmp_rise_2, $tmp_rise_3, 8) )   {
 
-         my $d_sunrise_1 = $d + $tmp_rise_1/24.0;
-         ($tmp_rise_2,undef) = sun_rise_set($d_sunrise_1, $lon, $lat,$altit,15.04107);
-         $tmp_rise_1 = $tmp_rise_3;
-         my $d_sunrise_2 = $d + $tmp_rise_2/24.0;
-         ($tmp_rise_3,undef) = sun_rise_set($d_sunrise_2, $lon, $lat,$altit,15.04107);
-       
-         #print "tmp_rise2 is: $tmp_rise_2 tmp_rise_3 is:$tmp_rise_3\n";
+       my $d_sunrise_1 = $d + $tmp_rise_1/24.0;
+       ($tmp_rise_2, undef) = sun_rise_set($d_sunrise_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb});
+       $tmp_rise_1 = $tmp_rise_3;
+       my $d_sunrise_2 = $d + $tmp_rise_2/24.0;
+       ($tmp_rise_3, undef) = sun_rise_set($d_sunrise_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb});
+
+       #print "tmp_rise2 is: $tmp_rise_2 tmp_rise_3 is:$tmp_rise_3\n";
     }
 
     my $tmp_set_2 = 9;
@@ -71,23 +70,22 @@ sub sunrise  {
 
     until (equal($tmp_set_2, $tmp_set_3, 8) )   {
 
-         my $d_sunset_1 = $d + $tmp_set_1/24.0;
-         (undef,$tmp_set_2) = sun_rise_set($d_sunset_1, $lon, $lat,$altit,15.04107);
-         $tmp_set_1 = $tmp_set_3;
-         my $d_sunset_2 = $d + $tmp_set_2/24.0;
-         (undef,$tmp_set_3) = sun_rise_set($d_sunset_2, $lon, $lat,$altit,15.04107);
-        
-         #print "tmp_set_1 is: $tmp_set_1 tmp_set_3 is:$tmp_set_3\n";
+       my $d_sunset_1 = $d + $tmp_set_1/24.0;
+       (undef, $tmp_set_2) = sun_rise_set($d_sunset_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb});
+       $tmp_set_1 = $tmp_set_3;
+       my $d_sunset_2 = $d + $tmp_set_2/24.0;
+       (undef, $tmp_set_3) = sun_rise_set($d_sunset_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb});
+
+       #print "tmp_set_1 is: $tmp_set_1 tmp_set_3 is:$tmp_set_3\n";
          
     }
-   
    
     return convert_hour($tmp_rise_3, $tmp_set_3, $TZ, $isdst);
 
   }
   else {
     my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
-    my ($h1,$h2) = sun_rise_set($d, $lon, $lat, $altit, 15.0);
+    my ($h1, $h2) = sun_rise_set($d, $lon, $lat, $altit, 15.0, $arg{upper_limb});
     return convert_hour($h1, $h2, $TZ, $isdst);
   }
 }
@@ -97,10 +95,7 @@ sub sunrise  {
 
 
 sub sun_rise_set {
-    my ($d, $lon, $lat,$altit) =@_;
-    #my ( $year, $month, $day, $lon, $lat, $TZ, $isdst, $alt ) = @_;
-    #my $altit      = $alt || -0.833;
-    #my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
+    my ($d, $lon, $lat,$altit, $h, $upper_limb) = @_;
 
     # Compute local sidereal time of this moment
     my $sidtime = revolution( GMST0($d) + 180.0 + $lon );
@@ -109,7 +104,7 @@ sub sun_rise_set {
     my ( $sRA, $sdec, $sr ) = sun_RA_dec($d);
 
     # Compute time when Sun is at south - in hours UT
-    my $tsouth  = 12.0 - rev180( $sidtime - $sRA ) / 15.0;
+    my $tsouth  = 12.0 - rev180( $sidtime - $sRA ) / $h;
 
     # Compute the Sun's apparent radius, degrees
     my $sradius = 0.2666 / $sr;
@@ -121,9 +116,8 @@ sub sun_rise_set {
     # Compute the diurnal arc that the Sun traverses to reach 
     # the specified altitude altit: 
 
-    my $cost =
-      ( sind($altit) - sind($lat) * sind($sdec) ) /
-      ( cosd($lat) * cosd($sdec) );
+    my $cost =   ( sind($altit) - sind($lat) * sind($sdec) )
+               / ( cosd($lat) * cosd($sdec) );
 
     my $t;
     if ( $cost >= 1.0 ) {
@@ -143,7 +137,6 @@ sub sun_rise_set {
     my $hour_rise_ut = $tsouth - $t;
     my $hour_set_ut  = $tsouth + $t;
     return($hour_rise_ut, $hour_set_ut);
-    #return convert_hour($hour_rise_ut,$hour_set_ut,$TZ, $isdst);
 }
 
 #########################################################################################################
@@ -663,6 +656,18 @@ Altitude of the sun, in decimal degrees. Usually a negative number,
 because the sun should be I<under> the mathematical horizon.
 
 This parameter is optional. Its default value is -0.833.
+
+=item upper_limb
+
+If this parameter set to a true value (usually 1), the algorithm computes
+the sun apparent radius and takes it into account when computing the sun
+altitude. This parameter is useful only when the C<alt> parameter is set
+to C<0> or C<-0.583> degrees. When using C<-0.25> or C<-0.833> degrees,
+the sun radius is already taken into account. When computing twilights
+(C<-6> to C<-18>), the sun radius is irrelevant.
+
+Since the default value for the C<alt> parameter is -0.833, the 
+default value for C<upper_limb> is 0.
 
 =item precise
 

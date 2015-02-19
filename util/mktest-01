@@ -94,7 +94,7 @@ test(char * city, char * country, int lgd, int lgm, char lgc, int ltd, int ltm, 
         lt = - round3(ltd + ltm / 60.0);
         break;
     }
-   rs = __sunriset__(2003, 6, 21, lg, lt, -0.833, 1, &rise, &set);
+   rs = __sunriset__(2003, 6, 21, lg, lt, -0.833, 0, &rise, &set);
    rise_h  = floor(rise);
    rise_m  = floor(0.5 + 60 * (rise - rise_h));
    set_h   = floor(set);
