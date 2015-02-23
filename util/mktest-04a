@@ -102,10 +102,18 @@ test(int year, int month, int day, char * city, int ltd, int ltm, char ltc, int 
    set_s   = floor(60 * (60 * (set - set_h) - set_m));
    rise_h += floor(lg / 15);
    set_h  += floor(lg / 15);
+   if (rise_s >= 30) 
+     {
+       rise_m  ++;
+     }
    if (rise_m >= 60) 
      {
        rise_m -= +60;
        rise_h ++;
+     }
+   if (set_s >= 30) 
+     {
+       set_m  ++;
      }
    if (set_m >= 60) 
      {
@@ -128,6 +136,11 @@ test(int year, int month, int day, char * city, int ltd, int ltm, char ltc, int 
 main ()
 {
 
+/*
+As you can see, this programme calls the computation of sunrise and sunset with an altitude -0.833
+and with upper_limb = 1. This is silly. But the purpose of this programme is just to check
+that the Perl implementation of the algorithm is compatible with the C implementation.
+*/
 EOF
 for my $date ([ 2013,  1,  1],
               [ 2013,  3, 21],
