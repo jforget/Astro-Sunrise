@@ -457,49 +457,75 @@ sub convert_hour   {
 
 }
 
-sub sun_rise
-   {
-   my $longitude = shift;
-   my $latitude = shift;
-   my $alt = shift || -0.833;
-   my $offset = int( shift || 0 );
+sub sun_rise {
+  my %arg;
+  if (ref($_[0]) eq 'HASH') {
+    %arg = %{$_[0]};
+  }
+  else {
+    @arg{ qw/lon lat alt offset/ } = @_;
+  }
+  my ($longitude, $latitude) = @arg{ qw/lon lat/ };
+  my $alt       = defined($arg{alt}    ) ?     $arg{alt}     : -0.833;
+  my $offset    = defined($arg{offset} ) ? int($arg{offset}) : 0 ;
+  $arg{precise}    ||= 0;
+  $arg{upper_limb} ||= 0;
 
-   my $today = DateTime->today->set_time_zone( 'local' );
-   $today->set( hour => 12 );
-   $today->add( days => $offset );
+  my $today = DateTime->today->set_time_zone( 'local' );
+  $today->set( hour => 12 );
+  $today->add( days => $offset );
 
-   my( $sun_rise, undef ) = sunrise( $today->year, $today->mon, $today->mday,
-                                     $longitude, $latitude,
-                                     ( $today->offset / 3600 ),
-                                     #
-                                     # DST is always 0 because DateTime
-                                     # currently (v 0.16) adds one to the
-                                     # offset during DST hours
-                                     0,
-                                     $alt );
+  my( $sun_rise, undef ) = sunrise( { year  => $today->year,
+                                      month => $today->mon,
+                                      day   => $today->mday,
+                                      lon   => $longitude,
+                                      lat   => $latitude,
+                                      tz    => ( $today->offset / 3600 ),
+                                      #
+                                      # DST is always 0 because DateTime
+                                      # currently (v 0.16) adds one to the
+                                      # offset during DST hours
+                                      isdst      => 0,
+                                      alt        => $alt,
+                                      precise    => $arg{precise},
+                                      upper_limb => $arg{upper_limb},
+                                   } );
    return $sun_rise;
    }
 
-sub sun_set
-   {
-   my $longitude = shift;
-   my $latitude = shift;
-   my $alt = shift || -0.833;
-   my $offset = int( shift || 0 );
+sub sun_set {
+  my %arg;
+  if (ref($_[0]) eq 'HASH') {
+    %arg = %{$_[0]};
+  }
+  else {
+    @arg{ qw/lon lat alt offset/ } = @_;
+  }
+  my ($longitude, $latitude) = @arg{ qw/lon lat/ };
+  my $alt       = defined($arg{alt}    ) ?     $arg{alt}     : -0.833;
+  my $offset    = defined($arg{offset} ) ? int($arg{offset}) : 0 ;
+  $arg{precise}    ||= 0;
+  $arg{upper_limb} ||= 0;
 
-   my $today = DateTime->today->set_time_zone( 'local' );
-   $today->set( hour => 12 );
-   $today->add( days => $offset );
+  my $today = DateTime->today->set_time_zone( 'local' );
+  $today->set( hour => 12 );
+  $today->add( days => $offset );
 
-   my( undef, $sun_set ) = sunrise( $today->year, $today->mon, $today->mday,
-                                    $longitude, $latitude,
-                                    ( $today->offset / 3600 ),
-                                    #
-                                    # DST is always 0 because DateTime
-                                    # currently (v 0.16) adds one to the
-                                    # offset during DST hours
-                                    0,
-                                    $alt );
+   my( undef, $sun_set ) = sunrise( { year  => $today->year,
+                                      month => $today->mon,
+                                      day   => $today->mday,
+                                      lon   => $longitude,
+                                      lat   => $latitude,
+                                      tz    => ( $today->offset / 3600 ),
+                                      #
+                                      # DST is always 0 because DateTime
+                                      # currently (v 0.16) adds one to the
+                                      # offset during DST hours
+                                      isdst      => 0,
+                                      alt        => $alt,
+                                      precise    => $arg{precise},
+                                      upper_limb => $arg{upper_limb},
+                                   } );
    return $sun_set;
    }
 
@@ -533,14 +559,15 @@ Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
   # When does the sun rise today in Salt Lake City?
   use Astro::Sunrise;
   use DateTime;
-  $sunrise_today = sun_rise(-111.88, 40.75) # 40°45'N, 111°53'W
+  $sunrise_today = sun_rise( { lon => -111.88, lat => 40.75 } ); # 40°45'N, 111°53'W
 
   # And when does it set tomorrow at Salt Lake City?
   use Astro::Sunrise;
   use DateTime;
-  $sunset_tomorrow = sun_set(-111.88, 40.75, # 40°45'N, 111°53'W
-                             -0.833,         # standard value for the sun altitude at sunset
-                             1);             # day offset up to tomorrow
+  $sunset_tomorrow = sun_set(lat => 40.75,   # 40°45'N,
+                             lon => -111.88, # 111°53'W
+                             alt => -0.833,  # standard value for the sun altitude at sunset
+                             offset => 1);   # day offset up to tomorrow
 
 =head1 DESCRIPTION
 
@@ -714,53 +741,28 @@ This parameter is optional. It can be positional.
  ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18);
  ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18, 1);
 
-=head2 B<sun_rise>
+=head2 B<sun_rise>, B<sun_set>
 
-=over
+  $sun_rise = sun_rise( { lon => $longitude, lat => $latitude,
+                          alt => $altitude, upper_limb => $bool,
+                          offset  => $day_offset,
+                          precise => $bool_precise } );
+  $sun_rise = sun_rise( $longitude, $latitude );
+  $sun_rise = sun_rise( $longitude, $latitude, $alt );
+  $sun_rise = sun_rise( $longitude, $latitude, $alt, $day_offset );
 
-=item C<$sun_rise = sun_rise( longitude, latitude );>
-
-=item C<$sun_rise = sun_rise( longitude, latitude, ALT );>
-
-=item C<$sun_rise = sun_rise( longitude, latitude, ALT, day_offset );>
-
-Returns the sun rise time for the given location.  The first form
-uses today's date (from DateTime) and the default altitude.  The second
-form adds specifying a custom altitude.  The third form allows for specifying
+Returns the sun rise time (resp. the sun set time) for the given location. 
+The first form use all parameters and transmit them by name. The second form
+uses today's date (from DateTime) and the default altitude.  The third
+form adds specifying a custom altitude.  The fourth form allows for specifying
 an integer day offset from today, either positive or negative.
 
-=item I<For Example>
+=head3 For Example
 
  $sunrise = sun_rise( -105.181, 41.324 );
  $sunrise = sun_rise( -105.181, 41.324, -15 );
  $sunrise = sun_rise( -105.181, 41.324, -12, +3 );
  $sunrise = sun_rise( -105.181, 41.324, undef, -12);
-
-=back
-
-=head2 B<sun_set>
-
-=over
-
-=item C<$sun_set = sun_set( longitude, latitude );>
-
-=item C<$sun_set = sun_set( longitude, latitude, ALT );>
-
-=item C<$sun_set = sun_set( longitude, latitude, ALT, day_offset );>
-
-Returns the sun set time for the given location.  The first form
-uses today's date (from DateTime) and the default altitude.  The second
-form adds specifying a custom altitude.  The third form allows for specifying
-an integer day offset from today, either positive or negative.
-
-=item I<For Example>
-
- $sunset = sun_set( -105.181, 41.324 );
- $sunset = sun_set( -105.181, 41.324, -15 );
- $sunset = sun_set( -105.181, 41.324, -12, +3 );
- $sunset = sun_set( -105.181, 41.324, undef, -12);
-
-=back
 
 =head1 AUTHOR
 
