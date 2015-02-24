@@ -632,6 +632,8 @@ The other forms are kept for backward compatibility. The arguments are:
 The three elements of the date for which you want to compute the sunrise and sunset.
 Months are numbered 1 to 12, in the usual way, not 0 to 11 as in C and in Perl's localtime.
 
+Mandatory, can be positional.
+
 =item lon, lat
 
 The longitude and latitude of the place for which you want to compute the sunrise and sunset.
@@ -645,20 +647,26 @@ They are given in decimal degrees. For example:
  Northern latitude is entered as a positive number
  Southern latitude is entered as a negative number
 
+Mandatory, can be positional.
+
 =item TZ
 
 Time Zone is the offset from GMT
 
+Mandatory, can be positional.
+
 =item isdst
 
 1 if daylight saving time is in effect, 0 if not.
+
+Mandatory, can be positional.
 
 =item alt
 
 Altitude of the sun, in decimal degrees. Usually a negative number,
 because the sun should be I<under> the mathematical horizon.
 
-This parameter is optional. Its default value is -0.833.
+This parameter is optional. Its default value is -0.833. It can be positional.
 
 =item upper_limb
 
@@ -671,6 +679,8 @@ the sun radius is already taken into account. When computing twilights
 
 Since the default value for the C<alt> parameter is -0.833, the 
 default value for C<upper_limb> is 0.
+
+This parameter is optional and it can be specified only by keyword.
 
 =item precise
 
@@ -693,6 +703,8 @@ b) Re-do the computation but compute the Sun's RA and Decl, and also GMST0, for 
 
 c) Iterate b) until the computed sunrise or sunset no longer changes significantly. 
    Usually 2 iterations are enough, in rare cases 3 or 4 iterations may be needed.
+
+This parameter is optional. It can be positional.
 
 =back
 
