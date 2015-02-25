@@ -9,3 +9,4 @@ t/01basic.t
 t/02constants.t
 t/03dst.t
 t/04basic.t
+t/05polar.t

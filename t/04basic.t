@@ -46,7 +46,7 @@ for (@data) {
                \s+(\d+)\s+(\d+)\s+(\w)    # latitude $5 $6 $7
                \s+(\d+)\s+(\d+)\s+(\w)    # longitude $8 $9 $10
                \s+(\S+)                   # altitude $11
-               \s+(\d)                    # precise $12
+               \s+(\d)                    # upper limb $12
                \s+sunrise:\s+(\d+:\d+)    # sunrise $13
                \s+sunset:\s+(\d+:\d+)/x;  # sunset $14
     if ( $lat_x eq 'N' ) {
@@ -137,7 +137,8 @@ sub fudge_l {
 # El Hierro, because it is located on a former prime meridian
 #
 # Warning: as you can see, the computation of sunrise and sunset is called with an altitude -0.833
-# and with upper_limb = 1. This is silly. But the purpose of this programme is just to check
+# and with upper_limb = 1. This is silly, because that means that the radius is accounted
+# twice instead of just once. But the purpose of this programme is just to check
 # that the Perl implementation of the algorithm is compatible with the C implementation.
 sub load_data {
     return split "\n", <<'EOD';

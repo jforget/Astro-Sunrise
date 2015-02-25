@@ -42,12 +42,15 @@ sub sunrise  {
   my $altit     = defined($arg{alt}    ) ? $arg{alt}     : -0.833;
   my $iteration = defined($arg{precise}) ? $arg{precise} : 0 ;
   $arg{upper_limb} ||= 0;
+  $arg{polar}      ||= 'warn';
+  carp "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
+      if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
    
   if ($iteration)   {
     # This is the initial start
 
     my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
-    my ($tmp_rise_1, $tmp_set_1) = sun_rise_set($d, $lon, $lat, $altit, 15.04107, $arg{upper_limb});
+    my ($tmp_rise_1, $tmp_set_1) = sun_rise_set($d, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
 
     # Now we have the initial rise/set times next recompute d using the exact moment
     # recompute sunrise
@@ -57,10 +60,10 @@ sub sunrise  {
     until (equal($tmp_rise_2, $tmp_rise_3, 8) )   {
 
        my $d_sunrise_1 = $d + $tmp_rise_1/24.0;
-       ($tmp_rise_2, undef) = sun_rise_set($d_sunrise_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb});
+       ($tmp_rise_2, undef) = sun_rise_set($d_sunrise_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
        $tmp_rise_1 = $tmp_rise_3;
        my $d_sunrise_2 = $d + $tmp_rise_2/24.0;
-       ($tmp_rise_3, undef) = sun_rise_set($d_sunrise_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb});
+       ($tmp_rise_3, undef) = sun_rise_set($d_sunrise_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
 
        #print "tmp_rise2 is: $tmp_rise_2 tmp_rise_3 is:$tmp_rise_3\n";
     }
@@ -71,10 +74,10 @@ sub sunrise  {
     until (equal($tmp_set_2, $tmp_set_3, 8) )   {
 
        my $d_sunset_1 = $d + $tmp_set_1/24.0;
-       (undef, $tmp_set_2) = sun_rise_set($d_sunset_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb});
+       (undef, $tmp_set_2) = sun_rise_set($d_sunset_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
        $tmp_set_1 = $tmp_set_3;
        my $d_sunset_2 = $d + $tmp_set_2/24.0;
-       (undef, $tmp_set_3) = sun_rise_set($d_sunset_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb});
+       (undef, $tmp_set_3) = sun_rise_set($d_sunset_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
 
        #print "tmp_set_1 is: $tmp_set_1 tmp_set_3 is:$tmp_set_3\n";
          
@@ -85,7 +88,10 @@ sub sunrise  {
   }
   else {
     my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
-    my ($h1, $h2) = sun_rise_set($d, $lon, $lat, $altit, 15.0, $arg{upper_limb});
+    my ($h1, $h2) = sun_rise_set($d, $lon, $lat, $altit, 15.0, $arg{upper_limb}, $arg{polar});
+    if ($h1 eq 'day' or $h1 eq 'night' or $h2 eq 'day' or $h2 eq 'night') {
+      return ($h1, $h2);
+    }
     return convert_hour($h1, $h2, $TZ, $isdst);
   }
 }
@@ -95,7 +101,7 @@ sub sunrise  {
 
 
 sub sun_rise_set {
-    my ($d, $lon, $lat,$altit, $h, $upper_limb) = @_;
+    my ($d, $lon, $lat,$altit, $h, $upper_limb, $polar) = @_;
 
     # Compute local sidereal time of this moment
     my $sidtime = revolution( GMST0($d) + 180.0 + $lon );
@@ -121,15 +127,23 @@ sub sun_rise_set {
 
     my $t;
     if ( $cost >= 1.0 ) {
-        carp "Sun never rises!!\n";
-        $t = 0.0;    # Sun always below altit
+      if ($polar eq 'retval') {
+        return ('night', 'night');
+      }
+      carp "Sun never rises!!\n"
+        if $polar eq 'warn';
+      $t = 0.0;    # Sun always below altit
     }
     elsif ( $cost <= -1.0 ) {
-        carp "Sun never sets!!\n";
-        $t = 12.0;    # Sun always above altit
+      if ($polar eq 'retval') {
+        return ('day', 'day');
+      }
+      carp "Sun never sets!!\n"
+        if $polar eq 'warn';
+      $t = 12.0;    # Sun always above altit
     }
     else {
-        $t = acosd($cost) / 15.0;    # The diurnal arc, hours
+      $t = acosd($cost) / 15.0;    # The diurnal arc, hours
     }
 
     # Store rise and set times - in hours UT 
@@ -639,7 +653,7 @@ Astronomical twilight (the sky is completely dark)
                                    lon     => $longitude, lat        => $latitude,
                                    tz      => $tz_offset, isdst      => $is_dst,
                                    alt     => $altitude,  upper_limb => $upper_limb);
-                                   precise => $precise);
+                                   precise => $precise,   polar      => $action);
 
   ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
 
@@ -706,6 +720,21 @@ the sun radius is already taken into account. When computing twilights
 
 Since the default value for the C<alt> parameter is -0.833, the 
 default value for C<upper_limb> is 0.
+
+This parameter is optional and it can be specified only by keyword.
+
+=item polar
+
+When dealing with a polar location, there may be dates where there is
+a polar night (sun never rises) or a polar day. The default behaviour of
+the module is to emit a warning in these cases ("Sun never rises!!"
+or "Sun never sets!!"). But some programmers may find this inconvenient.
+An alternate behaviour is to return special values reflecting the
+situation.
+
+So, if the C<polar> parameter is set to C<'warn'>, the module emits
+a warning. If the C<polar> parameter is set to C<'retval'>, the
+module emits no warning, but it returns either C<'day'> or C<'night'>.
 
 This parameter is optional and it can be specified only by keyword.
 
