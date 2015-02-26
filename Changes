@@ -60,3 +60,5 @@ Revision history for Perl extension sunrise.
       Fix ticket 62593 (patch from Slaven Rezic)
       Parameters to sunrise can be passed by name (using a hashref)
       The upper_limb is not longer hard-coded, it is now a parameter
+      The behaviour for polar day and polar night can change: no warning,
+      but a special return value.

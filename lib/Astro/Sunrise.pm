@@ -12,7 +12,6 @@ use warnings;
 use POSIX qw(floor);
 use Math::Trig;
 use Carp;
-use DateTime;
 use vars qw( $VERSION @ISA @EXPORT @EXPORT_OK %EXPORT_TAGS $RADEG $DEGRAD );
 
 require Exporter;

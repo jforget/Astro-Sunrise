@@ -31,11 +31,10 @@ use strict;
 use warnings;
 use POSIX qw(floor ceil);
 use Astro::Sunrise;
-use DateTime;
 use Test::More;
 
 my @data = load_data();
-plan(tests => 7 + 2 * @data); # I prefer having Perl counting my tests than myself
+plan(tests => 2 * @data); # I prefer having Perl counting my tests than myself
 
 use vars qw($long $lat $offset);
 
@@ -74,34 +73,6 @@ for (@data) {
     is ($sunset , $10, "Sunset for $1, $2");
 
 }
-
-
-my $sunrise_1 = sun_rise( -118, 33  );
-my $sunrise_2 = sun_rise( -118, 33, -.833 );
-my $sunrise_3 = sun_rise( -118, 33, -.833, 0 );
-my $sunrise_4 = sun_rise( -118, 33, undef, 0 );
-my $sunrise_5 = sun_rise({ lon => -118, lat => 33 });
-my $sunrise_6 = sun_rise({ lon => -118, lat => 33, alt => -0.833, offset => 0, upper_limb => 0, precise => 0 });
-
-ok( $sunrise_1 eq $sunrise_2 , "Test W/O Alt");
-ok( $sunrise_2 eq $sunrise_3 , "Test W/O offset");
-ok( $sunrise_3 eq $sunrise_4 , "Test setting Alt to undef");
-ok( $sunrise_4 eq $sunrise_5 , "Test using named basic parameters");
-ok( $sunrise_5 eq $sunrise_6 , "Test using all named parameters");
-
-
-my $then = DateTime->new (
-                    year => 2000,
-		    month => 6,
-		    day => 20,
-		    time_zone =>'America/Los_Angeles',
-		    );
-my $offset = ( ($then->offset) /60 /60);
-
-my ($sunrise, $sunset) = sunrise($then->year, $then->mon, $then->mday,
-                              -118, 33, $offset, 0);
-is ($sunrise, '05:44', "Test DateTime sunrise interface");
-is ($sunset,  '20:04', "Test DateTime sunset interface");
 
 sub load_data {
     return split "\n", <<'EOD';

@@ -33,6 +33,14 @@ use strict;
 use warnings;
 use Test::More;
 
+BEGIN {
+  eval "use DateTime;";
+  if ($@) {
+    plan skip_all => "DateTime needed";
+    exit;
+  }
+}
+
 if (!eval q{ require Time::Fake; 1;}) {
     print "1..0 # skip no Time::Fake module\n";
     exit;
@@ -50,7 +58,11 @@ plan tests => scalar @tests;
 
 for my $test (@tests) {
     my($epoch, $func, $expected) = @$test;
-    my @cmd = ($^X, "-Mblib", "-MTime::Fake=$epoch", "-MAstro::Sunrise", "-e", "print $func(13.5,52.5)");
+    my @cmd = ($^X, "-Mblib",
+                    "-MTime::Fake=$epoch",
+                    "-MDateTime",
+                    "-MAstro::Sunrise",
+                    "-e", "print $func(13.5,52.5)");
     open my $fh, "-|", @cmd or die $!;
     local $/;
     my $res = <$fh>;
