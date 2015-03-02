@@ -734,6 +734,23 @@ So, if the C<polar> parameter is set to C<'warn'>, the module emits
 a warning. If the C<polar> parameter is set to C<'retval'>, the
 module emits no warning, but it returns either C<'day'> or C<'night'>.
 
+Example:
+
+  # Loosely based on Alex Gough's activities: scientist and Perl programmer, who spent a year
+  # in Halley Base in 2006.
+  my ($sunrise, $sunset) = sunrise( { year => 2006, month => 1, day => 15,
+                                      lon => -26.65, lat => -75.58, # Halley Base: 75°35'S 26°39'W
+                                      tz  => 3, polar => 'retval' } );
+  if ($sunrise eq 'day') {
+    say "Alex Gough saw the midnight sun the first day he arrived at Halley Base";
+  }
+  elsif ($sunrise eq 'night') {
+    say "It would be days, maybe weeks, before the sun would rise.";
+  }
+  else {
+    say "Alex saw his first antarctic sunset at $sunset";
+  }
+
 This parameter is optional and it can be specified only by keyword.
 
 =item precise
@@ -773,16 +790,25 @@ This parameter is optional. It can be positional (#9).
   $sun_rise = sun_rise( { lon => $longitude, lat => $latitude,
                           alt => $altitude, upper_limb => $bool,
                           offset  => $day_offset,
-                          precise => $bool_precise } );
+                          precise => $bool_precise, polar => $action } );
+  $sun_set  = sun_set ( { lon => $longitude, lat => $latitude,
+                          alt => $altitude, upper_limb => $bool,
+                          offset  => $day_offset,
+                          precise => $bool_precise, polar => $action } );
   $sun_rise = sun_rise( $longitude, $latitude );
   $sun_rise = sun_rise( $longitude, $latitude, $alt );
   $sun_rise = sun_rise( $longitude, $latitude, $alt, $day_offset );
 
-Returns the sun rise time (resp. the sun set time) for the given location.
+Returns the sun rise time (resp. the sun set time) for the given location
+and for today's date (as given by DateTime), plus or minus some offset in days.
 The first form use all parameters and transmit them by name. The second form
 uses today's date (from DateTime) and the default altitude.  The third
 form adds specifying a custom altitude.  The fourth form allows for specifying
 an integer day offset from today, either positive or negative.
+
+The parameters are the same as the parameters for C<sunrise>. There is an additional
+parameter, C<offset>, which allows using a date other than today: C<+1> for
+to-morrow, C<-7> for one week ago, etc.
 
 =head3 For Example
 
