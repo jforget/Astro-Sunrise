@@ -19,10 +19,10 @@ require Exporter;
 @ISA       = qw( Exporter );
 @EXPORT    = qw( sunrise sun_rise sun_set );
 @EXPORT_OK = qw( DEFAULT CIVIL NAUTICAL AMATEUR ASTRONOMICAL );
-%EXPORT_TAGS = ( 
+%EXPORT_TAGS = (
         constants => [ @EXPORT_OK ],
         );
-        
+
 $VERSION =  '0.93';
 $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
@@ -44,7 +44,7 @@ sub sunrise  {
   $arg{polar}      ||= 'warn';
   carp "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
       if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
-   
+
   if ($arg{precise})   {
     # This is the initial start
 
@@ -79,9 +79,9 @@ sub sunrise  {
        (undef, $tmp_set_3) = sun_rise_set($d_sunset_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
 
        #print "tmp_set_1 is: $tmp_set_1 tmp_set_3 is:$tmp_set_3\n";
-         
+
     }
-   
+
     return convert_hour($tmp_rise_3, $tmp_set_3, $TZ, $isdst);
 
   }
@@ -117,8 +117,8 @@ sub sun_rise_set {
         $altit -= $sradius;
     }
 
-    # Compute the diurnal arc that the Sun traverses to reach 
-    # the specified altitude altit: 
+    # Compute the diurnal arc that the Sun traverses to reach
+    # the specified altitude altit:
 
     my $cost =   ( sind($altit) - sind($lat) * sind($sdec) )
                / ( cosd($lat) * cosd($sdec) );
@@ -142,7 +142,7 @@ sub sun_rise_set {
       $t = acosd($cost) / 15.0;    # The diurnal arc, hours
     }
 
-    # Store rise and set times - in hours UT 
+    # Store rise and set times - in hours UT
 
     my $hour_rise_ut = $tsouth - $t;
     my $hour_set_ut  = $tsouth + $t;
@@ -152,18 +152,18 @@ sub sun_rise_set {
 #########################################################################################################
 #
 #
-# FUNCTIONAL SEQUENCE for GMST0 
+# FUNCTIONAL SEQUENCE for GMST0
 #
 # _GIVEN
 # Day number
 #
 # _THEN
 #
-# computes GMST0, the Greenwich Mean Sidereal Time  
-# at 0h UT (i.e. the sidereal time at the Greenwhich meridian at  
-# 0h UT).  GMST is then the sidereal time at Greenwich at any     
+# computes GMST0, the Greenwich Mean Sidereal Time
+# at 0h UT (i.e. the sidereal time at the Greenwich meridian at
+# 0h UT).  GMST is then the sidereal time at Greenwich at any
 # time of the day..
-# 
+#
 #
 # _RETURN
 #
@@ -189,10 +189,10 @@ sub GMST0 {
 #
 # _THEN
 #
-# Computes the Sun's ecliptic longitude and distance */
-# at an instant given in d, number of days since     */
-# 2000 Jan 0.0. 
-# 
+# Computes the Sun's ecliptic longitude and distance
+# at an instant given in d, number of days since
+# 2000 Jan 0.0.
+#
 #
 # _RETURN
 #
@@ -202,20 +202,20 @@ sub GMST0 {
 sub sunpos {
     my ($d) = @_;
 
-    #                       Mean anomaly of the Sun 
-    #                       Mean longitude of perihelion 
-    #                         Note: Sun's mean longitude = M + w 
-    #                       Eccentricity of Earth's orbit 
-    #                       Eccentric anomaly 
-    #                       x, y coordinates in orbit 
-    #                       True anomaly 
+    #                       Mean anomaly of the Sun
+    #                       Mean longitude of perihelion
+    #                         Note: Sun's mean longitude = M + w
+    #                       Eccentricity of Earth's orbit
+    #                       Eccentric anomaly
+    #                       x, y coordinates in orbit
+    #                       True anomaly
 
-    # Compute mean elements 
+    # Compute mean elements
     my $Mean_anomaly_of_sun = revolution( 356.0470 + 0.9856002585 * $d );
     my $Mean_longitude_of_perihelion = 282.9404 + 4.70935E-5 * $d;
     my $Eccentricity_of_Earth_orbit  = 0.016709 - 1.151E-9 * $d;
 
-    # Compute true longitude and radius vector 
+    # Compute true longitude and radius vector
     my $Eccentric_anomaly =
       $Mean_anomaly_of_sun + $Eccentricity_of_Earth_orbit * $RADEG *
       sind($Mean_anomaly_of_sun) *
@@ -243,10 +243,10 @@ sub sunpos {
 
 #
 #
-# FUNCTIONAL SEQUENCE for sun_RA_dec 
+# FUNCTIONAL SEQUENCE for sun_RA_dec
 #
 # _GIVEN
-# day number, $r and $lon (from sunpos) 
+# day number, $r and $lon (from sunpos)
 #
 # _THEN
 #
@@ -566,7 +566,7 @@ Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
                                   lon  => -3.6, lat   => 37.17        # Granada is 37°10'N, 3°36'W
                                   tz   => 1,    dst   => 1);          # This is still summer, therefore DST
 
-  # When does the sun rise today in Salt Lake City?
+  # When does the sun rise today in Salt Lake City (home to YAPC::NA 2015)?
   use Astro::Sunrise;
   use DateTime;
   $sunrise_today = sun_rise( { lon => -111.88, lat => 40.75 } ); # 40°45'N, 111°53'W
@@ -655,7 +655,7 @@ Astronomical twilight (the sky is completely dark)
 
   ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);
 
-  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);
+  ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,precise);
 
 Returns the sunrise and sunset times, in HH:MM format.
 
@@ -669,7 +669,7 @@ The other forms are kept for backward compatibility. The arguments are:
 The three elements of the date for which you want to compute the sunrise and sunset.
 Months are numbered 1 to 12, in the usual way, not 0 to 11 as in C and in Perl's localtime.
 
-Mandatory, can be positional.
+Mandatory, can be positional (#1, #2 and #3).
 
 =item lon, lat
 
@@ -684,26 +684,28 @@ They are given in decimal degrees. For example:
  Northern latitude is entered as a positive number
  Southern latitude is entered as a negative number
 
-Mandatory, can be positional.
+Mandatory, can be positional (#4 and #5).
 
 =item TZ
 
 Time Zone is the offset from GMT
 
-Mandatory, can be positional.
+Mandatory, can be positional (#6).
 
 =item isdst
 
 1 if daylight saving time is in effect, 0 if not.
 
-Mandatory, can be positional.
+Mandatory, can be positional (#7).
 
 =item alt
 
 Altitude of the sun, in decimal degrees. Usually a negative number,
 because the sun should be I<under> the mathematical horizon.
+But if there is a high mountain range sunward (that is, southward if you
+live in the Northern hemisphere), you may need to enter a positive altitude.
 
-This parameter is optional. Its default value is -0.833. It can be positional.
+This parameter is optional. Its default value is -0.833. It can be positional (#8).
 
 =item upper_limb
 
@@ -714,7 +716,7 @@ to C<0> or C<-0.583> degrees. When using C<-0.25> or C<-0.833> degrees,
 the sun radius is already taken into account. When computing twilights
 (C<-6> to C<-18>), the sun radius is irrelevant.
 
-Since the default value for the C<alt> parameter is -0.833, the 
+Since the default value for the C<alt> parameter is -0.833, the
 default value for C<upper_limb> is 0.
 
 This parameter is optional and it can be specified only by keyword.
@@ -740,23 +742,23 @@ Choice between a precise algorithm and a simpler algorithm.
 The default value is 0, that is, the simpler algorithm.
 Any true value switches to the precise algorithm.
 
-The original method only gives an approximate value of the Sun's rise/set times. 
-The error rarely exceeds one or two minutes, but at high latitudes, when the Midnight Sun 
-soon will start or just has ended, the errors may be much larger. If you want higher accuracy, 
-you must then use the iteration feature. This feature is new as of version 0.7. Here is
+The original method only gives an approximate value of the Sun's rise/set times.
+The error rarely exceeds one or two minutes, but at high latitudes, when the Midnight Sun
+soon will start or just has ended, the errors may be much larger. If you want higher accuracy,
+you must then use the precise algorithm. This feature is new as of version 0.7. Here is
 what I have tried to accomplish with this.
 
 a) Compute sunrise or sunset as always, with one exception: to convert LHA from degrees to hours,
-   divide by 15.04107 instead of 15.0 (this accounts for the difference between the solar day 
+   divide by 15.04107 instead of 15.0 (this accounts for the difference between the solar day
    and the sidereal day.
 
-b) Re-do the computation but compute the Sun's RA and Decl, and also GMST0, for the moment 
+b) Re-do the computation but compute the Sun's RA and Decl, and also GMST0, for the moment
    of sunrise or sunset last computed.
 
-c) Iterate b) until the computed sunrise or sunset no longer changes significantly. 
+c) Iterate b) until the computed sunrise or sunset no longer changes significantly.
    Usually 2 iterations are enough, in rare cases 3 or 4 iterations may be needed.
 
-This parameter is optional. It can be positional.
+This parameter is optional. It can be positional (#9).
 
 =back
 
@@ -776,7 +778,7 @@ This parameter is optional. It can be positional.
   $sun_rise = sun_rise( $longitude, $latitude, $alt );
   $sun_rise = sun_rise( $longitude, $latitude, $alt, $day_offset );
 
-Returns the sun rise time (resp. the sun set time) for the given location. 
+Returns the sun rise time (resp. the sun set time) for the given location.
 The first form use all parameters and transmit them by name. The second form
 uses today's date (from DateTime) and the default altitude.  The third
 form adds specifying a custom altitude.  The fourth form allows for specifying
@@ -806,7 +808,7 @@ Also adding options for different altitudes.
 Joshua Hoblitt [jhoblitt@ifa.hawaii.edu]
 For providing the patch to convert to DateTime
 
-Chris Phillips for providing patch for conversion to 
+Chris Phillips for providing patch for conversion to
 local time.
 
 Brian D Foy for providing patch for constants :)
@@ -815,7 +817,7 @@ Brian D Foy for providing patch for constants :)
 
 =over 4
 
-=item  Paul Schlyter, Stockholm, Sweden 
+=item  Paul Schlyter, Stockholm, Sweden
 
 for his excellent web page on the subject.
 
