@@ -861,7 +861,9 @@ for finding and fixing a bug with DST
 
 =back
 
-Lightly verified against http://aa.usno.navy.mil/data/docs/RS_OneYear.html
+Lightly verified against L<http://aa.usno.navy.mil/data/docs/RS_OneYear.html>
+
+In addition, checked to be compatible with a C implementation of Paul Schlyter's algorithm.
 
 =head1 COPYRIGHT and LICENSE
 
@@ -888,7 +890,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software Foundation,
-Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
+Inc., L<http://www.fsf.org/>.
 
 =head2 Original C program
 
