@@ -466,42 +466,15 @@ sub convert_1_hour {
 }
 
 sub sun_rise {
-  my %arg;
-  if (ref($_[0]) eq 'HASH') {
-    %arg = %{$_[0]};
-  }
-  else {
-    @arg{ qw/lon lat alt offset/ } = @_;
-  }
-  my ($longitude, $latitude) = @arg{ qw/lon lat/ };
-  my $alt       = defined($arg{alt}    ) ?     $arg{alt}     : -0.833;
-  my $offset    = defined($arg{offset} ) ? int($arg{offset}) : 0 ;
-  $arg{precise}    ||= 0;
-  $arg{upper_limb} ||= 0;
-
-  my $today = DateTime->today->set_time_zone( 'local' );
-  $today->set( hour => 12 );
-  $today->add( days => $offset );
-
-  my( $sun_rise, undef ) = sunrise( { year  => $today->year,
-                                      month => $today->mon,
-                                      day   => $today->mday,
-                                      lon   => $longitude,
-                                      lat   => $latitude,
-                                      tz    => ( $today->offset / 3600 ),
-                                      #
-                                      # DST is always 0 because DateTime
-                                      # currently (v 0.16) adds one to the
-                                      # offset during DST hours
-                                      isdst      => 0,
-                                      alt        => $alt,
-                                      precise    => $arg{precise},
-                                      upper_limb => $arg{upper_limb},
-                                   } );
-   return $sun_rise;
-   }
-
+  my ($sun_rise, undef) = sun_rise_sun_set(@_);
+  return $sun_rise;
+}
 sub sun_set {
+  my (undef, $sun_set) = sun_rise_sun_set(@_);
+  return $sun_set;
+}
+
+sub sun_rise_sun_set {
   my %arg;
   if (ref($_[0]) eq 'HASH') {
     %arg = %{$_[0]};
@@ -514,28 +487,32 @@ sub sun_set {
   my $offset    = defined($arg{offset} ) ? int($arg{offset}) : 0 ;
   $arg{precise}    ||= 0;
   $arg{upper_limb} ||= 0;
+  $arg{polar}      ||= 'warn';
+  carp "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
+      if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
 
   my $today = DateTime->today->set_time_zone( 'local' );
   $today->set( hour => 12 );
   $today->add( days => $offset );
 
-   my( undef, $sun_set ) = sunrise( { year  => $today->year,
-                                      month => $today->mon,
-                                      day   => $today->mday,
-                                      lon   => $longitude,
-                                      lat   => $latitude,
-                                      tz    => ( $today->offset / 3600 ),
-                                      #
-                                      # DST is always 0 because DateTime
-                                      # currently (v 0.16) adds one to the
-                                      # offset during DST hours
-                                      isdst      => 0,
-                                      alt        => $alt,
-                                      precise    => $arg{precise},
-                                      upper_limb => $arg{upper_limb},
-                                   } );
-   return $sun_set;
-   }
+  my( $sun_rise, $sun_set ) = sunrise( { year  => $today->year,
+                                         month => $today->mon,
+                                         day   => $today->mday,
+                                         lon   => $longitude,
+                                         lat   => $latitude,
+                                         tz    => ( $today->offset / 3600 ),
+                                         #
+                                         # DST is always 0 because DateTime
+                                         # currently (v 0.16) adds one to the
+                                         # offset during DST hours
+                                         isdst      => 0,
+                                         alt        => $alt,
+                                         precise    => $arg{precise},
+                                         upper_limb => $arg{upper_limb},
+                                         polar      => $arg{polar},
+                                      } );
+  return ($sun_rise, $sun_set);
+}
 
 sub DEFAULT      () { -0.833 }
 sub CIVIL        () { - 6 }
@@ -589,7 +566,8 @@ C and in Perl's localtime.
  Northern latitude is entered as a positive number
  Southern latitude is entered as a negative number
 
-Please note that the longitude is specified before the latitude.
+Please note that, when given as positional parameters, the longitude is specified before the
+latitude.
 
 The time zone is given as the numeric value of the offset from UTC.
 
