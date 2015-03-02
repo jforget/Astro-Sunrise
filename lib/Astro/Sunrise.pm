@@ -414,57 +414,55 @@ sub equal {
 # hour:min rise and set 
 #
 
-sub convert_hour   {
+sub convert_hour {
   my ($hour_rise_ut, $hour_set_ut, $TZ, $isdst) = @_;
+  return (convert_1_hour($hour_rise_ut, $TZ, $isdst),
+          convert_1_hour($hour_set_ut,  $TZ, $isdst));
+}
+#
+#
+# FUNCTIONAL SEQUENCE for convert_1_hour
+#
+# _GIVEN
+# Hour, Time zone offset, DST setting
+# hours are in UT
+#
+# _THEN
+#
+# convert to local time
+#
+#
+# _RETURN
+#
+# hour:min
+#
 
-  my $rise_local = $hour_rise_ut + $TZ;
-  my $set_local = $hour_set_ut + $TZ;
+sub convert_1_hour {
+  my ($hour_ut, $TZ, $isdst) = @_;
+  my $hour_local = $hour_ut + $TZ;
   if ($isdst) {
-    $rise_local +=1;
-    $set_local +=1;
+    $hour_local ++;
   }
 
-  # Rise and set should be between 0 and 24;
-  if ($rise_local<0) {
-    $rise_local+=24;
+  # The hour should be between 0 and 24;
+  if ($hour_local < 0) {
+    $hour_local += 24;
   }
-  elsif ($rise_local>24) {
-    $rise_local -=24;
-  }
-  if ($set_local<0) {
-    $set_local+=24;
-  }
-  elsif ($set_local>24) {
-    $set_local -=24;
+  elsif ($hour_local > 24) {
+    $hour_local -= 24;
   }
 
-  my $hour_rise =  int ($rise_local);
-  my $hour_set  =  int($set_local);
+  my $hour =  int ($hour_local);
 
-  my $min_rise  = floor(($rise_local-$hour_rise)*60+0.5);
-  my $min_set   = floor(($set_local-$hour_set)*60+0.5);
+  my $min  = floor(($hour_local - $hour) * 60 + 0.5);
 
-  if ($min_rise>=60) {
-    $min_rise -=60;
-    $hour_rise+=1;
-    $hour_rise-=24 if ($hour_rise>=24);
-  }
-  if ($min_set>=60) {
-    $min_set -=60;
-    $hour_set+=1;
-    $hour_set-=24 if ($hour_set>=24);
+  if ($min >= 60) {
+    $min -= 60;
+    $hour++;
+    $hour -= 24 if $hour >= 24;
   }
 
-  if ( $min_rise < 10 ) {
-    $min_rise = sprintf( "%02d", $min_rise );
-  }
-  if ( $min_set < 10 ) {
-    $min_set = sprintf( "%02d", $min_set );
-  }
-  $hour_rise = sprintf( "%02d", $hour_rise );
-  $hour_set  = sprintf( "%02d", $hour_set );
-  return ( "$hour_rise:$min_rise", "$hour_set:$min_set" );
-
+  return sprintf("%02d:%02d", $hour, $min);
 }
 
 sub sun_rise {
