@@ -39,13 +39,13 @@ sub sunrise  {
   my (        $year, $month, $day, $lon, $lat, $TZ, $isdst)
     = @arg{ qw/year   month   day   lon   lat   tz   isdst/ };
   my $altit     = defined($arg{alt}    ) ? $arg{alt}     : -0.833;
-  my $iteration = defined($arg{precise}) ? $arg{precise} : 0 ;
+  $arg{precise}    ||= 0;
   $arg{upper_limb} ||= 0;
   $arg{polar}      ||= 'warn';
   carp "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
       if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
    
-  if ($iteration)   {
+  if ($arg{precise})   {
     # This is the initial start
 
     my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
@@ -111,10 +111,9 @@ sub sun_rise_set {
     # Compute time when Sun is at south - in hours UT
     my $tsouth  = 12.0 - rev180( $sidtime - $sRA ) / $h;
 
-    # Compute the Sun's apparent radius, degrees
-    my $sradius = 0.2666 / $sr;
-
     if ($upper_limb) {
+        # Compute the Sun's apparent radius, degrees
+        my $sradius = 0.2666 / $sr;
         $altit -= $sradius;
     }
 
@@ -129,16 +128,14 @@ sub sun_rise_set {
       if ($polar eq 'retval') {
         return ('night', 'night');
       }
-      carp "Sun never rises!!\n"
-        if $polar eq 'warn';
+      carp "Sun never rises!!\n";
       $t = 0.0;    # Sun always below altit
     }
     elsif ( $cost <= -1.0 ) {
       if ($polar eq 'retval') {
         return ('day', 'day');
       }
-      carp "Sun never sets!!\n"
-        if $polar eq 'warn';
+      carp "Sun never sets!!\n";
       $t = 12.0;    # Sun always above altit
     }
     else {
