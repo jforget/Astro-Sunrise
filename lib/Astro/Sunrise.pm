@@ -18,9 +18,10 @@ require Exporter;
 
 @ISA       = qw( Exporter );
 @EXPORT    = qw( sunrise sun_rise sun_set );
-@EXPORT_OK = qw( DEFAULT CIVIL NAUTICAL AMATEUR ASTRONOMICAL );
+@EXPORT_OK = qw( DEFAULT CIVIL NAUTICAL AMATEUR ASTRONOMICAL sind cosd tand asind acosd atand atan2d equal );
 %EXPORT_TAGS = (
-        constants => [ @EXPORT_OK ],
+        constants => [ qw/DEFAULT CIVIL NAUTICAL AMATEUR ASTRONOMICAL/ ],
+        trig      => [ qw/sind cosd tand asind acosd atand atan2d equal/ ],
         );
 
 $VERSION =  '0.93';
@@ -792,6 +793,45 @@ to-morrow, C<-7> for one week ago, etc.
  $sunrise = sun_rise( -105.181, 41.324, -15 );
  $sunrise = sun_rise( -105.181, 41.324, -12, +3 );
  $sunrise = sun_rise( -105.181, 41.324, undef, -12);
+
+=head2 Trigonometric functions using degrees
+
+Since the module use trigonometry with degrees, the corresponding functions
+are available to the module user, free of charge. They are:
+
+=over 4
+
+=item sind, cosd, tand
+
+The direct functions, that is, sine, cosine and tangent functions, respectively.
+Each one receives one parameter, in degrees, and returns the trigonometric value.
+
+=item asind, acosd, atand
+
+The reverse functions, that is, arc-sine, arc-cosine, and arc-tangent.
+Each one receives one parameter, the trigonometric value, and returns the corresponding
+angle in degrees.
+
+=item atan2d
+
+Arc-tangent. This function receives two parameters: the numerator and the denominator
+of a fraction equal to the tangent. Use this function instead of C<atand> when you
+are not sure the denominator is not zero. E.g.:
+
+  say atan2d(1, 2) # prints 26,5
+  say atan2d(1, 0) # prints 90, without triggering a "division by zero" error
+
+=item equal
+
+Not really a trigonometrical function, but still useful at some times. This function
+receives two floating values and an integer value. It compares the floating numbers,
+and returns "1" if their most significant digits are equal. The integer value
+specifies how many digits are kept. E.g.
+
+  say equal(22/7, 355/113, 3) # prints 1, because :  22/7   = 3.14285715286
+                              #                     355/113 = 3.14159292035
+  say equal(22/7, 355/113, 4) # prints 0
+
 
 =head1 AUTHOR
 

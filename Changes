@@ -62,3 +62,5 @@ Revision history for Perl extension sunrise.
       The upper_limb is not longer hard-coded, it is now a parameter
       The behaviour for polar day and polar night can change: no warning,
       but a special return value.
+      Make degree-trigonometric functions available for import.
+
