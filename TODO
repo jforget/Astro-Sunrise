@@ -1,0 +1,9 @@
+-*- encoding: utf-8; indent-tabs-mode: nil -*-
+
+Most remaining issues have been dealt with in version 0.93. Yet,
+two issues will need to be addressed in the next version.
+
+1) Check the "precise" algorithm.
+
+2) Improve code coverage in module checks.
+

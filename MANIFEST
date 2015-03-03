@@ -3,6 +3,7 @@ LICENSE
 MANIFEST
 Makefile.PL
 README
+TODO
 lib/Astro/Sunrise.pm
 t/00load.t
 t/01basic.t
