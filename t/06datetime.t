@@ -29,8 +29,7 @@
 #
 use strict;
 use warnings;
-use POSIX qw(floor ceil);
-use Astro::Sunrise;
+use Astro::Sunrise(qw(:DEFAULT :constants));
 use Test::More;
 
 
@@ -50,7 +49,7 @@ my $sunrise_2 = sun_rise( -118, 33, -.833 );
 my $sunrise_3 = sun_rise( -118, 33, -.833, 0 );
 my $sunrise_4 = sun_rise( -118, 33, undef, 0 );
 my $sunrise_5 = sun_rise({ lon => -118, lat => 33 });
-my $sunrise_6 = sun_rise({ lon => -118, lat => 33, alt => -0.833, offset => 0, upper_limb => 0, precise => 0 });
+my $sunrise_6 = sun_rise({ lon => -118, lat => 33, alt => DEFAULT, offset => 0, upper_limb => 0, precise => 0 });
 
 ok( $sunrise_1 eq $sunrise_2 , "Test W/O Alt");
 ok( $sunrise_2 eq $sunrise_3 , "Test W/O offset");
@@ -63,7 +62,7 @@ my $sunset_2 = sun_set( -118, 33, -.833 );
 my $sunset_3 = sun_set( -118, 33, -.833, 0 );
 my $sunset_4 = sun_set( -118, 33, undef, 0 );
 my $sunset_5 = sun_set({ lon => -118, lat => 33 });
-my $sunset_6 = sun_set({ lon => -118, lat => 33, alt => -0.833, offset => 0, upper_limb => 0, precise => 0 });
+my $sunset_6 = sun_set({ lon => -118, lat => 33, alt => DEFAULT, offset => 0, upper_limb => 0, precise => 0 });
 
 ok( $sunset_1 eq $sunset_2 , "Test W/O Alt");
 ok( $sunset_2 eq $sunset_3 , "Test W/O offset");
