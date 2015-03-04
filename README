@@ -1,6 +1,6 @@
 -*- encoding: utf-8; indent-tabs-mode: nil -*-
 
-Astro::Sunrise version 0.93
+Astro::Sunrise version 0.94
 ===========================
 
 This module commpute the sunrise and sunset for a given day.
@@ -20,13 +20,15 @@ type the following:
 DEPENDENCIES
 
 This module requires these other modules and libraries:
+  Math::Trig
+  POSIX
 
+The following module is recommended:
   DateTime.pm
-  DateTime::Set
 
 COPYRIGHT AND LICENCE
 
-Copyright (C) 2000, 2001, 2002, 2003, 2013 Ron Hill and Jean Forget
+Copyright (C) 2000, 2001, 2002, 2003, 2013, 2015 Ron Hill and Jean Forget
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl 5.16.3. For more details, see the full
@@ -38,206 +40,27 @@ details, see the full text of the licenses in the file LICENSE.
 
 Based on a public domain C program sunriset.c (c) Paul Schlyter, 1989, 1992
 NAME
-    Astro::Sunrise - Perl extension for computing the sunrise/sunset on a
-    given day
+
+    Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
 
 SYNOPSIS
-     use Astro::Sunrise;
 
-     ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
-     ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT);
-     ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST,ALT,inter);
+  # When will the sun rise on YAPC::Europe 2015?
+  use Astro::Sunrise;
+  my ($sunrise, $sunset = sunrise(year => 2015, month => 9, day => 2, # YAPC::EU starts on 2nd September 2015
+                                  lon  => -3.6, lat   => 37.17        # Granada is 37°10'N, 3°36'W
+                                  tz   => 1,    dst   => 1);          # This is still summer, therefore DST
 
-     $sunrise = sun_rise(longitude,latitude);
-     $sunset = sun_set(longitude,latitude);
+  # When does the sun rise today in Salt Lake City (home to YAPC::NA 2015)?
+  use Astro::Sunrise;
+  use DateTime;
+  $sunrise_today = sun_rise( { lon => -111.88, lat => 40.75 } ); # 40°45'N, 111°53'W
 
-     $sunrise = sun_rise(longitude,latitude,ALT);
-     $sunset = sun_set(longitude,latitude,ALT);
-
-     $sunrise = sun_rise(longitude,latitude,ALT,day_offset);
-     $sunset = sun_set(longitude,latitude,ALT,day_offset);
-
-DESCRIPTION
-    This module will return the sunrise/sunset for a given day.
-
-     Eastern longitude is entered as a positive number
-     Western longitude is entered as a negative number
-     Northern latitude is entered as a positive number
-     Southern latitude is entered as a negative number
-
-    inter is set to either 0 or 1. If set to 0 no Iteration will occur. If
-    set to 1 Iteration will occur. Default is 0.
-
-    There are a number of sun altitudes to chose from. The default is -0.833
-    because this is what most countries use. Feel free to specify it if you
-    need to. Here is the list of values to specify altitude (ALT) with:
-
-    0 degrees
-        Center of Sun's disk touches a mathematical horizon
-
-    -0.25 degrees
-        Sun's upper limb touches a mathematical horizon
-
-    -0.583 degrees
-        Center of Sun's disk touches the horizon; atmospheric refraction
-        accounted for
-
-    -0.833 degrees
-        Sun's supper limb touches the horizon; atmospheric refraction
-        accounted for
-
-    -6 degrees
-        Civil twilight (one can no longer read outside without artificial
-        illumination)
-
-    -12 degrees
-        Nautical twilight (navigation using a sea horizon no longer
-        possible)
-
-    -15 degrees
-        Amateur astronomical twilight (the sky is dark enough for most
-        astronomical observations)
-
-    -18 degrees
-        Astronomical twilight (the sky is completely dark)
-
-USAGE
-    sunrise
-        "($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time
-        Zone,DST);"
-        "($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time
-        Zone,DST,ALT);"
-            Returns the sunrise and sunset times, in HH:MM format. (Note:
-            Time Zone is the offset from GMT and DST is daylight savings
-            time, 1 means DST is in effect and 0 is not). In the first form,
-            a default altitude of -.0833 is used. In the second form, the
-            altitude is specified as the last argument. Note that adding 1
-            to the Time Zone during DST and specifying DST as 0 is the same
-            as indicating the Time Zone correctly and specifying DST as 1.
-
-        Notes on Iteration
-            ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time
-            Zone,DST,ALT,inter);
-                The original method only gives an approximate value of the
-                Sun's rise/set times. The error rarely exceeds one or two
-                minutes, but at high latitudes, when the Midnight Sun soon
-                will start or just has ended, the errors may be much larger.
-                If you want higher accuracy, you must then use the iteration
-                feature. This feature is new as of version 0.7. Here is what
-                I have tried to accomplish with this.
-
-                a) Compute sunrise or sunset as always, with one exception:
-                to convert LHA from degrees to hours, divide by 15.04107
-                instead of 15.0 (this accounts for the difference between
-                the solar day and the sidereal day.
-
-                b) Re-do the computation but compute the Sun's RA and Decl,
-                and also GMST0, for the moment of sunrise or sunset last
-                computed.
-
-                c) Iterate b) until the computed sunrise or sunset no longer
-                changes significantly. Usually 2 iterations are enough, in
-                rare cases 3 or 4 iterations may be needed.
-
-            *For Example*
-                 ($sunrise, $sunset) = sunrise( 2001, 3, 10, 17.384, 98.625, -5, 0 );
-                 ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18);
-                 ($sunrise, $sunset) = sunrise( 2002, 10, 14, -105.181, 41.324, -7, 1, -18, 1);
-                =back
-
-            sun_rise
-                "$sun_rise = sun_rise( longitude, latitude );"
-                "$sun_rise = sun_rise( longitude, latitude, ALT );"
-                "$sun_rise = sun_rise( longitude, latitude, ALT, day_offset
-                );"
-                    Returns the sun rise time for the given location. The
-                    first form uses today's date (from Time::Object) and the
-                    default altitude. The second form adds specifying a
-                    custom altitude. The third form allows for specifying an
-                    integer day offset from today, either positive or
-                    negative.
-
-                *For Example*
-                     $sunrise = sun_rise( -105.181, 41.324 );
-                     $sunrise = sun_rise( -105.181, 41.324, -15 );
-                     $sunrise = sun_rise( -105.181, 41.324, -12, +3 );
-                     $sunrise = sun_rise( -105.181, 41.324, undef, -12);
-
-            sun_set
-                "$sun_set = sun_set( longitude, latitude );"
-                "$sun_set = sun_set( longitude, latitude, ALT );"
-                "$sun_set = sun_set( longitude, latitude, ALT, day_offset
-                );"
-                    Returns the sun set time for the given location. The
-                    first form uses today's date (from Time::Object) and the
-                    default altitude. The second form adds specifying a
-                    custom altitude. The third form allows for specifying an
-                    integer day offset from today, either positive or
-                    negative.
-
-                *For Example*
-                     $sunrise = sun_set( -105.181, 41.324 );
-                     $sunrise = sun_set( -105.181, 41.324, -15 );
-                     $sunrise = sun_set( -105.181, 41.324, -12, +3 );
-                     $sunrise = sun_set( -105.181, 41.324, undef, -12);
-
-AUTHOR
-            Ron Hill rkhill@firstlight.net
-
-SPECIAL THANKS
-            Robert Creager [Astro-Sunrise@LogicalChaos.org] For providing
-            help with converting Paul's C code to perl For providing code
-            for sun_rise, sun_set sub's Also adding options for different
-            altitudes.
-
-            Joshua Hoblitt [jhoblitt@ifa.hawaii.edu]
-            For providing the patch to convert to DateTime
-
-
-CREDITS
-        Paul Schlyter, Stockholm, Sweden
-            for his excellent web page on the subject.
-
-        Rich Bowen (rbowen@rbowen.com)
-            for suggestions
-
-        Adrian Blockley [adrian.blockley@environ.wa.gov.au]
-            for finding a bug in the conversion to local time
-
-        Lightly verified against
-        http://aa.usno.navy.mil/data/docs/RS_OneYear.html
-
-COPYRIGHT and LICENSE
-        Here is the copyright information provided by Paul Schlyter:
-
-        Written as DAYLEN.C, 1989-08-16
-
-        Modified to SUNRISET.C, 1992-12-01
-
-        (c) Paul Schlyter, 1989, 1992
-
-        Released to the public domain by Paul Schlyter, December 1992
-
-        Permission is hereby granted, free of charge, to any person
-        obtaining a copy of this software and associated documentation files
-        (the "Software"), to deal in the Software without restriction,
-        including without limitation the rights to use, copy, modify, merge,
-        publish, distribute, sublicense, and/or sell copies of the Software,
-        and to permit persons to whom the Software is furnished to do so,
-        subject to the following conditions:
-
-        The above copyright notice and this permission notice shall be
-        included in all copies or substantial portions of the Software.
-
-        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-        EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-        NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
-        CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
-        TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
-        SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-BUGS
-SEE ALSO
-        perl(1).
+  # And when does it set tomorrow at Salt Lake City?
+  use Astro::Sunrise;
+  use DateTime;
+  $sunset_tomorrow = sun_set(lat => 40.75,   # 40°45'N,
+                             lon => -111.88, # 111°53'W
+                             alt => -0.833,  # standard value for the sun altitude at sunset
+                             offset => 1);   # day offset up to tomorrow
 
