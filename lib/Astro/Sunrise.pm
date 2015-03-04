@@ -393,9 +393,7 @@ sub equal {
     my ($A, $B, $dp) = @_;
 
     return sprintf("%.${dp}g", $A) eq sprintf("%.${dp}g", $B);
-  }
-
-
+}
 
 #
 #
@@ -663,7 +661,7 @@ They are given in decimal degrees. For example:
 
 Mandatory, can be positional (#4 and #5).
 
-=item TZ
+=item tz
 
 Time Zone is the offset from GMT
 
@@ -714,7 +712,7 @@ module emits no warning, but it returns either C<'day'> or C<'night'>.
 Example:
 
   # Loosely based on Alex Gough's activities: scientist and Perl programmer, who spent a year
-  # in Halley Base in 2006.
+  # in Halley Base in 2006. Let us suppose he arrived there on 15th January 2006.
   my ($sunrise, $sunset) = sunrise( { year => 2006, month => 1, day => 15,
                                       lon => -26.65, lat => -75.58, # Halley Base: 75°35'S 26°39'W
                                       tz  => 3, polar => 'retval' } );
@@ -832,6 +830,7 @@ specifies how many digits are kept. E.g.
                               #                     355/113 = 3.14159292035
   say equal(22/7, 355/113, 4) # prints 0
 
+=back
 
 =head1 AUTHOR
 
@@ -871,7 +870,7 @@ for suggestions
 
 for finding a bug in the conversion to local time
 
-=item Slaven Rezic
+=item Slaven Rezić
 
 for finding and fixing a bug with DST
 
