@@ -536,9 +536,9 @@ Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
 
   # When will the sun rise on YAPC::Europe 2015?
   use Astro::Sunrise;
-  my ($sunrise, $sunset = sunrise(year => 2015, month => 9, day => 2, # YAPC::EU starts on 2nd September 2015
-                                  lon  => -3.6, lat   => 37.17        # Granada is 37°10'N, 3°36'W
-                                  tz   => 1,    dst   => 1);          # This is still summer, therefore DST
+  my ($sunrise, $sunset) = sunrise( { year => 2015, month => 9, day => 2, # YAPC::EU starts on 2nd September 2015
+                                      lon  => -3.6, lat   => 37.17,       # Granada is 37°10'N, 3°36'W
+                                      tz   => 1,    dst   => 1 } );       # This is still summer, therefore DST
 
   # When does the sun rise today in Salt Lake City (home to YAPC::NA 2015)?
   use Astro::Sunrise;
@@ -548,10 +548,10 @@ Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
   # And when does it set tomorrow at Salt Lake City?
   use Astro::Sunrise;
   use DateTime;
-  $sunset_tomorrow = sun_set(lat => 40.75,   # 40°45'N,
-                             lon => -111.88, # 111°53'W
-                             alt => -0.833,  # standard value for the sun altitude at sunset
-                             offset => 1);   # day offset up to tomorrow
+  $sunset_tomorrow = sun_set( { lat => 40.75,    # 40°45'N,
+                                lon => -111.88,  # 111°53'W
+                                alt => -0.833,   # standard value for the sun altitude at sunset
+                                offset => 1 } ); # day offset up to tomorrow
 
 =head1 DESCRIPTION
 
@@ -623,8 +623,8 @@ Astronomical twilight (the sky is completely dark)
   ($sunrise, $sunset) = sunrise( { year    => $year,      month      => $month,     day => $day,
                                    lon     => $longitude, lat        => $latitude,
                                    tz      => $tz_offset, isdst      => $is_dst,
-                                   alt     => $altitude,  upper_limb => $upper_limb);
-                                   precise => $precise,   polar      => $action);
+                                   alt     => $altitude,  upper_limb => $upper_limb,
+                                   precise => $precise,   polar      => $action } );
 
   ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
 
@@ -826,9 +826,10 @@ receives two floating values and an integer value. It compares the floating numb
 and returns "1" if their most significant digits are equal. The integer value
 specifies how many digits are kept. E.g.
 
-  say equal(22/7, 355/113, 3) # prints 1, because :  22/7   = 3.14285715286
-                              #                     355/113 = 3.14159292035
-  say equal(22/7, 355/113, 4) # prints 0
+  say equal(22/7, 355/113, 3) # prints 1, because :  22/7   = 3.14285715286 rounded to 3.14
+                              #                     355/113 = 3.14159292035 rounded to 3.14
+  say equal(22/7, 355/113, 4) # prints 0, because :  22/7   = 3.14285715286 rounded to 3.142
+                              #                     355/113 = 3.14159292035 rounded to 3.141
 
 =back
 
@@ -853,6 +854,8 @@ Chris Phillips for providing patch for conversion to
 local time.
 
 Brian D Foy for providing patch for constants :)
+
+Gabor Szabo for pointing POD mistakes
 
 =head1 CREDITS
 
