@@ -55,12 +55,12 @@ my @tests = (
 	    );
 
 plan tests => scalar @tests;
+local $ENV{TZ} = 'Europe/Berlin';
 
 for my $test (@tests) {
     my($epoch, $func, $expected) = @$test;
     my @cmd = ($^X, "-Mblib",
                     "-MTime::Fake=$epoch",
-                    "-MDateTime",
                     "-MAstro::Sunrise",
                     "-e", "print $func(13.5,52.5)");
     open my $fh, "-|", @cmd or die $!;

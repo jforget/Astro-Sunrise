@@ -481,6 +481,18 @@ sub sun_rise_sun_set {
   else {
     @arg{ qw/lon lat alt offset/ } = @_;
   }
+
+  # This trick aims to fulfill two antagonistic purposes:
+  # -- do not load DateTime if the only function called is "sunrise"
+  # -- load DateTime implicitly if the user calls "sun_rise" or "sun_set". This is to be backward
+  # compatible with 0.92 or earlier, when Astro::Sunrise would load DateTime and thus, allow
+  # the user to remove this line from his script.
+  unless ($INC{DateTime}) {
+    eval "use DateTime";
+    carp $@
+      if $@;
+  }
+
   my ($longitude, $latitude) = @arg{ qw/lon lat/ };
   my $alt       = defined($arg{alt}    ) ?     $arg{alt}     : -0.833;
   my $offset    = defined($arg{offset} ) ? int($arg{offset}) : 0 ;
