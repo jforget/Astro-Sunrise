@@ -754,7 +754,7 @@ what I have tried to accomplish with this.
 
 a) Compute sunrise or sunset as always, with one exception: to convert LHA from degrees to hours,
    divide by 15.04107 instead of 15.0 (this accounts for the difference between the solar day
-   and the sidereal day.
+   and the sidereal day).
 
 b) Re-do the computation but compute the Sun's RA and Decl, and also GMST0, for the moment
    of sunrise or sunset last computed.
@@ -840,8 +840,8 @@ specifies how many digits are kept. E.g.
 
   say equal(22/7, 355/113, 3) # prints 1, because :  22/7   = 3.14285715286 rounded to 3.14
                               #                     355/113 = 3.14159292035 rounded to 3.14
-  say equal(22/7, 355/113, 4) # prints 0, because :  22/7   = 3.14285715286 rounded to 3.142
-                              #                     355/113 = 3.14159292035 rounded to 3.141
+  say equal(22/7, 355/113, 4) # prints 0, because :  22/7   = 3.14285715286 rounded to 3.143
+                              #                     355/113 = 3.14159292035 rounded to 3.142
 
 =back
 
@@ -855,19 +855,19 @@ Co-maintainer: Jean Forget (JFORGET at cpan dot org)
 =head1 SPECIAL THANKS
 
 Robert Creager [Astro-Sunrise@LogicalChaos.org]
-For providing help with converting Paul's C code to perl
-For providing code for sun_rise, sun_set sub's
+for providing help with converting Paul's C code to Perl,
+for providing code for sun_rise, sun_set subs.
 Also adding options for different altitudes.
 
 Joshua Hoblitt [jhoblitt@ifa.hawaii.edu]
-For providing the patch to convert to DateTime
+for providing the patch to convert to DateTime.
 
 Chris Phillips for providing patch for conversion to
 local time.
 
 Brian D Foy for providing patch for constants :)
 
-Gabor Szabo for pointing POD mistakes
+Gabor Szabo for pointing POD mistakes.
 
 =head1 CREDITS
 
@@ -879,15 +879,15 @@ for his excellent web page on the subject.
 
 =item Rich Bowen (rbowen@rbowen.com)
 
-for suggestions
+for suggestions.
 
 =item Adrian Blockley [adrian.blockley@environ.wa.gov.au]
 
-for finding a bug in the conversion to local time
+for finding a bug in the conversion to local time.
 
 =item Slaven Rezić
 
-for finding and fixing a bug with DST
+for finding and fixing a bug with DST.
 
 =back
 
