@@ -3,6 +3,8 @@
 Revision history for Perl extension sunrise.
 
 0.94  ???
+      - Fix typos in the POD documentation
+      - Fix problem in the t/03dst.t test file.
 
 0.93  Tuesday 3 March 2015
       - Stylistic and kwalitee issues: license, distro structure, etc.

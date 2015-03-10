@@ -55,9 +55,11 @@ my @tests = (
 	    );
 
 plan tests => scalar @tests;
-local $ENV{TZ} = 'Europe/Berlin';
 
-for my $test (@tests) {
+{
+  local $ENV{TZ} = 'Europe/Berlin';
+
+  for my $test (@tests) {
     my($epoch, $func, $expected) = @$test;
     my @cmd = ($^X, "-Mblib",
                     "-MTime::Fake=$epoch",
@@ -68,6 +70,7 @@ for my $test (@tests) {
     my $res = <$fh>;
     close $fh or die "Failure while running @cmd: $!";
     is $res, $expected, "Check for $func at $epoch";
+  }
 }
 
 __END__

@@ -42,13 +42,17 @@ WriteMakefile(
     BUILD_REQUIRES => { 'Test::More'         => '0',   # should be 'TEST_REQUIRES', except that ExtUtils::MakeMaker 6.5705 does not accept it
                            },
     META_MERGE       => {
-       recommends => {
-           DateTime => '0.16',
+       prereqs => {
+         runtime => {
+           recommends => {
+               DateTime => '0.16',
+           },
+         },
        },
        provides       => {
            'Astro::Sunrise' => {
                 file => 'lib/Astro/Sunrise.pm',
-                version => '0.93',
+                version => '0.94',
            },
        },
        'meta-spec' => { version => 2 },
