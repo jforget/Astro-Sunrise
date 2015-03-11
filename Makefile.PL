@@ -37,7 +37,7 @@ WriteMakefile(
                         'Math::Trig' => 0, },
     AUTHOR         => [ 'Ron Hill <rkhill@firstlight.net>', 'Jean Forget <JFORGET@cpan.org>' ],
     LICENSE        => 'perl',
-    # The oldest Perl to check Astro::Sunrise 0.92 is 5.6.2. Therefore, I guess Astro::Sunrise 0.93 will work in 5.6.2 too.
+    # The oldest Perl to check Astro::Sunrise 0.92 is 5.6.2. Therefore, I guess Astro::Sunrise 0.93 and next will work in 5.6.2 too.
     MIN_PERL_VERSION => '5.6.2',
     BUILD_REQUIRES => { 'Test::More'         => '0',   # should be 'TEST_REQUIRES', except that ExtUtils::MakeMaker 6.5705 does not accept it
                            },
@@ -52,7 +52,7 @@ WriteMakefile(
        provides       => {
            'Astro::Sunrise' => {
                 file => 'lib/Astro/Sunrise.pm',
-                version => '0.94',
+                version => '0.95',
            },
        },
        'meta-spec' => { version => 2 },

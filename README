@@ -1,6 +1,6 @@
 -*- encoding: utf-8; indent-tabs-mode: nil -*-
 
-Astro::Sunrise version 0.94
+Astro::Sunrise version 0.95
 ===========================
 
 This module commpute the sunrise and sunset for a given day.
