@@ -544,6 +544,10 @@ __END__
 
 Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
 
+=head1 VERSION
+
+This documentation refers to C<Astro::Sunrise> version 0.95.
+
 =head1 SYNOPSIS
 
   # When will the sun rise on YAPC::Europe 2015?
@@ -797,6 +801,93 @@ The parameters are the same as the parameters for C<sunrise>. There is an additi
 parameter, C<offset>, which allows using a date other than today: C<+1> for
 to-morrow, C<-7> for one week ago, etc.
 
+The arguments are:
+
+=over 4
+
+=item lon, lat
+
+The longitude and latitude of the place for which you want to compute the sunrise and sunset.
+They are given in decimal degrees. For example:
+
+    lon => -3.6,  #  3° 36' W
+    lat => 37.17, # 37° 10' N
+
+ Eastern longitude is entered as a positive number
+ Western longitude is entered as a negative number
+ Northern latitude is entered as a positive number
+ Southern latitude is entered as a negative number
+
+Mandatory, can be positional (#1 and #2).
+
+=item alt
+
+Altitude of the sun, in decimal degrees. Usually a negative number,
+because the sun should be I<under> the mathematical horizon.
+But if there is a high mountain range sunward (that is, southward if you
+live in the Northern hemisphere), you may need to enter a positive altitude.
+
+This parameter is optional. Its default value is -0.833. It can be positional (#3).
+
+=item offset
+
+By default, C<sun_rise> and C<sun_set> use the current day. If you need another
+day, you give an offset relative to the current day. For example, C<+7> means
+next week, while C<-365> means last year.
+
+This parameter has nothing to do with timezones.
+
+Optional, 0 by default, can be positional (#4).
+
+=item tz
+
+Time Zone is the Olson name for a timezone. By default, the functions
+C<sun_rise> and C<sun_set> will try to use the C<local> timezone.
+
+This parameter is optional and it can be specified only by keyword.
+
+=item upper_limb
+
+If this parameter set to a true value (usually 1), the algorithm computes
+the sun apparent radius and takes it into account when computing the sun
+altitude. This parameter is useful only when the C<alt> parameter is set
+to C<0> or C<-0.583> degrees. When using C<-0.25> or C<-0.833> degrees,
+the sun radius is already taken into account. When computing twilights
+(C<-6> to C<-18>), the sun radius is irrelevant.
+
+Since the default value for the C<alt> parameter is -0.833, the
+default value for C<upper_limb> is 0.
+
+This parameter is optional and it can be specified only by keyword.
+
+=item polar
+
+When dealing with a polar location, there may be dates where there is
+a polar night (sun never rises) or a polar day. The default behaviour of
+the module is to emit a warning in these cases ("Sun never rises!!"
+or "Sun never sets!!"). But some programmers may find this inconvenient.
+An alternate behaviour is to return special values reflecting the
+situation.
+
+So, if the C<polar> parameter is set to C<'warn'>, the module emits
+a warning. If the C<polar> parameter is set to C<'retval'>, the
+module emits no warning, but it returns either C<'day'> or C<'night'>.
+
+This parameter is optional and it can be specified only by keyword.
+
+=item precise
+
+Choice between a precise algorithm and a simpler algorithm.
+The default value is 0, that is, the simpler algorithm.
+Any true value switches to the precise algorithm.
+
+For more documentation, see the corresponding parameter
+for the C<sunrise> function.
+
+This parameter is optional and it can be specified only by keyword.
+
+=back
+
 =head3 For Example
 
  $sunrise = sun_rise( -105.181, 41.324 );
@@ -807,7 +898,8 @@ to-morrow, C<-7> for one week ago, etc.
 =head2 Trigonometric functions using degrees
 
 Since the module use trigonometry with degrees, the corresponding functions
-are available to the module user, free of charge. They are:
+are available to the module user, free of charge. Just mention the
+tag C<:trig> in the C<use> statement. These functions are:
 
 =over 4
 
@@ -828,6 +920,7 @@ Arc-tangent. This function receives two parameters: the numerator and the denomi
 of a fraction equal to the tangent. Use this function instead of C<atand> when you
 are not sure the denominator is not zero. E.g.:
 
+  use Astro::Sunrise qw(:trig);
   say atan2d(1, 2) # prints 26,5
   say atan2d(1, 0) # prints 90, without triggering a "division by zero" error
 
@@ -844,6 +937,22 @@ specifies how many digits are kept. E.g.
                               #                     355/113 = 3.14159292035 rounded to 3.142
 
 =back
+
+=head1 EXPORTS
+
+By default, the functions C<sunrise>, C<sun_rise> and C<sun_set> are exported.
+
+The constants C<DEFAULT>, C<CIVIL>, C<NAUTICAL>, C<AMATEUR> and C<ASTRONOMICAL> are
+exported on request with the tag C<:constants>.
+
+The functions C<sind>, C<cosd>, C<tand>, C<asind>, C<acosd>, C<atand>, C<atan2d> and C<equal>
+exported on request with the tag C<:trig>.
+
+=head1 DEPENDENCIES
+
+This module requires only core modules: L<POSIX>, L<Math::Trig> and L<Carp>.
+
+If you use the C<sun_rise> and C<sun_set> functions, you will need also L<DateTime>.
 
 =head1 AUTHOR
 
