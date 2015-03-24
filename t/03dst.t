@@ -39,11 +39,15 @@ BEGIN {
     plan skip_all => "DateTime needed";
     exit;
   }
-}
-
-if (!eval q{ require Time::Fake; 1;}) {
-    print "1..0 # skip no Time::Fake module\n";
+  eval "use Time::Fake;";
+  if ($@) {
+    plan skip_all => "Time::Fake needed";
     exit;
+  }
+  if ($^O =~ /MSWin/i) {
+    plan skip_all => "Unix-like forking needed";
+    exit;
+  }
 }
 
 my @tests = (
