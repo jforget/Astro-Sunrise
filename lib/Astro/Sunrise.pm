@@ -494,15 +494,16 @@ sub sun_rise_sun_set {
   }
 
   my ($longitude, $latitude) = @arg{ qw/lon lat/ };
-  my $alt       = defined($arg{alt}    ) ?     $arg{alt}     : -0.833;
-  my $offset    = defined($arg{offset} ) ? int($arg{offset}) : 0 ;
+  my $alt       = defined($arg{alt}      ) ?     $arg{alt}       : -0.833;
+  my $offset    = defined($arg{offset}   ) ? int($arg{offset})   : 0 ;
+  my $tz        = defined($arg{time_zone}) ?     $arg{time_zone} : 'local';
   $arg{precise}    ||= 0;
   $arg{upper_limb} ||= 0;
   $arg{polar}      ||= 'warn';
   carp "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
       if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
 
-  my $today = DateTime->today->set_time_zone( 'local' );
+  my $today = DateTime->today(time_zone => $tz);
   $today->set( hour => 12 );
   $today->add( days => $offset );
 
@@ -839,7 +840,7 @@ This parameter has nothing to do with timezones.
 
 Optional, 0 by default, can be positional (#4).
 
-=item tz
+=item time_zone
 
 Time Zone is the Olson name for a timezone. By default, the functions
 C<sun_rise> and C<sun_set> will try to use the C<local> timezone.

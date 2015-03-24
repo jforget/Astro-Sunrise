@@ -13,3 +13,4 @@ t/04basic.t
 t/05polar.t
 t/06datetime.t
 t/07trig.t
+t/08timezone.t
