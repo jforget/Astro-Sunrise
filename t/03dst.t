@@ -60,21 +60,17 @@ my @tests = (
 
 plan tests => scalar @tests;
 
-{
-  local $ENV{TZ} = 'Europe/Berlin';
-
-  for my $test (@tests) {
-    my($epoch, $func, $expected) = @$test;
-    my @cmd = ($^X, "-Mblib",
-                    "-MTime::Fake=$epoch",
-                    "-MAstro::Sunrise",
-                    "-e", "print $func(13.5,52.5)");
-    open my $fh, "-|", @cmd or die $!;
-    local $/;
-    my $res = <$fh>;
-    close $fh or die "Failure while running @cmd: $!";
-    is $res, $expected, "Check for $func at $epoch";
-  }
+for my $test (@tests) {
+  my($epoch, $func, $expected) = @$test;
+  my @cmd = ($^X, "-Mblib",
+		  "-MTime::Fake=$epoch",
+		  "-MAstro::Sunrise",
+		  "-e", "print $func({ lon => 13.5, lat => 52.5, time_zone => 'Europe/Berlin' })");
+  open my $fh, "-|", @cmd or die $!;
+  local $/;
+  my $res = <$fh>;
+  close $fh or die "Failure while running @cmd: $!";
+  is $res, $expected, "Check for $func at $epoch";
 }
 
 __END__
