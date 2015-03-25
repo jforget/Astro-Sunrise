@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Test script for Astro::Sunrise
 #     Copyright (C) 2001, 2002, 2003, 2013 Ron Hill and Jean Forget
@@ -27,7 +29,7 @@
 #
 use strict;
 use warnings;
-use Test;
+use Test::More;
 
 BEGIN {$| = 1; plan tests => 1 }
 use Astro::Sunrise;

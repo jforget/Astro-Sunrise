@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Test script for Astro::Sunrise
 #     Copyright (C) 2003, 2013 Ron Hill and Jean Forget
@@ -27,15 +29,15 @@
 #
 use strict;
 use warnings;
-use Test;
+use Test::More;
 use Astro::Sunrise qw(:constants);
 
 BEGIN { plan tests => 6 }
 
-ok( CIVIL,        -6 );
+is( CIVIL,        -6 );
 
-ok( CIVIL,        Astro::Sunrise::CIVIL        );
-ok( AMATEUR,      Astro::Sunrise::AMATEUR      );
-ok( ASTRONOMICAL, Astro::Sunrise::ASTRONOMICAL );
-ok( DEFAULT,      Astro::Sunrise::DEFAULT      );
-ok( NAUTICAL,     Astro::Sunrise::NAUTICAL     );
+is( CIVIL,        Astro::Sunrise::CIVIL        );
+is( AMATEUR,      Astro::Sunrise::AMATEUR      );
+is( ASTRONOMICAL, Astro::Sunrise::ASTRONOMICAL );
+is( DEFAULT,      Astro::Sunrise::DEFAULT      );
+is( NAUTICAL,     Astro::Sunrise::NAUTICAL     );
