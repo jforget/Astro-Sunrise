@@ -14,3 +14,5 @@ t/05polar.t
 t/06datetime.t
 t/07trig.t
 t/08timezone.t
+t/09springforward.t
+t/10fallback.t
