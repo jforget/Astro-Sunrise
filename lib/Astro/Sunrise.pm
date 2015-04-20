@@ -43,6 +43,16 @@ sub sunrise  {
   $arg{precise}    ||= 0;
   $arg{upper_limb} ||= 0;
   $arg{polar}      ||= 'warn';
+  croak "Year parameter is mandatory"
+    unless defined $year;
+  croak "Month parameter is mandatory"
+    unless defined $month;
+  croak "Day parameter is mandatory"
+    unless defined $day;
+  croak "Longitude parameter (keyword: 'lon') is mandatory"
+    unless defined $lon;
+  croak "Latitude parameter (keyword: 'lat') is mandatory"
+    unless defined $lat;
   croak "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
       if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
 
@@ -500,6 +510,10 @@ sub sun_rise_sun_set {
   $arg{precise}    ||= 0;
   $arg{upper_limb} ||= 0;
   $arg{polar}      ||= 'warn';
+  croak "Longitude parameter (keyword: 'lon') is mandatory"
+    unless defined $longitude;
+  croak "Latitude parameter (keyword: 'lat') is mandatory"
+    unless defined $latitude;
   croak "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
     if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
 

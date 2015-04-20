@@ -47,18 +47,52 @@ BEGIN {
     $datetime_ok = 1;
   }
 }
-use Astro::Sunrise(qw(:DEFAULT :constants));
-plan(tests => 1 + $datetime_ok);
+my @basic = ( [ { year => 2003, month => 6, day => 21, tz => 0, lon => 0, lat => 0, polar => 'whatever' },
+                qr/Wrong value of the 'polar' argument/,
+                "Wrong value of the 'polar' argument" ],
+              [ { month => 6, day => 21, tz => 0, lon => 0, lat => 0 },
+                qr/Year parameter is mandatory/,
+                "Year parameter is mandatory" ],
+              [ { year => 2003, day => 21, tz => 0, lon => 0, lat => 0 },
+                qr/Month parameter is mandatory/,
+                "Month parameter is mandatory" ],
+              [ { year => 2003, month => 6, tz => 0, lon => 0, lat => 0 },
+                qr/Day parameter is mandatory/,
+                "Day parameter is mandatory" ],
+              [ { year => 2003, month => 6, day => 21, tz => 0, lat => 0 },
+                qr/Longitude .* mandatory/,
+                "Longitude parameter is mandatory" ],
+              [ { year => 2003, month => 6, day => 21, tz => 0, lon => 0 },
+                qr/Latitude .* mandatory/,
+                "Latitude parameter is mandatory" ],
+            );
+my @dt = ( [ { lon => 0, lat => 0, polar => 'whatever' },
+                qr/Wrong value of the 'polar' argument/,
+                "Wrong value of the 'polar' argument" ],
+              [ { lat => 0 },
+                qr/Longitude .* mandatory/,
+                "Longitude parameter is mandatory" ],
+              [ { lon => 0 },
+                qr/Latitude .* mandatory/,
+                "Latitude parameter is mandatory" ],
+            );
 
-like ( exception { sunrise ( { year => 2003, month => 6, day => 21, tz => 0, lon => 0, lat => 0,
-                                          polar => 'whatever' } ) },
-                         qr/Wrong value of the 'polar' argument/,
-                         "Wrong value of the 'polar' argument");
+use Astro::Sunrise(qw(:DEFAULT :constants));
+plan(tests => @basic + $datetime_ok * @dt);
+
+for my $test (@basic) {
+  my ($arg_href, $regexp, $label) = @$test;
+  like ( exception { sunrise($arg_href) }, $regexp, $label);
+}
 
 if ($datetime_ok) {
-  like ( exception { sun_rise ( { year => 2003, month => 6, day => 21, tz => 0, lon => 0, lat => 0,
-                                          polar => 'whatever' } ) },
-                         qr/Wrong value of the 'polar' argument/,
-                         "Wrong value of the 'polar' argument");
+  for my $test (@dt) {
+    my ($arg_href, $regexp, $label) = @$test;
+    like ( exception { sun_rise($arg_href) }, $regexp, $label);
+  }
+  #like ( exception { sun_rise ( { year => 2003, month => 6, day => 21, tz => 0, lon => 0, lat => 0,
+  #                                        polar => 'whatever' } ) },
+  #                       qr/Wrong value of the 'polar' argument/,
+  #                       "Wrong value of the 'polar' argument");
 
 }
