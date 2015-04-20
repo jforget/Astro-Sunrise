@@ -6,6 +6,7 @@ Revision history for Perl extension sunrise.
       - Some improvements in the POD documentation.
       - New time_zone parameter to sun_rise and sun_set.
       - New tests for fork-less systems
+      - New tests to check for parameter checking
 
 0.94  Tuesday 10 March 2015
       - Fix typos in the POD documentation

@@ -43,7 +43,7 @@ sub sunrise  {
   $arg{precise}    ||= 0;
   $arg{upper_limb} ||= 0;
   $arg{polar}      ||= 'warn';
-  carp "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
+  croak "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
       if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
 
   if ($arg{precise})   {
@@ -489,7 +489,7 @@ sub sun_rise_sun_set {
   # the user to remove this line from his script.
   unless ($INC{DateTime}) {
     eval "use DateTime";
-    carp $@
+    croak $@
       if $@;
   }
 
@@ -500,8 +500,8 @@ sub sun_rise_sun_set {
   $arg{precise}    ||= 0;
   $arg{upper_limb} ||= 0;
   $arg{polar}      ||= 'warn';
-  carp "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
-      if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
+  croak "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
+    if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
 
   my $today = DateTime->today(time_zone => $tz);
   $today->set( hour => 12 );
