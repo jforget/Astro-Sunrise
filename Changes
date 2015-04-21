@@ -2,6 +2,8 @@
 
 Revision history for Perl extension sunrise.
 
+0.96  ???
+
 0.95  Tuesday 21 April 2015
       - Some improvements in the POD documentation.
       - New time_zone parameter to sun_rise and sun_set.

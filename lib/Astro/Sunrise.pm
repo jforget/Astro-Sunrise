@@ -24,7 +24,7 @@ require Exporter;
         trig      => [ qw/sind cosd tand asind acosd atand atan2d equal/ ],
         );
 
-$VERSION =  '0.95';
+$VERSION =  '0.96';
 $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
 my $INV360     = ( 1.0 / 360.0 );
@@ -561,7 +561,7 @@ Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
 
 =head1 VERSION
 
-This documentation refers to C<Astro::Sunrise> version 0.95.
+This documentation refers to C<Astro::Sunrise> version 0.96.
 
 =head1 SYNOPSIS
 
