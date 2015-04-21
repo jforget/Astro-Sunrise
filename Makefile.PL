@@ -39,7 +39,8 @@ WriteMakefile(
     LICENSE        => 'perl',
     # The oldest Perl to check Astro::Sunrise 0.92 is 5.6.2. Therefore, I guess Astro::Sunrise 0.93 and next will work in 5.6.2 too.
     MIN_PERL_VERSION => '5.6.2',
-    BUILD_REQUIRES => { 'Test::More'         => '0',   # should be 'TEST_REQUIRES', except that ExtUtils::MakeMaker 6.5705 does not accept it
+    BUILD_REQUIRES => { 'Test::More'         => '0',        # should be 'TEST_REQUIRES', except that ExtUtils::MakeMaker 6.5705 does not accept it
+                        'ExtUtils::MakeMaker' => '6.57_02', # the first version to accept several authors in an arrayref
                            },
     META_MERGE       => {
        prereqs => {
