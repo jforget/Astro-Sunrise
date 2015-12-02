@@ -67,6 +67,8 @@ sub sunrise  {
 
     my $tmp_rise_2 = 9;
     my $tmp_rise_3 = 0;
+
+    my $counter = 0;
     until (equal($tmp_rise_2, $tmp_rise_3, 8) )   {
 
        my $d_sunrise_1 = $d + $tmp_rise_1/24.0;
@@ -76,11 +78,13 @@ sub sunrise  {
        ($tmp_rise_3, undef) = sun_rise_set($d_sunrise_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
 
        #print "tmp_rise2 is: $tmp_rise_2 tmp_rise_3 is:$tmp_rise_3\n";
+       last if ++$counter >= 100;
     }
 
     my $tmp_set_2 = 9;
     my $tmp_set_3 = 0;
 
+    $counter = 0;
     until (equal($tmp_set_2, $tmp_set_3, 8) )   {
 
        my $d_sunset_1 = $d + $tmp_set_1/24.0;
@@ -90,6 +94,7 @@ sub sunrise  {
        (undef, $tmp_set_3) = sun_rise_set($d_sunset_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
 
        #print "tmp_set_1 is: $tmp_set_1 tmp_set_3 is:$tmp_set_3\n";
+       last if ++$counter >= 100;
 
     }
 
@@ -992,6 +997,9 @@ local time.
 Brian D Foy for providing patch for constants :)
 
 Gabor Szabo for pointing POD mistakes.
+
+People at L<http://geocoder.opencagedata.com/> for noticing an endless
+loop condition and for fixing it.
 
 =head1 CREDITS
 

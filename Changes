@@ -3,6 +3,8 @@
 Revision history for Perl extension sunrise.
 
 0.96  ???
+      - Fix ticket 109992, prevent endless loops
+        (thank you http://geocoder.opencagedata.com/)
 
 0.95  Tuesday 21 April 2015
       - Some improvements in the POD documentation.

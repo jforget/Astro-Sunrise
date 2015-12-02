@@ -17,3 +17,4 @@ t/08timezone.t
 t/09springforward.t
 t/10fallback.t
 t/11fatal.t
+t/12loop.t
