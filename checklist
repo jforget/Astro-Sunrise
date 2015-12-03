@@ -1,0 +1,26 @@
+-*- encoding: utf-8; indent-tabs-mode: nil -*-
+
+See Merijn's checklist:
+https://github.com/Tux/Release-Checklist/blob/master/Checklist.md
+
+Check version number in:
+-- README
+-- Makefile.PL
+-- (2x) lib/Astro/Sunrise.pm, code ($VERSION) and POD (=head1 VERSION)
+
+Kwalitee: do not bother with "has known license in source file". Check all others
+
+MANIFEST: among others, check that all new test files are mentionned
+
+Test with all perlbrew versions
+
+Coverage: preferably with perlbrew perl-lgdbl (or later?)
+
+Changes: Type the proper release date for the latest version
+
+Build META.{json,yml} and .tar.gz with perlbrew perl-lgdbl (or other? perl-5.20.2?)
+
+Check contents of META.{json,yml}:
+  version number (2x)
+  runtime recommends DateTime 0.16
+  minimum perl version
