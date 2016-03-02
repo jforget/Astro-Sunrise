@@ -129,6 +129,7 @@ double rev180( double x );
 
 double GMST0( double d );
 
+void format_hour(double t, char buf[]);
 
 
 /* A small test program */
@@ -141,7 +142,7 @@ main()
       double rise, set, civ_start, civ_end, naut_start, naut_end,
              astr_start, astr_end;
       int    rs, civ, naut, astr;
-      char buf[80], *rc;
+      char buf[80], *rc, bufr[80], bufs[80];
 
       printf( "Longitude (+ is east) and latitude (+ is north) : " );
       fgets(buf, 80, stdin);
@@ -184,13 +185,16 @@ main()
             astr = astronomical_twilight( year, month, day, lon, lat,
                                           &astr_start, &astr_end );
 
-            printf( "Sun at south %5.2fh UT\n", (rise+set)/2.0 );
+            format_hour((rise+set)/2.0, buf);
+            printf( "Sun at south %s UT\n", buf );
 
             switch( rs )
             {
                 case 0:
-                    printf( "Sun rises %5.2fh UT, sets %5.2fh UT\n",
-                             rise, set );
+		  format_hour(rise, bufr);
+		  format_hour(set , bufs);
+                    printf( "                   Sun rises %s, sets %s UT\n",
+                             bufr, bufs );
                     break;
                 case +1:
                     printf( "Sun above horizon\n" );
@@ -203,8 +207,10 @@ main()
             switch( civ )
             {
                 case 0:
-                    printf( "Civil twilight starts %5.2fh, "
-                            "ends %5.2fh UT\n", civ_start, civ_end );
+		  format_hour(civ_start, bufr);
+		  format_hour(civ_end  , bufs);
+                    printf( "       Civil twilight starts %s, "
+                            "ends %s UT\n", bufr, bufs );
                     break;
                 case +1:
                     printf( "Never darker than civil twilight\n" );
@@ -217,8 +223,10 @@ main()
             switch( naut )
             {
                 case 0:
-                    printf( "Nautical twilight starts %5.2fh, "
-                            "ends %5.2fh UT\n", naut_start, naut_end );
+		  format_hour(naut_start, bufr);
+		  format_hour(naut_end  , bufs);
+                    printf( "    Nautical twilight starts %s, "
+                            "ends %s UT\n", bufr, bufs );
                     break;
                 case +1:
                     printf( "Never darker than nautical twilight\n" );
@@ -231,8 +239,10 @@ main()
             switch( astr )
             {
                 case 0:
-                    printf( "Astronomical twilight starts %5.2fh, "
-                            "ends %5.2fh UT\n", astr_start, astr_end );
+		  format_hour(astr_start, bufr);
+		  format_hour(astr_end  , bufs);
+                    printf( "Astronomical twilight starts %s, "
+                            "ends %s UT\n", bufr, bufs );
                     break;
                 case +1:
                     printf( "Never darker than astronomical twilight\n" );
@@ -525,3 +535,19 @@ double GMST0( double d )
                           ( 0.9856002585 + 4.70935E-5 ) * d );
       return sidtim0;
 }  /* GMST0 */
+
+void format_hour(double t, char buf[])
+{
+  double t1 = t;
+  int hh, mm, ss;
+  hh  = floor(t1);
+  t1 -= hh;
+  t1 *= 60.0;
+  mm  = floor(t1);
+  t1 -= mm;
+  t1 *= 60.0;
+  ss  = floor(t1);
+
+  sprintf(buf, "%10.7f %02d:%02d:%02d", t, hh, mm, ss);
+
+}
