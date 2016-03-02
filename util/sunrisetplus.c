@@ -141,7 +141,7 @@ main()
       double rise, set, civ_start, civ_end, naut_start, naut_end,
              astr_start, astr_end;
       int    rs, civ, naut, astr;
-      char buf[80];
+      char buf[80], *rc;
 
       printf( "Longitude (+ is east) and latitude (+ is north) : " );
       fgets(buf, 80, stdin);
@@ -149,8 +149,12 @@ main()
 
       for(;;)
       {
-            printf( "Input date ( yyyy mm dd ) (ctrl-C exits): " );
+            printf( "Input date ( yyyy mm dd ) (ctrl-D (=EOF) exits): " );
             fgets(buf, 80, stdin);
+	    if (rc == 0) {
+              printf("\nEnd\n");
+	      break;
+	    }
             sscanf(buf, "%d %d %d", &year, &month, &day );
 
             daylen  = day_length(year,month,day,lon,lat);
