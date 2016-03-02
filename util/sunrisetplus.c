@@ -150,29 +150,30 @@ main()
       for(;;)
       {
             printf( "Input date ( yyyy mm dd ) (ctrl-D (=EOF) exits): " );
-            fgets(buf, 80, stdin);
+            rc = fgets(buf, 80, stdin);
 	    if (rc == 0) {
               printf("\nEnd\n");
 	      break;
 	    }
             sscanf(buf, "%d %d %d", &year, &month, &day );
 
-            daylen  = day_length(year,month,day,lon,lat);
-            civlen  = day_civil_twilight_length(year,month,day,lon,lat);
-            nautlen = day_nautical_twilight_length(year,month,day,lon,lat);
-            astrlen = day_astronomical_twilight_length(year,month,day,
-                  lon,lat);
-
-            printf( "Day length:                 %5.2f hours\n", daylen );
-            printf( "With civil twilight         %5.2f hours\n", civlen );
-            printf( "With nautical twilight      %5.2f hours\n", nautlen );
-            printf( "With astronomical twilight  %5.2f hours\n", astrlen );
-            printf( "Length of twilight: civil   %5.2f hours\n",
-                  (civlen-daylen)/2.0);
-            printf( "                  nautical  %5.2f hours\n",
-                  (nautlen-daylen)/2.0);
-            printf( "              astronomical  %5.2f hours\n",
-                  (astrlen-daylen)/2.0);
+            // I am not interested in modifying the xx_length functions.
+            //daylen  = day_length(year,month,day,lon,lat);
+            //civlen  = day_civil_twilight_length(year,month,day,lon,lat);
+            //nautlen = day_nautical_twilight_length(year,month,day,lon,lat);
+            //astrlen = day_astronomical_twilight_length(year,month,day,
+            //      lon,lat);
+	    //
+            //printf( "Day length:                 %5.2f hours\n", daylen );
+            //printf( "With civil twilight         %5.2f hours\n", civlen );
+            //printf( "With nautical twilight      %5.2f hours\n", nautlen );
+            //printf( "With astronomical twilight  %5.2f hours\n", astrlen );
+            //printf( "Length of twilight: civil   %5.2f hours\n",
+            //      (civlen-daylen)/2.0);
+            //printf( "                  nautical  %5.2f hours\n",
+            //      (nautlen-daylen)/2.0);
+            //printf( "              astronomical  %5.2f hours\n",
+            //      (astrlen-daylen)/2.0);
 
             rs   = sun_rise_set         ( year, month, day, lon, lat,
                                           &rise, &set );
@@ -240,7 +241,6 @@ main()
                     printf( "Never as bright as astronomical twilight\n" );
                     break;
             }
-      return 0;
       }
 }
 
