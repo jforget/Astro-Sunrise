@@ -142,7 +142,7 @@ main()
       double rise, set, civ_start, civ_end, naut_start, naut_end,
              astr_start, astr_end;
       int    rs, civ, naut, astr;
-      char buf[80], *rc, bufr[80], bufs[80];
+      char buf[80], *rc, bufr[30], bufs[30];
 
       printf( "Longitude (+ is east) and latitude (+ is north) : " );
       fgets(buf, 80, stdin);
@@ -185,6 +185,7 @@ main()
             astr = astronomical_twilight( year, month, day, lon, lat,
                                           &astr_start, &astr_end );
 
+            printf("%4d-%02d-%02d\n", year, month, day);
             format_hour((rise+set)/2.0, buf);
             printf( "Sun at south %s UT\n", buf );
 
@@ -536,6 +537,12 @@ double GMST0( double d )
       return sidtim0;
 }  /* GMST0 */
 
+/*
+ * Format an hour value to show both its value as decimal hours and its value as hours:minutes:seconds
+ * The input buffer should be large enough: 10 chars for the decimal value, 1 space, 8 chars for the hh:mm:ss value.
+ * and 1 for the end null byte. But in case the value is negative, add 1 chars for the minus signs, so we arrive at 22
+ * So with 25 chars, it should be enough.
+ */
 void format_hour(double t, char buf[])
 {
   double t1 = t;
@@ -548,6 +555,10 @@ void format_hour(double t, char buf[])
   t1 *= 60.0;
   ss  = floor(t1);
 
-  sprintf(buf, "%10.7f %02d:%02d:%02d", t, hh, mm, ss);
-
+  if (fabs(t) > 100) {
+    sprintf(buf, "*********");
+  }
+  else {
+    sprintf(buf, "%10.7f %02d:%02d:%02d", t, hh, mm, ss);
+  }
 }
