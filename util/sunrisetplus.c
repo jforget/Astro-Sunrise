@@ -178,6 +178,8 @@ main()
 
             rs   = sun_rise_set         ( year, month, day, lon, lat,
                                           &rise, &set );
+            /* using the precise algorithm to compute twilights is overkill, but
+	       it helps checking this algorithm. */
             civ  = civil_twilight       ( year, month, day, lon, lat,
                                           &civ_start, &civ_end );
             naut = nautical_twilight    ( year, month, day, lon, lat,
@@ -301,6 +303,7 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 
       int rc = 0; /* Return cde from function - usually 0 */
 
+      /**** Computing sunrise time ****/
       /* Compute d of 12h local mean solar time */
       d = days_since_2000_Jan_0(year,month,day) + 0.5 - lon/360.0;
 
@@ -336,6 +339,42 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 
       /* Store rise and set times - in hours UT */
       *trise = tsouth - t;
+
+      /**** Computing sunset time ****/
+      /* Compute d of 12h local mean solar time */
+      d = days_since_2000_Jan_0(year,month,day) + 0.5 - lon/360.0;
+
+      /* Compute the local sidereal time of this moment */
+      sidtime = revolution( GMST0(d) + 180.0 + lon );
+
+      /* Compute Sun's RA, Decl and distance at this moment */
+      sun_RA_dec( d, &sRA, &sdec, &sr );
+
+      /* Compute time when Sun is at south - in hours UT */
+      tsouth = 12.0 - rev180(sidtime - sRA)/15.0;
+
+      /* Compute the Sun's apparent radius in degrees */
+      sradius = 0.2666 / sr;
+
+      /* Do correction to upper limb, if necessary */
+      if ( upper_limb )
+            altit -= sradius;
+
+      /* Compute the diurnal arc that the Sun traverses to reach */
+      /* the specified altitude altit: */
+      {
+            double cost;
+            cost = ( sind(altit) - sind(lat) * sind(sdec) ) /
+                  ( cosd(lat) * cosd(sdec) );
+            if ( cost >= 1.0 )
+                  rc = -1, t = 0.0;       /* Sun always below altit */
+            else if ( cost <= -1.0 )
+                  rc = +1, t = 12.0;      /* Sun always above altit */
+            else
+                  t = acosd(cost)/15.0;   /* The diurnal arc, hours */
+      }
+
+      /* Store rise and set times - in hours UT */
       *tset  = tsouth + t;
 
       return rc;
