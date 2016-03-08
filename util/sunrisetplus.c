@@ -199,11 +199,14 @@ main()
                     printf( "                   Sun rises %s, sets %s UT\n",
                              bufr, bufs );
                     break;
-                case +1:
+                case +4:
                     printf( "Sun above horizon\n" );
                     break;
-                case -1:
+                case -4:
                     printf( "Sun below horizon\n" );
+                    break;
+		default:
+		    printf("Sunrise/sunset: transition case %d\n", rs);
                     break;
             }
 
@@ -215,11 +218,14 @@ main()
                     printf( "       Civil twilight starts %s, "
                             "ends %s UT\n", bufr, bufs );
                     break;
-                case +1:
+                case +4:
                     printf( "Never darker than civil twilight\n" );
                     break;
-                case -1:
+                case -4:
                     printf( "Never as bright as civil twilight\n" );
+                    break;
+		default:
+		    printf("Civil twilight: transition case %d\n", rs);
                     break;
             }
 
@@ -231,11 +237,14 @@ main()
                     printf( "    Nautical twilight starts %s, "
                             "ends %s UT\n", bufr, bufs );
                     break;
-                case +1:
+                case +4:
                     printf( "Never darker than nautical twilight\n" );
                     break;
-                case -1:
+                case -4:
                     printf( "Never as bright as nautical twilight\n" );
+                    break;
+		default:
+		    printf("Nautical twilight: transition case %d\n", rs);
                     break;
             }
 
@@ -247,11 +256,14 @@ main()
                     printf( "Astronomical twilight starts %s, "
                             "ends %s UT\n", bufr, bufs );
                     break;
-                case +1:
+                case +4:
                     printf( "Never darker than astronomical twilight\n" );
                     break;
-                case -1:
+                case -4:
                     printf( "Never as bright as astronomical twilight\n" );
+                    break;
+		default:
+		    printf("Astronomical twilight: transition case %d\n", rs);
                     break;
             }
       }
@@ -280,13 +292,17 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 /*                Both times are relative to the specified altitude,  */
 /*                and thus this function can be used to compute       */
 /*                various twilight times, as well as rise/set times   */
-/* Return value:  0 = sun rises/sets this day, times stored at        */
+/* Return value:  It is a composite value of two return values, one for sunrise
+/*                    (or morning twilight) and the other for sunset (or evening twilight).
+/*                0, +3, -3 applies to the morning,
+/*                0, +1, -1 applies to the evening.
+/*                0 = sun rises/sets this day, time stored at         */
 /*                    *trise and *tset.                               */
-/*               +1 = sun above the specified "horizon" 24 hours.     */
+/*           +3, +1 = sun above the specified "horizon" 24 hours.     */
 /*                    *trise set to time when the sun is at south,    */
 /*                    minus 12 hours while *tset is set to the south  */
 /*                    time plus 12 hours. "Day" length = 24 hours     */
-/*               -1 = sun is below the specified "horizon" 24 hours   */
+/*           -3, -1 = sun is below the specified "horizon" 24 hours   */
 /*                    "Day" length = 0 hours, *trise and *tset are    */
 /*                    both set to the time when the sun is at south.  */
 /*                                                                    */
@@ -301,7 +317,8 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       tsouth,     /* Time when Sun is at south */
       sidtime;    /* Local sidereal time */
 
-      int rc = 0; /* Return cde from function - usually 0 */
+      int rc_r = 0; /* Return cde from function - usually 0 */
+      int rc_s = 0; /* Return cde from function - usually 0 */
 
       /**** Computing sunrise time ****/
       /* Compute d of 12h local mean solar time */
@@ -330,9 +347,9 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
             cost = ( sind(altit) - sind(lat) * sind(sdec) ) /
                   ( cosd(lat) * cosd(sdec) );
             if ( cost >= 1.0 )
-                  rc = -1, t = 0.0;       /* Sun always below altit */
+                  rc_r = -1, t = 0.0;       /* Sun always below altit */
             else if ( cost <= -1.0 )
-                  rc = +1, t = 12.0;      /* Sun always above altit */
+                  rc_r = +1, t = 12.0;      /* Sun always above altit */
             else
                   t = acosd(cost)/15.0;   /* The diurnal arc, hours */
       }
@@ -367,9 +384,9 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
             cost = ( sind(altit) - sind(lat) * sind(sdec) ) /
                   ( cosd(lat) * cosd(sdec) );
             if ( cost >= 1.0 )
-                  rc = -1, t = 0.0;       /* Sun always below altit */
+                  rc_s = -1, t = 0.0;       /* Sun always below altit */
             else if ( cost <= -1.0 )
-                  rc = +1, t = 12.0;      /* Sun always above altit */
+                  rc_s = +1, t = 12.0;      /* Sun always above altit */
             else
                   t = acosd(cost)/15.0;   /* The diurnal arc, hours */
       }
@@ -377,7 +394,7 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       /* Store rise and set times - in hours UT */
       *tset  = tsouth + t;
 
-      return rc;
+      return 3 * rc_r + rc_s;
 }  /* __sunriset__ */
 
 
