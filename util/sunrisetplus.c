@@ -355,17 +355,19 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       int rc_s = 0; /* Return cde from sunset  computation - usually 0 */
       int nb;       /* Number of iterations */
 
-      char buffer[30];
+      char buffer[30], buffersouth[30];
 
       /**** Computing sunrise time ****/
       /* Compute d of 12h local mean solar time */
       d = days_since_2000_Jan_0(year,month,day) + 0.5 - lon/360.0;
       *trise = 12;
+      delta  = 99.0;
 
       for (nb = 0; nb < ITERMAX; nb++) {
 #if TRACE
+        format_hour(tsouth, buffersouth);
         format_hour(*trise, buffer);
-        printf("Iteration %2d using tsouth = %10.7f *trise = %s, delta = %10.7f\n", nb, tsouth, buffer, delta);
+        printf("Iteration %2d using tsouth = %s *trise = %s, delta = %10.7f\n", nb, buffersouth, buffer, delta);
 #endif
 	/* Compute the local sidereal time of this moment */
 	sidtime = revolution( GMST0(d + (*trise - 12) / 24) + 180.0 + lon );
@@ -409,8 +411,9 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 
       }
 #if TRACE
+      format_hour(tsouth, buffersouth);
       format_hour(*trise, buffer);
-      printf("Iteration %2d using tsouth = %10.7f *trise = %s, delta = %10.7f\n", nb, tsouth, buffer, delta);
+      printf("Iteration %2d using tsouth = %s *trise = %s, delta = %10.7f\n", nb, buffersouth, buffer, delta);
 #endif
       if (nb >= ITERMAX)
         printf("Not converging\n");
@@ -419,12 +422,14 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       /* Compute d of 12h local mean solar time */
       d = days_since_2000_Jan_0(year,month,day) + 0.5 - lon/360.0;
       *tset = 12;
+      delta = 99.0;
 
       for (nb = 0; nb < ITERMAX; nb++) {
 
 #if TRACE
+        format_hour(tsouth, buffersouth);
         format_hour(*tset, buffer);
-        printf("Iteration %2d using tsouth = %10.7f *tset = %s, delta = %10.7f\n", nb, tsouth, buffer, delta);
+        printf("Iteration %2d using tsouth = %s *tset = %s, delta = %10.7f\n", nb, buffersouth, buffer, delta);
 #endif
 	/* Compute the local sidereal time of this moment */
 	sidtime = revolution( GMST0(d + (*tset - 12) / 24) + 180.0 + lon );
@@ -467,8 +472,9 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
           break;
       }
 #if TRACE
+      format_hour(tsouth, buffersouth);
       format_hour(*tset, buffer);
-      printf("Iteration %2d using tsouth = %10.7f *tset = %s, delta = %10.7f\n", nb, tsouth, buffer, delta);
+      printf("Iteration %2d using tsouth = %s *tset = %s, delta = %10.7f\n", nb, buffersouth, buffer, delta);
 #endif
       if (nb >= ITERMAX)
         printf("Not converging\n");
