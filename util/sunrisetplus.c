@@ -293,10 +293,10 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 /*                and thus this function can be used to compute       */
 /*                various twilight times, as well as rise/set times   */
 /* Return value:  It is a composite value of two return values, one for sunrise
-/*                    (or morning twilight) and the other for sunset (or evening twilight).
-/*                0, +3, -3 applies to the morning,
-/*                0, +1, -1 applies to the evening.
-/*                0 = sun rises/sets this day, time stored at         */
+ *                    (or morning twilight) and the other for sunset (or evening twilight).
+ *                0, +3, -3 applies to the morning,
+ *                0, +1, -1 applies to the evening.
+ *                0 = sun rises/sets this day, time stored at         */
 /*                    *trise and *tset.                               */
 /*           +3, +1 = sun above the specified "horizon" 24 hours.     */
 /*                    *trise set to time when the sun is at south,    */
@@ -304,9 +304,21 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 /*                    time plus 12 hours. "Day" length = 24 hours     */
 /*           -3, -1 = sun is below the specified "horizon" 24 hours   */
 /*                    "Day" length = 0 hours, *trise and *tset are    */
-/*                    both set to the time when the sun is at south.  */
-/*                                                                    */
-/**********************************************************************/
+/*                    both set to the time when the sun is at south.
+ *                So the composite values are:
+ *                0 = the most common day+night situation
+ *               -4 = polar night, the sun neither rises nor sets, staying below the horizon
+ *               +4 = polar day, the sun neither rises nor sets, staying above the horizon
+ *               +3 = transition from day+night to polar day, the sun rises but does not set
+ *               +1 = transition from polar day to day+night, the sun does not rise, but sets
+ *               For location with a very high latitude:
+ *               -2 = transition from polar night to polar day, the day+night period lasting less than 12 hours
+ *               +2 = transition from polar day to polar night, the day+night period lasting less than 12 hours
+ *               I do not see how these could appear, since we use days centered on noon, with sunrise before sunset:
+ *               -3 = transition from polar night to day+night, the sun does not rise (staying below the horizon) but sets
+ *               -1 = transition from day+night to polar night, the sun rises but does not sets (staying below the horizon)
+ *
+ **********************************************************************/
 {
       double  d,  /* Days since 2000 Jan 0.0 (negative before) */
       sr,         /* Solar distance, astronomical units */
@@ -317,8 +329,8 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       tsouth,     /* Time when Sun is at south */
       sidtime;    /* Local sidereal time */
 
-      int rc_r = 0; /* Return cde from function - usually 0 */
-      int rc_s = 0; /* Return cde from function - usually 0 */
+      int rc_r = 0; /* Return cde from sunrise computation - usually 0 */
+      int rc_s = 0; /* Return cde from sunset  computation - usually 0 */
 
       /**** Computing sunrise time ****/
       /* Compute d of 12h local mean solar time */
