@@ -349,7 +349,8 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       t,          /* Diurnal arc */
       tsouth,     /* Time when Sun is at south */
       sidtime,    /* Local sidereal time */
-      delta;    /* Difference of *trise or *tset between an iteration and the next */
+      delta,      /* Difference of *trise or *tset between an iteration and the next */
+      altit1;     /* Altitude of the center of the solar disk */
 
       int rc_r = 0; /* Return cde from sunrise computation - usually 0 */
       int rc_s = 0; /* Return cde from sunset  computation - usually 0 */
@@ -362,12 +363,13 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       d = days_since_2000_Jan_0(year,month,day) + 0.5 - lon/360.0;
       *trise = 12;
       delta  = 99.0;
+      altit1 = altit;
 
       for (nb = 0; nb < ITERMAX; nb++) {
 #if TRACE
         format_hour(tsouth, buffersouth);
         format_hour(*trise, buffer);
-        printf("Iteration %2d using tsouth = %s *trise = %s, delta = %10.7f\n", nb, buffersouth, buffer, delta);
+        printf("Iteration %2d using altit = %10.7f, tsouth = %s *trise = %s, delta = %10.7f\n", nb, altit1, buffersouth, buffer, delta);
 #endif
 	/* Compute the local sidereal time of this moment */
 	sidtime = revolution( GMST0(d + (*trise - 12) / 24) + 180.0 + lon );
@@ -381,9 +383,11 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 	/* Compute the Sun's apparent radius in degrees */
 	sradius = 0.2666 / sr;
 
-	/* Do correction to upper limb, if necessary */
-	if ( upper_limb )
-	      altit -= sradius;
+        /* Do correction to upper limb, if necessary */
+        if ( upper_limb )
+          altit1 = altit - sradius;
+        else
+          altit1 = altit;
 
 	/* Compute the diurnal arc that the Sun traverses to reach */
 	/* the specified altitude altit: */
@@ -413,23 +417,24 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 #if TRACE
       format_hour(tsouth, buffersouth);
       format_hour(*trise, buffer);
-      printf("Iteration %2d using tsouth = %s *trise = %s, delta = %10.7f\n", nb, buffersouth, buffer, delta);
+      printf("Iteration %2d using altit = %10.7f, tsouth = %s *trise = %s, delta = %10.7f\n", nb, altit1, buffersouth, buffer, delta);
 #endif
       if (nb >= ITERMAX)
         printf("Not converging\n");
 
       /**** Computing sunset time ****/
       /* Compute d of 12h local mean solar time */
-      d = days_since_2000_Jan_0(year,month,day) + 0.5 - lon/360.0;
-      *tset = 12;
-      delta = 99.0;
+      d      = days_since_2000_Jan_0(year,month,day) + 0.5 - lon/360.0;
+      *tset  = 12;
+      delta  = 99.0;
+      altit1 = altit;
 
       for (nb = 0; nb < ITERMAX; nb++) {
 
 #if TRACE
         format_hour(tsouth, buffersouth);
         format_hour(*tset, buffer);
-        printf("Iteration %2d using tsouth = %s *tset = %s, delta = %10.7f\n", nb, buffersouth, buffer, delta);
+        printf("Iteration %2d using altit = %10.7f, tsouth = %s *tset = %s, delta = %10.7f\n", nb, altit1, buffersouth, buffer, delta);
 #endif
 	/* Compute the local sidereal time of this moment */
 	sidtime = revolution( GMST0(d + (*tset - 12) / 24) + 180.0 + lon );
@@ -444,8 +449,10 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 	sradius = 0.2666 / sr;
 
 	/* Do correction to upper limb, if necessary */
-	if ( upper_limb )
-	      altit -= sradius;
+        if ( upper_limb )
+          altit1 = altit - sradius;
+        else
+          altit1 = altit;
 
 	/* Compute the diurnal arc that the Sun traverses to reach */
 	/* the specified altitude altit: */
@@ -474,7 +481,7 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 #if TRACE
       format_hour(tsouth, buffersouth);
       format_hour(*tset, buffer);
-      printf("Iteration %2d using tsouth = %s *tset = %s, delta = %10.7f\n", nb, buffersouth, buffer, delta);
+      printf("Iteration %2d using altit = %10.7f, tsouth = %s *tset = %s, delta = %10.7f\n", nb, altit1, buffersouth, buffer, delta);
 #endif
       if (nb >= ITERMAX)
         printf("Not converging\n");
