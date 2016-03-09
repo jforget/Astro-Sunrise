@@ -41,6 +41,13 @@ Build with:
 #define RADEG     ( 180.0 / PI )
 #define DEGRAD    ( PI / 180.0 )
 
+/* Stopping the iteration after a variation lower than 1e-6 hour, that is 3.6 milliseconds
+   overkill, but this allows to show how the algorithm works. */
+#define EPSILON 0.000001
+
+/* Failsafe exit from the loop */
+#define ITERMAX 10
+
 /* The trigonometric functions in degrees */
 
 #define sind(x)  sin((x)*DEGRAD)
@@ -327,84 +334,111 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       sradius,    /* Sun's apparent radius */
       t,          /* Diurnal arc */
       tsouth,     /* Time when Sun is at south */
-      sidtime;    /* Local sidereal time */
+      sidtime,    /* Local sidereal time */
+	delta;    /* Difference of *trise or *tset between an iteration and the next */
 
       int rc_r = 0; /* Return cde from sunrise computation - usually 0 */
       int rc_s = 0; /* Return cde from sunset  computation - usually 0 */
+      int nb;       /* Number of iterations */
 
       /**** Computing sunrise time ****/
       /* Compute d of 12h local mean solar time */
       d = days_since_2000_Jan_0(year,month,day) + 0.5 - lon/360.0;
+      *trise = 12;
 
-      /* Compute the local sidereal time of this moment */
-      sidtime = revolution( GMST0(d) + 180.0 + lon );
+      for (nb = 0; nb < ITERMAX; nb++) {
+	/* Compute the local sidereal time of this moment */
+	sidtime = revolution( GMST0(d + (*trise - 12) / 24) + 180.0 + lon );
 
-      /* Compute Sun's RA, Decl and distance at this moment */
-      sun_RA_dec( d, &sRA, &sdec, &sr );
+	/* Compute Sun's RA, Decl and distance at this moment */
+	sun_RA_dec( d + (*trise - 12) / 24, &sRA, &sdec, &sr );
 
-      /* Compute time when Sun is at south - in hours UT */
-      tsouth = 12.0 - rev180(sidtime - sRA)/15.0;
+	/* Compute time when Sun is at south - in hours UT */
+	tsouth = 12.0 - rev180(sidtime - sRA)/15.0;
 
-      /* Compute the Sun's apparent radius in degrees */
-      sradius = 0.2666 / sr;
+	/* Compute the Sun's apparent radius in degrees */
+	sradius = 0.2666 / sr;
 
-      /* Do correction to upper limb, if necessary */
-      if ( upper_limb )
-            altit -= sradius;
+	/* Do correction to upper limb, if necessary */
+	if ( upper_limb )
+	      altit -= sradius;
 
-      /* Compute the diurnal arc that the Sun traverses to reach */
-      /* the specified altitude altit: */
-      {
-            double cost;
-            cost = ( sind(altit) - sind(lat) * sind(sdec) ) /
-                  ( cosd(lat) * cosd(sdec) );
-            if ( cost >= 1.0 )
-                  rc_r = -1, t = 0.0;       /* Sun always below altit */
-            else if ( cost <= -1.0 )
-                  rc_r = +1, t = 12.0;      /* Sun always above altit */
-            else
-                  t = acosd(cost)/15.0;   /* The diurnal arc, hours */
+	/* Compute the diurnal arc that the Sun traverses to reach */
+	/* the specified altitude altit: */
+	{
+	      double cost;
+	      cost = ( sind(altit) - sind(lat) * sind(sdec) ) /
+		    ( cosd(lat) * cosd(sdec) );
+	      if ( cost >= 1.0 )
+		    rc_r = -1, t = 0.0;       /* Sun always below altit */
+	      else if ( cost <= -1.0 )
+		    rc_r = +1, t = 12.0;      /* Sun always above altit */
+	      else
+		    t = acosd(cost)/15.0;   /* The diurnal arc, hours */
+	}
+
+        /* How much did we progress? */
+        delta  = fabs(tsouth - t - *trise);
+
+	/* Store rise and set times - in hours UT */
+	*trise = tsouth - t;
+
+        /* Normal end of iteration */
+        if (delta < EPSILON)
+          break;
+
       }
-
-      /* Store rise and set times - in hours UT */
-      *trise = tsouth - t;
+      if (nb >= ITERMAX)
+        printf("Not converging\n");
 
       /**** Computing sunset time ****/
       /* Compute d of 12h local mean solar time */
       d = days_since_2000_Jan_0(year,month,day) + 0.5 - lon/360.0;
+      *tset = 12;
 
-      /* Compute the local sidereal time of this moment */
-      sidtime = revolution( GMST0(d) + 180.0 + lon );
+      for (nb = 0; nb < ITERMAX; nb++) {
+	/* Compute the local sidereal time of this moment */
+	sidtime = revolution( GMST0(d + (*tset - 12) / 24) + 180.0 + lon );
 
-      /* Compute Sun's RA, Decl and distance at this moment */
-      sun_RA_dec( d, &sRA, &sdec, &sr );
+	/* Compute Sun's RA, Decl and distance at this moment */
+	sun_RA_dec( d + (*tset - 12) / 24, &sRA, &sdec, &sr );
 
-      /* Compute time when Sun is at south - in hours UT */
-      tsouth = 12.0 - rev180(sidtime - sRA)/15.0;
+	/* Compute time when Sun is at south - in hours UT */
+	tsouth = 12.0 - rev180(sidtime - sRA)/15.0;
 
-      /* Compute the Sun's apparent radius in degrees */
-      sradius = 0.2666 / sr;
+	/* Compute the Sun's apparent radius in degrees */
+	sradius = 0.2666 / sr;
 
-      /* Do correction to upper limb, if necessary */
-      if ( upper_limb )
-            altit -= sradius;
+	/* Do correction to upper limb, if necessary */
+	if ( upper_limb )
+	      altit -= sradius;
 
-      /* Compute the diurnal arc that the Sun traverses to reach */
-      /* the specified altitude altit: */
-      {
-            double cost;
-            cost = ( sind(altit) - sind(lat) * sind(sdec) ) /
-                  ( cosd(lat) * cosd(sdec) );
-            if ( cost >= 1.0 )
-                  rc_s = -1, t = 0.0;       /* Sun always below altit */
-            else if ( cost <= -1.0 )
-                  rc_s = +1, t = 12.0;      /* Sun always above altit */
-            else
-                  t = acosd(cost)/15.0;   /* The diurnal arc, hours */
+	/* Compute the diurnal arc that the Sun traverses to reach */
+	/* the specified altitude altit: */
+	{
+	      double cost;
+	      cost = ( sind(altit) - sind(lat) * sind(sdec) ) /
+		    ( cosd(lat) * cosd(sdec) );
+	      if ( cost >= 1.0 )
+		    rc_s = -1, t = 0.0;       /* Sun always below altit */
+	      else if ( cost <= -1.0 )
+		    rc_s = +1, t = 12.0;      /* Sun always above altit */
+	      else
+		    t = acosd(cost)/15.0;   /* The diurnal arc, hours */
+	}
+
+        /* How much did we progress? */
+        delta  = fabs(tsouth + t - *tset);
+
+	/* Store rise and set times - in hours UT */
+	*tset  = tsouth + t;
+
+        /* Normal end of iteration */
+        if (delta < EPSILON)
+          break;
       }
-
-      /* Store rise and set times - in hours UT */
-      *tset  = tsouth + t;
+      if (nb >= ITERMAX)
+        printf("Not converging\n");
 
       return 3 * rc_r + rc_s;
 }  /* __sunriset__ */
