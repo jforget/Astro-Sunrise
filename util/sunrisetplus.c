@@ -18,6 +18,8 @@ Converted to iterative algorithm (work in progress) by Jean Forget, March 2016
 
 Build with:
   cc sunrisetplus.c -lm -o sunrisetplus
+or with:
+  cc -DTRACE=1 sunrisetplus.c -lm -o sunrisetplus
 
 */
 
@@ -183,14 +185,26 @@ main()
             //printf( "              astronomical  %5.2f hours\n",
             //      (astrlen-daylen)/2.0);
 
+#if TRACE
+            printf("Computing sunrise and sunset\n");
+#endif
             rs   = sun_rise_set         ( year, month, day, lon, lat,
                                           &rise, &set );
             /* using the precise algorithm to compute twilights is overkill, but
-	       it helps checking this algorithm. */
+               it helps checking this algorithm. */
+#if TRACE
+            printf("Computing civil twilight\n");
+#endif
             civ  = civil_twilight       ( year, month, day, lon, lat,
                                           &civ_start, &civ_end );
+#if TRACE
+            printf("Computing nautical twilight\n");
+#endif
             naut = nautical_twilight    ( year, month, day, lon, lat,
                                           &naut_start, &naut_end );
+#if TRACE
+            printf("Computing astronomical twilight\n");
+#endif
             astr = astronomical_twilight( year, month, day, lon, lat,
                                           &astr_start, &astr_end );
 
@@ -335,11 +349,13 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       t,          /* Diurnal arc */
       tsouth,     /* Time when Sun is at south */
       sidtime,    /* Local sidereal time */
-	delta;    /* Difference of *trise or *tset between an iteration and the next */
+      delta;    /* Difference of *trise or *tset between an iteration and the next */
 
       int rc_r = 0; /* Return cde from sunrise computation - usually 0 */
       int rc_s = 0; /* Return cde from sunset  computation - usually 0 */
       int nb;       /* Number of iterations */
+
+      char buffer[30];
 
       /**** Computing sunrise time ****/
       /* Compute d of 12h local mean solar time */
@@ -347,6 +363,10 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       *trise = 12;
 
       for (nb = 0; nb < ITERMAX; nb++) {
+#if TRACE
+        format_hour(*trise, buffer);
+        printf("Iteration %2d using tsouth = %10.7f *trise = %s, delta = %10.7f\n", nb, tsouth, buffer, delta);
+#endif
 	/* Compute the local sidereal time of this moment */
 	sidtime = revolution( GMST0(d + (*trise - 12) / 24) + 180.0 + lon );
 
@@ -388,6 +408,10 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
           break;
 
       }
+#if TRACE
+      format_hour(*trise, buffer);
+      printf("Iteration %2d using tsouth = %10.7f *trise = %s, delta = %10.7f\n", nb, tsouth, buffer, delta);
+#endif
       if (nb >= ITERMAX)
         printf("Not converging\n");
 
@@ -397,6 +421,11 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       *tset = 12;
 
       for (nb = 0; nb < ITERMAX; nb++) {
+
+#if TRACE
+        format_hour(*tset, buffer);
+        printf("Iteration %2d using tsouth = %10.7f *tset = %s, delta = %10.7f\n", nb, tsouth, buffer, delta);
+#endif
 	/* Compute the local sidereal time of this moment */
 	sidtime = revolution( GMST0(d + (*tset - 12) / 24) + 180.0 + lon );
 
@@ -437,6 +466,10 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
         if (delta < EPSILON)
           break;
       }
+#if TRACE
+      format_hour(*tset, buffer);
+      printf("Iteration %2d using tsouth = %10.7f *tset = %s, delta = %10.7f\n", nb, tsouth, buffer, delta);
+#endif
       if (nb >= ITERMAX)
         printf("Not converging\n");
 
