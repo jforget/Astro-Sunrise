@@ -400,7 +400,7 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 	      else if ( cost <= -1.0 )
 		    rc_r = +1, t = 12.0;      /* Sun always above altit */
 	      else
-		    t = acosd(cost)/15.0;   /* The diurnal arc, hours */
+		    t = acosd(cost)/15.04107;   /* The diurnal arc, hours */
 	}
 
         /* How much did we progress? */
@@ -461,7 +461,7 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 	      else if ( cost <= -1.0 )
 		    rc_s = +1, t = 12.0;      /* Sun always above altit */
 	      else
-		    t = acosd(cost)/15.0;   /* The diurnal arc, hours */
+		    t = acosd(cost)/15.04107;   /* The diurnal arc, hours */
 	}
 
         /* How much did we progress? */
