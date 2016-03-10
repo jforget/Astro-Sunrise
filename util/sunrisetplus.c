@@ -365,7 +365,7 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       delta  = 99.0;
       altit1 = altit;
 
-      for (nb = 0; nb < ITERMAX; nb++) {
+      for (nb = 0; nb < ITERMAX && delta > EPSILON; nb++) {
 #if TRACE
         format_hour(tsouth, buffersouth);
         format_hour(*trise, buffer);
@@ -409,10 +409,6 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 	/* Store rise and set times - in hours UT */
 	*trise = tsouth - t;
 
-        /* Normal end of iteration */
-        if (delta < EPSILON)
-          break;
-
       }
 #if TRACE
       format_hour(tsouth, buffersouth);
@@ -429,7 +425,7 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       delta  = 99.0;
       altit1 = altit;
 
-      for (nb = 0; nb < ITERMAX; nb++) {
+      for (nb = 0; nb < ITERMAX && delta > EPSILON; nb++) {
 
 #if TRACE
         format_hour(tsouth, buffersouth);
@@ -473,10 +469,6 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 
 	/* Store rise and set times - in hours UT */
 	*tset  = tsouth + t;
-
-        /* Normal end of iteration */
-        if (delta < EPSILON)
-          break;
       }
 #if TRACE
       format_hour(tsouth, buffersouth);
