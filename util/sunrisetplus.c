@@ -377,8 +377,8 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 	/* Compute Sun's RA, Decl and distance at this moment */
 	sun_RA_dec( d + (*trise - 12) / 24, &sRA, &sdec, &sr );
 
-	/* Compute time when Sun is at south - in hours UT */
-	tsouth = 12.0 - rev180(sidtime - sRA)/15.0;
+        /* Compute time when Sun is at south - in hours UT */
+        tsouth = 12.0 - (sidtime - sRA)/15.0;
 
 	/* Compute the Sun's apparent radius in degrees */
 	sradius = 0.2666 / sr;
@@ -438,8 +438,8 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 	/* Compute Sun's RA, Decl and distance at this moment */
 	sun_RA_dec( d + (*tset - 12) / 24, &sRA, &sdec, &sr );
 
-	/* Compute time when Sun is at south - in hours UT */
-	tsouth = 12.0 - rev180(sidtime - sRA)/15.0;
+        /* Compute time when Sun is at south - in hours UT */
+        tsouth = 12.0 - (sidtime - sRA)/15.0;
 
 	/* Compute the Sun's apparent radius in degrees */
 	sradius = 0.2666 / sr;
