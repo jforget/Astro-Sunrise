@@ -350,7 +350,8 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
       tsouth,     /* Time when Sun is at south */
       sidtime,    /* Local sidereal time */
       delta,      /* Difference of *trise or *tset between an iteration and the next */
-      altit1;     /* Altitude of the center of the solar disk */
+      altit1,     /* Altitude of the center of the solar disk */
+      t_old;      /* sunrise or sunset time computed at the previous iteration */
 
       int rc_r = 0; /* Return cde from sunrise computation - usually 0 */
       int rc_s = 0; /* Return cde from sunset  computation - usually 0 */
@@ -377,8 +378,17 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 	/* Compute Sun's RA, Decl and distance at this moment */
 	sun_RA_dec( d + (*trise - 12) / 24, &sRA, &sdec, &sr );
 
+        /* Ensure sidtime and sRA are not a whole turn apart */
+        if (sidtime < sRA - 180)
+          sidtime += 360;
+        if (sidtime > sRA + 180)
+          sidtime -= 360;
+ 
         /* Compute time when Sun is at south - in hours UT */
         tsouth = 12.0 - (sidtime - sRA)/15.0;
+#if TRACE
+        printf("sidtime = %10.7f sRA = %10.7f\n", sidtime, sRA);
+#endif
 
 	/* Compute the Sun's apparent radius in degrees */
 	sradius = 0.2666 / sr;
@@ -403,11 +413,16 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 		    t = acosd(cost)/15.04107;   /* The diurnal arc, hours */
 	}
 
-        /* How much did we progress? */
-        delta  = fabs(tsouth - t - *trise);
+        /* Store rise and set times - in hours UT */
+        t_old = *trise;
+        *trise = tsouth - t;
+        if (*trise - t_old < -12)
+          *trise += 24;
+        if (*trise - t_old > 12)
+          *trise -= 24;
 
-	/* Store rise and set times - in hours UT */
-	*trise = tsouth - t;
+        /* How much did we progress? */
+        delta  = fabs(*trise - t_old);
 
       }
 #if TRACE
@@ -438,8 +453,17 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 	/* Compute Sun's RA, Decl and distance at this moment */
 	sun_RA_dec( d + (*tset - 12) / 24, &sRA, &sdec, &sr );
 
+        /* Ensure sidtime and sRA are not a whole turn apart */
+        if (sidtime < sRA - 180)
+          sidtime += 360;
+        if (sidtime > sRA + 180)
+          sidtime -= 360;
+ 
         /* Compute time when Sun is at south - in hours UT */
         tsouth = 12.0 - (sidtime - sRA)/15.0;
+#if TRACE
+        printf("sidtime = %10.7f sRA = %10.7f\n", sidtime, sRA);
+#endif
 
 	/* Compute the Sun's apparent radius in degrees */
 	sradius = 0.2666 / sr;
@@ -464,11 +488,16 @@ int __sunriset__( int year, int month, int day, double lon, double lat,
 		    t = acosd(cost)/15.04107;   /* The diurnal arc, hours */
 	}
 
-        /* How much did we progress? */
-        delta  = fabs(tsouth + t - *tset);
+        /* Store set and set times - in hours UT */
+        t_old = *tset;
+        *tset = tsouth + t;
+        if (*tset - t_old < -12)
+          *tset += 24;
+        if (*tset - t_old > 12)
+          *tset -= 24;
 
-	/* Store rise and set times - in hours UT */
-	*tset  = tsouth + t;
+        /* How much did we progress? */
+        delta  = fabs(*tset - t_old);
       }
 #if TRACE
       format_hour(tsouth, buffersouth);
