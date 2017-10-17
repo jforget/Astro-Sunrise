@@ -1,7 +1,7 @@
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Perl extension for computing the sunrise/sunset on a given day
-#     Copyright (C) 1999-2003, 2013, 2015 Ron Hill and Jean Forget
+#     Copyright (C) 1999-2003, 2013, 2015, 2017 Ron Hill and Jean Forget
 #
 #     See the license in the embedded documentation below.
 #
@@ -998,7 +998,7 @@ Brian D Foy for providing patch for constants :)
 
 Gabor Szabo for pointing POD mistakes.
 
-People at L<http://geocoder.opencagedata.com/> for noticing an endless
+People at L<https://geocoder.opencagedata.com/> for noticing an endless
 loop condition and for fixing it.
 
 =head1 CREDITS
@@ -1036,7 +1036,7 @@ GNU Public License version 1 or later and Perl Artistic License
 
 You can find the text of the licenses in the F<LICENSE> file or at
 L<http://www.perlfoundation.org/artistic_license_1_0>
-and L<http://www.gnu.org/licenses/gpl-1.0.html>.
+and L<https://www.gnu.org/licenses/gpl-1.0.html>.
 
 Here is the summary of GPL:
 
@@ -1052,7 +1052,7 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software Foundation,
-Inc., L<http://www.fsf.org/>.
+Inc., L<https://www.fsf.org/>.
 
 =head2 Original C program
 

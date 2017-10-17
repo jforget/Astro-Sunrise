@@ -8,6 +8,8 @@ Check version number in:
 -- Makefile.PL
 -- (2x) lib/Astro/Sunrise.pm, code ($VERSION) and POD (=head1 VERSION)
 
+Check URL, replacing http by https when possible
+
 Kwalitee: do not bother with "has known license in source file". Check all others
 
 MANIFEST: among others, check that all new test files are mentionned

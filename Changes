@@ -3,10 +3,11 @@
 Revision history for Perl extension sunrise.
 
 0.97  ???
+      - change http to https whenever possible
 
 0.96  Wednesday 2 December 2015
       - Fix ticket 109992, prevent endless loops
-        (thank you http://geocoder.opencagedata.com/)
+        (thank you https://geocoder.opencagedata.com/)
 
 0.95  Tuesday 21 April 2015
       - Some improvements in the POD documentation.
