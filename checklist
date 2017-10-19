@@ -26,3 +26,22 @@ Check contents of META.{json,yml}:
   version number (2x)
   runtime recommends DateTime 0.16
   minimum perl version
+  dynamic config 0
+  provides (with version number)
+  prerequisite: strict and warnings
+
+
+After release
+=============
+
+Github:
+    git tag -m 'Release to CPAN' v0.13
+    git push --tags -u origin master
+
+Change version number in:
+-- Changes
+-- Makefile.PL
+-- README
+-- lib/Astro/Sunrise.pm
+
+
