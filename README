@@ -22,6 +22,7 @@ DEPENDENCIES
 This module requires these other modules and libraries:
   Math::Trig
   POSIX
+  Carp
 
 The following module is recommended:
   DateTime.pm
@@ -63,4 +64,10 @@ SYNOPSIS
                                 lon => -111.88,  # 111°53'W
                                 alt => -0.833,   # standard value for the sun altitude at sunset
                                 offset => 1 } ); # day offset up to tomorrow
+
+FURTHER DOCUMENTATION
+
+The distribution contains a "doc" subdirectory with a text giving the 
+astronomical context of this module. This text has a French and an English
+versions. Beware, it is a work in progress.
 

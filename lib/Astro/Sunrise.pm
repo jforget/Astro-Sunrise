@@ -1094,4 +1094,7 @@ L<DateTime::Event::Sunrise>
 
 L<DateTime::Event::Jewish::Sunrise>
 
+The text F<doc/astronomical-notes.pod> (or its original French version
+F<doc/notes-astronomiques>) in this distribution.
+
 =cut
