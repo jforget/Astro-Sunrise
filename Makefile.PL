@@ -57,7 +57,7 @@ WriteMakefile(
        provides       => {
            'Astro::Sunrise' => {
                 file => 'lib/Astro/Sunrise.pm',
-                version => '0.97',
+                version => '0.98',
            },
        },
        'meta-spec' => { version => 2 },
