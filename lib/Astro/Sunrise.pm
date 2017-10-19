@@ -574,7 +574,7 @@ This documentation refers to C<Astro::Sunrise> version 0.97.
   use Astro::Sunrise;
   my ($sunrise, $sunset) = sunrise( { year => 2015, month => 9, day => 2, # YAPC::EU starts on 2nd September 2015
                                       lon  => -3.6, lat   => 37.17,       # Granada is 37°10'N, 3°36'W
-                                      tz   => 1,    dst   => 1 } );       # This is still summer, therefore DST
+                                      tz   => 1,    isdst => 1 } );       # This is still summer, therefore DST
 
   # When does the sun rise today in Salt Lake City (home to YAPC::NA 2015)?
   use Astro::Sunrise;
