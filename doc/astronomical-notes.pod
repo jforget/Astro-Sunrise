@@ -36,7 +36,7 @@ precise iterative algorithm, because
 L<Paul Schlyter's explanations|http://www.stjarnhimlen.se/comp/riset.html#3>
 are not detailed enough for my taste and there is no
 compilable source available to check this algorithm (unlike the 
-L<simple version without iteration|http://www.stjarnhimlen.se/comp/sunriset.c>.
+L<simple version without iteration|http://www.stjarnhimlen.se/comp/sunriset.c>).
 
 =head2 For Whom? For The Next Module Maintainer
 
@@ -126,7 +126,7 @@ specified.
 
 =item The I<Institut de Mécanique Céleste et de Calcul des Éphémérides> (IMCCE, Institute of Celestial Mechanics and Ephemerides Computation)
 
-This L<site|https://www.imcce.fr/langues/fr/index.html>
+This L<website|https://www.imcce.fr/langues/fr/index.html>
 (also available in L<english|https://www.imcce.fr/langues/en/index.html>)
 used to give an HTML form to generate a table giving the sunrise and sunset times
 for a location and a time span  of your choosing. Unfortunately, this webpage
@@ -151,7 +151,7 @@ ready to compile and use, giving the
 L<sunrise and sunset|http://stjarnhimlen.se/comp/riset.html> 
 times. This is the basis of the simple algorithm used in
 C<Astro::Sunrise>. Its precision, as stated by the author,
-is oneor two minutes, but it can be much less precise depending
+is one or two minutes, but it can be much less precise depending
 on the location and date, especially when we are close to the
 beginning or the end of the period when the midnight sun is visible.
 
@@ -164,7 +164,7 @@ and not bothering with other celestial bodies.
 
 =item The U.S Naval Observatory
 
-L<The US Naval Obseravtory|http://aa.usno.navy.mil/faq/index.php> 
+L<The US Naval Observatory|http://aa.usno.navy.mil/faq/index.php> 
 gives a
 L<HTML form|http://aa.usno.navy.mil/data/docs/RS_OneYear.php>
 to compute the sunrise and sunset times. These times are given
@@ -183,7 +183,9 @@ the main view giving a real time sky simulation, you can use it to obtain
 the coordinates of a given celestial body at a given time when seen from
 a given Earth location.
 
-To be completed
+TO BE COMPLETED
+
+=back
 
 =head1 Heliocentrism Or Geocentrism?
 
@@ -303,7 +305,7 @@ in accordance with the actual observations"
 
 Excerpt from Osiander's preface to Copernic's book. This excerpt was reused
 by Jean-Pierre Petit as a foreword to
-L<Cosmic Story|ww.savoir-sans-frontieres.com/JPP/telechargeables/English/cosmic_story_anglo_indien/cosmic_story_en.html>.
+L<Cosmic Story|http://www.savoir-sans-frontieres.com/JPP/telechargeables/English/cosmic_story_anglo_indien/cosmic_story_en.html>.
 In Copernic's time, Osiander wanted to have heliocentrism accepted
 by people who were certain that geocentrism was the one and only truth.
 It is ironical that I use the same quotation to have geocentrism accepted
