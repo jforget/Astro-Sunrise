@@ -245,8 +245,6 @@ qui produit la meilleure approximation de l'azimuth ou de la hauteur recherché.
 
 =back
 
-=back
-
 =head1 Héliocentrisme ou géocentrisme ?
 
 De ces deux propositions, laquelle est vraie et laquelle est S<fausse ?>
