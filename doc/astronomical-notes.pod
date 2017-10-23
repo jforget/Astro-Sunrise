@@ -321,6 +321,8 @@ the Earth's surface is a perfect sphere, without any mountains, valleys or moleh
 and, as I have already stated, all interesting locations
 on Earth are between the Tropic of Cancer and the Arctic Circle.
 
+=back
+
 =head2 Conclusion
 
 All this to explain that in the following text, I will not refrain from using
