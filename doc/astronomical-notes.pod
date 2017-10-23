@@ -38,6 +38,11 @@ are not detailed enough for my taste and there is no
 compilable source available to check this algorithm (unlike the 
 L<simple version without iteration|http://www.stjarnhimlen.se/comp/sunriset.c>).
 
+Have you read
+L<brian's Guide to Solving Any Perl Problem|http://www252.pair.com/~comdog/brian's_guide.pod>?
+One of the advices consists in "talking to the teddy-bear".
+I prefer writing (on GitHub) for my teddy-bear.
+
 =head2 For Whom? For The Next Module Maintainer
 
 The second person for whom I write is the next module maintainer. I have read
@@ -54,7 +59,7 @@ the module and be enthusiastic enough to get around to it.
 In the case of astronomical module, the competence in Perl programming is
 not enough, you must also be competent in astronomy. So, if you think you might
 maintain this module, first read the present text. If you understand why I bother
-about such and such question, if you can follow my train of thought with being
+about such and such question, if you can follow my train of thought without being
 lost, then you are competent enough. If you think I am playing
 L<Captain Obvious|http://tvtropes.org/pmwiki/pmwiki.php/Main/CaptainObvious>
 and if you have instant answers to my questions, then you are the ideal
@@ -189,7 +194,7 @@ TO BE COMPLETED
 
 =head1 Heliocentrism Or Geocentrism?
 
-From those two assertions below, which one is true and which one is false?
+Here are two assertions. Are they true of false?
 
 =over 4
 
@@ -212,7 +217,7 @@ Oh yes indeed, will you answer, it should read actually:
 =item C
 
 The Earth runs along an elliptic orbit with the Sun located on
-one focus of the ellipsis.
+one focus of the ellipse.
 
 =back
 
@@ -225,7 +230,7 @@ is nearer to the truth than assertions B and C (and A).
 
 The center of mass of the Earth-Moon binary system runs along an
 elliptic orbit with the center of mass of the Solar System located
-on a focus of the ellipsis.
+on a focus of the ellipse.
 
 And I will point that the center of mass of the Sun is not the same
 as the center of mass of the Solar System. There are even times when
@@ -255,7 +260,7 @@ years, this prediction is no longer possible for an interval of one milliard yea
 
 =item H
 
-The Earth moves in the general direction of the Hercules constellation
+The Earth corkscrews in the general direction of the Hercules constellation
 with a approximate speed of 220 km/s.
 
 =item I

@@ -43,6 +43,12 @@ dans son site web et qu'il n'a pas mis à disposition du public
 sous une forme compilable et exécutable (contrairement à la
 L<version simple sans itération|http://www.stjarnhimlen.se/comp/sunriset.c>).
 
+Avez-vous lu 
+L<Le guide de brian pour résoudre tout problème Perl|http://articles.mongueurs.net/traductions/guide_brian.html> ?
+L'un des conseils consiste à 
+L<parler à votre nounours|http://articles.mongueurs.net/traductions/guide_brian.html#item_En_avez_vous_parl__au_nounours_nbsp__>.
+Au lieu de cela, je préfère écrire à mon nounours via GitHub.
+
 =head2 Pour qui ? pour le prochain mainteneur du module
 
 Le deuxième destinataire de ce texte, c'est le futur mainteneur
@@ -249,7 +255,7 @@ qui produit la meilleure approximation de l'azimuth ou de la hauteur recherché.
 
 =head1 Héliocentrisme ou géocentrisme ?
 
-De ces deux propositions, laquelle est vraie et laquelle est S<fausse ?>
+Voici deux propositions. Sont-elles vraies ou S<fausses ?>
 
 =over 4
 
@@ -318,7 +324,7 @@ un intervalle d'un milliard d'années.
 
 =item H
 
-La Terre se déplace dans la direction générale de la constellation Hercule
+La Terre se déplace en colimaçon dans la direction générale de la constellation Hercule
 à la vitesse approximative de 220 km/s.
 
 =item I
@@ -333,7 +339,7 @@ pour les S<enfants »> (I<la Science du Disque-Monde>, chapitre 4, pages 38 et 3
 la version originale). Ce sont des énoncés faux, mais suffisamment simples pour être compris par des
 enfants et qui, malgré leur inexactitude, font progresser lesdits enfants vers la
 vérité. Il est illusoire de faire comprendre à un enfant l'énoncé C
-s'il n'a pas déjà appris et admis l'énoncé B. Et c'est la même chose, en pire,
+s'il n'a pas déjà appris, compris et admis l'énoncé B. Et c'est la même chose, en pire,
 avec les énoncés D et suivants.
 
 Qui plus est, ce sont des S<« mensonges> pour les S<adultes »>. Au début, on considérait
@@ -455,7 +461,7 @@ Terre et le Soleil, permettez-moi une petite digression.
 
 J'ai horreur de ces gens qui, chaque fois qu'il neige, s'exclament
 S<« Et> dire qu'on nous parle de réchauffement 
-<climatique ! »> Le climat et la météo sont deux choses différentes.
+S<climatique ! »> Le climat et la météo sont deux choses différentes.
 Quand la température relevée sous abri à S<5 heures> du matin
 varie de S<10 degrés> du jour au lendemain, c'est un événement
 météorologique ordinaire. Lorsque la température I<moyenne> sur dix ans
