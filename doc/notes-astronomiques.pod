@@ -358,12 +358,37 @@ pas de caractériser la publicité ou les campagnes électorales.
 Cela ne fait de doute pour personne ou presque que ce sont des tissus
 de mensonges.
 
-Autres mensonges pour les adultes utilisés dans ce S<texte :> la lumière se propage
-instantanément d'un point à l'autre de l'espace, les astres extérieurs au système solaire
-sont immobiles, ils sont situés sur une sphère appelée S<« sphère> S<céleste »>, le temps
-UTC et le temps GMT sont identiques et, ainsi que je l'ai déjà signalé, tous les endroits
+Autres mensonges pour les adultes utilisés dans ce S<texte :>
+
+=over 4
+
+=item *
+
+la lumière se propage instantanément d'un point à l'autre de l'espace,
+
+=item *
+
+les astres extérieurs au système solaire sont immobiles,
+
+=item *
+
+ils sont situés sur une sphère appelée S<« sphère> S<céleste »>,
+
+=item *
+
+le temps UTC et le temps GMT sont identiques
+
+=item *
+
+la Terre est parfaitement sphérique, sans la moindre montagne, la moindre vallée et la moindre taupinière,
+
+=item *
+
+et, ainsi que je l'ai déjà signalé, tous les endroits
 dignes d'intérêt sur la Terre se situent entre le tropique du Cancer et le cercle 
 polaire arctique.
+
+=back
 
 =head2 Conclusion
 

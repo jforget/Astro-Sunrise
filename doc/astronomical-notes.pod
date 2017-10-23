@@ -292,10 +292,33 @@ Please note that I was talking about scientific methods. I was not dealing with
 electoral campaigns and advertisements. Every sane adult knows for
 sure that these are ridden with lies.
 
-Other lies to adults you will find in the following: the light propagates instantly
-from one place to another, the celestial bodies outside the Solar System are 
-motionless, they are located on a sphere call the I<Celestial Sphere>, 
-UTC time is equal to GMT time and, as I have already stated, all interesting locations
+Other lies to adults you will find in the following:
+
+=over 4
+
+=item *
+
+the light propagates instantly from one place to another,
+
+=item *
+
+the celestial bodies outside the Solar System are motionless,
+
+=item *
+
+they are located on a sphere call the I<Celestial Sphere>, 
+
+=item *
+
+UTC time is equal to GMT time
+
+=item *
+
+the Earth's surface is a perfect sphere, without any mountains, valleys or molehills,
+
+=item *
+
+and, as I have already stated, all interesting locations
 on Earth are between the Tropic of Cancer and the Arctic Circle.
 
 =head2 Conclusion
