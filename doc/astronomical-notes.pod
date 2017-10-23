@@ -351,6 +351,33 @@ a 23° 26' angle. The intersection is a line, named I<line of nodes>.
 In some cases, it is more convenient to use a half-line than a line.
 In this case, the line of nodes is a half line starting at the Earth center
 and aiming at the Pisces constellation.
+The point where the line of nodes meets the celestial sphere is call
+I<vernal point> (which is politically incorrect, this is the beginning of
+autumn in the southern hemisphere).
+
+For a point on Earth, we generally use longitude and latitude. We start from
+an origin in the Gulf of Guinea, where the Greenwich meridian meets the equator.
+Then  we move along the equator in a first arc and along a meridian in a second arc
+to reach the point. The angle of the first arc is the longitude, the angle of the
+second arc is the latitude for a point on the ground. But when we consider a celestial body, the
+first angle is counted from the line of nodes instead of the Gulf
+of Guinea and is named I<right ascension>; the second angle is names I<declination>.
+
+I<Ecliptic coordinates> follow the same principle, but the first arc is drawn
+along the ecliptic instead of the equator. Likewise, the second arc is perpendicular
+to the ecliptic. These angles are named I<ecliptic longitude> and I<ecliptic latitude>
+respectively. The ecliptic longitude is counted from the same origine as the
+right ascension: the line of nodes. That simplifies a little bit the conversions
+between the two systems of coordinates.
+
+Because of the definition of the ecliptic plane, the ecliptic latitude of the
+sun is always zero.
+
+Lastly, there is the local coordinate system. For a given celestial body, we
+project its location to the ground, or rather to the plane that is tangent to
+the ground. The angle between the North and this location on the tangent plane
+is called I<azimuth> and the angle between the tangent plane and the line to the 
+celestial body is name I<altitude>.
 
 =head2 Other Movements
 

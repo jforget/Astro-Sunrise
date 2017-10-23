@@ -452,6 +452,11 @@ de conversion d'un système à l'autre.
 Notons qu'en raison de la définition de l'écliptique, la latitude écliptique
 du soleil est toujours égale à zéro.
 
+Finalement, il y a le système de coordonnées locales. Pour un astre dans le
+ciel, on cherche la projection sur le sol ou plus exactement sur le plan tangent
+au sol. L'angle entre le nord et cette projection est appelé S<« azimut »>
+et l'angle entre la projection et l'astre lui-même est appelé S<« hauteur »>.
+
 =head2 Les autres mouvements
 
 Avant d'évoquer les autres mouvements faisant intervenir la
