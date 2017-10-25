@@ -3,7 +3,9 @@
 Revision history for Perl extension sunrise.
 
 0.98   ???
-      - ???
+      - Add stuff in the text documenting the astronomical background of the module
+      - Fix POD typos
+      - Automatic testing of POD files with Test::Pod
 
 0.97  Thursday 19 October 2017
       - Change http to https whenever possible
