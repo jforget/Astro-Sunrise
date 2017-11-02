@@ -344,7 +344,8 @@ avec les énoncés D et suivants.
 
 Qui plus est, ce sont des S<« mensonges> pour les S<adultes »>. Au début, on considérait
 que la physique était une représentation mathématique du monde réel, se rapprochant de plus
-en plus de la vérité ultime. Puis il y a eu le principe de de Broglie et son
+en plus de la vérité ultime. Puis il y a eu, la physique quantique avec
+notamment le principe de de Broglie et son
 interprétation par l'école de Copenhague. La nature ultime de l'électron (par exemple)
 est-elle S<corpusculaire ?> Est-elle S<ondulatoire ?> La réponse est S<« Ni> l'une
 ni l'autre et du toutes façons, on s'en S<fiche. »> La vocation de la physique n'est
