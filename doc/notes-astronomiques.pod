@@ -390,6 +390,9 @@ polaire arctique.
 
 =back
 
+Remarquez que, de temps en temps, dans certains paragraphes, je laisserai tomber certains de ces
+mensonges. Toutefois, la plupart du temps, tous ces mensonges sont en vigueur.
+
 =head2 Conclusion
 
 Tout ça pour dire que dans la suite, j'utiliserai aussi bien le modèle
@@ -480,6 +483,7 @@ du soleil est toujours égale à zéro.
 Finalement, il y a le système de coordonnées locales. Pour un astre dans le
 ciel, on cherche la projection sur le sol ou plus exactement sur le plan tangent
 au sol. L'angle entre le nord et cette projection est appelé S<« azimut »>
+(ou S<« azimuth »>)
 et l'angle entre la projection et l'astre lui-même est appelé S<« hauteur »>.
 
 =head2 Les autres mouvements

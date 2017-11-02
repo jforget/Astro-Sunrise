@@ -279,7 +279,8 @@ it without telling him first assertion B. And it is worse with assertions D and 
 
 Moreover, these are I<lies to adults>. In the beginning, people would consider that
 the aim of Physics was to build a mathematical representation of the real world,
-getting closer and closer to the ultimate truth. Then, there was de Broglie's work
+getting closer and closer to the ultimate truth. Then, there was quantum physics
+including especially de Broglie's work
 with the duality of wave and particle and the Copenhagen interpretation. Is the ultimate
 nature of the electron (for example) a wave? No. Is it a particle? No. So what? We do not
 care about the ultimate nature of the electron. The aim of Physics is to no longer
@@ -322,6 +323,9 @@ and, as I have already stated, all interesting locations
 on Earth are between the Tropic of Cancer and the Arctic Circle.
 
 =back
+
+In some paragraphs, I will temporarily set aside some of these lies. But in most
+paragraphs all these lies will be in effect.
 
 =head2 Conclusion
 
@@ -368,7 +372,7 @@ to this question later.
 
 =head2 Coordinates
 
-The ecliptic if the plane where the Earth's orbit around the Sun is located (when
+The ecliptic is the plane where the Earth's orbit around the Sun is located (when
 using an heliocentric model) or where the Sun's orbit around the Earch is 
 located (when using a geocentric model). We define also the equatorial plane,
 the plane which contains the Earth's equator. These two planes intersect with
@@ -376,7 +380,7 @@ a 23° 26' angle. The intersection is a line, named I<line of nodes>.
 In some cases, it is more convenient to use a half-line than a line.
 In this case, the line of nodes is a half line starting at the Earth center
 and aiming at the Pisces constellation.
-The point where the line of nodes meets the celestial sphere is call
+The point where the line of nodes meets the celestial sphere is called
 I<vernal point> (which is politically incorrect, this is the beginning of
 autumn in the southern hemisphere).
 
