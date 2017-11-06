@@ -410,15 +410,76 @@ celestial body is name I<altitude>.
 
 =head2 Other Movements
 
+Before I explain the other movements involved with the
+Sun and the Earth, let me tell you a little digressive note.
+
 =head3 Weather And Climate
+
+I hate these people who, each time snow falls, cry
+"Where is this global warming scientists talk about
+again and again?" These people seem to ignore that
+climate and weather are two different things. When
+the temperature from a meteorologic station varies
+by 10 degrees C from one day to the following, this
+is a mundane meteorological event. When the I<average>
+temperature for a decade varies by 2 degrees C from
+one century to the next, this is a catastrophic
+climate event.
+
+The movements I explain below are more "climatic" and
+less "meteorogical" than Earth's spin and orbital
+rotation. Their values over a short timespan are so
+low that the algorithms computing astronomical positions
+over a short timespan do not care about them.
+
+Note: weather (but not climate) will come back in a few
+chapters, but as a real phenomenon, not as a metaphor.
 
 =head3 Equinox Precession
 
+The best known movement with a long timescale is the
+equinox precession. Presently, the vernal point lies
+within the constellation of Pisces. But actually, it moves
+all along the ecliptic, making a whole turn in about
+26,000 years.
+
 =head3 Nutation
+
+The angle between the equatorial plane and the ecliptic
+plane varies slightly. I did not find the characteristics of this
+movement.
 
 =head3 Perihelion Precession
 
+There is also the perihelion precession. This movement
+is best known for Mercury, because it is the most apparent,
+but all other planets have a perihelion precession, including
+the Earth.
+
 =head3 Other Drifts And fluctuations
+
+The formulas computing the positions of celestial bodies
+use some constants. But these values are constant only
+on a short timespan (astronomically speaking; or, with the
+metaphor above, on a meteorological timespan). For example,
+everybody knows that the day lasts 24 hours (the mean
+solar day, not the sidereal day). Yet, as I have read it
+somewhere, in paleontological times, it used to last
+22 hours or so.
+
+The variation of the duration of the day is a tiny
+variation, but with our modern measure isntruments, we
+can measure it. Since the scientists abolished the
+astronomical standard of time for an atomic
+standard, it has been necessary to add 27 leap seconds
+over 47 years to synchronise the atomic timescale with
+the Earth's spin.
+
+For the moment, all adjustments have consisted in
+adding a leap second. But it can happen that we
+would have to synchronise in the other direction by removing
+a second. So this phenomenon produces fluctuations
+rather than a slow drift in a single direction.
 
 =head3 The Equation Of Time And The Analemma
 
