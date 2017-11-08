@@ -1,0 +1,294 @@
+#!/usr/bin/perl
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
+#
+#     Utility script for Astro::Sunrise's astronomical documentation
+#     Copyright (C) 2017 Jean Forget
+#
+#     This program is distributed under the same terms as Perl 5.16.3:
+#     GNU Public License version 1 or later and Perl Artistic License.
+#     More on that in the POD below
+#
+
+use v5.10;
+use strict;
+use warnings;
+use Getopt::Long;
+use Astro::Sunrise (':trig');
+
+my ($obl, $ra, $decl, $format);
+GetOptions( 'obliq:s'          => \$obl,
+            'rightascension:s' => \$ra,
+            'declination:s'    => \$decl,
+            'format:s'         => \$format,
+     )
+  or die "problem with the options";
+
+my %format = ( dms  => \&dec_to_dms,
+               ddec => sub { sprintf "%.4f°", @_ },
+    );
+$format //= 'ddec';
+unless ($format{$format}) {
+  die "unknown format $format";
+}
+
+unless (defined($ra)) {
+  die "Please specify a right ascension";
+}
+$decl //= "0h";
+$ra   = parse_angle("right ascension", $ra);
+$decl = parse_angle("declination",     $decl);
+
+$obl //= q(23°26');
+$obl = parse_angle("obl", $obl);
+
+
+my ($long, $lat) = conv($ra, $decl, $obl);
+$long = $format{$format}->($long);
+$lat  = $format{$format}->($lat);
+say "Ecliptic longitude $long, ecliptic latitude $lat";
+exit(0);
+
+sub parse_angle {
+  my ($param, $value) = @_;
+
+  # decimal degrees
+  if ($value =~ /^(?:-)?\d+(?:[.,]\d+)?°$/) {
+    $value =~ tr/,/./;
+    $value =~ s/°//;
+    return 0 + $value;
+  }
+
+  # decimal hours
+  if ($value =~ /^(?:-)?\d+(?:[.,]\d+)?h$/) {
+    $value =~ tr/,/./;
+    $value =~ s/h//;
+    return 15 * $value;
+  }
+
+  # degrees, minutes, seconds
+  if ($value =~ /^(-)?            # optional minus sign
+                  (\d+)°          # degree value
+                  (?:(\d{1,2})')? # optional minute value
+                  (?:(\d{1,2})")? # optional second value
+                  $/x) {
+    my ($sign, $degree, $minute, $second) = ($1, $2, $3, $4);
+    $minute //= 0;
+    $second //= 0;
+    my $mult = 1;
+    if ($sign // '+' eq '-') {
+      $mult = -1;
+    }
+    return $mult * ($degree + $minute / 60 + $second / 3600);
+  }
+
+  # hours, minutes, seconds
+  if ($value =~ /^(-)?             # optional minus sign
+                  (\d+)h           # hour value
+                  (?:(\d{1,2})mn)? # optional minute value
+                  (?:(\d{1,2})s)?  # optional second value
+                  $/x) {
+    my ($sign, $hour, $minute, $second) = ($1, $2, $3, $4);
+    $minute //= 0;
+    $second //= 0;
+    my $mult = 1;
+    if ($sign // '+' eq '-') {
+      $mult = -1;
+    }
+    return $mult * 15 * ($hour + $minute / 60 + $second / 3600);
+  }
+
+  # ????
+  die "Wrong format for parameter $param : $value";
+}
+
+sub conv {
+  my ($ra, $decl, $obl)= @_;
+
+  my ($x_eq, $y_eq, $z_eq); # cartesian coordinates relative to the equator
+  $x_eq  = cosd($ra) * cosd($decl);
+  $y_eq  = sind($ra) * cosd($decl);
+  $z_eq  =             sind($decl);
+
+  my ($x_ecl, $y_ecl, $z_ecl); # cartesian coordinates on the Ecliptic
+  $x_ecl = $x_eq;
+  $y_ecl =   cosd($obl) * $y_eq + sind($obl) * $z_eq;
+  $z_ecl = - sind($obl) * $y_eq + cosd($obl) * $z_eq;
+
+  my ($long, $lat);
+  $long = atan2d($y_ecl, $x_ecl);
+  $lat  = atan2d($z_ecl, sqrt($x_ecl * $x_ecl + $y_ecl * $y_ecl));
+  return ($long, $lat);
+}
+
+sub dec_to_dms {
+  my ($angle) = @_;
+  my $sign = '';
+  if ($angle < 0) {
+    $sign   = '-';
+    $angle *= -1;
+  }
+  my $deg = int($angle);
+  $angle -= $deg;
+  $angle *= 60;
+  my $min = int($angle);
+  $angle -= $min;
+  $angle *= 60;
+  my $sec = int($angle);
+  return sprintf(q<%s%02d°%02d'%02d">, $sign, $deg, $min, $sec);
+}
+
+
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+conv-eq-ecl -- utility script to convert equatorial coordinates to ecliptic coordinates
+
+=head1 SYNOPSIS
+
+According to Stellarium, on 1st January 2000, the coordinates of Regulus were 10h,
+8mn 22s for the right ascension and 11° 58' 2" for the declination, that is,
+11.9672° in decimal notation. What about the ecliptic coordinates?
+
+  conv-eq-ecl --rightascension=10h8mn22s --declination=11.9672° --format=dms
+  # --> Ecliptic longitude 149°49'40", ecliptic latitude 00°28'02"
+
+  conv-eq-ecl --rightascension=10h8mn22s --declination=11.9672° --format=ddec
+  # --> Ecliptic longitude 149.8280°, ecliptic latitude 0.4674°
+
+=head1 DESCRIPTION
+
+This programme converts a right ascension and a declination into ecliptic
+coordinates.
+
+=head1 USAGE
+
+=head2 Parameters
+
+=over 4
+
+=item rightascension
+
+Mandatory. The keyword can be abbreviated to C<-r>.
+
+=item declination
+
+Optional, default to 0°. The keyword can be abbreviated to C<-d>.
+
+=item obliq
+
+Obliquity between the equatorial plane and the ecliptic plane.
+
+Optional, default is 23°26'. The keyword can be abbreviated to C<-o>.
+
+=item format
+
+The output format for the ecliptic longitude and latitude.
+
+Possible values are C<ddec>, decimal degrees such as C<12.5822> or C<dms> for
+degrees, minutes and seconds, such as C<12°34'56">.
+
+Optional, the default value is C<ddec>.
+
+=back
+
+=head2 Input Angle Format
+
+Except for the output format, the parameters are angles in degrees or in
+hours. Traditionnally, the right ascension is expressed as hours, while the
+declination and obliquity are expressed as degrees. With the present script, you
+can use degrees for the right ascension and hours for the declination and the
+obliquity if you like.
+
+The parameters can be entered as numerical value, with an optional minus sign, an
+integer part and an optional fractional part separated from the integer part by a
+decimal mark (point or comma) and the unit: C<h> or C<°>. The decimal mark is
+forbidden if there is no fractional part. The unit, C<h> or C<°>, is mandatory.
+
+The parameters can also be entered as hours, minutes and seconds.  They consist in
+an optional minus sign, a mandatory integer degree part ending with C<h>, an
+optional integer minute part ending with C<mn> and an optional integer second part
+ending with C<s>. Even if, traditionally, only the right ascension uses hours,
+minutes, seconds, all input angles can use this format.
+
+The parameters can also be entered as degrees, minutes and seconds.  They consist
+in an optional minus sign, a mandatory integer degree part ending with C<°>, an
+optional integer minute part ending with C<'> and an optional integer second part
+ending with C<">.
+
+Note that when you use hours for the angles, the corresponding minutes and seconds
+symbols are C<mn> and C<s>. When using degrees, the minutes and seconds symbols
+are C<'> and C<">. Do not mix them.
+
+Bad news: if you call this script from shell, you will have trouble mixing the DMS
+format with the shell's quoting rules. With only degrees, you can use:
+
+  conv-eq-ecl --rightascension=12°
+  conv-eq-ecl --rightascension='12°'
+  conv-eq-ecl --rightascension="12°"
+
+With degrees and minutes, quoting becomes mandatory and you must use double quotes:
+
+  conv-eq-ecl --rightascension="12°34'"
+
+With degrees, minutes and seconds, you must enter the parameter as the
+concatenation of two strings, a double-quoted string for degrees and minutes and a
+single-quoted string for the seconds:
+
+  conv-eq-ecl --rightascension="12°34'"'56"'
+
+If you launch this script with C<exec> from another Perl script or from a C program
+or something like that, it is much easier
+
+  my $ra = q(12°34'56");
+  exec('conv-eq-ecl', "-rightascension=$ra");
+
+or even
+
+  exec('conv-eq-ecl', q(-rightascension=12°34'56"));
+
+Or you can use the decimal format
+
+  conv-eq-ecl --rightascension=12.5822°
+  conv-eq-ecl --rightascension=12,5822°
+
+=head1 BUGS
+
+I am not sure about the proper handling of plus and minus signs.
+
+=head1 AUTHOR
+
+Jean Forget (JFORGET at cpan dot org)
+
+=head1 COPYRIGHT and LICENSE
+
+This program is distributed under the same terms as Perl 5.16.3: GNU Public License
+version 1 or later and Perl Artistic License
+
+You can find the text of the licenses in the F<LICENSE> file or at
+L<http://www.perlfoundation.org/artistic_license_1_0> and
+L<https://www.gnu.org/licenses/gpl-1.0.html>.
+
+Here is the summary of GPL:
+
+This program is free software; you can redistribute it and/or modify it under the
+terms of the GNU General Public License as published by the Free Software
+Foundation; either version 1, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License along with this
+program; if not, write to the Free Software Foundation, Inc., L<https://www.fsf.org/>.
+
+=head1 SEE ALSO
+
+perl(1).
+
+L<Astro::Sunrise>
+
+=cut
