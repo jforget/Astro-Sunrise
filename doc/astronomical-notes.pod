@@ -391,13 +391,17 @@ to reach the point. The angle of the first arc is the longitude, the angle of th
 second arc is the latitude for a point on the ground. But when we consider a celestial body, the
 first angle is counted from the line of nodes instead of the Gulf
 of Guinea and is named I<right ascension>; the second angle is names I<declination>.
+The right ascension is usually expressed as hours, minutes and seconds instead of
+degrees. The declination still uses degrees.
 
 I<Ecliptic coordinates> follow the same principle, but the first arc is drawn
 along the ecliptic instead of the equator. Likewise, the second arc is perpendicular
 to the ecliptic. These angles are named I<ecliptic longitude> and I<ecliptic latitude>
 respectively. The ecliptic longitude is counted from the same origine as the
 right ascension: the line of nodes. That simplifies a little bit the conversions
-between the two systems of coordinates.
+between the two systems of coordinates. On the other hand, the use of hours, minutes
+and seconds for the right ascension and of degrees for all other angles
+is an unnecessary complication in the conversions.
 
 Because of the definition of the ecliptic plane, the ecliptic latitude of the
 sun is always zero.

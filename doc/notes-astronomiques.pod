@@ -468,6 +468,9 @@ I<coordonnées équatoriales>, c'est le même principe,
 sauf que l'origine du premier arc se trouve sur la ligne des nœuds
 et que les angles s'appellent 
 S<« ascension> S<droite »> et S<« déclinaison »>.
+Habituellement, l'ascension droite est exprimée en heures, minutes et secondes
+et non pas en degrés. J'essaierai de donner les deux valeurs chaque fois que
+j'en aurai besoin.
 
 Les I<coordonnées écliptiques> suivent le même principe,
 en traçant le premier arc le long de l'écliptique au lieu
@@ -476,7 +479,9 @@ perpendiculaire à l'écliptique. Les deux angles s'appellent
 S<« longitude> S<écliptique »> et S<« latitude> S<écliptique »>
 respectivement. La position origine de la longitude écliptique est la ligne des
 nœuds comme pour l'ascension droite, ce qui permet une simplification appréciable des formules
-de conversion d'un système à l'autre.
+de conversion d'un système à l'autre. D'un autre côté, l'utilisation 
+d'heures minutes et secondes pour l'ascension droite et de degrés pour
+tous les autres angles introduit une complication superflue à la conversion.
 
 Notons qu'en raison de la définition de l'écliptique, la latitude écliptique
 du soleil est toujours égale à zéro.
