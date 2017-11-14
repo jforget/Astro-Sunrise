@@ -460,7 +460,7 @@ is best known for Mercury, because it is the most apparent,
 but all other planets have a perihelion precession, including
 the Earth.
 
-=head3 Other Drifts And fluctuations
+=head3 Other Drifts And Fluctuations
 
 The formulas computing the positions of celestial bodies
 use some constants. But these values are constant only
@@ -485,5 +485,50 @@ would have to synchronise in the other direction by removing
 a second. So this phenomenon produces fluctuations
 rather than a slow drift in a single direction.
 
-=head3 The Equation Of Time And The Analemma
+=head3 The Equation Of Time
+
+There are other fluctuations, easier to measure and with a more
+"meteorological" and less "climatic" timescale. The I<true> solar noon
+does not occur on the same precise time as the I<mean> solar noon.
+There are two reasons.
+
+First, there is an angle between the ecliptical plane and the equatorial plane,
+therefore, a constant-speed rotation on the ecliptical plane does not translate
+to a constant-speed rotation when measured by right ascension on the equatorial 
+plane. The rate of variation of the right ascension is a variable rate.
+
+TO BE COMPLETED: numerical values
+
+Second, the rotational speed of Sun itself on the ecliptical plane is not a constant.
+It obeys Kepler's second law, with a rotational speed more or less inversely 
+proportional to the Earth-Sun distance.
+
+Q: You cannot apply Kepler's second law to a geocentric model!
+
+A: No. Kepler's second law applies to a barycentric model as D above. It applies
+I<approximately> to an heliocentric model as C. But once we have computed
+Earth's angular speed on its orbit around the Sun in model C, the computation of the
+Sun's coordinates and speed in the geocentric model B is very simple. Especially,
+the Sun's angular speed in a geocentric model is equal to the Earth's speed in
+an heliocentric model.
+
+Here are the Sun's positions for 2017, as given by Stellarium. The software
+gives the equatorial coordinates and I translate them  into ecliptic coordinates.
+
+  date       right asc.   declination  ecliptic longitude
+  4 January  18h59mn1s     -22°44'43"   -76°24'58" or -76,4162°
+  5 January  19h3mn24s     -22°38'18"   -75°23'58" or -75,3996°
+  3 July      6h48mn        22°58'35"   101°2'7"   or 101,0355°
+  4 July      6h52mn8s      22°53'39"   101°59'26" or 101,9907°
+
+This translates as a speed of 1.0166 degree per day in January at perigee (when
+in a geocentric model, that is perihelion in an heliocentric model) and a spped
+of 0.9552 degree per day in July at apogee (or aphelion).
+
+Both phenomena add to each other, so the Sun's angular speed measured on the 
+equatorial plane is not constant. Its mean value is 0.986 degree per day, but
+it varies
+TO BE COMPLETED
+
+=head4 The Analemma
 
