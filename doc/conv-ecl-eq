@@ -1,0 +1,237 @@
+#!/usr/bin/perl
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
+#
+#     Utility script for Astro::Sunrise's astronomical documentation
+#     Copyright (C) 2017 Jean Forget
+#
+#     This program is distributed under the same terms as Perl 5.16.3:
+#     GNU Public License version 1 or later and Perl Artistic License.
+#     More on than in the POD below
+#
+
+use v5.10;
+use strict;
+use warnings;
+use Getopt::Long;
+use Astro::Sunrise (':trig');
+
+my ($obl, $long, $lat, $step, $format);
+GetOptions( 'obliq:s'      => \$obl,
+            'longitude:s'  => \$long,
+            'latitude:s'   => \$lat,
+            'step:s'       => \$step,
+            'format:s'     => \$format,
+     )
+  or die "problem with the options";
+
+my %format = ( dms  => \&dec_to_dms,
+               hms  => \&dec_to_hms,
+               ddec => sub { sprintf "%.4f°", @_ },
+               hdec => sub { sprintf "%.4fh", ($_[0] / 15) },
+    );
+$format //= 'ddec';
+unless ($format{$format}) {
+  die "unknown format $format";
+}
+
+unless (defined($long) or defined($step)) {
+  die "Nothing to do! Please specify a 'longitude' parameter or a 'step' parameter";
+}
+$obl //= q(23°26');
+$obl = parse_angle("obl", $obl);
+if (defined $long) {
+  my $long_n = parse_angle("longitude", $long);
+  my $lat_n  = parse_angle("latitude",  $lat // '0');
+  my ($ra, $decl) = conv($long_n, $lat_n, $obl);
+  $ra   = $format{$format}->($ra);
+  $decl = $format{$format}->($decl);
+  say "Longitude : $long -> right asc $ra, declination $decl";
+  exit(0);
+}
+
+if (defined $step) {
+  die "not ready yet";
+}
+
+sub parse_angle {
+  my ($param, $entree) = @_;
+  if ($entree =~ /^(?:-)?\d+(?:[.,]\d+)?$/) {
+    $entree =~ tr/,/./;
+    return 0 + $entree;
+  }
+  if ($entree =~ /^(-)?            # optional minus sign
+                   (\d+)°          # degree value
+                   (?:(\d{1,2})')? # optional minute value
+                   (?:(\d{1,2})")? # optional second value
+                   $/x) {
+    my ($sign, $degree, $minute, $second) = ($1, $2, $3, $4);
+    $minute //= 0;
+    $second //= 0;
+    my $mult = 1;
+    if ($sign // '+' eq '-') {
+      $mult = -1;
+    }
+    return $mult * ($degree + $minute / 60 + $second / 3600);
+  }
+  die "Wrong format for parameter $param : $entree";
+}
+
+sub conv {
+  my ($long, $lat, $obl) = @_;
+  my ($x_ecl, $y_ecl, $z_ecl); # cartesian coordinates on the Ecliptic
+  $x_ecl = cosd($long) * cosd($lat);
+  $y_ecl = sind($long) * cosd($lat);
+  $z_ecl =               sind($lat);
+
+  my ($x_eq, $y_eq, $z_eq); # cartesian coordinates relative to the equator
+  $x_eq = $x_ecl;
+  $y_eq = cosd($obl) * $y_ecl - sind($obl) * $z_ecl;
+  $z_eq = sind($obl) * $y_ecl + cosd($obl) * $z_ecl;
+
+  my ($ra, $decl);
+  $ra = atan2d($y_eq, $x_eq);
+  $decl = atan2d($z_eq, sqrt($x_eq * $x_eq + $y_eq * $y_eq));
+  return ($ra, $decl);
+
+}
+
+sub dec_to_dms {
+  my ($angle) = @_;
+  my $sign = '';
+  if ($angle < 0) {
+    $sign   = '-';
+    $angle *= -1;
+  }
+  my $deg = int($angle);
+  $angle -= $deg;
+  $angle *= 60;
+  my $min = int($angle);
+  $angle -= $min;
+  $angle *= 60;
+  my $sec = int($angle);
+  return sprintf(q<%s%02d°%02d'%02d">, $sign, $deg, $min, $sec);
+}
+
+sub dec_to_hms {
+  my ($angle) = @_;
+  my $sign = '';
+  if ($angle < 0) {
+    $sign   = '-';
+    $angle *= -1;
+  }
+  $angle /= 15;
+  my $hr  = int($angle);
+  $angle -= $hr;
+  $angle *= 60;
+  my $min = int($angle);
+  $angle -= $min;
+  $angle *= 60;
+  my $sec = int($angle);
+  return sprintf(q<%s%02dh%02dmn%02ds>, $sign, $hr, $min, $sec);
+}
+
+
+__END__
+
+=encoding utf-8
+
+=head1 NAME
+
+conv-ecl-eq -- utility script to convert ecliptic coordinates to equatorial coordinates
+
+=head1 SYNOPSIS
+
+  conv-ecl-eq --long=10° --lat=22.5
+  conv-ecl-eq --step=0.986
+
+=head1 DESCRIPTION
+
+The basic use of this script is converting ecliptic longitudes and latitudes to right ascensions and
+delinations. A advanced use is to scan a liste of ecliptic longitudes and find the
+maximum difference between an input ecliptic longitude and the corresponding right
+ascension.
+
+=head1 USAGE
+
+=head2 Parameter Format
+
+The parameters are angles in degrees. They can be entered as numerical
+value, with an optional minus sign, an integer part and an optional
+fractional part separated from the integer part by a decimal mark
+(point or comma). The decimal mark is forbidden if there is no fractional
+part.
+
+The parameters can also be entered as degrees, minutes and seconds.
+They consist in an optional minus sign, a mandatory integer degree part ending
+with C<°>, an optional integer minute part ending with C<'> and an optional integer second
+part ending with C<">.
+
+Bad news: if you call this script from shell, you will have trouble mixing 
+the DMS format with the shell's quoting rules. With only degrees, you can use:
+
+  conv-ecl-eq --long=51°
+  conv-ecl-eq --long='51°'
+  conv-ecl-eq --long="51°"
+
+With degrees and minutes, quoting becomes mandatory and you must use double quotes:
+
+  conv-ecl-eq --long="51°28'"
+
+With degrees, minutes and seconds, you must enter the parameter as the concatenation
+of two strings, a double-quoted string for degrees and minutes and a single-quoted
+string for the seconds:
+
+  conv-ecl-eq --long="51°28'"'44"'
+
+If you launch this script with C<exec> from another Perl script or from
+a C program or something like that, it is much easier
+
+  my $lon = q(51°28'44");
+  exec('conv-ecl-eq', "-long=$long");
+
+or even
+
+  exec('conv-ecl-eq', q(-long=51°28'44"));
+
+Or you can use the decimal format
+
+  conv-ecl-eq --long=51.4789
+  conv-ecl-eq --long=51,4789
+
+
+=head1 AUTHOR
+
+Jean Forget (JFORGET at cpan dot org)
+
+=head1 COPYRIGHT and LICENSE
+
+This program is distributed under the same terms as Perl 5.16.3:
+GNU Public License version 1 or later and Perl Artistic License
+
+You can find the text of the licenses in the F<LICENSE> file or at
+L<http://www.perlfoundation.org/artistic_license_1_0>
+and L<https://www.gnu.org/licenses/gpl-1.0.html>.
+
+Here is the summary of GPL:
+
+This program is free software; you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation; either version 1, or (at your option)
+any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software Foundation,
+Inc., L<https://www.fsf.org/>.
+
+=head1 SEE ALSO
+
+perl(1).
+
+L<Astro::Sunrise>
+
+=cut
