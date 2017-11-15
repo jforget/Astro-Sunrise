@@ -570,7 +570,7 @@ This documentation refers to C<Astro::Sunrise> version 0.98.
 
 =head1 SYNOPSIS
 
-  # When will the sun rise on YAPC::Europe 2015?
+  # When did the sun rise on YAPC::Europe 2015?
   use Astro::Sunrise;
   my ($sunrise, $sunset) = sunrise( { year => 2015, month => 9, day => 2, # YAPC::EU starts on 2nd September 2015
                                       lon  => -3.6, lat   => 37.17,       # Granada is 37°10'N, 3°36'W

@@ -522,7 +522,7 @@ gives the equatorial coordinates and I translate them  into ecliptic coordinates
   4 July      6h52mn8s      22°53'39"   101°59'26" or 101,9907°
 
 This translates as a speed of 1.0166 degree per day in January at perigee (when
-in a geocentric model, that is perihelion in an heliocentric model) and a spped
+in a geocentric model, that is perihelion in an heliocentric model) and a speed
 of 0.9552 degree per day in July at apogee (or aphelion).
 
 Both phenomena add to each other, so the Sun's angular speed measured on the 
@@ -532,3 +532,20 @@ TO BE COMPLETED
 
 =head4 The Analemma
 
+The irregularity of the Sun's trajectory can be visualised by using the Local Mean Time
+as a reference and pinpointing the positions of the Sun at noon in LMT.
+The various Sun positions day after day build an 8-shaped curve, called I<analemma>.
+
+=head4 Mean Sun, Virtual Homocinetic Sun
+
+In the following, it is useful to imagine a virtual Sun which would use an constant
+angular speed (either in equatorial coordinates or ecliptic coordinates, depending on
+which is more convenient).
+
+The concept of I<Mean Sun> is a virtual Sun like this, calibrated so it crosses
+the meridian at 12h00 (Local Mean Time) each day, and which minimizes the difference
+between the real local noon and the mean local noon. 
+
+I will also consider several "virtual homocinetic suns" or VHS (no relation with
+magnetic tapes). These virtal suns are synchronised with the real Sun at some 
+convenient point and then move with a constant angular speed.
