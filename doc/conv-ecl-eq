@@ -50,7 +50,77 @@ if (defined $long) {
 }
 
 if (defined $step) {
-  die "not ready yet";
+  my $step_n = parse_angle("longitude step", $step);
+  my %result = ( min  => { delta_1 =>  999 },
+                 max  => { delta_1 => -999 },
+                 incr => { ddel    =>    0 },
+                 decr => { ddel    =>    0 },
+               );
+  my $lg_0 = - $step_n;
+  my ($ra_0, $decl_0) = conv($lg_0, 0, $obl);
+  my $delta_0 = $ra_0 - $lg_0;
+
+  for (my $lg_1 = 0; $lg_1 < 360; $lg_1 += $step_n) {
+    # compute new values
+    my ($ra_1, $decl_1) = conv($lg_1, 0, $obl);
+    if ($ra_1 < $ra_0 - 90) {
+      $ra_1 += 360;
+    }
+    my $delta_1 = $ra_1 - $lg_1;
+  
+    # check new values
+    my @keys;
+    if ($delta_1 < $result{min}{delta_1}) {
+      push @keys, 'min';
+    }
+    if ($delta_1 > $result{max}{delta_1}) {
+      push @keys, 'max';
+    }
+    if ($delta_1 - $delta_0 > $result{incr}{ddel}) {
+      push @keys, 'incr';
+    }
+    if ($delta_1 - $delta_0 < $result{decr}{ddel}) {
+      push @keys, 'decr';
+    }
+    #printf("%8.4f %8.4f %8.4f %8.4f %8.4f %8.4f -> %8.4f %s\n", $lg_0, $ra_0, $decl_0, $lg_1, $ra_1, $decl_1, $delta_1, join(' ', @keys));
+    
+    # store best results
+    for (@keys) {
+      $result{$_}{lg_0}    = $lg_0; 
+      $result{$_}{ra_0}    = $ra_0; 
+      $result{$_}{decl_0}  = $decl_0; 
+      $result{$_}{delta_0} = $delta_0;
+      $result{$_}{lg_1}    = $lg_1; 
+      $result{$_}{ra_1}    = $ra_1; 
+      $result{$_}{decl_1}  = $decl_1; 
+      $result{$_}{delta_1} = $delta_1;
+      $result{$_}{ddel}    = $delta_1 - $delta_0;
+    }
+    
+    # memo old values for next step
+    $lg_0    = $lg_1;
+    $ra_0    = $ra_1;
+    $decl_0  = $decl_1;
+    $delta_0 = $delta_1;
+  }
+  for (qw/min max incr decr/) {
+    my $lg    = $format{$format}->($result{$_}{lg_1});
+    my $ra    = $format{$format}->($result{$_}{ra_1});
+    my $decl  = $format{$format}->($result{$_}{decl_1});
+    my $delta = $format{$format}->($result{$_}{delta_1});
+    print "At longitude $lg, right ascension is $ra and declination is $decl, for a difference $delta.";
+    if ($_ eq 'incr') {
+      $delta = $format{$format}->($result{$_}{delta_0});
+      say " Previous difference was $delta, the fastest increase.";
+    }
+    elsif ($_ eq 'decr') {
+      $delta = $format{$format}->($result{$_}{delta_0});
+      say " Previous difference was $delta, the fastest decrease.";
+    }
+    else {
+      print "\n";
+    }
+  }
 }
 
 sub parse_angle {

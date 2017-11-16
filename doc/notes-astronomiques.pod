@@ -565,7 +565,21 @@ Tout d'abord, comme il existe un écart angulaire entre le plan de l'équateur
 et le plan de l'écliptique, une rotation uniforme sur le plan de l'écliptique
 se traduira sur le plan de l'équateur par une rotation à vitesse variable.
 
-À COMPLÉTER : valeurs numériques
+Si nous exprimons l'ascension droite et la longitude écliptique dans les mêmes
+unités (degrés ou heures), alors leurs valeurs sont voisines, mais pas
+égales. Ainsi, lorsque la longitude écliptique est de 46°20'31", l'ascension
+droite est de 43°52'36", soit un écart de 2°27'54". Le même écart existe pour
+la longitude écliptique de 226°20'31". Et pour une longitude
+écliptique de 313°32'52", l'ascension droite est de 316°47", soit le même écart
+en sens inverse, écart que l'on retrouve également pour la longitude écliptique
+de 133°32'52". Ce sont les valeurs extrêmes des écarts pour l'obliquité
+de 23° 26'. Et si vous préférez les heures, minutes, secondes, voici les S<valeurs :>
+
+   longitude  ascension droite      écart   longitude  ascension droite     écart
+   3h05mn22s      2h55mn30s       -9mn51s   46°20'31"     43°52'36"      2°27'54"
+   8h54mn11s      9h04mn03s        9mn51s  133°32'52"    136°00'47"     -2°27'54"
+  15h05mn22s     14h55mn30s       -9mn51s  226°20'31"    223°52'36"      2°27'54"
+  20h54mn11s     21h04mn03s        9mn51s  313°32'52"    316°00'47"     -2°27'54"
 
 Ensuite, la rotation du soleil sur le plan de l'écliptique n'est pas constante.
 Elle suit la deuxième loi de Kepler, avec une vitesse angulaire inversement proportionnelle

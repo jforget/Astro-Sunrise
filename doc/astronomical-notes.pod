@@ -497,7 +497,20 @@ therefore, a constant-speed rotation on the ecliptical plane does not translate
 to a constant-speed rotation when measured by right ascension on the equatorial 
 plane. The rate of variation of the right ascension is a variable rate.
 
-TO BE COMPLETED: numerical values
+If we use the same units for the ecliptic longitude and the right ascension
+(either degrees or hours), then both values are nearly equal, but still different.
+So, when the ecliptic longitude is 46°20'31", the right ascension is 43°52'36",
+that is, a 2°27'54" gap. The same happens at longitude 226°20'31". And at
+longitude 313°32'52", the right ascension is 316°47", that is a gap of 2°27'54",
+but in the other direction. And the same happens at 133°32'52". These are
+the maximum values for the gap when using an obliquity of 23°26'.
+And if you prefer hours, here are the values:
+
+   longitude   right ascension      gap     longitude   right ascension   gap
+   3h05mn22s      2h55mn30s       -9mn51s   46°20'31"     43°52'36"      2°27'54"
+   8h54mn11s      9h04mn03s        9mn51s  133°32'52"    136°00'47"     -2°27'54"
+  15h05mn22s     14h55mn30s       -9mn51s  226°20'31"    223°52'36"      2°27'54"
+  20h54mn11s     21h04mn03s        9mn51s  313°32'52"    316°00'47"     -2°27'54"
 
 Second, the rotational speed of Sun itself on the ecliptical plane is not a constant.
 It obeys Kepler's second law, with a rotational speed more or less inversely 
