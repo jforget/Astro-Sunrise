@@ -561,6 +561,8 @@ sur une échelle plus S<« météorologique »> et moins S<« climatique »>.
 Le midi solaire I<vrai> ne correspond pas avec le midi solaire I<moyen>.
 Il y a deux raisons pour cela.
 
+=head4 Obliquité de la Terre
+
 Tout d'abord, comme il existe un écart angulaire entre le plan de l'équateur
 et le plan de l'écliptique, une rotation uniforme sur le plan de l'écliptique
 se traduira sur le plan de l'équateur par une rotation à vitesse variable.
@@ -580,6 +582,8 @@ de 23° 26'. Et si vous préférez les heures, minutes, secondes, voici les S<va
    8h54mn11s      9h04mn03s        9mn51s  133°32'52"    136°00'47"     -2°27'54"
   15h05mn22s     14h55mn30s       -9mn51s  226°20'31"    223°52'36"      2°27'54"
   20h54mn11s     21h04mn03s        9mn51s  313°32'52"    316°00'47"     -2°27'54"
+
+=head4 Deuxième Loi de Kepler
 
 Ensuite, la rotation du soleil sur le plan de l'écliptique n'est pas constante.
 Elle suit la deuxième loi de Kepler, avec une vitesse angulaire inversement proportionnelle
@@ -607,10 +611,7 @@ Soit une vitesse angulaire de 1,0166 degré par jour en longitude écliptique au
 modèle géocentrique, c'est-à-dire périhélie dans un modèle héliocentrique) et de 0,9552 degré
 par jour à l'apogée (ou aphélie).
 
-Les deux phénomènes se cumulent et donc, la vitesse de rotation du Soleil autour
-de la Terre, mesurée sur le plan équatorial, n'est pas constante. La moyenne
-est de 0,986 degrés par jour, mais la vitesse instantanée varie entre
-À COMPLÉTER.
+=head4 Équation du temps
 
 La vitesse de rotation de la Terre sur elle-même est constante, 360,986 degrés par jour
 mais la vitesse de rotation du Soleil autour de la Terre ne l'est pas. La combinaison des
@@ -620,6 +621,17 @@ Il y a donc une différence entre le temps solaire I<moyen>, dans lequel midi se
 toutes les S<86 400 secondes> et le temps solaire I<vrai> dans lequel midi, le moment où
 le Soleil passe au méridien, fluctue légèrement. La différence entre le temps solaire
 moyen et le temps solaire vrai s'appelle l'I<équation du temps>.
+
+Voici quelques valeurs extrêmes pour l'équation du temps en 2017, obtenue par un script
+basé sur L<DateTime::Event::Sunrise> et contrôlé avec Stellarium.
+
+                DT::E::S    Stellarium
+  2017-11-02    11:43:33    11:43:37   -16mn23s  la valeur la plus tôt
+  2017-02-10    12:14:12    12:14:14   +14mn14s  la valeur la plus tardive
+  2017-09-11    11:56:33    11:56:34    -3mn26s 
+  2017-09-12    11:56:11    11:56:13    -3mn57s  la plus forte décroissance : 21 ou 22 secondes
+  2017-12-17    11:56:11    11:56:14    -3mn56s 
+  2017-12-18    11:56:41    11:56:44    -3mn26s  la plus forte croissance : 30 secondes
 
 =head4 Analemme
 

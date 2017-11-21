@@ -492,6 +492,8 @@ There are other fluctuations, easier to measure and with a more
 does not occur on the same precise time as the I<mean> solar noon.
 There are two reasons.
 
+=head4 Obliquity of the Earth
+
 First, there is an angle between the ecliptical plane and the equatorial plane,
 therefore, a constant-speed rotation on the ecliptical plane does not translate
 to a constant-speed rotation when measured by right ascension on the equatorial 
@@ -511,6 +513,8 @@ And if you prefer hours, here are the values:
    8h54mn11s      9h04mn03s        9mn51s  133°32'52"    136°00'47"     -2°27'54"
   15h05mn22s     14h55mn30s       -9mn51s  226°20'31"    223°52'36"      2°27'54"
   20h54mn11s     21h04mn03s        9mn51s  313°32'52"    316°00'47"     -2°27'54"
+
+=head4 Kepler's Second Law
 
 Second, the rotational speed of Sun itself on the ecliptical plane is not a constant.
 It obeys Kepler's second law, with a rotational speed more or less inversely 
@@ -538,10 +542,28 @@ This translates as a speed of 1.0166 degree per day in January at perigee (when
 in a geocentric model, that is perihelion in an heliocentric model) and a speed
 of 0.9552 degree per day in July at apogee (or aphelion).
 
-Both phenomena add to each other, so the Sun's angular speed measured on the 
-equatorial plane is not constant. Its mean value is 0.986 degree per day, but
-it varies
-TO BE COMPLETED
+=head4 Equation of Time
+
+The Earth's spin velocity is constant, that is 360.986 degrees per day
+but the Sun's orbital speed around the Earth is not. The combination of
+both speed is variable and it is I<not> 360 degrees per day. The crossing
+of the meridian by the Sun is not exactly every 86400 seconds.
+There is a difference between the Solar I<Mean> Time, where noon occurs
+every 86400 seconds, no more, no less, and the Solar I<Real> Time, in which
+noon is defined by the time when the Sun crosses the meridian. The difference
+between the Solar Mean Time and the Solar Real Time is called I<equation
+of time>.
+
+Here are the extreme values for the equation of time in 2017, computed
+by a script using L<DateTime::Event::Sunrise> and refined with Stellarium.
+
+                DT::E::S    Stellarium
+  2017-11-02    11:43:33    11:43:37   -16mn23s  earliest noon value,
+  2017-02-10    12:14:12    12:14:14   +14mn14s  latest noon value
+  2017-09-11    11:56:33    11:56:34    -3mn26s
+  2017-09-12    11:56:11    11:56:13    -3mn57s  biggest decrease: 21 or 22 seconds
+  2017-12-17    11:56:11    11:56:14    -3mn56s
+  2017-12-18    11:56:41    11:56:44    -3mn26s  biggest increase: 30 seconds
 
 =head4 The Analemma
 
