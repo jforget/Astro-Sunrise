@@ -15,8 +15,18 @@ use warnings;
 use Getopt::Long;
 use DateTime::Event::Sunrise;
 
-my $year = 2017;
+my $year   = 2017;
+my $plot   = 0;
+my $file   = 'equ-time.tex';
+my $step   = 5;  # plot every <step> days
+my $xscale =  1; # 
+my $yscale = 10; # 
 GetOptions( 'year:n' => \$year,
+            'plot'   => \$plot,
+            'file:s' => \$file,
+            'step:n' => \$step,
+            'xscale:n' => \$xscale,
+            'yscale:n' => \$yscale,
           )
   or die "problem with the options";
 
@@ -29,6 +39,34 @@ my %result = ( min  => { sec => 86400 },
                incr => { delta =>   0 },
                decr => { delta =>   0 },
              );
+
+my $fh;
+if ($plot) {
+  open $fh, '>', $file
+    or die "Opening $file $!";
+  print $fh <<'EOF';
+% -*- encoding: utf-8 -*-
+\documentclass[a4paper]{article}
+\usepackage{luamplib}
+\begin{document}
+\begin{mplibcode}
+beginfig(1);
+
+EOF
+  my $ln = int(366 / $xscale);
+  print $fh "draw (0, 0) -- ($ln, 0);\n";
+  $ln = int(1200 / $yscale);
+  print $fh "draw (0, -$ln) -- (0, $ln);\n";
+  for (-15, -10, -5, 0, 5, 10, 15) {
+    $ln = int($_ * 60 / $yscale);
+    print $fh qq<label.lft("$_", (0, $ln));\n>;
+  }
+  my @month = qw/J F M A M J J A S O N D/;
+  for (0..11) {
+    $ln = int(($_ * 30 + 15) / $xscale);
+    print $fh qq<label.bot("$month[$_]", ($ln, 0));\n>;
+  }
+}
 
 my $noon_prev;
 for (my $day = 0; $day <= 365; $day++) {
@@ -52,6 +90,12 @@ for (my $day = 0; $day <= 365; $day++) {
 
   if ($day == 0) {
     $noon_prev = $noon_s;
+    if ($plot) {
+      printf $fh "draw (0, %d)", int(($noon_s - 43200) / $yscale);
+    }
+  }
+  if ($plot && ($day % $step) == 0) {
+    printf $fh "  -- (%d, %d)\n", int($day / $xscale), int(($noon_s - 43200) / $yscale);
   }
 
   my @keys;
@@ -81,6 +125,16 @@ for (keys %result) {
   say "$_ $result{$_}{date} $result{$_}{equ} $result{$_}{delta}";
 }
 
+if ($plot) {
+  print $fh <<'EOF';
+  ;
+endfig;
+\end{mplibcode}
+\end{document}
+EOF
+  close $fh
+    or die "Closing $file $!";
+}
 
 __END__
 
@@ -94,12 +148,55 @@ equ-time.pl -- utility script to compute the equation of time each day of a year
 
   equ-time.pl -year 2017
 
+or:
+
+  equ-time.pl -year 2017 -plot
+  lualatex equ-time.tex
+
 =head1 DESCRIPTION
 
 This script computes the true solar noon in local mean time. And the difference
 between this time and 12h00 gives the equation of time.
 
+Optionally, the script can generate a LuaLATEX file including a MetaPOST figure
+showing the equation of time during one year.
+
 =head1 USAGE
+
+=head2 Parameters
+
+=over 4
+
+=item year
+
+The year for which the equation of time will be computed.
+
+=item plot
+
+Boolean triggering the generation of the LuaLATEX file.
+
+Default: 0, that is, no generation.
+
+=item file
+
+Filename for the generated LuaLATEX file. Useless if C<-plot> is false.
+
+Default F<equ-time.tex>
+
+=item step
+
+When generating the file, not every day will be printed into the file.
+This parameter gives the interval between two consecutive days
+used in the curve. Useless if C<-plot> is false.
+
+Default value 5.
+
+=item xscale, yscale
+
+Shrinking factors for the generated curve. The higher the value, the narrower
+the curve will be. Useless if C<-plot> is false.
+
+=back
 
 =head1 KNOWN BUGS
 
