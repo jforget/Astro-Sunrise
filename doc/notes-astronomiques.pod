@@ -633,6 +633,11 @@ basé sur L<DateTime::Event::Sunrise> et contrôlé avec Stellarium.
   2017-12-17    11:56:11    11:56:14    -3mn46s 
   2017-12-18    11:56:41    11:56:44    -3mn16s  la plus forte croissance : 30 secondes
 
+=for html
+<p>
+<img src='equ-time.png' alt='"ourbe de l'équation du temps pendant un an" />
+</p>
+
 =head4 Analemme
 
 L'irrégularité de la course du Soleil se matérialise également en se basant sur

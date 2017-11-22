@@ -194,7 +194,7 @@ Default value 5.
 =item xscale, yscale
 
 Shrinking factors for the generated curve. The higher the value, the narrower
-the curve will be. Useless if C<-plot> is false.
+or the shorter the curve will be. Useless if C<-plot> is false.
 
 =back
 

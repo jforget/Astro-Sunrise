@@ -565,6 +565,11 @@ by a script using L<DateTime::Event::Sunrise> and refined with Stellarium.
   2017-12-17    11:56:11    11:56:14    -3mn46s
   2017-12-18    11:56:41    11:56:44    -3mn16s  biggest increase: 30 seconds
 
+=for html
+<p>
+<img src='equ-time.png' alt='Curve of the equation of time during one year' />
+</p>
+
 =head4 The Analemma
 
 The irregularity of the Sun's trajectory can be visualised by using the Local Mean Time
