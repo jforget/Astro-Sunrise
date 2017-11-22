@@ -508,11 +508,11 @@ but in the other direction. And the same happens at 133°32'52". These are
 the maximum values for the gap when using an obliquity of 23°26'.
 And if you prefer hours, here are the values:
 
-   longitude   right ascension      gap     longitude   right ascension   gap
-   3h05mn22s      2h55mn30s       -9mn51s   46°20'31"     43°52'36"      2°27'54"
-   8h54mn11s      9h04mn03s        9mn51s  133°32'52"    136°00'47"     -2°27'54"
-  15h05mn22s     14h55mn30s       -9mn51s  226°20'31"    223°52'36"      2°27'54"
-  20h54mn11s     21h04mn03s        9mn51s  313°32'52"    316°00'47"     -2°27'54"
+  .   longitude   right ascension      gap     longitude   right ascension   gap
+  .   3h05mn22s      2h55mn30s       -9mn51s   46°20'31"     43°52'36"      2°27'54"
+  .   8h54mn11s      9h04mn03s        9mn51s  133°32'52"    136°00'47"     -2°27'54"
+  .  15h05mn22s     14h55mn30s       -9mn51s  226°20'31"    223°52'36"      2°27'54"
+  .  20h54mn11s     21h04mn03s        9mn51s  313°32'52"    316°00'47"     -2°27'54"
 
 =head4 Kepler's Second Law
 
@@ -557,13 +557,15 @@ of time>.
 Here are the extreme values for the equation of time in 2017, computed
 by a script using L<DateTime::Event::Sunrise> and refined with Stellarium.
 
-                DT::E::S    Stellarium
+  Date          DT::E::S    Stellarium
   2017-11-02    11:43:33    11:43:37   -16mn23s  earliest noon value,
   2017-02-10    12:14:12    12:14:14   +14mn14s  latest noon value
   2017-09-11    11:56:33    11:56:34    -3mn26s
   2017-09-12    11:56:11    11:56:13    -3mn47s  biggest decrease: 21 or 22 seconds
   2017-12-17    11:56:11    11:56:14    -3mn46s
   2017-12-18    11:56:41    11:56:44    -3mn16s  biggest increase: 30 seconds
+
+And here is the curve for the equation of time.
 
 =for html
 <p>
