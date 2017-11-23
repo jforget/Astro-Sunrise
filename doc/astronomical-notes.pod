@@ -391,7 +391,8 @@ to reach the point. The angle of the first arc is the longitude, the angle of th
 second arc is the latitude for a point on the ground. But when we consider a celestial body, the
 first angle is counted from the line of nodes instead of the Gulf
 of Guinea and is named I<right ascension>; the second angle is names I<declination>.
-The right ascension is usually expressed as hours, minutes and seconds instead of
+Because of tradition, an old charter or something,
+the right ascension is usually expressed as hours, minutes and seconds instead of
 degrees. The declination still uses degrees.
 
 I<Ecliptic coordinates> follow the same principle, but the first arc is drawn

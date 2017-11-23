@@ -477,7 +477,8 @@ I<coordonnées équatoriales>, c'est le même principe,
 sauf que l'origine du premier arc se trouve sur la ligne des nœuds
 et que les angles s'appellent 
 S<« ascension> S<droite »> et S<« déclinaison »>.
-Habituellement, l'ascension droite est exprimée en heures, minutes et secondes
+À cause d'une tradition, d'une charte ancienne ou de quelque chose comme ça,
+l'ascension droite est exprimée en heures, minutes et secondes
 et non pas en degrés. J'essaierai de donner les deux valeurs chaque fois que
 j'en aurai besoin.
 
