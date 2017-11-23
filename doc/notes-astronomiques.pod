@@ -228,6 +228,13 @@ Dans Stellarium, figer le temps par C<7> si ce n'est pas encore fait.
 
 =item *
 
+Si ce n'est pas encore fait, taper C<< <F2> >> pour avoir le menu de configuration.
+Dans ce menu, choisir l'onglet C<Plugins>, puis C<Fuseau horaire>. Il est alors
+possible de demander l'affichage de l'heure UTC au lieu du fuseau horaire
+de celui du PC. Ne pas oublier de sauvegarder la configuration en sortant.
+
+=item *
+
 Rechercher le soleil, la fenêtre de recherche s'activant par C<< <F3> >>.
 
 =item *
@@ -239,6 +246,8 @@ bascules C<g> et C<a>. Et C<e> ou C<z> pour avoir la grille des coordonnées
 =item *
 
 Presser C<< <F6> >> pour spécifier le lieu d'observation.
+Prendre un lieu situé sur le méridien de Greenwich, ainsi le temps UTC
+coïncidera avec le temps solaire moyen.
 
 =item *
 
@@ -261,11 +270,11 @@ Voici deux propositions. Sont-elles vraies ou S<fausses ?>
 
 =item A
 
-Le Soleil qui tourne autour de la Terre.
+Le Soleil tourne autour de la Terre.
 
 =item B
 
-La Terre qui tourne autour du Soleil.
+La Terre tourne autour du Soleil.
 
 =back
 
@@ -297,7 +306,7 @@ des foyers de cette ellipse.
 
 En faisant remarquer que le centre de gravité du Soleil et celui du système
 solaire sont deux points différents. Et même, il y a des périodes où le
-centre d'inertie du système solaire se trouve I<à l'extérieur> du soleil.
+centre d'inertie du système solaire se trouve I<à l'extérieur> du Soleil.
 La L<page web|http://hp41programs.yolasite.com/solar-sys-bary.php>
 d'un programme pour HP-41 indique que le 15 mars 1983, la distance entre
 le centre de gravité du Soleil et le centre de gravité du système solaire
@@ -578,10 +587,10 @@ de 133°32'52". Ce sont les valeurs extrêmes des écarts pour l'obliquité
 de 23° 26'. Et si vous préférez les heures, minutes, secondes, voici les S<valeurs :>
 
   .   longitude  ascension droite      écart   longitude  ascension droite   écart
-  .   3h05mn22s      2h55mn30s       -9mn51s   46°20'31"     43°52'36"      2°27'54"
-  .   8h54mn11s      9h04mn03s        9mn51s  133°32'52"    136°00'47"     -2°27'54"
-  .  15h05mn22s     14h55mn30s       -9mn51s  226°20'31"    223°52'36"      2°27'54"
-  .  20h54mn11s     21h04mn03s        9mn51s  313°32'52"    316°00'47"     -2°27'54"
+  .   3h05mn22s      2h55mn30s       -9mn51s   46°20'31"     43°52'36"     -2°27'54"
+  .   8h54mn11s      9h04mn03s        9mn51s  133°32'52"    136°00'47"      2°27'54"
+  .  15h05mn22s     14h55mn30s       -9mn51s  226°20'31"    223°52'36"     -2°27'54"
+  .  20h54mn11s     21h04mn03s        9mn51s  313°32'52"    316°00'47"      2°27'54"
 
 =head4 Deuxième Loi de Kepler
 
@@ -622,7 +631,7 @@ toutes les S<86 400 secondes> et le temps solaire I<vrai> dans lequel midi, le m
 le Soleil passe au méridien, fluctue légèrement. La différence entre le temps solaire
 moyen et le temps solaire vrai s'appelle l'I<équation du temps>.
 
-Voici quelques valeurs extrêmes pour l'équation du temps en 2017, obtenue par un script
+Voici quelques valeurs extrêmes pour l'équation du temps en 2017, obtenues par un script
 basé sur L<DateTime::Event::Sunrise> et contrôlé avec Stellarium.
 
   Date          DT::E::S    Stellarium
@@ -637,7 +646,7 @@ Et voici la courbe correspondante de l'équation du temps.
 
 =for html
 <p>
-<img src='equ-time.png' alt='"ourbe de l'équation du temps pendant un an" />
+<img src='equ-time.png' alt="Courbe de l'équation du temps pendant un an" />
 </p>
 
 =head4 Analemme

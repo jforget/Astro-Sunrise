@@ -146,12 +146,15 @@ equ-time.pl -- utility script to compute the equation of time each day of a year
 
 =head1 SYNOPSIS
 
+Just a List of values on F<stdout>
+
   equ-time.pl -year 2017
 
-or:
+Adding a PNG plot
 
   equ-time.pl -year 2017 -plot
   lualatex equ-time.tex
+  convert -crop '700x300+100+100' equ-time.pdf equ-time.png
 
 =head1 DESCRIPTION
 
@@ -197,6 +200,12 @@ Shrinking factors for the generated curve. The higher the value, the narrower
 or the shorter the curve will be. Useless if C<-plot> is false.
 
 =back
+
+=head1 PREREQUISITE
+
+In addition to core modules, this script needs L<DateTime::Event::Sunrise>.
+
+If you want the graphical plot as a PDF file, you need C<lualatex>.
 
 =head1 KNOWN BUGS
 
