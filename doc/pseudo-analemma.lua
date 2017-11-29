@@ -31,7 +31,7 @@ function tim2x(tim)
   local hh = substr(tim, 1, 2);
   local mn = substr(tim, 4, 5);
   local ss = substr(tim, 7, 8);
-  return 120 + floor(pedag * ((hh - 12) * 10 + mn / 6 + ss / 360));
+  return floor(pedag * ((hh - 12) * 10 + mn / 6 + ss / 360));
 end
 
 function alt2y(alt)
@@ -43,30 +43,40 @@ end
 
 function dessin(date)
   -- values obtained from Stellarium
-  -- alt: not using the "degree" character U+00B0, because of encoding problems between lua and lualatex
+  -- alt12 and alt24: not using the "degree" character U+00B0, because of encoding problems between lua and lualatex
   local t = {
-       { date = "2017-01-21", noon = "12:11:24", alt = "18 43 46", label = "J" },
-       { date = "2017-02-21", noon = "12:13:35", alt = "28 08 20", label = "F" },
-       { date = "2017-03-21", noon = "12:07:08", alt = "38 56 42", label = "M" },
-       { date = "2017-04-21", noon = "11:58:41", alt = "50 32 27", label = "A" },
-       { date = "2017-05-21", noon = "11:56:38", alt = "58 48 02", label = "M" },
-       { date = "2017-06-21", noon = "12:01:52", alt = "61 57 27", label = "J" },
-       { date = "2017-07-21", noon = "12:06:28", alt = "58 53 35", label = "J" },
-       { date = "2017-08-21", noon = "12:03:07", alt = "50 28 12", label = "A" },
-       { date = "2017-09-21", noon = "11:53:02", alt = "39 02 20", label = "S" },
-       { date = "2017-10-21", noon = "11:44:38", alt = "27 39 33", label = "O" },
-       { date = "2017-11-21", noon = "11:45:58", alt = "18 30 28", label = "N" },
-       { date = "2017-12-21", noon = "11:58:13", alt = "15 04 59", label = "D" },
+       { date = "2017-01-21", noon = "12:11:24", alt12 = "18 43 46", alt24 = "-58 25 33", label = "J" },
+       { date = "2017-02-21", noon = "12:13:35", alt12 = "28 08 20", alt24 = "-49 05 11", label = "F" },
+       { date = "2017-03-21", noon = "12:07:08", alt12 = "38 56 42", alt24 = "-38 17 49", label = "M" },
+       { date = "2017-04-21", noon = "11:58:41", alt12 = "50 32 27", alt24 = "-26 40 25", label = "A" },
+       { date = "2017-05-21", noon = "11:56:38", alt12 = "58 48 02", alt24 = "-18 20 44", label = "M" },
+       { date = "2017-06-21", noon = "12:01:52", alt12 = "61 57 27", alt24 = "-15 05 16", label = "J" },
+       { date = "2017-07-21", noon = "12:06:28", alt12 = "58 53 35", alt24 = "-18 03 18", label = "J" },
+       { date = "2017-08-21", noon = "12:03:07", alt12 = "50 28 12", alt24 = "-26 24 29", label = "A" },
+       { date = "2017-09-21", noon = "11:53:02", alt12 = "39 02 20", alt24 = "-37 48 40", label = "S" },
+       { date = "2017-10-21", noon = "11:44:38", alt12 = "27 39 33", alt24 = "-49 12 25", label = "O" },
+       { date = "2017-11-21", noon = "11:45:58", alt12 = "18 30 28", alt24 = "-58 25 33", label = "N" },
+       { date = "2017-12-21", noon = "11:58:13", alt12 = "15 04 59", alt24 = "-61 57 30", label = "D" },
       };
   tex.print("\\begin{mplibcode}\n");
   tex.print("beginfig(1);\n");
-  tex.print("draw (0, 0) -- (240, 0);\n");
-  tex.print("draw (120, -90) -- (120, 90);\n");
+  tex.print("draw (-120, 0) -- (120, 0);\n");
+  tex.print("draw (0, -90) -- (0, 90);\n");
+
+  -- drawing the pseudo-analemma
+  tex.print("draw ");
   for i, v in ipairs(t) do
+    local x = tostring(tim2x(v.noon));
+    local y = tostring(alt2y(v.alt12));
+    tex.print("(" .. x .. ", " .. y .. ")..");
+  end
+  tex.print("cycle;\n");
+
+  -- labelling the pseudo-analemma
+  for i, v in ipairs(t) do
+    local x = tostring(tim2x(v.noon));
+    local y = tostring(alt2y(v.alt12));
     if (v.date == date) then
-      local x = tostring(tim2x(v.noon));
-      local y = tostring(alt2y(v.alt));
-      print(x, y);
       if (substr(v.noon, 1, 2) == "11") then
         tex.print("dotlabel.lft(" .. dq .. v.label .. dq .. ", (" .. x .. ", " .. y .. "));\n");
       else
