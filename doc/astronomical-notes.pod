@@ -592,3 +592,10 @@ between the real local noon and the mean local noon.
 I will also consider several "virtual homocinetic suns" or VHS (no relation with
 magnetic tapes). These virtal suns are synchronised with the real Sun at some 
 convenient point and then move with a constant angular speed.
+
+=head1 Computing Sunrise and Sunset
+
+=for html
+<p>
+<img src='pseudo-analemma.gif' alt="Evolution of the Sun's trajectory during a year" />
+</p>

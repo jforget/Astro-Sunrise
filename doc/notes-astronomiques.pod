@@ -671,6 +671,13 @@ Je prendrai en considération également des soleils virtuels homocinétiques, o
 soleils virtuels sont synchronisés avec le Soleil réel à un instant donné et
 ensuite bougent avec une vitesse angulaire constante.
 
+=head1 Calcul du lever et du coucher du soleil
+
+=for html
+<p>
+<img src='pseudo-analemma.gif' alt="Evolution de la course du soleil pendant un an" />
+</p>
+
 =head1 Autres algorithmes de calcul
 
 Q : Pourquoi C<Astro::Sunrise> a-t-il besoin de l'année pour calculer le lever

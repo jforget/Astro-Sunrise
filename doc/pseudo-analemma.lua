@@ -35,56 +35,97 @@ function tim2x(tim)
 end
 
 function alt2y(alt)
-  local dg = substr(alt, 1, 2);
-  local mn = substr(alt, 4, 5);
-  local ss = substr(alt, 7, 8);
-  return floor(dg + mn / 60 + ss / 3600);
+  local sg = substr(alt, 1, 1);
+  local dg = substr(alt, 2, 3);
+  local mn = substr(alt, 5, 6);
+  local ss = substr(alt, 8, 9);
+  local sign;
+  if sg == '-' then
+    sign = -1;
+  else
+    sign =  1;
+  end
+
+  return sign * floor(dg + mn / 60 + ss / 3600);
 end
 
 function dessin(date)
   -- values obtained from Stellarium
   -- alt12 and alt24: not using the "degree" character U+00B0, because of encoding problems between lua and lualatex
   local t = {
-       { date = "2017-01-21", noon = "12:11:24", alt12 = "18 43 46", alt24 = "-58 25 33", label = "J" },
-       { date = "2017-02-21", noon = "12:13:35", alt12 = "28 08 20", alt24 = "-49 05 11", label = "F" },
-       { date = "2017-03-21", noon = "12:07:08", alt12 = "38 56 42", alt24 = "-38 17 49", label = "M" },
-       { date = "2017-04-21", noon = "11:58:41", alt12 = "50 32 27", alt24 = "-26 40 25", label = "A" },
-       { date = "2017-05-21", noon = "11:56:38", alt12 = "58 48 02", alt24 = "-18 20 44", label = "M" },
-       { date = "2017-06-21", noon = "12:01:52", alt12 = "61 57 27", alt24 = "-15 05 16", label = "J" },
-       { date = "2017-07-21", noon = "12:06:28", alt12 = "58 53 35", alt24 = "-18 03 18", label = "J" },
-       { date = "2017-08-21", noon = "12:03:07", alt12 = "50 28 12", alt24 = "-26 24 29", label = "A" },
-       { date = "2017-09-21", noon = "11:53:02", alt12 = "39 02 20", alt24 = "-37 48 40", label = "S" },
-       { date = "2017-10-21", noon = "11:44:38", alt12 = "27 39 33", alt24 = "-49 12 25", label = "O" },
-       { date = "2017-11-21", noon = "11:45:58", alt12 = "18 30 28", alt24 = "-58 25 33", label = "N" },
-       { date = "2017-12-21", noon = "11:58:13", alt12 = "15 04 59", alt24 = "-61 57 30", label = "D" },
+       { date = "2017-01-21", noon = "12:11:24", alt12 = "+18 43 46", alt24 = "-58 25 33", label = "J" },
+       { date = "2017-02-21", noon = "12:13:35", alt12 = "+28 08 20", alt24 = "-49 05 11", label = "F" },
+       { date = "2017-03-21", noon = "12:07:08", alt12 = "+38 56 42", alt24 = "-38 17 49", label = "M" },
+       { date = "2017-04-21", noon = "11:58:41", alt12 = "+50 32 27", alt24 = "-26 40 25", label = "A" },
+       { date = "2017-05-21", noon = "11:56:38", alt12 = "+58 48 02", alt24 = "-18 20 44", label = "M" },
+       { date = "2017-06-21", noon = "12:01:52", alt12 = "+61 57 27", alt24 = "-15 05 16", label = "J" },
+       { date = "2017-07-21", noon = "12:06:28", alt12 = "+58 53 35", alt24 = "-18 03 18", label = "J" },
+       { date = "2017-08-21", noon = "12:03:07", alt12 = "+50 28 12", alt24 = "-26 24 29", label = "A" },
+       { date = "2017-09-21", noon = "11:53:02", alt12 = "+39 02 20", alt24 = "-37 48 40", label = "S" },
+       { date = "2017-10-21", noon = "11:44:38", alt12 = "+27 39 33", alt24 = "-49 12 25", label = "O" },
+       { date = "2017-11-21", noon = "11:45:58", alt12 = "+18 30 28", alt24 = "-58 25 33", label = "N" },
+       { date = "2017-12-21", noon = "11:58:13", alt12 = "+15 04 59", alt24 = "-61 57 30", label = "D" },
       };
   tex.print("\\begin{mplibcode}\n");
   tex.print("beginfig(1);\n");
   tex.print("draw (-120, 0) -- (120, 0);\n");
   tex.print("draw (0, -90) -- (0, 90);\n");
 
+  -- extrema along the X-axis for the pseudo-analemma
+  local x_min = 0;
+  local x_max = 0;
+
   -- drawing the pseudo-analemma
   tex.print("draw ");
   for i, v in ipairs(t) do
-    local x = tostring(tim2x(v.noon));
-    local y = tostring(alt2y(v.alt12));
-    tex.print("(" .. x .. ", " .. y .. ")..");
-  end
+    local x = tim2x(v.noon);
+    local y = alt2y(v.alt12);
+    if x < x_min then
+      x_min = x;
+    end;
+    if x > x_max then
+      x_max = x;
+    end;
+    tex.print("(" .. tostring(x) .. ", " .. tostring(y) .. ")..");
+  end;
   tex.print("cycle;\n");
+  x_min = tostring(x_min);
+  x_max = tostring(x_max);
+
+  -- parameters for the sine curve
+  local a = 0;
+  local b = 0;
+  local x_noon = 0;
 
   -- labelling the pseudo-analemma
   for i, v in ipairs(t) do
     local x = tostring(tim2x(v.noon));
     local y = tostring(alt2y(v.alt12));
     if (v.date == date) then
+      tex.print("dotlabel.rt(" .. dq .. dq .. ", (" .. x .. ", " .. y .. "));\n");
       if (substr(v.noon, 1, 2) == "11") then
-        tex.print("dotlabel.lft(" .. dq .. v.label .. dq .. ", (" .. x .. ", " .. y .. "));\n");
+        tex.print("label.ulft(" .. dq .. v.label .. dq .. ", (" .. x_min .. ", " .. y .. "));\n");
       else
-        tex.print("dotlabel.rt(" .. dq .. v.label .. dq .. ", (" .. x .. ", " .. y .. "));\n");
+        tex.print("label.urt(" .. dq .. v.label .. dq .. ", (" .. x_max .. ", " .. y .. "));\n");
       end;
+      a = (alt2y(v.alt12) - alt2y(v.alt24)) /  2;
+      b = (alt2y(v.alt12) + alt2y(v.alt24)) /  2;
+      x_noon = tim2x(v.noon);
       break;
     end
   end
+
+  -- drawing the sine curve
+  tex.print("draw ");
+  local y;
+  for x = -120, 120, 5 do
+    y = a * math.cos((x - x_noon) * math.pi / 120) + b;
+    tex.print("(" .. tostring(x) .. ", " .. tostring(y) .. ")..");
+  end
+  -- ending the curve
+  y = a * math.cos((120 - x_noon) * math.pi / 120) + b;
+  tex.print("(120, " .. tostring(y) .. ");");
+
   tex.print("endfig;\n");
   tex.print("\\end{mplibcode}\n");
   tex.print("\\eject\n");

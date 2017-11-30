@@ -14,6 +14,9 @@ equ-time.pdf: equ-time.tex
 equ-time.tex: equ-time.pl
 	perl equ-time.pl -plot
 
+visu1: pseudo-analemma.gif
+	display pseudo-analemma.gif
+
 pseudo-analemma.gif: pseudo-analemma.pdf
 	convert -crop '500x300+100+100' -background white -alpha deactivate pseudo-analemma.pdf tmp.png
 	convert -delay 100 -dispose background $(OBJET) pseudo-analemma.gif
