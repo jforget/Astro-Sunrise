@@ -595,7 +595,76 @@ convenient point and then move with a constant angular speed.
 
 =head1 Computing Sunrise and Sunset
 
+Computing sunrise and sunset consists in taking in account both the variation of
+day's length and the equation of time to pinpoint when the Sun reaches the
+altitude that corresponds to sunrise or sunset.
+
+In the schema below, the variation of day's length results in a bobbing up and
+down of the sinusoidal curve (and less obviously, a vertical stretch or compression 
+of this curve). The equation of time results in a leftward or rightward shift
+of the curve.
+
 =for html
 <p>
 <img src='pseudo-analemma.gif' alt="Evolution of the Sun's trajectory during a year" />
 </p>
+
+Q: Wahoo! Impressive!
+
+A: You should not be impressed. I took some liberties with the reality. First, 
+I figured the Sun's trajectory as a sinusoidal curve, because it is easy to compute,
+but I did not check whether it was the real curve. And I would bet that it is
+only approximately close to the real curve. Second, the equation of time is very much
+increased. Instead of a true solar noon varying from 11h43 to 12h15 (in mean solar time),
+here the variation is multiplied by 8 and the solar noon varies from 10h, or even less,
+to 14h. But without this stretching, you would not have seen anything.
+
+Q: And this figure eight, is this the analemma?
+
+A: No. The analemma gives the position of the Sun as azimuth and height at 
+I<mean> solar noon. In the curve above, the abscisse is the mean time of
+I<true> solar noon and the ordinate is the height of the Sun at this instant.
+In other words, the analemma is based on a regular temporal event, the mean solar
+noon, and plots the correlation between two variable spatial phenomena, the 
+azimuth and the height of the Sun. On the other hand, the curve above is based on
+a precise spatial event, the azimuth 180°, and plots the correlation between a 
+variable spatial phenomenon, the height of the Sun and a variable temporal event,
+the true solar noon.
+
+I admit that the ordinates of both curves are very similar notions, and it would be
+comparing golden apples with Granny Smiths. On the other hand, the abscisses are 
+a spatial angle in one case and a time of the day in the other case, so it would
+be comparing apples with oranges.
+
+Q: And the similarity of the shapes is juste a coincidence?
+
+A: No, this is no coincidence. Let us start with the ordinates.
+The curve above, which I will call "pseudo-analemma", gives the
+height of the Sun at I<true> solar noon, so the Sun is at its highest for the current day.
+Therefore, the height of the Sun in the analemma is obviously lower than on the
+pseudo-analemma (except during the 4 days when the curve crosses the Y-axis).
+But since we are near a point with an horizontal tangent, the variation
+is very small. For example, we consider an observer at Greenwich observaroty on
+2nd November 2017. At true solar noon (11h 43mn 37s), the Sun is at 23°37'39"
+while a quarter of an hour later, at mean solar noon it is at 23°31'40"
+(values given by Stellarium).
+
+For the abscises, it is a bit more complicated. Let us use the same example as
+above. At mean solar noon, the Sun's azimuth is 184°19'08", so on the analemma
+the dot for 2nd November is on the right of the Y-axis. On the pseudo-analemma,
+true solar noon occurs at 11h 43mn 37s, so the dot for 2nd November is on the
+left of the Y-axis. Not only the units of measure are not the same, but there
+is a change of sign. So the pseudo-analemma and the analemma
+are, approximately, the symetrical image of the other curve.
+
+See L<below|politically correct pseudo-analemma> for a politically correct
+discussion of the analemma and pseudo-analemma.
+
+TO BE COMPLETED
+
+=head1 Annex: Politically Correct Explanations
+
+=head2 Policitally Correct Pseudo-Analemma
+
+TO BE COMPLETED
+
