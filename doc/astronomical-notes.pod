@@ -657,7 +657,7 @@ left of the Y-axis. Not only the units of measure are not the same, but there
 is a change of sign. So the pseudo-analemma and the analemma
 are, approximately, the symetrical image of the other curve.
 
-See L<below|politically correct pseudo-analemma> for a politically correct
+See L<below|#user-content-Policitally-Correct-Pseudo-Analemma> for a politically correct
 discussion of the analemma and pseudo-analemma.
 
 TO BE COMPLETED

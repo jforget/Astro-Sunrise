@@ -745,7 +745,7 @@ tandis que sur la pseudo-analemme ci-dessous, il est 16 mn 23s à gauche de l'ax
 Il y a donc non seulement un changement d'unités, mais aussi un changement de signe.
 La pseudo-analemme et l'analemme sont donc, à peu près, symétriques l'une de l'autre.
 
-Cf. L<à la fin|Pseudo-analemme politiquement correcte> pour une discussion politiquement
+Cf. L<à la fin|#user-content-Pseudo-analemme-politiquement-correcte> pour une discussion politiquement
 correcte de l'analemme et de la pseudo-analemme.
 
 À COMPLÉTER
