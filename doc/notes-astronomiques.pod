@@ -249,6 +249,14 @@ Presser C<< <F6> >> pour spécifier le lieu d'observation.
 Prendre un lieu situé sur le méridien de Greenwich, ainsi le temps UTC
 coïncidera avec le temps solaire moyen.
 
+Dans de nombreux exemples ci-dessous, j'ai choisi de placer mon
+observateur à 51° 28' 40" de latitude nord, 5" de longitude est et
+S<27 m> de hauteur. La longitude et la latitude correspondent aux
+coordonnées de l'observatoire de Greenwich données sur Wikipedia, la
+hauteur est le reliquat du lieu précédemment utilisé.  Elle ne
+correspond pas à l'altitude de l'observatoire, ou alors c'est une
+heureuse coïncidence.
+
 =item *
 
 Presser C<< <F5> >> pour spécifier la date et l'heure.
@@ -673,10 +681,70 @@ ensuite bougent avec une vitesse angulaire constante.
 
 =head1 Calcul du lever et du coucher du soleil
 
+Le calcul du lever et du coucher du Soleil consiste à tenir compte à
+la fois de la variation de la longueur de la journée et de
+l'équation du temps pour savoir quand le Soleil atteint 
+la hauteur qui correspond au lever ou au coucher du Soleil.
+
+Dans le schéma ci-dessous, la variation de la longueur de la
+journée se traduit par un déplacement haut-bas de la sinusoïde
+(et, dans une moindre mesure une contraction-extension
+haut-bas de la courbe). L'équation du temps se traduit
+par un déplacement horizontal de la sinusoïde.
+
 =for html
 <p>
 <img src='pseudo-analemma.gif' alt="Evolution de la course du soleil pendant un an" />
 </p>
+
+Q : Ouaaaaah ! Impressionnant, ton schéma !
+
+R : Ne sois pas si impressionné. Il y a quelques écarts avec la réalité.
+Tout d'abord, j'ai représenté la course  du Soleil par une sinusoïde parce
+que c'était facile à programmer, mais je n'ai pas vérifié si ça collait à la
+vérité et je parierais que la correspondance est approximative. Ensuite, l'équation du temps
+est très largement exagérée. Au lieu d'un midi solaire vrai qui varie entre
+11h43 et 12h15 du temps moyen, ici la variation est 8 fois plus importante,
+faisant varier le midi solaire entre 10h et 14h. Mais on n'aurait rien vu
+sans cet élargissement.
+
+Q : Et cette courbe en forme de huit, c'est l'analemme ?
+
+R : Non. L'analemme montre la position en azimuth et hauteur du Soleil au moment du midi
+solaire de temps I<moyen>. Cette courbe donne en abscisse l'heure en temps moyen
+du midi solaire vrai et en ordonnée la hauteur du Soleil à ce instant. 
+En d'autres termes, l'analemme se base sur un événement temporel régulier, le midi
+solaire moyen, et montre la corrélation de deux phénomènes spatiaux variables,
+l'azimuth et la hauteur. À l'inverse, la courbe ci-dessus se base sur un
+événement spatial précis, l'azimuth 180°, et montre la corrélation entre
+un phénomène spatial variable, la hauteur du Soleil, et un phénomène temporel
+variable, le midi solaire vrai.
+
+Certes, les notions associées aux ordonnées sont voisines, comme une comparaison entre des carottes nantaises
+et des carottes de Chantenay, mais comparer les abscisses entre les deux courbes,
+c'est vouloir comparer des choux avec des carottes.
+
+Q : Et la similitude de forme est une coïncidence ?
+
+R : Non, ce n'est pas une coïncidence. Prenons pour commencer les
+ordonnées. La courbe ci-dessus, que j'appelerai S<« pseudo-analemme »>, donne
+la hauteur au midi solaire vrai, donc la hauteur maximale du Soleil pour
+la journée. L'analemme donne la hauteur du Soleil au midi moyen, donc
+forcément inférieure à la hauteur maximale (sauf à l'occasion des quatre jours
+où l'analemme croise l'axe des Y). Mais comme on est au voisinage d'un point
+à tangente horizontale, la variation est très faible.
+Par exemple, le 2 novembre 2017, pour un observateur à l'observatoire de Greenwich,
+le Soleil est à une hauteur de 23°37'39" au moment du midi solaire vrai (11h 43mn 37s)
+et à une hauteur de 23°31'40" au moment du midi solaire moyen, un quart d'heure plus tard
+(données obtenues dans Stellarium).
+
+Pour les abscisses, c'est un peu plus compliqué. En reprenant l'exemple du 2 novembre
+2017, au moment du midi solaire moyen, l'azimuth du Soleil est 184°19'08".
+Donc, sur l'analemme, le point du 2 novembre est 4 degrés à droite de l'axe Y,
+tandis que sur la pseudo-analemme ci-dessous, il est 16 mn 23s à gauche de l'axe Y.
+Il y a donc non seulement un changement d'unités, mais aussi un changement de signe.
+La pseudo-analemme et l'analemme sont donc, à peu près, symétriques l'une de l'autre.
+
 
 =head1 Autres algorithmes de calcul
 
