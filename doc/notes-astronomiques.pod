@@ -745,7 +745,7 @@ tandis que sur la pseudo-analemme ci-dessous, il est 16 mn 23s à gauche de l'ax
 Il y a donc non seulement un changement d'unités, mais aussi un changement de signe.
 La pseudo-analemme et l'analemme sont donc, à peu près, symétriques l'une de l'autre.
 
-Cf. L<à la fin|"Pseudo-analemme politiquement correcte"> pour une discussion politiquement
+Cf. L<à la fin|"Analemme politiquement correcte"> pour une discussion politiquement
 correcte de l'analemme et de la pseudo-analemme.
 
 À COMPLÉTER
@@ -758,8 +758,50 @@ et le coucher du S<soleil ?>
 
 À COMPLÉTER
 
-=head1 Annexe : explication politiquement correctes
+=head1 Annexes
 
-=head2 Pseudo-analemme politiquement correcte
+=head2 Analemme politiquement correcte
+
+Tout d'abord, pour les observateurs situés au nord du
+cercle polaire arctique, il faut juste savoir qu'une partie
+de l'analemme et de la pseudo-analemme se trouve au-dessous
+de l'horizon. Cette partie, plus ou moins importante selon
+la latitude de l'observateur, correspond à la période de
+l'année de la I<nuit polaire>.
+
+Pour les observateurs de l'hémisphère austral entre le tropique du capricorne
+et le cercle polaire antarctique, la situation est plus curieuse.
+Le midi solaire vrai correspond à l'ascension droite 0°,
+lorsque le Soleil passe au nord. De plus, comme l'observateur
+doit faire face au nord et non pas au sud, le Soleil progresse
+dans le sens est → nord → ouest, c'est-à-dire
+dans le sens des ascensions droites I<décroissantes>.
+Donc, lorsque le midi solaire vrai est en avance sur 
+le midi solaire moyen, le point de l'analemme sera à gauche
+de l'axe des Y, tandis que pendant les périodes où le
+midi solaire vrai est en retard sur le midi solaire moyen,
+le point de l'analemme sera à droite de l'axe des Y.
+
+Pour la pseudo-analemme, en revanche, il n'y a aucune raison de
+changer la représentation du sens de variation des abscisses,
+de gauche à droite. En conséquence,
+l'analemme et la pseudo-analemme seront à peu près superposables,
+sans qu'il y ait besoin de faire de symétrie.
+
+Pour les observateurs au sud du cercle polaire antarctique, même
+chose, sachant que comme pour ceux du grand nord, l'analemme et
+la pseudo-analemme se trouvent en partie en-dessous de l'horizon.
+
+Et les observateurs entre les deux S<tropiques ?> Un observateur
+faisant face au sud ne pourra pas voir l'analemme dans
+sa totalité, il lui manquera la portion aux alentours du 21 juin,
+qui se trouvera alors dans son dos. Et s'il fait face au nord, c'est
+la portion aux environs du 21 décembre qui sera dans son
+dos. Que faire S<alors ?> Il suffit de s'allonger au sol pour
+voir l'analemme dans sa totalité. Si l'observateur s'allonge avec la
+tête au nord et les pieds au sud, la situation sera semblable à celle
+d'un observateur au nord du tropique du cancer et faisant face au sud.
+S'il s'allonge avec la tête au sud et les pieds au nord, ses observations
+rejoindront celles d'un observateur situé au sud du tropique du capricorne.
 
 À COMPLÉTER
