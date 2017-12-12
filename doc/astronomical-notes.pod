@@ -657,14 +657,47 @@ left of the Y-axis. Not only the units of measure are not the same, but there
 is a change of sign. So the pseudo-analemma and the analemma
 are, approximately, the symetrical image of the other curve.
 
-See L<below|"Policitally Correct Pseudo-Analemma"> for a politically correct
+See L<below|"Policitally Correct Analemma"> for a politically correct
 discussion of the analemma and pseudo-analemma.
 
 TO BE COMPLETED
 
 =head1 Annex: Politically Correct Explanations
 
-=head2 Policitally Correct Pseudo-Analemma
+=head2 Policitally Correct Analemma
+
+First, let us deal with observers located north of the Arctic Polar Circle.
+They just have to know that the analemma and the pseudo-analemma cross the horizon
+and are partly hidden by the ground. The hidden part, more or less important depending
+on the observer's latitude, corresponds to the year period when the I<polar night> is
+in effect.
+
+For observers between the Tropic of Capricorn and the Antarctic Polar Circle,
+this is more strange. True solar noon corresponds to a right ascension of 0°,
+when the Sun is exactly northward. As the observer must face north instead of south,
+he sees the sun crossing the sky in the direction E → N → W, that is, in the 
+direction of I<decreasing> right ascension valude. So, when the true solar noon is
+ahead of the mean solar noon, the point on the analemma will be to the left of the Y-axis,
+and when the true solar noon is later than the mean solar noon, the point on the analemma
+will be to the right of the Y-axis.
+
+On the same time, for the pseudo-analemma, there is no reason to change the way
+the time of day is represented on the abscisses, that is, left to right. Therefore,
+the analemma and the pseudo-analemma will be more or less superposable, without
+an intervening symmetry. 
+
+For observer to the south of the Antarctic Polar Circle, the situation is the same,
+with the additional provision that the analemma and the pseudo-analemma will be partly
+hidden by the ground.
+
+And what about observers located between both tropics? An observer facing south
+cannot see the whole analemma, he would miss the part around 21st of June,
+which is located behind his back. And if he faces north, he will miss the
+part around 21st of December. What to do then? Just lie on the ground. If the 
+observer lies with the head to the north and the feet to the south, the observed
+analemma will be similar to the curve seen by an observer north of the Tropic of Cancer.
+If the observer lies with the head to the south and the feet to the north, the situation
+will be similar to an observer on the south of the Tropic of Capricorn and facing north.
 
 TO BE COMPLETED
 
