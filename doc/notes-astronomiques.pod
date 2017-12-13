@@ -383,7 +383,8 @@ pas de caractériser la publicité ou les campagnes électorales.
 Cela ne fait de doute pour personne ou presque que ce sont des tissus
 de mensonges.
 
-Autres mensonges pour les adultes utilisés dans ce S<texte :>
+Autres mensonges pour les adultes, également appelés S<« hypothèses
+S<simplificatrices »>, utilisés dans ce S<texte :>
 
 =over 4
 
@@ -600,7 +601,8 @@ la longitude écliptique de 226°20'31". Et pour une longitude
 écliptique de 313°32'52", l'ascension droite est de 316°47", soit le même écart
 en sens inverse, écart que l'on retrouve également pour la longitude écliptique
 de 133°32'52". Ce sont les valeurs extrêmes des écarts pour l'obliquité
-de 23° 26'. Et si vous préférez les heures, minutes, secondes, voici les S<valeurs :>
+de 23° 26'. Et si vous préférez les heures, minutes, secondes, voici 
+un tableau donnant les valeurs dans les deux S<systèmes :>
 
   .   longitude  ascension droite      écart   longitude  ascension droite   écart
   .   3h05mn22s      2h55mn30s       -9mn51s   46°20'31"     43°52'36"     -2°27'54"

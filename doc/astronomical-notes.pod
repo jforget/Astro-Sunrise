@@ -284,7 +284,7 @@ if false, leads children to a better understanding of the described phenomena an
 them closer to truth. You cannot tell assertion C to a child and expect him to understand
 it without telling him first assertion B. And it is worse with assertions D and next.
 
-Moreover, these are I<lies to adults>. In the beginning, people would consider that
+Moreover, these are what I would call I<lies to adults>. In the beginning, people would consider that
 the aim of Physics was to build a mathematical representation of the real world,
 getting closer and closer to the ultimate truth. Then, there was quantum physics
 including especially de Broglie's work
@@ -300,7 +300,8 @@ Please note that I was talking about scientific methods. I was not dealing with
 electoral campaigns and advertisements. Every sane adult knows for
 sure that these are ridden with lies.
 
-Other lies to adults you will find in the following:
+Other lies to adults, also known as "simplifying
+hypotheses", you will find in the following:
 
 =over 4
 
@@ -656,7 +657,7 @@ is very small. For example, we consider an observer at Greenwich observaroty on
 while a quarter of an hour later, at mean solar noon it is at 23°31'40"
 (values given by Stellarium).
 
-For the abscises, it is a bit more complicated. Let us use the same example as
+For the abscisses, it is a bit more complicated. Let us use the same example as
 above. At mean solar noon, the Sun's azimuth is 184°19'08", so on the analemma
 the dot for 2nd November is on the right of the Y-axis. On the pseudo-analemma,
 true solar noon occurs at 11h 43mn 37s, so the dot for 2nd November is on the
