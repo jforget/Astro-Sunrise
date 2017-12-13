@@ -30,24 +30,31 @@ explications sur le calcul des levers et des couchers
 du soleil, explications trop longues et trop techniques pour avoir leur place
 dans la documentation POD du module.
 
-=head2 Pour qui ? pour moi
+=head2 Pour qui ? pour mon nounours
 
-Aussi bizarre que cela puisse paraître, le premier destinataire
-de ce texte est moi-même. J'écris ce texte pour me souvenir
-des problèmes que j'ai rencontrés lors de la maintenance
-du module et des choix que j'ai faits alors.
-Mais surtout, c'est pour expliquer le fonctionnement de l'algorithme itératif, 
+Avez-vous lu 
+L<Le guide de brian pour résoudre tout problème Perl|http://articles.mongueurs.net/traductions/guide_brian.html> ?
+Même si l'écrasante majorité des conseils concerne le débugage
+d'un programme Perl erroné, quelques conseils s'appliquent à
+n'importe quel problème intellectuel.
+L'un de ces conseils généralistes consiste à 
+L<parler à votre nounours|http://articles.mongueurs.net/traductions/guide_brian.html#item_En_avez_vous_parl__au_nounours_nbsp__>.
+Ne vous contentez pas de faire semblant et d'imaginer que vous
+parlez à votre nounours, il faut réellement parler à haute voix
+avec des phrases cohérentes et bien formées.  Cela dit, dans mon
+cas, le sujet est trop vaste pour être abordé en une discussion d'un
+quart d'heure avec mon nounours. J'ai préféré passer au stade supérieur et je préfère
+I<écrire> à mon nounours via GitHub.
+
+Ainsi donc, j'écris ce texte pour raconter à mon nounours
+les problèmes que j'ai rencontrés lors de la maintenance
+du module et les choix que j'ai faits alors.
+Mais surtout, c'est pour lui expliquer le fonctionnement de l'algorithme itératif, 
 L<décrit succintement|http://www.stjarnhimlen.se/comp/riset.html#3> 
 par Paul Schlyter
 dans son site web et qu'il n'a pas mis à disposition du public
 sous une forme compilable et exécutable (contrairement à la
 L<version simple sans itération|http://www.stjarnhimlen.se/comp/sunriset.c>).
-
-Avez-vous lu 
-L<Le guide de brian pour résoudre tout problème Perl|http://articles.mongueurs.net/traductions/guide_brian.html> ?
-L'un des conseils consiste à 
-L<parler à votre nounours|http://articles.mongueurs.net/traductions/guide_brian.html#item_En_avez_vous_parl__au_nounours_nbsp__>.
-Au lieu de cela, je préfère écrire à mon nounours via GitHub.
 
 =head2 Pour qui ? pour le prochain mainteneur du module
 
