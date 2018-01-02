@@ -383,7 +383,7 @@ pas de caractériser la publicité ou les campagnes électorales.
 Cela ne fait de doute pour personne ou presque que ce sont des tissus
 de mensonges.
 
-Autres mensonges pour les adultes, également appelés S<« hypothèses
+Autres mensonges pour les adultes, également appelés S<« hypothèses>
 S<simplificatrices »>, utilisés dans ce S<texte :>
 
 =over 4
@@ -756,6 +756,36 @@ La pseudo-analemme et l'analemme sont donc, à peu près, symétriques l'une de 
 
 Cf. L<à la fin|"Analemme politiquement correcte"> pour une discussion politiquement
 correcte de l'analemme et de la pseudo-analemme.
+
+=head2 Principe du calcul itératif
+
+Il y a deux attitudes vis-à-vis de la variation du midi solaire vrai d'un jour à l'autre.
+En prenant un observateur à Greenwich en septembre 2017, 
+le midi solaire du 11 septembre se produit à 11:56:34 à une hauteur de 42°53'40"
+et celui du lendemain se produit à 11:56:13 à une hauteur de 42°30'47".
+
+On peut considérer que la valeur 11:56:34 est valide le 11 de zéro heure à minuit et
+qu'elle saute instantanément à 11:56:13 le 12 septembre à zéro heure. Cela revient à dire
+que la pseudo-analemme est un nuage de 365 points distincts.
+
+Ou alors, on peut considérer que le midi solaire vrai évolue continûment d'un jour à l'autre
+et que la pseudo-analemme est une courbe constituée d'une infinité de points.
+Le calcul du coucher du Soleil en se basant sur le midi solaire vrai de 11:56:34 donne une 
+heure 18:23:59. Puisque le midi solaire vrai a varié de 21 secondes en S<86 379 secondes>
+(soit 1 jour moyen moins 21 secondes), par interpolation linéaire, à 18:23:59, soit 
+S<23 225 secondes> plus tard le midi solaire moyen aura varié de 5,6 secondes.
+De même, la hauteur, qui varie de 22'53" en S<86 379 secondes> aura varié de 6'9"
+en S<23 225 secondes>. On obtient un midi solaire vrai virtuel de 11:56:28 et
+une hauteur de 42°47'31".
+
+On déplace donc la courbe de la course du Soleil pour culminer sur ce point précis
+et on recalcule l'intersection avec la ligne horizontale représentant le coucher
+du Soleil. On obtiendra un point différent de 18:23:59, mais très proche de
+18:23:59 et encore plus proche de la valeur donnée par S<Stellarium :> 18:23:24.
+
+
+
+
 
 À COMPLÉTER
 

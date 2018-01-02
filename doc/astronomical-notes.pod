@@ -668,6 +668,36 @@ are, approximately, the symetrical image of the other curve.
 See L<below|"Policitally Correct Analemma"> for a politically correct
 discussion of the analemma and pseudo-analemma.
 
+=head2 Principle of the Iterative Computation
+
+There are two models for the variability of the true solar
+noon from one day to the next. Let us take the example
+of an observer in Grrenwich in September 2017.
+On 11th September, the true solar noon occurs at 11:56:34,
+with an altitude of 42°53'40" and the next day it occurs
+at 11:56:13 with an altitude of 42°30'47".
+
+With the first model, we consider that the 11:56:34 value applies on the 11th from 00:00:01 until 23:59:59, at which time it instantly jumps 
+to 11:56:13 for the 12th. In other words, the pseudo-analemma
+is a cloud of 365 discrete points.
+
+Or else, we can consider that the true solar noon is a continuous function
+and that the pseudo-analemma is a continuous curve. When using the orbital parameters
+for the 11th at 11:56:34, the computed sunset occurs at 18:23:59. Since the true solar noon varies by 21 seconds over a timespan
+of 86379 seconds (one day minus 21 seconds), using linear interpolation,
+we can find that after 23225 seconds (i.e. 18:23:59), the true solar
+noon has varied by 5.6 seconds. Likewise, the altitude varies
+by 22'53" in 86379 seconds and by 6'9" in 23225 seconds. So at
+18:23:59, we have a I<virtual> true solar noon of 11:56:28
+and a I<virtual> altitude of 42°47'31".
+
+So we move a little bit the course of the Sun so it will
+be at its highest at his virtual point
+and we recompute the intersection between the new course and
+the horizontal line corresponding to sunsen. The result will not
+be 18:23:59, but very near to this value and even nearer to the value
+from Stellarium: 18:23:24.
+
 TO BE COMPLETED
 
 =head1 Annex: Politically Correct Explanations
