@@ -8,7 +8,7 @@ Ce texte est diffusé sous la licence I<Creative Commons>
 S<CC-BY-ND :> avec attribution et me demander avant de modifier
 le contenu.
 
-Copyright (c) 2017 Jean Forget, tous droits réservés.
+Copyright (c) 2017, 2018 Jean Forget, tous droits réservés.
 
 Le texte est fréquemment (mais irrégulièrement) mis à jour
 sur Github. Il y a une version française et une version

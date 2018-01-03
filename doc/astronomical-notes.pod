@@ -7,7 +7,7 @@
 This text is published under the I<Creative Commons> license
 CC-BY-ND.
 
-Copyright (c) 2017 Jean Forget. All rights reserved.
+Copyright (c) 2017, 2018 Jean Forget. All rights reserved.
 
 The text is often (but irregularly) updated on Github. There are
 a French version and an English version. Since I am more at ease
@@ -652,7 +652,7 @@ height of the Sun at I<true> solar noon, so the Sun is at its highest for the cu
 Therefore, the height of the Sun in the analemma is obviously lower than on the
 pseudo-analemma (except during the 4 days when the curve crosses the Y-axis).
 But since we are near a point with an horizontal tangent, the variation
-is very small. For example, we consider an observer at Greenwich observaroty on
+is very small. For example, we consider an observer at Greenwich observatory on
 2nd November 2017. At true solar noon (11h 43mn 37s), the Sun is at 23°37'39"
 while a quarter of an hour later, at mean solar noon it is at 23°31'40"
 (values given by Stellarium).
