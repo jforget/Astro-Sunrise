@@ -18,7 +18,7 @@ traîne par rapport à la version française.
 
 Ce texte fait partie intégrante de la distribution du module.
 Il est donc visible sur les sites web de CPAN
-(L<http://search.cpan.org>, L<https://metacpan.org>, etc)
+(L<https://metacpan.org>, par exemple)
 Mais il ne donne lieu à aucune installation.
 Du coup, je pense qu'il est absent des paquets C<.deb>
 et C<.rpm> qui pourraient être construits pour ce module.

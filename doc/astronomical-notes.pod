@@ -16,7 +16,7 @@ will lag behind the French one.
 
 This text is an integral part of the module's distribution package.
 So you can read it on web pages generated from CPAN
-(L<http://search.cpan.org>, L<https://metacpan.org>, etc).
+(for example L<https://metacpan.org>).
 But it is not used during the module installation process.
 So, I guess it will not appear in C<.deb> or C<.rpm> packages.
 
