@@ -672,7 +672,7 @@ discussion of the analemma and pseudo-analemma.
 
 There are two models for the variability of the true solar
 noon from one day to the next. Let us take the example
-of an observer in Grrenwich in September 2017.
+of an observer in Greenwich in September 2017.
 On 11th September, the true solar noon occurs at 11:56:34,
 with an altitude of 42°53'40" and the next day it occurs
 at 11:56:13 with an altitude of 42°30'47".
@@ -697,6 +697,38 @@ and we recompute the intersection between the new course and
 the horizontal line corresponding to sunsen. The result will not
 be 18:23:59, but very near to this value and even nearer to the value
 from Stellarium: 18:23:24.
+
+=head2 Implementation of Basic Algorithm
+
+Before describing the precise algorithm, let us talk about the basic algorithm.
+And instead of using the example of Greenwich, we take its symmetrical point
+with respect to the Equator. This point is not far from Bouvet Island in
+South Atlantic. And the date is 4th January, 2018.
+
+The basic algorithm begins by computing the day's true solar noon.
+On 4th Jan, the true solar noon at Anti-Greenwich happens at 12:04:59
+(actually, same as Greenwich).
+
+Then we apply both Earth's spin (360.986 degrees per day) and 
+the movement of a VHS ("virtual homocinetic sun"), that is, 0.986 degrees per
+day. The result is a combined rotational speed of 360 degrees per day, that is,
+15 degrees per hour. And sunset happens when the VHS reaches the target altitude.
+
+So on 4th Jan, the angle between noon and sunset is 123.4° (123° 24' 25"). 
+We need 8.2271 hours (8 h 13 mn 35 s) to run this angle and the sunset for
+the VHS occurs at 20:18:34.
+
+=head2 Implementation of Precise Algorithm
+
+With the precise algorithm, we keep separate Earth's spin (360.986 degrees
+per day) and the Sun's rotational speed around Earth. In additionn, this
+rotational speed is the real speed, spanning from 0.9552 to 1.0166 
+degree per day.
+
+First iteration. We start from the true solar noon and we apply Earth's spin
+(15.04107 degrees per hour). The first result, a very approximate one, is the
+instant when Earth's spin brings the Sun to the target altitude.
+On 4th Jan, this first value is 20:17:31.
 
 TO BE COMPLETED
 

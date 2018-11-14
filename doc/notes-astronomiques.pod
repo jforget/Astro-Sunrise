@@ -783,8 +783,74 @@ et on recalcule l'intersection avec la ligne horizontale représentant le couche
 du Soleil. On obtiendra un point différent de 18:23:59, mais très proche de
 18:23:59 et encore plus proche de la valeur donnée par S<Stellarium :> 18:23:24.
 
+=head2 Mise en Œuvre de l'Algorithme Simple
+
+Faisons d'abord une digression avec l'algorithme simple. Et au lieu de prendre 
+comme exemple Greenwich, on prend le point symétrique de Greenwich par rapport
+à l'équateur, pas très loin de l'Île Bouvet dans l'Atlantique sud. Et la date
+choisie est celle du 4 janvier 2018. 
+
+L'algorithme simple commence par déterminer le midi solaire vrai du jour.
+En reprenant l'exemple du paragraphe précédent, le 4 janvier
+à anti-Greenwich, le midi solaire vrai se produit à 12:04:59 (en fait au
+même instant qu'à Greenwich).
+
+Puis on applique simultanément la rotation de la Terre sur elle-même (360,986 degrés par jour)
+et la rotation d'un SVH (rappel : soleil virtuel homocinétique) autour de la Terre (0,986 degré par jour)
+ce qui fait une vitesse combinée de 360 degrés par jour, soit 15 degrés
+par heure. Et le coucher du soleil se produit au moment où cette rotation combinée
+amène le SVH à l'altitude cible.
+
+Ainsi, pour le 4 janvier, l'écart entre le point de midi et le point du coucher
+du soleil est de 123,4° (123° 24' 25"). Donc il faut 8,2271 heures (8 h 13 mn 35 s)
+pour parcourir cet angle et le coucher du SVH se produit à 20 h 18 mn 34 s.
 
 
+=head2 Implémentation de l'Algorithme Précis
+
+Avec l'algorithme précis, on dissocie la rotation de le Terre sur elle-même
+(360,986 degrés par jour) et la rotation du soleil autour de la Terre.
+De plus, on utilise implicitement la valeur réelle de la rotation du soleil,
+entre 0,9552 degré et 1,0166 degré par jour.
+
+Première itération. On part du midi solaire vrai du jour et on applique
+uniquement la rotation de la Terre sur elle-même (15,04107 degrés par heure).
+La première valeur, très approximative, est le moment où la rotation
+de la Terre amène le soleil à l'altitude recherchée. 
+Avec l'exemple du 4 janvier, cette première approximation
+donne l'heure 20:17:31.
+
+Cette valeur est moins bonne que celle de l'algorithme basique,
+car elle ne tient pas du tout compte de la vitesse orbitale du soleil
+autour de la Terre, même approximativement. Mais nous allons nous rattraper avec
+la seconde itération.
+
+Pour la seconde itération, on détermine le midi solaire virtuel correspondant à la position du Soleil
+à cette heure approximative 20:17:31. Ce midi solaire virtuel se produit à 12:xx:xx.
+En partant de cette position, on applique la rotation de la Terre et on aboutit
+à la seconde évaluation du coucher du soleil, 20:xx:xx.
+
+S'il y a besoin d'une troisième itération, on détermine le midi solaire virtuel
+correspondant à la position du Soleil à 20:xx:xx. Ce midi solaire virtuel se produit à 12:yy:yy. Là encore
+nous appliquons la rotation de la Terre, pour aboutir à une troisième évaluation
+du coucher du Soleil, 20:yy:yy.
+
+C'est une première façon de voir le S<calcul :> le Soleil anticipe sa position
+dans la soirée et reste immobile à cette position. Une autre façon de voir ce
+calcul S<est :>
+
+Lors de la seconde itération, entre le midi solaire réel 12:zz:zz et la valeur donnée
+par la première itération 20:17:31, le Soleil tourne à la vitesse réelle de 1,0166 degré par jour,
+puis à 20:17:31, il se fige et ensuite seule la Terre tourne sur elle-même. Le coucher du
+Soleil se produit quelques instants plus tard à 20:xx:xx.
+
+Lors de la troisième itération, entre le midi solaire réel 12:zz:zz et la valeur donnée
+par la deuxième itération 20:xx:xx, le Soleil tourne à la vitesse réelle de 1,0166 degré par jour,
+puis à 20:xx:xx, il se fige et ensuite seule la Terre tourne sur elle-même. Le coucher du
+Soleil se produit quelques instants plus tard à 20:yy:yy. Il y a donc 8 h x mn x s où l'on utilise
+la vitesse réelle du Soleil et y secondes où l'on utilise une vitesse franchement erronée.
+On y gagne par rapport au calcul simple qui utilise une vitesse légèrement erronée pendant toute
+la période de 8 h, x mn et x s.
 
 
 À COMPLÉTER
