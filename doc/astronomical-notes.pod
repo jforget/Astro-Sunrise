@@ -50,12 +50,12 @@ L<simple version without iteration|http://www.stjarnhimlen.se/comp/sunriset.c>).
 
 =head2 For Whom? For The Next Module Maintainer
 
-Actually, my teddy-bear understand French, so the present
+Actually, my teddy-bear understands French, so the present
 English version is not for him.
 The second person for whom I write is the next module maintainer. I have read
 L<Neil Bowers' message|http://codeverge.com/perl.module-authors/the-module-authors-pledge/744969>
 about I<the module authors pledge>. I agree with him and I declare that
-should I stop maintaing my modules for whatever reason, I accept that 
+should I stop maintaining my modules for whatever reason, I accept that 
 any volunteer can take charge of them.
 
 What Neil did not explain, is that the new maintainer must obey a few
@@ -193,9 +193,80 @@ like I am doing here.
 Stellarium is a PC app to simulate a night sky. If you do not bother with
 the main view giving a real time sky simulation, you can use it to obtain
 the coordinates of a given celestial body at a given time when seen from
-a given Earth location.
+a given Earth location. Here is how you can determine the time
+of sunrise, sunset or true solar noon.
 
-TO BE COMPLETED
+=over 4
+
+=item *
+
+Choose an approximate value for the requested time: 12:00 for
+the true solar noon or use C<Astro::Sunrise> (basic mode) for
+sunrise or sunset.
+
+=item *
+
+Choose the search criterion: azimuth equal to 180° for true
+solar noon or real altitude equal to 0 degrees and I<xx>
+minutes below the horizon. I<xx> must be compatible with the
+C<altitude> parameter of C<Astro::Sunrise>'s functions.
+
+Note: we do not use the I<apparent> altitude given by Stellarium.
+For the deviation angle of sun rays near the horizon, we use
+C<Astro::Sunrise>'s value, which is 35' or 0.583 degree and
+we aim at this value in Stellarium. And if we want to take into
+account the radius of the sun's disk, we will use the average value 15'
+instead of recomputing the precise value depending on the
+Earth-Sun distance. In this case, we will aim at a 50' altitude
+below the horizon, that is, 0.833 degree.
+
+=item *
+
+In Stellarium, freeze the time with C<7> unless already frozen.
+
+=item *
+
+If not already done, hit C<< <F2> >> to open the configuration
+menu. In this menu, select the C<Plugins> tab, then C<Time zone>. With this,
+you can select a UTC display instead of a display using the 
+computer's local timezone. Do not forget to save the configuration
+upon exit.
+
+=item *
+
+Look for the Sun. The window is activated by C<< <F3> >>.
+
+=item *
+
+You may prefer a display without the ground and without the atmosphere.
+Use the flip-flops C<g> and C<a>. And C<e> or C<z> to display or
+to hide the equatorial and azimutal grids, acording to
+your current taste.
+
+=item *
+
+Press C<< <F6> >> to specify the observation location. With a location
+on the Greenwich meridian, the UTC time will coincide with the
+mean solar time.
+
+In several examples below, I have chosen a location at
+51° 28' 40" N, 5" E and a height of 27 m. The longitude and 
+latitude are the values given by Wikipedia for the Greenwich
+Observatory and the height is nothing more than the previously
+entered height. This has no relation with the observatory's real
+height, or this is a lucky coincidence.
+
+=item *
+
+Press C<< <F5> >> to specify date and time.
+
+=item *
+
+While keeping the date-time windows opened, try several
+time values until you get the best approximation of the
+target azimut or of the target altitude.
+
+=back
 
 =back
 
@@ -694,7 +765,7 @@ and a I<virtual> altitude of 42°47'31".
 So we move a little bit the course of the Sun so it will
 be at its highest at his virtual point
 and we recompute the intersection between the new course and
-the horizontal line corresponding to sunsen. The result will not
+the horizontal line corresponding to sunset. The result will not
 be 18:23:59, but very near to this value and even nearer to the value
 from Stellarium: 18:23:24.
 
