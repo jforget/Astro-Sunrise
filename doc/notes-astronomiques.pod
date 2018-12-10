@@ -475,8 +475,8 @@ L'écliptique est le plan qui contient l'orbite de la Terre autour du Soleil
 le plan qui contient le cercle de l'équateur terrestre. Ces deux plans ont
 un angle de 23° 26' et leur intersection s'appelle la ligne des nœuds.
 Dans certains cas il est plus intéressant de considérer que la
-ligne des nœuds est une demi-droite plutôt qu'une droite complète. Dans
-ce cas, on considère que la ligne des nœuds est la demi-droite avec
+ligne des nœuds est une demi-droite plutôt qu'une droite complète.
+On considère alors que la ligne des nœuds est la demi-droite avec
 le centre de la Terre pour origine et se dirigeant vers la constellation
 des poissons. Et le point où cette demi-droite rencontre
 la sphère céleste s'appelle I<point gamma> (politiquement correct) ou
@@ -713,14 +713,14 @@ Tout d'abord, j'ai représenté la course  du Soleil par une sinusoïde parce
 que c'était facile à programmer, mais je n'ai pas vérifié si ça collait à la
 vérité et je parierais que la correspondance est approximative. Ensuite, l'équation du temps
 est très largement exagérée. Au lieu d'un midi solaire vrai qui varie entre
-11h43 et 12h15 du temps moyen, ici la variation est 8 fois plus importante,
+11:43 et 12:15 du temps moyen, ici la variation est 8 fois plus importante,
 faisant varier le midi solaire entre 10h et 14h. Mais on n'aurait rien vu
 sans cet élargissement.
 
 Q : Et cette courbe en forme de huit, c'est l'analemme ?
 
 R : Non. L'analemme montre la position en azimuth et hauteur du Soleil au moment du midi
-solaire de temps I<moyen>. Cette courbe donne en abscisse l'heure en temps moyen
+solaire de temps I<moyen>. La courbe ci-dessus donne en abscisse l'heure en temps moyen
 du midi solaire vrai et en ordonnée la hauteur du Soleil à ce instant. 
 En d'autres termes, l'analemme se base sur un événement temporel régulier, le midi
 solaire moyen, et montre la corrélation de deux phénomènes spatiaux variables,
@@ -805,8 +805,7 @@ Ainsi, pour le 4 janvier, l'écart entre le point de midi et le point du coucher
 du soleil est de 123,4° (123° 24' 25"). Donc il faut 8,2271 heures (8 h 13 mn 35 s)
 pour parcourir cet angle et le coucher du SVH se produit à 20 h 18 mn 34 s.
 
-
-=head2 Implémentation de l'Algorithme Précis
+=head2 Mise en Œuvre de l'Algorithme Précis
 
 Avec l'algorithme précis, on dissocie la rotation de le Terre sur elle-même
 (360,986 degrés par jour) et la rotation du soleil autour de la Terre.
@@ -821,7 +820,7 @@ Avec l'exemple du 4 janvier, cette première approximation
 donne l'heure 20:17:31.
 
 Cette valeur est moins bonne que celle de l'algorithme basique,
-car elle ne tient pas du tout compte de la vitesse orbitale du soleil
+car elle ne tient pas du tout compte de la vitesse orbitale du Soleil
 autour de la Terre, même approximativement. Mais nous allons nous rattraper avec
 la seconde itération.
 

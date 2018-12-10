@@ -103,7 +103,7 @@ In my explanations, I usually take the point of view of a person living
 in the Northern hemisphere, between the Tropic of Cancer and the Arctic Circle.
 For example, I will write that at noon, the sun is located exactly southward,
 although any schoolboy from Australia, New Zealand, South Africa, Argentina
-and similar countries perfectly know that at noon, the sun is northward.
+and similar countries perfectly knows that at noon, the sun is northward.
 
 In a similar way, 21st of March is called the I<vernal equinox> or the
 I<spring equinox>, even if it pinpoints the beginning of autumn in the Southern
@@ -552,8 +552,8 @@ somewhere, in paleontological times, it used to last
 22 hours or so.
 
 The variation of the duration of the day is a tiny
-variation, but with our modern measure isntruments, we
-can measure it. Since the scientists abolished the
+variation, but with our modern measure instruments, we
+can measure it. Since the time when scientists abolished the
 astronomical standard of time for an atomic
 standard, it has been necessary to add 27 leap seconds
 over 47 years to synchronise the atomic timescale with
@@ -694,7 +694,7 @@ A: You should not be impressed. I took some liberties with the reality. First,
 I figured the Sun's trajectory as a sinusoidal curve, because it is easy to compute,
 but I did not check whether it was the real curve. And I would bet that it is
 only approximately close to the real curve. Second, the equation of time is very much
-increased. Instead of a true solar noon varying from 11h43 to 12h15 (in mean solar time),
+increased. Instead of a true solar noon varying from 11:43 to 12:15 (in mean solar time),
 here the variation is multiplied by 8 and the solar noon varies from 10h, or even less,
 to 14h. But without this stretching, you would not have seen anything.
 
@@ -756,7 +756,7 @@ Or else, we can consider that the true solar noon is a continuous function
 and that the pseudo-analemma is a continuous curve. When using the orbital parameters
 for the 11th at 11:56:34, the computed sunset occurs at 18:23:59. Since the true solar noon varies by 21 seconds over a timespan
 of 86379 seconds (one day minus 21 seconds), using linear interpolation,
-we can find that after 23225 seconds (i.e. 18:23:59), the true solar
+we can find that after 23225 seconds (i.e. at 18:23:59), the true solar
 noon has varied by 5.6 seconds. Likewise, the altitude varies
 by 22'53" in 86379 seconds and by 6'9" in 23225 seconds. So at
 18:23:59, we have a I<virtual> true solar noon of 11:56:28
@@ -800,6 +800,38 @@ First iteration. We start from the true solar noon and we apply Earth's spin
 (15.04107 degrees per hour). The first result, a very approximate one, is the
 instant when Earth's spin brings the Sun to the target altitude.
 On 4th Jan, this first value is 20:17:31.
+
+This value is noticeably worse than the value from the basic algorithm because
+it does not take into account the Sun's orbital speed around the Earth, even
+approximately. But we will do better with the second iteration.
+
+For iteration 2, we determine the virtual solar noon that corresponds to the
+Sun's position at 20:17:31. This virtual solar noon occurs at 12:xx:xx.
+With this reference, we apply the Earth's rotation and we get a second
+value for sunset, 20:xx:xx.
+
+If a third iteration is necessary, we determine the virtual solar noon 
+that corresponds to the Sun's position at 20:xx:xx. This new virtual solar
+noon occurs at 12:yy:yy. And one more time we apply the Earth's rotation
+and we obtain a third value for sunset, 20:yy:yy.
+
+This is one way to describe the algorithm: the Sun reaches by anticipation
+its position in the evening and stays there, waiting for the spinning Earth
+to spin until the Sun disappears below the horizon. Another way to describe
+the algorithm is as follows:
+
+During iteration 2, between the real solar noon 12:zz:zz and the time given
+by iteration 1, 20:17:31, the Sun orbitates with its real speed of 1.0166 degree per day.
+Then, at 20:17:31, the Sun freezes in its track and after that, there is only
+the Earth's spin and the sunset occurs some time after, at 20:xx:xx.
+
+During iteration 3, between the real solar noon 12:zz:zz and the time given
+by iteration 2, 20:xx:xx, the Sun orbitates with its real speed 1.0166 degree per day.
+Then at 20:xx:xx, it freezes, letting the Earth continue its spin. And sunset 
+happens a few instants later, at 20:yy:yy. So, there are 8 h x mn x s when we use
+the Sun's real orbital speed and y seconds when we use an obviously wrong orbital
+speed. In the end, it is better than the basic algorithm, which uses an approximate
+but still wrong orbital speed, but for the whole span of 8 h, x mn and x s.
 
 TO BE COMPLETED
 
