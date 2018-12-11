@@ -29,6 +29,72 @@ $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
 my $INV360     = ( 1.0 / 360.0 );
 
+sub sun_rise {
+  my ($sun_rise, undef) = sun_rise_sun_set(@_);
+  return $sun_rise;
+}
+sub sun_set {
+  my (undef, $sun_set) = sun_rise_sun_set(@_);
+  return $sun_set;
+}
+
+sub sun_rise_sun_set {
+  my %arg;
+  if (ref($_[0]) eq 'HASH') {
+    %arg = %{$_[0]};
+  }
+  else {
+    @arg{ qw/lon lat alt offset/ } = @_;
+  }
+
+  # This trick aims to fulfill two antagonistic purposes:
+  # -- do not load DateTime if the only function called is "sunrise"
+  # -- load DateTime implicitly if the user calls "sun_rise" or "sun_set". This is to be backward
+  # compatible with 0.92 or earlier, when Astro::Sunrise would load DateTime and thus, allow
+  # the user to remove this line from his script.
+  unless ($INC{DateTime}) {
+    eval "use DateTime";
+    croak $@
+      if $@;
+  }
+
+  my ($longitude, $latitude) = @arg{ qw/lon lat/ };
+  my $alt       = defined($arg{alt}      ) ?     $arg{alt}       : -0.833;
+  my $offset    = defined($arg{offset}   ) ? int($arg{offset})   : 0 ;
+  my $tz        = defined($arg{time_zone}) ?     $arg{time_zone} : 'local';
+  $arg{precise}    ||= 0;
+  $arg{upper_limb} ||= 0;
+  $arg{polar}      ||= 'warn';
+  croak "Longitude parameter (keyword: 'lon') is mandatory"
+    unless defined $longitude;
+  croak "Latitude parameter (keyword: 'lat') is mandatory"
+    unless defined $latitude;
+  croak "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
+    if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
+
+  my $today = DateTime->today(time_zone => $tz);
+  $today->set( hour => 12 );
+  $today->add( days => $offset );
+
+  my( $sun_rise, $sun_set ) = sunrise( { year  => $today->year,
+                                         month => $today->mon,
+                                         day   => $today->mday,
+                                         lon   => $longitude,
+                                         lat   => $latitude,
+                                         tz    => ( $today->offset / 3600 ),
+                                         #
+                                         # DST is always 0 because DateTime
+                                         # currently (v 0.16) adds one to the
+                                         # offset during DST hours
+                                         isdst      => 0,
+                                         alt        => $alt,
+                                         precise    => $arg{precise},
+                                         upper_limb => $arg{upper_limb},
+                                         polar      => $arg{polar},
+                                      } );
+  return ($sun_rise, $sun_set);
+}
+
 sub sunrise  {
   my %arg;
   if (ref($_[0]) eq 'HASH') {
@@ -114,6 +180,105 @@ sub sunrise  {
 # end sunrise
 ###################################################################################
 
+#
+#
+# FUNCTIONAL SEQUENCE for days_since_2000_Jan_0 
+#
+# _GIVEN
+# year, month, day
+#
+# _THEN
+#
+# process the year month and day (counted in days)
+# Day 0.0 is at Jan 1 2000 0.0 UT
+# Note that ALL divisions here should be INTEGER divisions
+#
+# _RETURN
+#
+# day number
+#
+sub days_since_2000_Jan_0 {
+    use integer;
+    my ( $year, $month, $day ) = @_;
+
+    my $d =   367 * $year
+            - int( ( 7 * ( $year + ( ($month + 9) / 12 ) ) ) / 4 )
+            + int( (275 * $month) / 9 )
+            + $day - 730530;
+
+    return $d;
+
+}
+
+#
+#
+# FUNCTIONAL SEQUENCE for convert_hour 
+#
+# _GIVEN
+# Hour_rise, Hour_set, Time zone offset, DST setting
+# hours are in UT
+#
+# _THEN
+#
+# convert to local time
+# 
+#
+# _RETURN
+#
+# hour:min rise and set 
+#
+
+sub convert_hour {
+  my ($hour_rise_ut, $hour_set_ut, $TZ, $isdst) = @_;
+  return (convert_1_hour($hour_rise_ut, $TZ, $isdst),
+          convert_1_hour($hour_set_ut,  $TZ, $isdst));
+}
+#
+#
+# FUNCTIONAL SEQUENCE for convert_1_hour
+#
+# _GIVEN
+# Hour, Time zone offset, DST setting
+# hours are in UT
+#
+# _THEN
+#
+# convert to local time
+#
+#
+# _RETURN
+#
+# hour:min
+#
+
+sub convert_1_hour {
+  my ($hour_ut, $TZ, $isdst) = @_;
+  my $hour_local = $hour_ut + $TZ;
+  if ($isdst) {
+    $hour_local ++;
+  }
+
+  # The hour should be between 0 and 24;
+  if ($hour_local < 0) {
+    $hour_local += 24;
+  }
+  elsif ($hour_local > 24) {
+    $hour_local -= 24;
+  }
+
+  my $hour =  int ($hour_local);
+
+  my $min  = floor(($hour_local - $hour) * 60 + 0.5);
+
+  if ($min >= 60) {
+    $min -= 60;
+    $hour++;
+    $hour -= 24 if $hour >= 24;
+  }
+
+  return sprintf("%02d:%02d", $hour, $min);
+}
+
 
 sub sun_rise_set {
     my ($d, $lon, $lat,$altit, $h, $upper_limb, $polar) = @_;
@@ -195,6 +360,48 @@ sub GMST0 {
 
 }
 
+#
+#
+# FUNCTIONAL SEQUENCE for sun_RA_dec
+#
+# _GIVEN
+# day number, $r and $lon (from sunpos)
+#
+# _THEN
+#
+# compute RA and dec
+# 
+#
+# _RETURN
+#
+# Sun's Right Ascension (RA), Declination (dec) and distance (r)
+# 
+#
+sub sun_RA_dec {
+    my ($d) = @_;
+
+    # Compute Sun's ecliptical coordinates 
+    my ( $r, $lon ) = sunpos($d);
+
+    # Compute ecliptic rectangular coordinates (z=0) 
+    my $x = $r * cosd($lon);
+    my $y = $r * sind($lon);
+
+    # Compute obliquity of ecliptic (inclination of Earth's axis) 
+    my $obl_ecl = 23.4393 - 3.563E-7 * $d;
+
+    # Convert to equatorial rectangular coordinates - x is unchanged 
+    my $z = $y * sind($obl_ecl);
+    $y = $y * cosd($obl_ecl);
+
+    # Convert to spherical coordinates 
+    my $RA  = atan2d( $y, $x );
+    my $dec = atan2d( $z, sqrt( $x * $x + $y * $y ) );
+
+    return ( $RA, $dec, $r );
+
+}    # sun_RA_dec
+
 
 #
 #
@@ -257,78 +464,6 @@ sub sunpos {
 }
 
 
-#
-#
-# FUNCTIONAL SEQUENCE for sun_RA_dec
-#
-# _GIVEN
-# day number, $r and $lon (from sunpos)
-#
-# _THEN
-#
-# compute RA and dec
-# 
-#
-# _RETURN
-#
-# Sun's Right Ascension (RA), Declination (dec) and distance (r)
-# 
-#
-sub sun_RA_dec {
-    my ($d) = @_;
-
-    # Compute Sun's ecliptical coordinates 
-    my ( $r, $lon ) = sunpos($d);
-
-    # Compute ecliptic rectangular coordinates (z=0) 
-    my $x = $r * cosd($lon);
-    my $y = $r * sind($lon);
-
-    # Compute obliquity of ecliptic (inclination of Earth's axis) 
-    my $obl_ecl = 23.4393 - 3.563E-7 * $d;
-
-    # Convert to equatorial rectangular coordinates - x is unchanged 
-    my $z = $y * sind($obl_ecl);
-    $y = $y * cosd($obl_ecl);
-
-    # Convert to spherical coordinates 
-    my $RA  = atan2d( $y, $x );
-    my $dec = atan2d( $z, sqrt( $x * $x + $y * $y ) );
-
-    return ( $RA, $dec, $r );
-
-}    # sun_RA_dec
-
-
-#
-#
-# FUNCTIONAL SEQUENCE for days_since_2000_Jan_0 
-#
-# _GIVEN
-# year, month, day
-#
-# _THEN
-#
-# process the year month and day (counted in days)
-# Day 0.0 is at Jan 1 2000 0.0 UT
-# Note that ALL divisions here should be INTEGER divisions
-#
-# _RETURN
-#
-# day number
-#
-sub days_since_2000_Jan_0 {
-    use integer;
-    my ( $year, $month, $day ) = @_;
-
-    my $d =
-      ( 367 * ($year) -
-      int( ( 7 * ( ($year) + ( ( ($month) + 9 ) / 12 ) ) ) / 4 ) +
-      int( ( 275 * ($month) ) / 9 ) + ($day) - 730530 );
-
-    return $d;
-
-}
 
 sub sind {
     sin( ( $_[0] ) * $DEGRAD );
@@ -410,140 +545,6 @@ sub equal {
     return sprintf("%.${dp}g", $A) eq sprintf("%.${dp}g", $B);
 }
 
-#
-#
-# FUNCTIONAL SEQUENCE for convert_hour 
-#
-# _GIVEN
-# Hour_rise, Hour_set, Time zone offset, DST setting
-# hours are in UT
-#
-# _THEN
-#
-# convert to local time
-# 
-#
-# _RETURN
-#
-# hour:min rise and set 
-#
-
-sub convert_hour {
-  my ($hour_rise_ut, $hour_set_ut, $TZ, $isdst) = @_;
-  return (convert_1_hour($hour_rise_ut, $TZ, $isdst),
-          convert_1_hour($hour_set_ut,  $TZ, $isdst));
-}
-#
-#
-# FUNCTIONAL SEQUENCE for convert_1_hour
-#
-# _GIVEN
-# Hour, Time zone offset, DST setting
-# hours are in UT
-#
-# _THEN
-#
-# convert to local time
-#
-#
-# _RETURN
-#
-# hour:min
-#
-
-sub convert_1_hour {
-  my ($hour_ut, $TZ, $isdst) = @_;
-  my $hour_local = $hour_ut + $TZ;
-  if ($isdst) {
-    $hour_local ++;
-  }
-
-  # The hour should be between 0 and 24;
-  if ($hour_local < 0) {
-    $hour_local += 24;
-  }
-  elsif ($hour_local > 24) {
-    $hour_local -= 24;
-  }
-
-  my $hour =  int ($hour_local);
-
-  my $min  = floor(($hour_local - $hour) * 60 + 0.5);
-
-  if ($min >= 60) {
-    $min -= 60;
-    $hour++;
-    $hour -= 24 if $hour >= 24;
-  }
-
-  return sprintf("%02d:%02d", $hour, $min);
-}
-
-sub sun_rise {
-  my ($sun_rise, undef) = sun_rise_sun_set(@_);
-  return $sun_rise;
-}
-sub sun_set {
-  my (undef, $sun_set) = sun_rise_sun_set(@_);
-  return $sun_set;
-}
-
-sub sun_rise_sun_set {
-  my %arg;
-  if (ref($_[0]) eq 'HASH') {
-    %arg = %{$_[0]};
-  }
-  else {
-    @arg{ qw/lon lat alt offset/ } = @_;
-  }
-
-  # This trick aims to fulfill two antagonistic purposes:
-  # -- do not load DateTime if the only function called is "sunrise"
-  # -- load DateTime implicitly if the user calls "sun_rise" or "sun_set". This is to be backward
-  # compatible with 0.92 or earlier, when Astro::Sunrise would load DateTime and thus, allow
-  # the user to remove this line from his script.
-  unless ($INC{DateTime}) {
-    eval "use DateTime";
-    croak $@
-      if $@;
-  }
-
-  my ($longitude, $latitude) = @arg{ qw/lon lat/ };
-  my $alt       = defined($arg{alt}      ) ?     $arg{alt}       : -0.833;
-  my $offset    = defined($arg{offset}   ) ? int($arg{offset})   : 0 ;
-  my $tz        = defined($arg{time_zone}) ?     $arg{time_zone} : 'local';
-  $arg{precise}    ||= 0;
-  $arg{upper_limb} ||= 0;
-  $arg{polar}      ||= 'warn';
-  croak "Longitude parameter (keyword: 'lon') is mandatory"
-    unless defined $longitude;
-  croak "Latitude parameter (keyword: 'lat') is mandatory"
-    unless defined $latitude;
-  croak "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
-    if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
-
-  my $today = DateTime->today(time_zone => $tz);
-  $today->set( hour => 12 );
-  $today->add( days => $offset );
-
-  my( $sun_rise, $sun_set ) = sunrise( { year  => $today->year,
-                                         month => $today->mon,
-                                         day   => $today->mday,
-                                         lon   => $longitude,
-                                         lat   => $latitude,
-                                         tz    => ( $today->offset / 3600 ),
-                                         #
-                                         # DST is always 0 because DateTime
-                                         # currently (v 0.16) adds one to the
-                                         # offset during DST hours
-                                         isdst      => 0,
-                                         alt        => $alt,
-                                         precise    => $arg{precise},
-                                         upper_limb => $arg{upper_limb},
-                                         polar      => $arg{polar},
-                                      } );
-  return ($sun_rise, $sun_set);
-}
 
 sub DEFAULT      () { -0.833 }
 sub CIVIL        () { - 6 }
