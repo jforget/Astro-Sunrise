@@ -265,6 +265,11 @@ sub convert_hour {
 
 sub convert_1_hour {
   my ($hour_ut, $TZ, $isdst) = @_;
+
+  if ($hour_ut eq 'day' or $hour_ut eq 'night') {
+    return $hour_ut;
+  }
+
   my $hour_local = $hour_ut + $TZ;
   if ($isdst) {
     $hour_local ++;
