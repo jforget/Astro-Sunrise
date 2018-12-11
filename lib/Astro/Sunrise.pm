@@ -65,6 +65,7 @@ sub sun_rise_sun_set {
   $arg{precise}    ||= 0;
   $arg{upper_limb} ||= 0;
   $arg{polar}      ||= 'warn';
+  $arg{trace}      ||= 0;
   croak "Longitude parameter (keyword: 'lon') is mandatory"
     unless defined $longitude;
   croak "Latitude parameter (keyword: 'lat') is mandatory"
@@ -91,6 +92,7 @@ sub sun_rise_sun_set {
                                          precise    => $arg{precise},
                                          upper_limb => $arg{upper_limb},
                                          polar      => $arg{polar},
+                                         trace      => $arg{trace},
                                       } );
   return ($sun_rise, $sun_set);
 }
@@ -103,12 +105,13 @@ sub sunrise  {
   else {
     @arg{ qw/year month day lon lat tz isdst alt precise/ } = @_;
   }
-  my (        $year, $month, $day, $lon, $lat, $TZ, $isdst)
-    = @arg{ qw/year   month   day   lon   lat   tz   isdst/ };
+  my (        $year, $month, $day, $lon, $lat, $TZ, $isdst, $trace)
+    = @arg{ qw/year   month   day   lon   lat   tz   isdst   trace/ };
   my $altit     = defined($arg{alt}    ) ? $arg{alt}     : -0.833;
   $arg{precise}    ||= 0;
   $arg{upper_limb} ||= 0;
   $arg{polar}      ||= 'warn';
+  $trace           ||= 0;
   croak "Year parameter is mandatory"
     unless defined $year;
   croak "Month parameter is mandatory"
@@ -124,6 +127,9 @@ sub sunrise  {
 
   if ($arg{precise})   {
     # This is the initial start
+    if ($trace) {
+      print $trace "Precise computation of sunrise for $year-$month-$day, lon $lon, lat $lat, altitude $altit, upper limb $arg{upper_limb}\n";
+    }
 
     my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
     my ($tmp_rise_1, $tmp_set_1) = sun_rise_set($d, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
@@ -147,6 +153,9 @@ sub sunrise  {
        last if ++$counter >= 100;
     }
 
+    if ($trace) {
+      print $trace "Precise computation of sunset for $year-$month-$day, lon $lon, lat $lat, altitude $altit, upper limb $arg{upper_limb}\n";
+    }
     my $tmp_set_2 = 9;
     my $tmp_set_3 = 0;
 
@@ -168,6 +177,9 @@ sub sunrise  {
 
   }
   else {
+    if ($trace) {
+      print $trace "Basic computation of sunrise and sunset for $year-$month-$day, lon $lon, lat $lat, altitude $altit, upper limb $arg{upper_limb}\n";
+    }
     my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
     my ($h1, $h2) = sun_rise_set($d, $lon, $lat, $altit, 15.0, $arg{upper_limb}, $arg{polar});
     if ($h1 eq 'day' or $h1 eq 'night' or $h2 eq 'day' or $h2 eq 'night') {
@@ -657,11 +669,13 @@ Astronomical twilight (the sky is completely dark)
 
 =head2 B<sunrise>
 
-  ($sunrise, $sunset) = sunrise( { year    => $year,      month      => $month,     day => $day,
+  ($sunrise, $sunset) = sunrise( { year    => $year,      month      => $month,
+                                   day     => $day,
                                    lon     => $longitude, lat        => $latitude,
                                    tz      => $tz_offset, isdst      => $is_dst,
                                    alt     => $altitude,  upper_limb => $upper_limb,
-                                   precise => $precise,   polar      => $action } );
+                                   precise => $precise,   polar      => $action,
+                                   trace   => $fh } );
 
   ($sunrise, $sunset) = sunrise(YYYY,MM,DD,longitude,latitude,Time Zone,DST);
 
@@ -762,6 +776,16 @@ Example:
   else {
     say "Alex saw his first antarctic sunset at $sunset";
   }
+
+This parameter is optional and it can be specified only by keyword.
+
+=item trace
+
+This parameter should either be a false value or a filehandle opened for output.
+In the latter case, a few messages are printed to the filehandle, which allows
+the programmer to see step by step how the sunrise and the sunset are computed.
+
+Used for analysis and debugging purposes.
 
 This parameter is optional and it can be specified only by keyword.
 
@@ -893,6 +917,16 @@ situation.
 So, if the C<polar> parameter is set to C<'warn'>, the module emits
 a warning. If the C<polar> parameter is set to C<'retval'>, the
 module emits no warning, but it returns either C<'day'> or C<'night'>.
+
+This parameter is optional and it can be specified only by keyword.
+
+=item trace
+
+This parameter should either be a false value or a filehandle opened for output.
+In the latter case, a few messages are printed to the filehandle, which allows
+the programmer to see step by step how the sunrise and the sunset are computed.
+
+Used for analysis and debugging purposes.
 
 This parameter is optional and it can be specified only by keyword.
 
