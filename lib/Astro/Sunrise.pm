@@ -132,7 +132,7 @@ sub sunrise  {
     }
 
     my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
-    my ($tmp_rise_1, $tmp_set_1) = sun_rise_set($d, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
+    my ($tmp_rise_1, $tmp_set_1) = sun_rise_set($d, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
 
     # Now we have the initial rise/set times next recompute d using the exact moment
     # recompute sunrise
@@ -144,10 +144,10 @@ sub sunrise  {
     until (equal($tmp_rise_2, $tmp_rise_3, 8) )   {
 
        my $d_sunrise_1 = $d + $tmp_rise_1/24.0;
-       ($tmp_rise_2, undef) = sun_rise_set($d_sunrise_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
+       ($tmp_rise_2, undef) = sun_rise_set($d_sunrise_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
        $tmp_rise_1 = $tmp_rise_3;
        my $d_sunrise_2 = $d + $tmp_rise_2/24.0;
-       ($tmp_rise_3, undef) = sun_rise_set($d_sunrise_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
+       ($tmp_rise_3, undef) = sun_rise_set($d_sunrise_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
 
        #print "tmp_rise2 is: $tmp_rise_2 tmp_rise_3 is:$tmp_rise_3\n";
        last if ++$counter >= 100;
@@ -163,10 +163,10 @@ sub sunrise  {
     until (equal($tmp_set_2, $tmp_set_3, 8) )   {
 
        my $d_sunset_1 = $d + $tmp_set_1/24.0;
-       (undef, $tmp_set_2) = sun_rise_set($d_sunset_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
+       (undef, $tmp_set_2) = sun_rise_set($d_sunset_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
        $tmp_set_1 = $tmp_set_3;
        my $d_sunset_2 = $d + $tmp_set_2/24.0;
-       (undef, $tmp_set_3) = sun_rise_set($d_sunset_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar});
+       (undef, $tmp_set_3) = sun_rise_set($d_sunset_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
 
        #print "tmp_set_1 is: $tmp_set_1 tmp_set_3 is:$tmp_set_3\n";
        last if ++$counter >= 100;
@@ -181,7 +181,7 @@ sub sunrise  {
       print $trace "Basic computation of sunrise and sunset for $year-$month-$day, lon $lon, lat $lat, altitude $altit, upper limb $arg{upper_limb}\n";
     }
     my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
-    my ($h1, $h2) = sun_rise_set($d, $lon, $lat, $altit, 15.0, $arg{upper_limb}, $arg{polar});
+    my ($h1, $h2) = sun_rise_set($d, $lon, $lat, $altit, 15.0, $arg{upper_limb}, $arg{polar}, $trace);
     if ($h1 eq 'day' or $h1 eq 'night' or $h2 eq 'day' or $h2 eq 'night') {
       return ($h1, $h2);
     }
@@ -298,7 +298,7 @@ sub convert_1_hour {
 
 
 sub sun_rise_set {
-    my ($d, $lon, $lat,$altit, $h, $upper_limb, $polar) = @_;
+    my ($d, $lon, $lat,$altit, $h, $upper_limb, $polar, $trace) = @_;
 
     # Compute local sidereal time of this moment
     my $sidtime = revolution( GMST0($d) + 180.0 + $lon );
@@ -307,7 +307,10 @@ sub sun_rise_set {
     my ( $sRA, $sdec, $sr ) = sun_RA_dec($d);
 
     # Compute time when Sun is at south - in hours UT
-    my $tsouth  = 12.0 - rev180( $sidtime - $sRA ) / $h;
+    my $tsouth  = 12.0 - rev180( $sidtime - $sRA ) / 15.0;
+    if ($trace) {
+      printf $trace "For day $d (%s), solar noon at $tsouth (%s)\n", _fmt_hr(24 * ($d - int($d))), _fmt_hr($tsouth);
+    }
 
     if ($upper_limb) {
         # Compute the Sun's apparent radius, degrees
@@ -337,13 +340,22 @@ sub sun_rise_set {
       $t = 12.0;    # Sun always above altit
     }
     else {
-      $t = acosd($cost) / 15.0;    # The diurnal arc, hours
+      my $arc = acosd($cost);    # The diurnal arc
+      $t = $arc / $h;            # Time to traverse the diurnal arc, hours
+      if ($trace) {
+        printf $trace "Diurnal arc $arc -> $t hours (%s)\n", _fmt_hr($t);
+      }
     }
 
     # Store rise and set times - in hours UT
 
     my $hour_rise_ut = $tsouth - $t;
     my $hour_set_ut  = $tsouth + $t;
+    if ($trace) {
+      printf $trace "For day $d (%s), sunrise at $hour_rise_ut (%s), sunset at $hour_set_ut (%s)\n", _fmt_hr(24 * ($d - int($d))),
+                   _fmt_hr($hour_rise_ut),
+                   _fmt_hr($hour_set_ut);
+    }
     return($hour_rise_ut, $hour_set_ut);
 }
 
@@ -560,6 +572,18 @@ sub equal {
     my ($A, $B, $dp) = @_;
 
     return sprintf("%.${dp}g", $A) eq sprintf("%.${dp}g", $B);
+}
+
+sub _fmt_hr {
+  my ($time) = @_;
+  my $hr = int($time);
+  $time -= $hr;
+  $time *= 60;
+  my $mn = int($time);
+  $time -= $mn;
+  $time *= 60;
+  my $sc = int($time);
+  return sprintf("%02d:%02d:%02d UTC", $hr, $mn, $sc);
 }
 
 
