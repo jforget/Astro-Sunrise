@@ -27,7 +27,7 @@ et C<.rpm> qui pourraient être construits pour ce module.
 
 Le but principal de ce texte est de donner des
 explications sur le calcul des levers et des couchers
-du soleil, explications trop longues et trop techniques pour avoir leur place
+du Soleil, explications trop longues et trop techniques pour avoir leur place
 dans la documentation POD du module.
 
 =head2 Pour qui ? pour mon nounours
@@ -80,7 +80,7 @@ de ces calculs. Lisez le texte et si vous comprenez pourquoi
 tel ou tel point me tracasse, alors vous avez la compétence astronomique
 nécessaire pour maintenir le module. Et si vous pensez que j'enfonce
 des portes ouvertes, ou si vous pouvez
-fournir une réponse argumentée à mes questions, c'est encore mieux.
+fournir instantanément une réponse argumentée à mes questions, c'est encore mieux.
 Mais si vous n'arrivez pas à suivre mes explications et si, de
 toutes manières, les sinus et les cosinus vous rebutent, ce n'est
 pas la peine d'essayer de regarder le contenu du module.
@@ -115,9 +115,9 @@ Galilée et Douglas Hofstadter.
 
 J'examine généralement les phénomènes du point de vue d'une personne se trouvant
 dans l'hémisphère nord, entre le tropique du Cancer et le cercle polaire
-arctique. Par exemple, j'écrirai qu'au moment de midi, le soleil se trouve
+arctique. Par exemple, j'écrirai qu'au moment de midi, le Soleil se trouve
 plein sud, alors que tous les écoliers australiens, néo-zélandais, sud-africains,
-argentins et de quelques autres pays savent qu'à midi le soleil est au nord.
+argentins et de quelques autres pays savent qu'à midi le Soleil est au nord.
 
 De même, le 21 mars est habituellement appelé S<« équinoxe> de S<printemps »>
 alors que c'est l'automne qui commence dans l'hémisphère sud à cette date.
@@ -144,16 +144,16 @@ ou de l'impossibilité de choisir les paramètres de génération.
 =item L'almanach du facteur
 
 Les almanachs du facteur fournissent les heures de lever et de coucher
-du soleil pour une année entière. Mais ces heures sont données à la minute près,
+du Soleil pour une année entière. Mais ces heures sont données à la minute près,
 pas à la seconde près. Et même si c'est une édition provinciale, le lever
-et le coucher du soleil est toujours donné pour Paris. Finalement, le mode de
+et le coucher du Soleil est toujours donné pour Paris. Finalement, le mode de
 calcul exact n'est pas donné.
 
 =item L'Institut de Mécanique Céleste et de Calcul des Éphémérides IMCCE
 
 Ce L<site|https://www.imcce.fr/langues/fr/index.html>
 fournissait un formulaire HTML pour obtenir le tableau des
-levers et couchers du soleil pour le lieu de votre choix et pour la
+levers et couchers du Soleil pour le lieu de votre choix et pour la
 période de votre choix. Hélas, cette page a disparu de leur site.
 
 Il existe en revanche un 
@@ -173,17 +173,17 @@ fournit un
 L<programme C|http://stjarnhimlen.se/comp/sunriset.c> 
 prêt à l'emploi donnant les heures
 de L<lever et de coucher|http://stjarnhimlen.se/comp/riset.html> 
-du soleil.
+du Soleil.
 Comme le fait remarquer Paul Schlyter, c'est la version simple de l'algorithme,
 qui peut présenter des erreurs d'une ou deux minutes en général, ou plus si
 en fonction du lieu et de la date, on est proche du début ou de la fin de la
-période où le soleil est visible à minuit.
+période où le Soleil est visible à minuit.
 
 Le site web de Paul Schlyter propose
 de L<nombreuses informations|http://stjarnhimlen.se/comp/ppcomp.html> 
 concernant le calcul des positions des corps célestes. Ce site est très
 intéressant, mais j'ai préféré reprendre à ma sauce (et en français) la
-description du calcul de la position du soleil, en laissant tomber les autres
+description du calcul de la position du Soleil, en laissant tomber les autres
 corps célestes.
 
 =item L'observatoire de l'US Navy
@@ -191,14 +191,14 @@ corps célestes.
 L<L'observatoire de l'US Navy|http://aa.usno.navy.mil/faq/index.php> 
 propose un
 L<formulaire|http://aa.usno.navy.mil/data/docs/RS_OneYear.php>
-pour calculer l'heure du lever et l'heure du coucher du soleil.
+pour calculer l'heure du lever et l'heure du coucher du Soleil.
 L'heure est donnée à la minute près, alors que j'aurais préféré
 une précision à la seconde près, tant pis.
 
 Notons toutefois que ce site fournit des 
 L<informations très intéressantes|http://aa.usno.navy.mil/faq/index.php>
 (en anglais) sur le calcul de la position des corps célestes, mais sans se focaliser sur
-la position du soleil comme je le fais ici.
+la position du Soleil comme je le fais ici.
 
 =item Stellarium
 
@@ -206,7 +206,7 @@ Stellarium est un planétarium pour PC. Si l'on ne se préoccupe pas de la visua
 réel du ciel, le logiciel permet de choisir un lieu d'observation, une date à la seconde près
 et un objet céleste. Il donne alors les coordonnées de cet objet céleste dans divers systèmes
 de S<coordonnées :> azimuthales, équatoriales et écliptiques. Voici comment procéder pour
-obtenir le lever du soleil, son coucher ou le midi vrai.
+obtenir le lever du Soleil, son coucher ou le midi vrai.
 
 =over 4
 
@@ -219,7 +219,7 @@ ou bien utiliser C<Astro::Sunrise> en mode simple pour le lever ou le coucher.
 
 Déterminer le critère de S<recherche :> azimuth à 180 degrés pour le midi vrai, ou
 bien hauteur réelle à 0 degré et I<xx> minutes sous l'horizon. I<xx> est choisi pour
-être compatible avec le paramètre C<hauteur> des fonctions de C<Astro::Sunrise>.
+être compatible avec le paramètre C<alt> (hauteur) des fonctions de C<Astro::Sunrise>.
 
 S<Note :> on ne tient pas compte de la hauteur apparente fournie par Stellarium.
 Pour la déviation des rayons lumineux au voisinage de l'horizon, on adopte le
@@ -242,11 +242,11 @@ de celui du PC. Ne pas oublier de sauvegarder la configuration en sortant.
 
 =item *
 
-Rechercher le soleil, la fenêtre de recherche s'activant par C<< <F3> >>.
+Rechercher le Soleil, la fenêtre de recherche s'activant par C<< <F3> >>.
 
 =item *
 
-Vous pouvez préférer l'affichage sans le sol ni l'atmosphère. Utiliser les 
+Vous pouvez préférer l'affichage sans le sol ni l'atmosphère. Il faut utiliser les 
 bascules C<g> et C<a>. Et C<e> ou C<z> pour avoir la grille des coordonnées
 équatoriales ou azimuthales, selon vos préférences du moment.
 
@@ -369,7 +369,7 @@ avec les énoncés D et suivants.
 Qui plus est, ce sont ce que j'appelerai des S<« mensonges> pour les S<adultes »>. Au début, on considérait
 que la physique était une représentation mathématique du monde réel, se rapprochant de plus
 en plus de la vérité ultime. Puis il y a eu la physique quantique, avec
-notamment le principe de de Broglie et son
+notamment le principe de dualité onde / corpuscule de de Broglie et son
 interprétation par l'école de Copenhague. La nature ultime de l'électron (par exemple)
 est-elle S<corpusculaire ?> Est-elle S<ondulatoire ?> La réponse est S<« Ni> l'une
 ni l'autre et de toutes façons, on s'en S<fiche. »> La vocation de la physique n'est
@@ -458,7 +458,8 @@ autour de la Terre. Et ce que nous voyons, c'est la composition
 de ces deux mouvements, qui donne une vitesse angulaire moyenne
 de 360 degrés par jour. Ce qui intéresse le commun des mortels,
 c'est de retrouver le Soleil à place fixe de jour en jour.
-Et seulement ensuite, il s'intéresse à la position de la
+Et seulement ensuite, le commun des mortels prend du recul, étudie
+son environnement, découvre l'astronomie et s'intéresse à la position de la
 Lune, des étoiles et des planètes.
 
 Q: Et pourquoi as-tu prononcé à deux ou trois reprises
@@ -483,7 +484,7 @@ la sphère céleste s'appelle I<point gamma> (politiquement correct) ou
 I<point vernal> (politiquement incorrect puisque cela correspond au début
 de l'automne dans l'hémisphère sud).
 
-Pour un point terrestre, on a l'habitude de partir d'un point
+Pour définir les coordonnées d'un point terrestre, on a l'habitude de partir d'un point
 origine dans le Golfe de Guinée, là où l'équateur croise le méridien
 de Greenwich. Puis on parcourt un premier arc de cercle le long
 de l'équateur et un second le long d'un méridien (donc, à son origine, perpendiculaire à l'équateur).
@@ -510,7 +511,7 @@ d'heures minutes et secondes pour l'ascension droite et de degrés pour
 tous les autres angles introduit une complication superflue à la conversion.
 
 Notons qu'en raison de la définition de l'écliptique, la latitude écliptique
-du soleil est toujours égale à zéro.
+du Soleil est toujours égale à zéro.
 
 Finalement, il y a le système de coordonnées locales. Pour un astre dans le
 ciel, on cherche la projection sur le sol ou plus exactement sur le plan tangent
@@ -612,7 +613,7 @@ un tableau donnant les valeurs dans les deux S<systèmes :>
 
 =head4 Deuxième Loi de Kepler
 
-Ensuite, la rotation du soleil sur le plan de l'écliptique n'est pas constante.
+Ensuite, la rotation du Soleil sur le plan de l'écliptique n'est pas constante.
 Elle suit la deuxième loi de Kepler, avec une vitesse angulaire inversement proportionnelle
 à la distance Terre-Soleil.
 
@@ -674,9 +675,9 @@ le temps solaire moyen et en notant la position du Soleil dans le ciel lorsqu'il
 est midi au temps solaire moyen. Les positions obtenues forment une courbe
 en 8 appelé I<analemme> avec l'ascension droite en abscisse et la hauteur en ordonnée.
 
-=head4 Soleil moyen, Soleil virtuel homocinétique
+=head4 Soleil moyen, soleil virtuel homocinétique
 
-Dans la suite de la discussion, il est utile d'imaginer un Soleil dont la vitesse
+Dans la suite de la discussion, il est utile d'imaginer un soleil dont la vitesse
 angulaire serait constante (soit en coordonnées équatoriales, soit en coordonnées
 écliptiques, selon le cas).
 
@@ -688,7 +689,7 @@ Je prendrai en considération également des soleils virtuels homocinétiques, o
 soleils virtuels sont synchronisés avec le Soleil réel à un instant donné et
 ensuite bougent avec une vitesse angulaire constante.
 
-=head1 Calcul du lever et du coucher du soleil
+=head1 Calcul du lever et du coucher du Soleil
 
 Le calcul du lever et du coucher du Soleil consiste à tenir compte à
 la fois de la variation de la longueur de la journée et de
@@ -703,7 +704,7 @@ par un déplacement horizontal de la sinusoïde.
 
 =for html
 <p>
-<img src='pseudo-analemma.gif' alt="Evolution de la course du soleil pendant un an" />
+<img src='pseudo-analemma.gif' alt="Evolution de la course du Soleil pendant un an" />
 </p>
 
 Q : Ouaaaaah ! Impressionnant, ton schéma !
@@ -798,24 +799,24 @@ même instant qu'à Greenwich).
 Puis on applique simultanément la rotation de la Terre sur elle-même (360,986 degrés par jour)
 et la rotation d'un SVH (rappel : soleil virtuel homocinétique) autour de la Terre (0,986 degré par jour)
 ce qui fait une vitesse combinée de 360 degrés par jour, soit 15 degrés
-par heure. Et le coucher du soleil se produit au moment où cette rotation combinée
+par heure. Et le coucher du Soleil se produit au moment où cette rotation combinée
 amène le SVH à l'altitude cible.
 
 Ainsi, pour le 4 janvier, l'écart entre le point de midi et le point du coucher
-du soleil est de 123,4° (123° 24' 25"). Donc il faut 8,2271 heures (8 h 13 mn 35 s)
+du Soleil est de 123,4° (123° 24' 25"). Donc il faut 8,2271 heures (8 h 13 mn 35 s)
 pour parcourir cet angle et le coucher du SVH se produit à 20 h 18 mn 34 s.
 
 =head2 Mise en Œuvre de l'Algorithme Précis
 
 Avec l'algorithme précis, on dissocie la rotation de le Terre sur elle-même
-(360,986 degrés par jour) et la rotation du soleil autour de la Terre.
-De plus, on utilise implicitement la valeur réelle de la rotation du soleil,
+(360,986 degrés par jour) et la rotation du Soleil autour de la Terre.
+De plus, on utilise implicitement la valeur réelle de la rotation du Soleil,
 entre 0,9552 degré et 1,0166 degré par jour.
 
 Première itération. On part du midi solaire vrai du jour et on applique
 uniquement la rotation de la Terre sur elle-même (15,04107 degrés par heure).
 La première valeur, très approximative, est le moment où la rotation
-de la Terre amène le soleil à l'altitude recherchée. 
+de la Terre amène le Soleil à l'altitude recherchée. 
 Avec l'exemple du 4 janvier, cette première approximation
 donne l'heure 20:17:31.
 
@@ -827,7 +828,7 @@ la seconde itération.
 Pour la seconde itération, on détermine le midi solaire virtuel correspondant à la position du Soleil
 à cette heure approximative 20:17:31. Ce midi solaire virtuel se produit à 12:xx:xx.
 En partant de cette position, on applique la rotation de la Terre et on aboutit
-à la seconde évaluation du coucher du soleil, 20:xx:xx.
+à la seconde évaluation du coucher du Soleil, 20:xx:xx.
 
 S'il y a besoin d'une troisième itération, on détermine le midi solaire virtuel
 correspondant à la position du Soleil à 20:xx:xx. Ce midi solaire virtuel se produit à 12:yy:yy. Là encore
@@ -858,7 +859,7 @@ la période de 8 h, x mn et x s.
 =head1 Autres algorithmes de calcul
 
 Q : Pourquoi C<Astro::Sunrise> a-t-il besoin de l'année pour calculer le lever
-et le coucher du S<soleil ?>
+et le coucher du S<Soleil ?>
 
 À COMPLÉTER
 
@@ -879,7 +880,7 @@ Le midi solaire vrai correspond à l'ascension droite 0°,
 lorsque le Soleil passe au nord. De plus, comme l'observateur
 doit faire face au nord et non pas au sud, le Soleil progresse
 dans le sens est → nord → ouest, c'est-à-dire
-dans le sens des ascensions droites I<décroissantes>.
+dans le sens des azimuths I<décroissants>.
 Donc, lorsque le midi solaire vrai est en avance sur 
 le midi solaire moyen, le point de l'analemme sera à gauche
 de l'axe des Y, tandis que pendant les périodes où le
