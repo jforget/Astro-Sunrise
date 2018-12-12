@@ -309,7 +309,7 @@ sub sun_rise_set {
     # Compute time when Sun is at south - in hours UT
     my $tsouth  = 12.0 - rev180( $sidtime - $sRA ) / 15.0;
     if ($trace) {
-      printf $trace "For day $d (%s), solar noon at $tsouth (%s)\n", _fmt_hr(24 * ($d - int($d))), _fmt_hr($tsouth);
+      printf $trace "For day $d (%s), solar noon at $tsouth (%s)\n", _fmt_hr(24 * ($d - int($d)), $lon), _fmt_hr($tsouth, $lon);
     }
 
     if ($upper_limb) {
@@ -343,7 +343,7 @@ sub sun_rise_set {
       my $arc = acosd($cost);    # The diurnal arc
       $t = $arc / $h;            # Time to traverse the diurnal arc, hours
       if ($trace) {
-        printf $trace "Diurnal arc $arc -> $t hours (%s)\n", _fmt_hr($t);
+        printf $trace "Diurnal arc $arc -> $t hours (%s)\n", _fmt_dur($t);
       }
     }
 
@@ -352,9 +352,10 @@ sub sun_rise_set {
     my $hour_rise_ut = $tsouth - $t;
     my $hour_set_ut  = $tsouth + $t;
     if ($trace) {
-      printf $trace "For day $d (%s), sunrise at $hour_rise_ut (%s), sunset at $hour_set_ut (%s)\n", _fmt_hr(24 * ($d - int($d))),
-                   _fmt_hr($hour_rise_ut),
-                   _fmt_hr($hour_set_ut);
+      printf $trace "For day $d (%s), sunrise at $hour_rise_ut (%s)\n", _fmt_hr(24 * ($d - int($d)), $lon),
+                   _fmt_hr($hour_rise_ut, $lon);
+      printf $trace "For day $d (%s), sunset  at $hour_set_ut (%s)\n",  _fmt_hr(24 * ($d - int($d)), $lon),
+                   _fmt_hr($hour_set_ut , $lon);
     }
     return($hour_rise_ut, $hour_set_ut);
 }
@@ -575,15 +576,35 @@ sub equal {
 }
 
 sub _fmt_hr {
-  my ($time) = @_;
-  my $hr = int($time);
-  $time -= $hr;
-  $time *= 60;
-  my $mn = int($time);
-  $time -= $mn;
-  $time *= 60;
-  my $sc = int($time);
-  return sprintf("%02d:%02d:%02d UTC", $hr, $mn, $sc);
+  my ($utc, $lon) = @_;
+  my $lmt = $utc + $lon / 15;
+  my $hr_utc = floor($utc);
+  $utc      -= $hr_utc;
+  $utc      *= 60;
+  my $mn_utc = floor($utc);
+  $utc      -= $mn_utc;
+  $utc      *= 60;
+  my $sc_utc = floor($utc);
+  my $hr_lmt = floor($lmt);
+  $lmt      -= $hr_lmt;
+  $lmt      *= 60;
+  my $mn_lmt = floor($lmt);
+  $lmt      -= $mn_lmt;
+  $lmt      *= 60;
+  my $sc_lmt = floor($lmt);
+  return sprintf("%02d:%02d:%02d UTC %02d:%02d:%02d LMT", $hr_utc, $mn_utc, $sc_utc, $hr_lmt, $mn_lmt, $sc_lmt);
+}
+
+sub _fmt_dur {
+  my ($dur) = @_;
+  my $hr = floor($dur);
+  $dur  -= $hr;
+  $dur  *= 60;
+  my $mn = floor($dur);
+  $dur  -= $mn;
+  $dur  *= 60;
+  my $sc = floor($dur);
+  return sprintf("%02d h %02d mn %02d s", $hr, $mn, $sc);
 }
 
 
