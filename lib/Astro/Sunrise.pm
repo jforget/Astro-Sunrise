@@ -303,11 +303,12 @@ sub sun_rise_set {
     my $sidtime = revolution( GMST0($d) + 180.0 + $lon );
 
     # Compute Sun's RA + Decl + distance at this moment
-    my ( $sRA, $sdec, $sr ) = sun_RA_dec($d, $trace);
+    my ( $sRA, $sdec, $sr ) = sun_RA_dec($d, $lon, $trace);
 
     # Compute time when Sun is at south - in hours UT
     my $tsouth  = 12.0 - rev180( $sidtime - $sRA ) / 15.0;
     if ($trace) {
+      printf $trace "For day $d (%s), sidereal time $sidtime, right asc $sRA\n", _fmt_hr(24 * ($d - int($d)), $lon);
       printf $trace "For day $d (%s), solar noon at $tsouth (%s)\n", _fmt_hr(24 * ($d - int($d)), $lon), _fmt_hr($tsouth, $lon);
     }
 
@@ -406,12 +407,12 @@ sub GMST0 {
 # 
 #
 sub sun_RA_dec {
-    my ($d, $trace) = @_;
+    my ($d, $lon_noon, $trace) = @_;
 
     # Compute Sun's ecliptical coordinates 
     my ( $r, $lon ) = sunpos($d);
     if ($trace) {
-      printf $trace "For day $d (%s), solar noon at ecliptic longitude $lon\n", _fmt_hr(24 * ($d - int($d)), $lon),;
+      printf $trace "For day $d (%s), solar noon at ecliptic longitude $lon\n", _fmt_hr(24 * ($d - int($d)), $lon_noon),;
     }
 
     # Compute ecliptic rectangular coordinates (z=0) 
