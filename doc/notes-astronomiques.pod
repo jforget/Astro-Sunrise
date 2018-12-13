@@ -859,7 +859,78 @@ la période de 8 h, x mn et x s.
 =head1 Autres algorithmes de calcul
 
 Q : Pourquoi C<Astro::Sunrise> a-t-il besoin de l'année pour calculer le lever
-et le coucher du S<Soleil ?>
+et le coucher du S<soleil ?> J'ai vu un algorihme qui ne demandait
+que le mois et le jour.
+
+R : Prenons le calcul du coucher du Soleil à Greenwich fin février
+et début mars. Les heures respectives sont :
+
+  .     26/02     27/02     28/02     29/02     01/03     02/03     03/03
+  2015 17:46:17  17:35:43  17:37:29            17:39:15  17:41:01  17:42:47
+  2016 17:47:36  17:35:17  17:37:03  17:38:49  17:40:35  17:42:21  17:44:06
+  2017 17:47:11  17:36:37  17:38:24            17:40:10  17:41:55  17:43:41
+  2018 17:46:45  17:36:12  17:37:58            17:39:44  17:41:30  17:43:15
+  2019 17:46:20  17:35:46  17:37:32            17:39:18  17:41:04  17:42:49
+  2020 17:47:39  17:35:20  17:37:06  17:38:52  17:40:38  17:42:24  17:44:09
+  2021 17:47:13  17:36:40  17:38:26            17:40:12  17:41:58  17:43:44
+  2022 17:46:48  17:36:14  17:38:01            17:39:47  17:41:32  17:43:18
+  2023 17:46:23  17:35:48  17:37:35            17:39:21  17:41:07  17:42:52
+
+
+Comme on peut le voir dans ce tableau, lorsque l'on progresse de 365 jours,
+le coucher du Soleil varie de 25 secondes vers le midi. Si l'on progresse
+de 366 jours, le coucher du Soleil progresse de 1 mn 20 s vers minuit.
+Et si l'on progresse d'une année civile, le coucher du Soleil progresse
+soit vers midi, soit vers minuit. Dans le cas, par exemple, du 28 février,
+quel résultat ton algorithme sans année doit-il donner ? 17:37:03 ? Ou 17:38:26 ?
+
+Q : Cela veut dire que mon algorithme est pourri, comme tout algorithme qui
+ne tiendrait pas compte de l'année ?
+
+R : Non. Si c'est pour déterminer l'instant précis où le Soleil quitte notre champ
+visuel, l'algorithme est pourri. Mais je connais une personne qui utilise un algorithme
+sans année uniquement pour savoir à quelle heure activer le système automatisé
+d'éclairage dans son salon. Dans ce cas, allumer à 17:37:03 ou à 17:38:26
+n'a pas tellement d'importance. Sous nos latitudes, la variation de luminosité
+due à la variation de la position du Soleil
+en deux minutes est négligeable. En fait, la météo a plus d'importance. Selon
+qe le ciel sera dégagé ou bien bouché par de gros nuages orageux, il faudra 
+attendre l'heure dite ou allumer plus tôt.
+
+Q : Je remarque que tu n'a pas utilisé les termes S<« avancer »>, S<« reculer »>
+et S<« retarder »>.
+
+R : Effectivement, j'ai un problème avec ce verbes. Lorsque l'on passe du 28/02/2015
+au 28/02/2016, on I<avance> de 365 jours. Mais lorsque le coucher du soleil passe
+de 17:35:43 à 17:37:29, il I<recule> ou il I<retarde> de 1 mn 46 s. Alors que la variation
+est dans le même sens.
+
+Q : Une autre remarque, comment as-tu fait pour avoir l'heure du coucher du Soleil
+à la seconde près avec L<Astro::Sunrise> ?
+
+R : Parce que je n'ai pas utilisé L<Astro::Sunrise>, mais
+L<DateTime::Event::Sunrise>, qui fournit comme résultats des
+objets de classe L<DateTime> pour lesquels le nombre de secondes est
+défini.
+
+Q : Et ne pourrait-on pas adapter L<Astro::Sunrise> pour fournir un
+résultat C<"hh:mm:ss"> au lieu de simplement C<"hh:mm"> ?
+
+R : Si, on pourrait. Mais cela a-t-il un S<sens ?> D'après Paul Schlyter, l'algorithme
+est précis à une ou deux minutes près, sauf dans les cas limites associés au début
+et à la fin de la période du Soleil de minuit. Donc cela ne vaut pas la peine de
+modifier C<Astro::Sunrise> pour afficher les secondes.
+
+Q : Et dans la discussion ci-dessus, pourquoi avoir tenu compte des secondes, si elles
+ne sont pas S<significatives ?>
+
+R : Parce que j'ai l'intuition que s'il y a une erreur, elle aura à peu de choses près
+la même valeur pour toutes les dates de fin février et de début mars de la décennie.
+On peut ainsi avoir une erreur de S<+45 s> le 28/02/2015 et une erreur de S<-50 s>
+en octobre 2015 et en février 2050, mais pour les dates voisines au sens JJ/MM et au sens AAAA, l'erreur
+sera quasiment celle du 28/02/2015. Peut-être S<+43 s> ou S<+46 s>, mais sûrement pas S<-50 s>
+(valeurs complètement pifométriques, je n'ai pas vérifié avec Stellarium).
+Il est donc justifié de calculer des variations d'horaire à la seconde près.
 
 À COMPLÉTER
 
