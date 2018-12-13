@@ -127,53 +127,52 @@ sub sunrise  {
 
   if ($arg{precise})   {
     # This is the initial start
+    my $d = days_since_2000_Jan_0($year, $month, $day) - $lon / 360.0;
+
     if ($trace) {
       print $trace "Precise computation of sunrise for $year-$month-$day, lon $lon, lat $lat, altitude $altit, upper limb $arg{upper_limb}\n";
     }
-
-    my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
-    my ($tmp_rise_1, $tmp_set_1) = sun_rise_set($d, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
-
-    # Now we have the initial rise/set times next recompute d using the exact moment
-    # recompute sunrise
-
-    my $tmp_rise_2 = 9;
-    my $tmp_rise_3 = 0;
-
-    my $counter = 0;
-    until (equal($tmp_rise_2, $tmp_rise_3, 8) )   {
-
-       my $d_sunrise_1 = $d + $tmp_rise_1/24.0;
-       ($tmp_rise_2, undef) = sun_rise_set($d_sunrise_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
-       $tmp_rise_1 = $tmp_rise_3;
-       my $d_sunrise_2 = $d + $tmp_rise_2/24.0;
-       ($tmp_rise_3, undef) = sun_rise_set($d_sunrise_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
-
-       #print "tmp_rise2 is: $tmp_rise_2 tmp_rise_3 is:$tmp_rise_3\n";
-       last if ++$counter >= 100;
+    my $h1 = 12; # noon, then sunrise
+    for my $counter (1..9) {
+      # 9 is a failsafe precaution against a possibly runaway loop
+      # but hopefully, we will leave the loop with last
+      my $h2;
+      ($h2, undef) = sun_rise_set($d + $h1 / 24, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
+      if ($h2 eq 'day' or $h2 eq 'night') {
+        $h1 = $h2;
+        last;
+      }
+      if (equal($h1, $h2, 5)) {
+        # equal to 1e-5 hour, a little less than a second
+        $h1 = $h2;
+        last;
+      }
+      $h1 = $h2;
     }
 
     if ($trace) {
       print $trace "Precise computation of sunset for $year-$month-$day, lon $lon, lat $lat, altitude $altit, upper limb $arg{upper_limb}\n";
     }
-    my $tmp_set_2 = 9;
-    my $tmp_set_3 = 0;
-
-    $counter = 0;
-    until (equal($tmp_set_2, $tmp_set_3, 8) )   {
-
-       my $d_sunset_1 = $d + $tmp_set_1/24.0;
-       (undef, $tmp_set_2) = sun_rise_set($d_sunset_1, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
-       $tmp_set_1 = $tmp_set_3;
-       my $d_sunset_2 = $d + $tmp_set_2/24.0;
-       (undef, $tmp_set_3) = sun_rise_set($d_sunset_2, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
-
-       #print "tmp_set_1 is: $tmp_set_1 tmp_set_3 is:$tmp_set_3\n";
-       last if ++$counter >= 100;
-
+    my $h3 = 12; # noon at first, then sunset
+    for my $counter (1..9) {
+      # 9 is a failsafe precaution against a possibly runaway loop
+      # but hopefully, we will leave the loop with last
+      my $h4;
+      (undef, $h4) = sun_rise_set($d + $h3 / 24, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
+      if ($h4 eq 'day' or $h4 eq 'night') {
+        $h3 = $h4;
+        last;
+      }
+      if (equal($h3, $h4, 5)) {
+        # equal to 1e-5 hour, a little less than a second
+        $h3 = $h4;
+        last;
+      }
+      $h3 = $h4;
     }
+    
 
-    return convert_hour($tmp_rise_3, $tmp_set_3, $TZ, $isdst);
+    return convert_hour($h1, $h3, $TZ, $isdst);
 
   }
   else {
@@ -304,7 +303,7 @@ sub sun_rise_set {
     my $sidtime = revolution( GMST0($d) + 180.0 + $lon );
 
     # Compute Sun's RA + Decl + distance at this moment
-    my ( $sRA, $sdec, $sr ) = sun_RA_dec($d);
+    my ( $sRA, $sdec, $sr ) = sun_RA_dec($d, $trace);
 
     # Compute time when Sun is at south - in hours UT
     my $tsouth  = 12.0 - rev180( $sidtime - $sRA ) / 15.0;
@@ -320,7 +319,6 @@ sub sun_rise_set {
 
     # Compute the diurnal arc that the Sun traverses to reach
     # the specified altitude altit:
-
     my $cost =   ( sind($altit) - sind($lat) * sind($sdec) )
                / ( cosd($lat) * cosd($sdec) );
 
@@ -408,10 +406,13 @@ sub GMST0 {
 # 
 #
 sub sun_RA_dec {
-    my ($d) = @_;
+    my ($d, $trace) = @_;
 
     # Compute Sun's ecliptical coordinates 
     my ( $r, $lon ) = sunpos($d);
+    if ($trace) {
+      printf $trace "For day $d (%s), solar noon at ecliptic longitude $lon\n", _fmt_hr(24 * ($d - int($d)), $lon),;
+    }
 
     # Compute ecliptic rectangular coordinates (z=0) 
     my $x = $r * cosd($lon);
