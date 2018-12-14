@@ -194,7 +194,7 @@ Stellarium is a PC app to simulate a night sky. If you do not bother with
 the main view giving a real time sky simulation, you can use it to obtain
 the coordinates of a given celestial body at a given time when seen from
 a given Earth location. Here is how you can determine the time
-of sunrise, sunset or true solar noon.
+of sunrise, sunset or true solar noon (version 0.18.0).
 
 =over 4
 
@@ -226,15 +226,7 @@ In Stellarium, freeze the time with C<7> unless already frozen.
 
 =item *
 
-If not already done, hit C<< <F2> >> to open the configuration
-menu. In this menu, select the C<Plugins> tab, then C<Time zone>. With this,
-you can select a UTC display instead of a display using the 
-computer's local timezone. Do not forget to save the configuration
-upon exit.
-
-=item *
-
-Look for the Sun. The window is activated by C<< <F3> >>.
+Look for the Sun. The search window is activated by C<< <F3> >>.
 
 =item *
 
@@ -243,18 +235,23 @@ Use the flip-flops C<g> and C<a>. And C<e> or C<z> to display or
 to hide the equatorial and azimutal grids, acording to
 your current taste.
 
+By the way, when the atmosphere is deactivated, Stellarium no longer
+displays the apparent coordinates of the Sun. So the choice above, using
+the I<real> Sun altitude and not its I<apparent> altitude is justified.
+
 =item *
 
 Press C<< <F6> >> to specify the observation location. With a location
 on the Greenwich meridian, the UTC time will coincide with the
-mean solar time.
+mean solar time. Do not forget to tick the personalised time zone check
+box and to select UTC.
 
-In several examples below, I have chosen a location at
-51° 28' 40" N, 5" E and a height of 27 m. The longitude and 
-latitude are the values given by Wikipedia for the Greenwich
-Observatory and the height is nothing more than the previously
-entered height. This has no relation with the observatory's real
-height, or this is a lucky coincidence.
+In version 0.18.0, use "Royal Observatory (Greenwich)". In the
+previous version, I entered a location at 51° 28' 40" N, 5" E and
+a height of 27 m. The longitude and latitude are the values given by
+Wikipedia for the Greenwich Observatory and the height is nothing more
+than the previously entered height. This has no relation with the
+observatory's real height, or this is a lucky coincidence.
 
 =item *
 
@@ -267,6 +264,13 @@ time values until you get the best approximation of the
 target azimut or of the target altitude.
 
 =back
+
+Note: on the previous version I used before 0.18.0, the timezone was
+not a property of the observation location, it was a global
+application configuration parameter. I had to hit C<< <F2> >> to open
+the configuration menu. In this menu, I selected the C<Plugins> tab,
+then C<Time zone>. With this, I selected a UTC display instead of a
+display using the computer's local timezone.
 
 =back
 
@@ -777,7 +781,7 @@ with respect to the Equator. This point is not far from Bouvet Island in
 South Atlantic. And the date is 4th January, 2018.
 
 The basic algorithm begins by computing the day's true solar noon.
-On 4th Jan, the true solar noon at Anti-Greenwich happens at 12:04:59
+On 4th Jan, the true solar noon at Anti-Greenwich happens at 12:04:56
 (actually, same as Greenwich).
 
 Then we apply both Earth's spin (360.986 degrees per day) and 
@@ -786,7 +790,7 @@ day. The result is a combined rotational speed of 360 degrees per day, that is,
 15 degrees per hour. And sunset happens when the VHS reaches the target altitude.
 
 So on 4th Jan, the angle between noon and sunset is 123.4° (123° 24' 25"). 
-We need 8.2271 hours (8 h 13 mn 35 s) to run this angle and the sunset for
+We need 8.2271 hours (8 h 13 mn 39 s) to run this angle and the sunset for
 the VHS occurs at 20:18:34.
 
 =head2 Implementation of Precise Algorithm

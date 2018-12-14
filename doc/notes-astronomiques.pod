@@ -206,7 +206,7 @@ Stellarium est un planétarium pour PC. Si l'on ne se préoccupe pas de la visua
 réel du ciel, le logiciel permet de choisir un lieu d'observation, une date à la seconde près
 et un objet céleste. Il donne alors les coordonnées de cet objet céleste dans divers systèmes
 de S<coordonnées :> azimuthales, équatoriales et écliptiques. Voici comment procéder pour
-obtenir le lever du Soleil, son coucher ou le midi vrai.
+obtenir le lever du Soleil, son coucher ou le midi vrai (version 0.18.0).
 
 =over 4
 
@@ -235,13 +235,6 @@ Dans Stellarium, figer le temps par C<7> si ce n'est pas encore fait.
 
 =item *
 
-Si ce n'est pas encore fait, taper C<< <F2> >> pour avoir le menu de configuration.
-Dans ce menu, choisir l'onglet C<Plugins>, puis C<Fuseau horaire>. Il est alors
-possible de demander l'affichage de l'heure UTC au lieu du fuseau horaire
-de celui du PC. Ne pas oublier de sauvegarder la configuration en sortant.
-
-=item *
-
 Rechercher le Soleil, la fenêtre de recherche s'activant par C<< <F3> >>.
 
 =item *
@@ -250,19 +243,26 @@ Vous pouvez préférer l'affichage sans le sol ni l'atmosphère. Il faut utilise
 bascules C<g> et C<a>. Et C<e> ou C<z> pour avoir la grille des coordonnées
 équatoriales ou azimuthales, selon vos préférences du moment.
 
+Vous remarquerez que lorsque l'atmosphère est désactivée, on ne voit plus
+l'affichage des coordonnées apparentes du Soleil. Cela justifie le choix de
+se baser sur les coordonnées réelles.
+
 =item *
 
-Presser C<< <F6> >> pour spécifier le lieu d'observation.
-Prendre un lieu situé sur le méridien de Greenwich, ainsi le temps UTC
-coïncidera avec le temps solaire moyen.
+Presser C<< <F6> >> pour spécifier le lieu d'observation. Prendre un
+lieu situé sur le méridien de Greenwich, ainsi le temps UTC coïncidera
+avec le temps solaire moyen. Il faut bien penser à cocher la case
+S<« utiliser> un fuseau horaire S<personnalisé »> et choisir le fuseau
+UTC.
 
-Dans de nombreux exemples ci-dessous, j'ai choisi de placer mon
-observateur à 51° 28' 40" de latitude nord, 5" de longitude est et
-S<27 m> de hauteur. La longitude et la latitude correspondent aux
-coordonnées de l'observatoire de Greenwich données sur Wikipedia, la
-hauteur est le reliquat du lieu précédemment utilisé.  Elle ne
-correspond pas à l'altitude de l'observatoire, ou alors c'est une
-heureuse coïncidence.
+Dans la version 0.18.0, il est possible d'utiliser S<« Royal>
+Observatory S<(Greenwich) »>. Dans la version précédente, j'ai dû
+créer un lieu d'observation à 51° 28' 40" de latitude nord,
+5" de longitude est et S<27 m> de hauteur. La longitude et la latitude
+correspondent aux coordonnées de l'observatoire de Greenwich données
+sur Wikipedia, la hauteur est le reliquat du lieu précédemment
+utilisé. Elle ne correspond pas à l'altitude de l'observatoire, ou
+alors c'est une heureuse coïncidence.
 
 =item *
 
@@ -274,6 +274,15 @@ Sans fermer la fenêtre date-heure, essayer plusieurs valeurs jusqu'à trouver c
 qui produit la meilleure approximation de l'azimuth ou de la hauteur recherché.
 
 =back
+
+Dans la version que j'utilisais avant la version actuelle 0.18.0, le
+choix de l'heure UTC n'était pas une propriété du lieu d'observation,
+mais un paramètre global de l'application. Il fallait taper C<< <F2> >>
+pour avoir le menu de configuration. Dans ce menu, il fallait
+choisir l'onglet C<Plugins>, puis C<Fuseau horaire>. Il était alors
+possible de demander l'affichage de l'heure UTC au lieu du fuseau
+horaire de celui du PC. Ne pas oublier de sauvegarder la configuration
+en sortant.
 
 =back
 
@@ -793,7 +802,7 @@ choisie est celle du 4 janvier 2018.
 
 L'algorithme simple commence par déterminer le midi solaire vrai du jour.
 En reprenant l'exemple du paragraphe précédent, le 4 janvier
-à anti-Greenwich, le midi solaire vrai se produit à 12:04:59 (en fait au
+à anti-Greenwich, le midi solaire vrai se produit à 12:04:56 (en fait au
 même instant qu'à Greenwich).
 
 Puis on applique simultanément la rotation de la Terre sur elle-même (360,986 degrés par jour)
@@ -803,8 +812,8 @@ par heure. Et le coucher du Soleil se produit au moment où cette rotation combi
 amène le SVH à l'altitude cible.
 
 Ainsi, pour le 4 janvier, l'écart entre le point de midi et le point du coucher
-du Soleil est de 123,4° (123° 24' 25"). Donc il faut 8,2271 heures (8 h 13 mn 35 s)
-pour parcourir cet angle et le coucher du SVH se produit à 20 h 18 mn 34 s.
+du Soleil est de 123,4° (123° 24' 25"). Donc il faut 8,2271 heures (8 h 13 mn 39 s)
+pour parcourir cet angle et le coucher du SVH se produit à 20:18:34.
 
 =head2 Mise en Œuvre de l'Algorithme Précis
 
