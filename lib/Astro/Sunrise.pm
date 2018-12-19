@@ -135,7 +135,7 @@ sub sunrise  {
     my $h1 = 12; # noon, then sunrise
     for my $counter (1..9) {
       # 9 is a failsafe precaution against a possibly runaway loop
-      # but hopefully, we will leave the loop with last
+      # but hopefully, we will leave the loop long before, with "last"
       my $h2;
       ($h2, undef) = sun_rise_set($d + $h1 / 24, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
       if ($h2 eq 'day' or $h2 eq 'night') {
@@ -143,7 +143,7 @@ sub sunrise  {
         last;
       }
       if (equal($h1, $h2, 5)) {
-        # equal to 1e-5 hour, a little less than a second
+        # equal within 1e-5 hour, a little less than a second
         $h1 = $h2;
         last;
       }
@@ -156,7 +156,7 @@ sub sunrise  {
     my $h3 = 12; # noon at first, then sunset
     for my $counter (1..9) {
       # 9 is a failsafe precaution against a possibly runaway loop
-      # but hopefully, we will leave the loop with last
+      # but hopefully, we will leave the loop long before, with "last"
       my $h4;
       (undef, $h4) = sun_rise_set($d + $h3 / 24, $lon, $lat, $altit, 15.04107, $arg{upper_limb}, $arg{polar}, $trace);
       if ($h4 eq 'day' or $h4 eq 'night') {
@@ -164,13 +164,12 @@ sub sunrise  {
         last;
       }
       if (equal($h3, $h4, 5)) {
-        # equal to 1e-5 hour, a little less than a second
+        # equal within 1e-5 hour, a little less than a second
         $h3 = $h4;
         last;
       }
       $h3 = $h4;
     }
-    
 
     return convert_hour($h1, $h3, $TZ, $isdst);
 
@@ -382,9 +381,8 @@ sub sun_rise_set {
 sub GMST0 {
     my ($d) = @_;
 
-    my $sidtim0 =
-      revolution( ( 180.0 + 356.0470 + 282.9404 ) +
-      ( 0.9856002585 + 4.70935E-5 ) * $d );
+    my $sidtim0 = revolution(   ( 180.0 + 356.0470 + 282.9404 )
+                              + ( 0.9856002585 + 4.70935E-5 ) * $d );
     return $sidtim0;
 
 }
@@ -424,7 +422,7 @@ sub sun_RA_dec {
 
     # Convert to equatorial rectangular coordinates - x is unchanged 
     my $z = $y * sind($obl_ecl);
-    $y = $y * cosd($obl_ecl);
+    $y    = $y * cosd($obl_ecl);
 
     # Convert to spherical coordinates 
     my $RA  = atan2d( $y, $x );
@@ -471,25 +469,23 @@ sub sunpos {
     my $Eccentricity_of_Earth_orbit  = 0.016709 - 1.151E-9 * $d;
 
     # Compute true longitude and radius vector
-    my $Eccentric_anomaly =
-      $Mean_anomaly_of_sun + $Eccentricity_of_Earth_orbit * $RADEG *
-      sind($Mean_anomaly_of_sun) *
-      ( 1.0 + $Eccentricity_of_Earth_orbit * cosd($Mean_anomaly_of_sun) );
+    my $Eccentric_anomaly =   $Mean_anomaly_of_sun
+                            + $Eccentricity_of_Earth_orbit * $RADEG
+                               * sind($Mean_anomaly_of_sun)
+                               * ( 1.0 + $Eccentricity_of_Earth_orbit * cosd($Mean_anomaly_of_sun) );
 
     my $x = cosd($Eccentric_anomaly) - $Eccentricity_of_Earth_orbit;
 
-    my $y =
-      sqrt( 1.0 - $Eccentricity_of_Earth_orbit * $Eccentricity_of_Earth_orbit )
-      * sind($Eccentric_anomaly);
+    my $y = sqrt( 1.0 - $Eccentricity_of_Earth_orbit * $Eccentricity_of_Earth_orbit )
+            * sind($Eccentric_anomaly);
 
     my $Solar_distance = sqrt( $x * $x + $y * $y );    # Solar distance
     my $True_anomaly = atan2d( $y, $x );               # True anomaly
 
-    my $True_solar_longitude =
-      $True_anomaly + $Mean_longitude_of_perihelion;    # True solar longitude
+    my $True_solar_longitude = $True_anomaly + $Mean_longitude_of_perihelion;    # True solar longitude
 
     if ( $True_solar_longitude >= 360.0 ) {
-        $True_solar_longitude -= 360.0;    # Make it 0..360 degrees
+      $True_solar_longitude -= 360.0;    # Make it 0..360 degrees
     }
 
     return ( $Solar_distance, $True_solar_longitude );
@@ -558,7 +554,7 @@ sub revolution {
 #
 # _THEN
 #
-# Reduce input to within +180..+180 degrees
+# Reduce input to within -180..+180 degrees
 # 
 #
 # _RETURN
@@ -1172,6 +1168,15 @@ OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
 =head1 BUGS
+
+Before reporting a bug, please read the text
+F<doc/astronomical-notes.pod> because the strange behavior you observed
+may be a correct one, or it may be a corner case already known and
+already mentioned in the text.
+
+Nevertheless, patches and (justified) bug reports are welcome.
+
+See L<https://rt.cpan.org/Public/Dist/Display.html?Name=Astro-Sunrise>.
 
 =head1 SEE ALSO
 
