@@ -10,6 +10,13 @@ le contenu.
 
 Copyright (c) 2017, 2018 Jean Forget, tous droits réservés.
 
+Je tiens à signaler que je ne suis pas un astronome professionnel.
+Il est possible que le texte ci-dessous contienne des erreurs.
+Soyez-en conscients. Je décline toute responsabilité pour les conséquences
+qui résulteraient de votre lecture du texte. La clause de non-responsabilité
+présente dans la GPL et dans la licence I<Artistic> s'appliquent non seulement
+au code Perl, mais aussi aux textes français (et anglais).
+
 Le texte est fréquemment (mais irrégulièrement) mis à jour
 sur Github. Il y a une version française et une version
 anglaise. Comme je suis plus à l'aise pour discuter d'astronomie
@@ -419,6 +426,11 @@ la Terre est parfaitement sphérique, sans la moindre montagne, la moindre vall�
 
 =item *
 
+il y a même un endroit où je laisse entendre que la durée d'une 
+année astronomique est un nombre entier de jours (365, bien sûr),
+
+=item *
+
 et, ainsi que je l'ai déjà signalé, tous les endroits
 dignes d'intérêt sur la Terre se situent entre le tropique du Cancer et le cercle 
 polaire arctique.
@@ -561,7 +573,8 @@ environ.
 =head3 Mouvement de nutation
 
 L'angle entre le plan équatorial et le plan de l'écliptique varie très
-légèrement. Je n'ai pas trouvé les caractéristiques de ce mouvement.
+légèrement. Dans le programme C de Paul Schlyter, l'angle diminue de 
+356 nanodegrés par jour (3.56 E-7 °/j, 1.3 E-4 °/année).
 
 =head3 Avance du périhélie
 
@@ -839,7 +852,7 @@ Pour la seconde itération, on détermine le midi solaire virtuel correspondant 
 En partant de cette position, on applique la rotation de la Terre et on aboutit
 à la seconde évaluation du coucher du Soleil, 20:17:24.
 
-S'il y a besoin d'une troisième itération, on détermine le midi solaire virtuel
+Pour la troisième itération, on détermine le midi solaire virtuel
 correspondant à la position du Soleil à 20:17:24. Ce midi solaire virtuel se produit à 12:05:06. Là encore
 nous appliquons la rotation de la Terre, pour aboutir à une troisième évaluation
 du coucher du Soleil, 20:17:24, différant de la valeur de la seconde itération 
@@ -865,10 +878,14 @@ On y gagne par rapport au calcul simple qui utilise une vitesse légèrement err
 la période de 8 h, 12 mn et 28 s.
 
 
-À COMPLÉTER
+=head1 Examen détaillé des paramètres
 
+Ci-dessous, je détaille diverses informations à savoir sur les paramètres de calcul,
+informations qui auraient été trop longues pour la documentation interne
+du module et qui auraient noyé dans un flot d'informations un lecteur non
+averti.
 
-=head1 Autres algorithmes de calcul
+=head2 Année C<year>
 
 Q : Pourquoi C<Astro::Sunrise> a-t-il besoin de l'année pour calculer le lever
 et le coucher du S<soleil ?> J'ai vu un algorihme qui ne demandait
@@ -900,13 +917,14 @@ Q : Cela veut dire que mon algorithme est pourri, comme tout algorithme qui
 ne tiendrait pas compte de l'année ?
 
 R : Non. Si c'est pour déterminer l'instant précis où le Soleil quitte notre champ
-visuel, l'algorithme est pourri. Mais je connais une personne qui utilise un algorithme
+visuel, l'algorithme est pourri. Mais  si c'est pour avoir une idée de la luminosité
+du ciel, c'est correct. Je connais une personne qui utilise un algorithme
 sans année uniquement pour savoir à quelle heure activer le système automatisé
 d'éclairage dans son salon. Dans ce cas, allumer à 17:37:03 ou à 17:38:26
 n'a pas tellement d'importance. Sous nos latitudes, la variation de luminosité
 due à la variation de la position du Soleil
 en deux minutes est négligeable. En fait, la météo a plus d'importance. Selon
-qe le ciel sera dégagé ou bien bouché par de gros nuages orageux, il faudra 
+que le ciel sera dégagé ou bien bouché par de gros nuages orageux, il faudra 
 attendre l'heure dite ou allumer plus tôt.
 
 Q : Je remarque que tu n'a pas utilisé les termes S<« avancer »>, S<« reculer »>

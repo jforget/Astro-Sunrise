@@ -9,6 +9,13 @@ CC-BY-ND.
 
 Copyright (c) 2017, 2018 Jean Forget. All rights reserved.
 
+I must precise that I am not a professional astronomer. The text
+below may contain errors, be aware of this. I will not be held
+responsible for any consequences of your reading of this text.
+The "NO WARRANTY" paragraphs from the GPL and the Artistic License
+apply not only to Perl code, but also to English (and French)
+texts.
+
 The text is often (but irregularly) updated on Github. There are
 a French version and an English version. Since I am more at ease
 discussing astronomical subjects in French, the English version
@@ -402,6 +409,11 @@ the Earth's surface is a perfect sphere, without any mountains, valleys or moleh
 
 =item *
 
+there is even a place in this text where I imply that the duration of
+an astronomical yaer is an integer number of days (365, of course), 
+
+=item *
+
 and, as I have already stated, all interesting locations
 on Earth are between the Tropic of Cancer and the Arctic Circle.
 
@@ -445,8 +457,8 @@ A: While the Earth spins, the Sun orbits around it. And what we see is
 the combination of both movements, which gives a combined speed of 360 degrees per day.
 What the commoner is interesting in is to find the Sun at the same place in the
 sky at regular times day after day.  Only after this is achieved, the commoner
-becomes a learned person and is interested in knowing the position of the Moon,
-the stars and the planets.
+becomes a learned person and is interested in knowing and understanding the
+position of the Moon, the stars and the planets.
 
 Q: And why did you say "average" two or three times?
 
@@ -534,8 +546,9 @@ all along the ecliptic, making a whole turn in about
 =head3 Nutation
 
 The angle between the equatorial plane and the ecliptic
-plane varies slightly. I did not find the characteristics of this
-movement.
+plane varies slightly. In Paul Schlyter's C program, the
+angle decreases by 356 nanodegrees per day (3.56 E-7 °/d,
+1.3 E-4 °/yr).
 
 =head3 Perihelion Precession
 
@@ -800,7 +813,7 @@ per day) and the Sun's rotational speed around Earth. In additionn, this
 rotational speed is the real speed, spanning from 0.9552 to 1.0166 
 degree per day.
 
-First iteration. We start from the true solar noon and we apply Earth's spin
+First iteration. We start from the true solar noon at 12:04:56 and we apply Earth's spin
 (15.04107 degrees per hour). The first result, a very approximate one, is the
 instant when Earth's spin brings the Sun to the target altitude.
 On 4th Jan, this first value is 20:17:31.
@@ -814,7 +827,7 @@ Sun's position at 20:17:31. This virtual solar noon occurs at 12:05:06.
 With this reference, we apply the Earth's rotation and we get a second
 value for sunset, 20:17:24.
 
-If a third iteration is necessary, we determine the virtual solar noon 
+For iteration 3, we determine the virtual solar noon 
 that corresponds to the Sun's position at 20:17:24. This new virtual solar
 noon occurs at 12:05:06. And one more time we apply the Earth's rotation
 and we obtain a third value for sunset, 20:17:24, differing from the previous
@@ -841,6 +854,78 @@ happens less than a second later (or earlier), at 20:17:24. So, there are 8 h 12
 the Sun's real orbital speed and less than one second when we use an obviously wrong orbital
 speed. In the end, it is better than the basic algorithm, which uses an approximate
 but still wrong orbital speed, but for the whole span of 8 h, 12 mn and 28 s.
+
+=head1 More About The Parameters
+
+Below, I give some detailed explanations about the parameter used when
+calling the module's functions. These explanations would have been too 
+long if they had been included in the module's POD and a casual doc reader
+would have been drowned in a deluge of informations.
+
+=head2 C<year>
+
+Q: Why does C<Astro::Sunrise> need the year to compute sunrise and sunset?
+I have seen an algorithm which only needs the month and the day.
+
+A: Let us compute the sunset at the Greenwich observatory at the end
+of February and at the beginning of March. The times are respectively:
+
+  .     26/02     27/02     28/02     29/02     01/03     02/03     03/03
+  2015 17:46:17  17:35:43  17:37:29            17:39:15  17:41:01  17:42:47
+  2016 17:47:36  17:35:17  17:37:03  17:38:49  17:40:35  17:42:21  17:44:06
+  2017 17:47:11  17:36:37  17:38:24            17:40:10  17:41:55  17:43:41
+  2018 17:46:45  17:36:12  17:37:58            17:39:44  17:41:30  17:43:15
+  2019 17:46:20  17:35:46  17:37:32            17:39:18  17:41:04  17:42:49
+  2020 17:47:39  17:35:20  17:37:06  17:38:52  17:40:38  17:42:24  17:44:09
+  2021 17:47:13  17:36:40  17:38:26            17:40:12  17:41:58  17:43:44
+  2022 17:46:48  17:36:14  17:38:01            17:39:47  17:41:32  17:43:18
+  2023 17:46:23  17:35:48  17:37:35            17:39:21  17:41:07  17:42:52
+
+As you can see in this table, when we go forward by 365 days, the sunset
+time decreases by about 25 seconds. When we go forward by 366 days, the
+sunset time increases by about 1 mn 20 s. And if we go forward by one
+civil year, the sunset time seesaws. So, for the 28th of February,
+which result should your yearless algorithm give? 17:37:03? Or 17:38:26?
+
+Q: That means that my algorithm is bad.
+
+A: No. If you want to know the precise instant when the Sun disappear
+from our field of view, your algorithm is wrong. If you are only interested
+in the level of light, your algorithm is OK. I know a person who uses
+a yearless algorithm to activate automated lights in his living room.
+For him, turning on the lights at 17:37:03 or 17:38:26 has no importance.
+Under our latitudes, the light variation in two minutes is negligible.
+Actually, the weather may have a much important effect. If you have a clear
+sky or a heavy layer of black thunder clouds, you will have to light
+later or sooner than the computed time.
+
+Q: By the way, how did you get the seconds in the table? C<Astro::Sunrise>
+does not provide the seconds.
+
+A: Because I have used C<DateTime::Event::Sunrise> instead of C<Astro::Sunrise>,
+which produces C<DateTime> objects, complete with seconds.
+
+Q: Could we modify C<Astro::Sunrise> to give C<"hh:mm:ss"> results instead
+of C<"hh:mm">?
+
+A: We could. But would this precision be meaningful? According to Paul 
+Schlyter, the algorithm precision is about 1 or 2 minutes, except at the
+beginning and the end of the Polar Day period when the precision is much
+worse. So it is not worth adding the seconds to the results produced by
+C<Astro::Sunrise>.
+
+Q: And in the discussion above, why did you keep the seconds, if they
+are not significant?
+
+A: Because I think that if there is an error, it will be the same error
+for similar dates, that is, end-February and beg-March within a decade.
+For instance, we may have a S<+45 s> bias on 2015-02-28 and a S<-50 s>
+bias on 2015-10-28 and on 2050-02-28, but for all the dates similar
+to 2015-02-28 in both a YYYY fashion and a MM-DD fashion, the bias will
+be approximately the same as 2015-02-28. Maybe S<+43 s> or S<+46 s> instead
+of S<+45 s>, but surely not S<-50 s>. So I can make comparisons with a
+granularity of 1 second. By the way, the bias values I gave above are
+complete guesses, they are not the result of a precise computation.
 
 TO BE COMPLETED
 
