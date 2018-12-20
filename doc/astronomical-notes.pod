@@ -789,22 +789,19 @@ from Stellarium: 18:23:24.
 =head2 Implementation of Basic Algorithm
 
 Before describing the precise algorithm, let us talk about the basic algorithm.
-And instead of using the example of Greenwich, we take its symmetrical point
-with respect to the Equator. This point is not far from Bouvet Island in
-South Atlantic. And the date is 4th January, 2018.
+We will use the example of the sunset at Greenwich, on 4th January, 2018.
 
 The basic algorithm begins by computing the day's true solar noon.
-On 4th Jan, the true solar noon at Anti-Greenwich happens at 12:04:56
-(actually, same as Greenwich).
+On 4th Jan, the true solar noon at Greenwich happens at 12:04:56.
 
 Then we apply both Earth's spin (360.986 degrees per day) and 
 the movement of a VHS ("virtual homocinetic sun"), that is, 0.986 degrees per
 day. The result is a combined rotational speed of 360 degrees per day, that is,
 15 degrees per hour. And sunset happens when the VHS reaches the target altitude.
 
-So on 4th Jan, the angle between noon and sunset is 123.4° (123° 24' 25"). 
-We need 8.2271 hours (8 h 13 mn 39 s) to run this angle and the sunset for
-the VHS occurs at 20:18:34.
+So on 4th Jan, the angle between noon and sunset is 59.9746° (59° 58' 28"). 
+We need 3.9983 hours (3 h 59 mn 53 s) to run this angle and the sunset for
+the VHS occurs at 16:04:50.
 
 =head2 Implementation of Precise Algorithm
 
@@ -816,21 +813,17 @@ degree per day.
 First iteration. We start from the true solar noon at 12:04:56 and we apply Earth's spin
 (15.04107 degrees per hour). The first result, a very approximate one, is the
 instant when Earth's spin brings the Sun to the target altitude.
-On 4th Jan, this first value is 20:17:31.
-
-This value is noticeably worse than the value from the basic algorithm because
-it does not take into account the Sun's orbital speed around the Earth, even
-approximately. But we will do better with the second iteration.
+On 4th Jan, this first value is 16:04:11.
 
 For iteration 2, we determine the virtual solar noon that corresponds to the
-Sun's position at 20:17:31. This virtual solar noon occurs at 12:05:06.
+Sun's position at 16:04:11. This virtual solar noon occurs at 12:05:01.
 With this reference, we apply the Earth's rotation and we get a second
-value for sunset, 20:17:24.
+value for sunset, 16:04:23.
 
 For iteration 3, we determine the virtual solar noon 
-that corresponds to the Sun's position at 20:17:24. This new virtual solar
-noon occurs at 12:05:06. And one more time we apply the Earth's rotation
-and we obtain a third value for sunset, 20:17:24, differing from the previous
+that corresponds to the Sun's position at 16:04:23. This new virtual solar
+noon occurs at 12:05:01. And one more time we apply the Earth's rotation
+and we obtain a third value for sunset, 16:04:23, differing from the previous
 value by less than a second.
 
 This is one way to describe the algorithm: the Sun reaches by anticipation
@@ -839,21 +832,19 @@ to spin until the Sun disappears below the horizon. Another way to describe
 the algorithm is as follows:
 
 During iteration 2, between the real solar noon 12:04:56 and the time given
-by iteration 1, 20:17:31, the Sun orbitates with its real speed of 1.0166 degree per day
+by iteration 1, 16:04:11, the Sun orbitates with its real speed of 1.0166 degree per day
 while the Earth spins at 360.986 degrees per day.
-Then, at 20:17:31, the Sun freezes in its track and after that, we adjust the
+Then, at 16:04:11, the Sun freezes in its track and after that, we adjust the
 position with only the Earth's spin to reach the required altitude.
-In this cas, we overshot the required altitude, so Earth spins backward
-while going back to the past.
-And the sunset occurs at 20:17:24.
+And the sunset occurs at 16:04:23.
 
 During iteration 3, between the real solar noon 12:04:56 and the time given
-by iteration 2, 20:17:24, the Sun orbitates with its real speed 1.0166 degree per day.
-Then at 20:17:24, it freezes, letting the Earth continue its spin. And sunset 
-happens less than a second later (or earlier), at 20:17:24. So, there are 8 h 12 mn 28 s when we use
+by iteration 2, 16:04:23, the Sun orbitates with its real speed 1.0166 degree per day.
+Then at 16:04:23, it freezes, letting the Earth continue its spin. And sunset 
+happens less than a second later, at 16:04:23. So, there are 3 h 59 mn 27 s when we use
 the Sun's real orbital speed and less than one second when we use an obviously wrong orbital
 speed. In the end, it is better than the basic algorithm, which uses an approximate
-but still wrong orbital speed, but for the whole span of 8 h, 12 mn and 28 s.
+but still wrong orbital speed, but for the whole span of 3 h, 59 mn and 57 s.
 
 =head1 More About The Parameters
 

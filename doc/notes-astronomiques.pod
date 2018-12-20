@@ -808,15 +808,12 @@ du Soleil. On obtiendra un point différent de 18:23:59, mais très proche de
 
 =head2 Mise en Œuvre de l'Algorithme Simple
 
-Faisons d'abord une digression avec l'algorithme simple. Et au lieu de prendre 
-comme exemple Greenwich, on prend le point symétrique de Greenwich par rapport
-à l'équateur, pas très loin de l'Île Bouvet dans l'Atlantique sud. Et la date
-choisie est celle du 4 janvier 2018. 
+Faisons d'abord une digression avec l'algorithme simple. Nous prendrons l'exemple
+du coucher du Soleil à Greenwich, le 4 janvier 2018. 
 
 L'algorithme simple commence par déterminer le midi solaire vrai du jour.
 En reprenant l'exemple du paragraphe précédent, le 4 janvier
-à anti-Greenwich, le midi solaire vrai se produit à 12:04:56 (en fait au
-même instant qu'à Greenwich).
+à Greenwich, le midi solaire vrai se produit à 12:04:56.
 
 Puis on applique simultanément la rotation de la Terre sur elle-même (360,986 degrés par jour)
 et la rotation d'un SVH (rappel : soleil virtuel homocinétique) autour de la Terre (0,986 degré par jour)
@@ -825,8 +822,8 @@ par heure. Et le coucher du Soleil se produit au moment où cette rotation combi
 amène le SVH à l'altitude cible.
 
 Ainsi, pour le 4 janvier, l'écart entre le point de midi et le point du coucher
-du Soleil est de 123,4° (123° 24' 25"). Donc il faut 8,2271 heures (8 h 13 mn 39 s)
-pour parcourir cet angle et le coucher du SVH se produit à 20:18:34.
+du Soleil est de 59,9746° (59° 58' 28"). Donc il faut 3,9983 heures (3 h 59 mn 53 s)
+pour parcourir cet angle et le coucher du SVH se produit à 16:04:50.
 
 =head2 Mise en Œuvre de l'Algorithme Précis
 
@@ -840,22 +837,17 @@ uniquement la rotation de la Terre sur elle-même (15,04107 degrés par heure).
 La première valeur, très approximative, est le moment où la rotation
 de la Terre amène le Soleil à l'altitude recherchée. 
 Avec l'exemple du 4 janvier, cette première approximation
-donne l'heure 20:17:31.
-
-Cette valeur est moins bonne que celle de l'algorithme basique,
-car elle ne tient pas du tout compte de la vitesse orbitale du Soleil
-autour de la Terre, même approximativement. Mais nous allons nous rattraper avec
-la seconde itération.
+donne l'heure 16:04:11.
 
 Pour la seconde itération, on détermine le midi solaire virtuel correspondant à la position du Soleil
-à cette heure approximative 20:17:31. Ce midi solaire virtuel se produit à 12:05:06.
+à cette heure approximative 16:04:11. Ce midi solaire virtuel se produit à 12:05:01.
 En partant de cette position, on applique la rotation de la Terre et on aboutit
-à la seconde évaluation du coucher du Soleil, 20:17:24.
+à la seconde évaluation du coucher du Soleil, 16:04:23.
 
 Pour la troisième itération, on détermine le midi solaire virtuel
-correspondant à la position du Soleil à 20:17:24. Ce midi solaire virtuel se produit à 12:05:06. Là encore
+correspondant à la position du Soleil à 16:04:23. Ce midi solaire virtuel se produit à 12:05:01. Là encore
 nous appliquons la rotation de la Terre, pour aboutir à une troisième évaluation
-du coucher du Soleil, 20:17:24, différant de la valeur de la seconde itération 
+du coucher du Soleil, 16:04:23, différant de la valeur de la seconde itération 
 par une fraction de seconde.
 
 C'est une première façon de voir le S<calcul :> le Soleil anticipe sa position
@@ -863,19 +855,18 @@ dans la soirée et reste immobile à cette position. Une autre façon de voir ce
 calcul S<est :>
 
 Lors de la seconde itération, entre le midi solaire réel 12:04:56 et la valeur donnée
-par la première itération 20:17:31, le Soleil tourne à la vitesse réelle de 1,0166 degré par jour
+par la première itération 16:04:11, le Soleil tourne à la vitesse réelle de 1,0166 degré par jour
 en même temps que la Terre tourne sur elle-même à la vitesse de 360,986 degrés par jour.
-Puis à 20:17:31, on ajuste en laissant le Soleil immobile et en faisant tourner la Terre seulement.
-Dans cet exemple, on est arrivé un peu trop loin, donc la rotation de la Terre se fait à l'envers
-en remontant le temps. Cela donne une nouvelle valeur 20:17:24 pour le coucher du Soleil.
+Puis à 16:04:11, le Soleil s'immobilise et on ajuste en faisant tourner la Terre seulement.
+Cela donne une nouvelle valeur 16:04:23 pour le coucher du Soleil.
 
 Lors de la troisième itération, entre le midi solaire réel 12:04:56 et la valeur donnée
-par la deuxième itération 20:17:24, le Soleil tourne à la vitesse réelle de 1,0166 degré par jour,
-puis à 20:17:24, il se fige et ensuite on ajuste en faisant tourner la Terre seule sur elle-même. Le coucher du
-Soleil se produit une fraction de seconde plus tard (ou plus tôt) à 20:17:24. Il y a donc 8 h 12 mn 28 s où l'on utilise
+par la deuxième itération 16:04:23, le Soleil tourne à la vitesse réelle de 1,0166 degré par jour,
+puis à 16:04:23, il se fige et ensuite on ajuste en faisant tourner la Terre seule sur elle-même. Le coucher du
+Soleil se produit une fraction de seconde plus tard à 16:04:23. Il y a donc 3 h 59 mn 27 s où l'on utilise
 la vitesse réelle du Soleil et une fraction de seconde où l'on utilise une vitesse franchement erronée.
 On y gagne par rapport au calcul simple qui utilise une vitesse légèrement erronée pendant toute
-la période de 8 h, 12 mn et 28 s.
+la période de 3 h, 59 mn et 57 s.
 
 
 =head1 Examen détaillé des paramètres
