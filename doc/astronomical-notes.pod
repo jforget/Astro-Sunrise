@@ -77,7 +77,7 @@ about such and such question, if you can follow my train of thought without bein
 lost, then you are competent enough. If you think I am playing
 L<Captain Obvious|http://tvtropes.org/pmwiki/pmwiki.php/Main/CaptainObvious>
 and if you have instant answers to my questions, then you are the ideal
-person which could maintain this module. If you do not understand what all
+person that could maintain this module. If you do not understand what all
 this is about, and if sines and cosines put you off, do not consider
 working on this module's innards.
 
@@ -410,7 +410,7 @@ the Earth's surface is a perfect sphere, without any mountains, valleys or moleh
 =item *
 
 there is even a place in this text where I imply that the duration of
-an astronomical yaer is an integer number of days (365, of course), 
+an astronomical year is an integer number of days (365, of course), 
 
 =item *
 
@@ -426,7 +426,7 @@ paragraphs all these lies will be in effect.
 
 All this to explain that in the following text, I will not refrain from using
 the geocentric model where the Sun turns around the Earth in 24 hours or the 
-geocentric model where the Sun turns arount the Earth in 365.25 days.
+geocentric model where the Sun turns around the Earth in 365.25 days.
 
 "It is not necessary that the following hypothesis be true or even
 resemble the truth. One thing is for sure that they provide calculations
@@ -485,7 +485,7 @@ Then  we move along the equator in a first arc and along a meridian in a second 
 to reach the point. The angle of the first arc is the longitude, the angle of the
 second arc is the latitude for a point on the ground. But when we consider a celestial body, the
 first angle is counted from the line of nodes instead of the Gulf
-of Guinea and is named I<right ascension>; the second angle is names I<declination>.
+of Guinea and is called I<right ascension>; the second angle is called I<declination>.
 Because of tradition, an old charter or something,
 the right ascension is usually expressed as hours, minutes and seconds instead of
 degrees. The declination still uses degrees.
@@ -493,7 +493,7 @@ degrees. The declination still uses degrees.
 I<Ecliptic coordinates> follow the same principle, but the first arc is drawn
 along the ecliptic instead of the equator. Likewise, the second arc is perpendicular
 to the ecliptic. These angles are named I<ecliptic longitude> and I<ecliptic latitude>
-respectively. The ecliptic longitude is counted from the same origine as the
+respectively. The ecliptic longitude is counted from the same origin as the
 right ascension: the line of nodes. That simplifies a little bit the conversions
 between the two systems of coordinates. On the other hand, the use of hours, minutes
 and seconds for the right ascension and of degrees for all other angles
@@ -506,7 +506,7 @@ Lastly, there is the local coordinate system. For a given celestial body, we
 project its location to the ground, or rather to the plane that is tangent to
 the ground. The angle between the North and this location on the tangent plane
 is called I<azimuth> and the angle between the tangent plane and the line to the 
-celestial body is name I<altitude>.
+celestial body is called I<altitude>.
 
 =head2 Other Movements
 
@@ -533,7 +533,7 @@ low that the algorithms computing astronomical positions
 over a short timespan do not care about them.
 
 Note: weather (but not climate) will come back in a few
-chapters, but as a real phenomenon, not as a metaphor.
+chapters as a real phenomenon, not as a metaphor.
 
 =head3 Equinox Precession
 
@@ -806,7 +806,7 @@ the VHS occurs at 16:04:50.
 =head2 Implementation of Precise Algorithm
 
 With the precise algorithm, we keep separate Earth's spin (360.986 degrees
-per day) and the Sun's rotational speed around Earth. In additionn, this
+per day) and the Sun's rotational speed around Earth. In addition, this
 rotational speed is the real speed, spanning from 0.9552 to 1.0166 
 degree per day.
 
@@ -881,7 +881,7 @@ which result should your yearless algorithm give? 17:37:03? Or 17:38:26?
 Q: That means that my algorithm is bad.
 
 A: No. If you want to know the precise instant when the Sun disappear
-from our field of view, your algorithm is wrong. If you are only interested
+from our field of view, your algorithm is wrong indeed. On the other hand; if you are only interested
 in the level of light, your algorithm is OK. I know a person who uses
 a yearless algorithm to activate automated lights in his living room.
 For him, turning on the lights at 17:37:03 or 17:38:26 has no importance.
@@ -934,7 +934,7 @@ For observers between the Tropic of Capricorn and the Antarctic Polar Circle,
 this is more strange. True solar noon corresponds to a right ascension of 0°,
 when the Sun is exactly northward. As the observer must face north instead of south,
 he sees the sun crossing the sky in the direction E → N → W, that is, in the 
-direction of I<decreasing> right ascension valude. So, when the true solar noon is
+direction of I<decreasing> right ascension values. So, when the true solar noon is
 ahead of the mean solar noon, the point on the analemma will be to the left of the Y-axis,
 and when the true solar noon is later than the mean solar noon, the point on the analemma
 will be to the right of the Y-axis.
