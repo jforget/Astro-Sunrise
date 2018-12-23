@@ -876,6 +876,111 @@ informations qui auraient été trop longues pour la documentation interne
 du module et qui auraient noyé dans un flot d'informations un lecteur non
 averti.
 
+=head2 Choix de l'algorithme C<precise>
+
+Q : Quand est-il préférable de choisir l'algorithme précis ?
+
+R : La réponse courte, c'est S<« jamais »>. La réponse développée est la suivante.
+
+=over 4
+
+=item *
+
+Si tu veux déterminer l'un des crépuscules, utilise l'algorithme de base.
+
+=item *
+
+Si tu vis entre les deux cercles polaires, utilise l'algorithme de base.
+
+=item *
+
+Si la date est éloignée d'une transition entre la période jour+nuit et
+la période de nuit polaire ou la période du Soleil de minuit, utilise
+l'algorihme de base.
+
+=item *
+
+Si la date est voisine d'une transition entre la période jour+nuit et
+la période de nuit polaire, utilise l'algorihme de base.
+
+=item *
+
+Si tu habites dans une zone polaire ET que la date est voisine d'une
+transition entre la période d'alternance jour/nuit et la période 
+du Soleil de minuit ET si tu t'intéresses
+à la visibilité du disque solaire au-dessus de l'horizon, alors tu
+peux utiliser l'algorithme précis.
+
+=back
+
+Q : On peut savoir pourquoi ?
+
+R : Reprenons l'animation de la courbe de la course du Soleil qui se déplace
+par rapport à la pseudo-analemme. Mais au lieu de nous situer à Greenwich,
+nous nous placerons au-delà du cercle polaire. Nous ne quittons pas le méridien
+de Greenwich, mais nous prenons place à XXX degrés de l'équateur.
+
+Comme tu peux le voir, aux alentours du XXX et du XXX,
+la course du Soleil est tangente ou quasiment tangente à la ligne d'horizon.
+Dans ces conditions, une légère variation de 6' de la hauteur du Soleil
+entraîne une variation nettement plus importante des points d'intersection
+de la course du Soleil avec la ligne d'horizon.
+
+Q : D'où sors-tu cette valeur de 6' ?
+
+R : C'est la valeur que j'ai calculée au chapitre
+L<Principe du calcul itératif>.
+
+EXEMPLE NUMÉRIQUE
+
+À l'inverse, si tu habites dans un lieu tempéré loin des cercles polaires,
+la pente de la course du Soleil au point d'intersection est toujours
+nettement oblique. Par exemple, à Greenwich, la pente la plus faible se produit
+à chaque solstice et vaut XXX. Donc une variation de hauteur de 6' produira au
+maximum une variation de l'heure de XXX.
+
+Q : Et pour ceux qui habitent dans une région polaire, que se passe-t-il
+aux dates éloignées des transitions ?
+
+R : Si la période en cours est l'alternance jour/nuit, alors les mêmes
+considérations que ci-dessus au sujet de la pente de la courbe s'appliquent.
+Et dans le cas des deux autres périodes, nuit polaire et Soleil de minuit,
+il n'y a pas d'intersection entre la course du Soleil et l'horizon et
+aucune variation de hauteur, dans certaines limites, ne peut créer
+un tel point d'intersection.
+
+Q : Dans le cas de la transition avec la période de nuit polaire,
+la course du Soleil est tangente à la ligne d'horizon, comme pour
+la transition avec la période du Soleil de minuit. Alors pourquoi,
+dans ce cas, conseilles-tu quand même l'algorithme de base ?
+
+R : L'algorithme précis est là pour contrebalancer le fait que la valeur
+du midi solaire virtuel obtenue â la première itération peut se révéler
+éloignée de la valeur finale à la convergence. Il peut y avoir presque 12 heures
+entre le point temporel de calcul de la premiêre itération et le point
+temporel à la convergence. À l'inverse, pour la transition avec
+la nuit polaire, le premier midi solaire calculé est très proche
+du lever ou du coucher du Soleil, donc du point de convergence.
+L'écart sur la hauteur du Soleil sera très faible même si l'on utilise 
+l'algorithme de base. Donc, il n'est pas vraiment utile de 
+passer à l'algorithme précis.
+
+Q : Et le cas des crépuscules ? On peut avoir le cas où la course du Soleil est
+tangente à la ligne d'horizon, si je peux me permettre d'utiliser ce terme pour
+une ligne située 24 degrés sous le plan horizontal. Et nous avons un écart de
+~12 heures comme dans le cas de la transition avec le Soleil de minuit, 
+pas un écart d'une heure ou moins comme dans le cas de la transition
+avec la nuit polaire.
+
+R : Qu'est-ce qui t'intéresse lorsque tu calcules les heures de crépuscule ?
+C'est d'avoir une luminosité la plus faible possible et les meilleures conditions
+possibles pour l'observation des astres. Crois-tu qu'il y a une nette différence entre
+une nuit où le point le plus bas du Soleil est 23°57' sous l'horizon et une nuit où ce même
+point est à 24°3' ? Et il vaut mieux commencer à observer les astres lorsque
+le Soleil est à, disons, -15° si tu sais que la Lune va se lever lorsque l'on
+atteindra le crépuscule astronomique pour le Soleil ou si la météo annonce l'arrivée d'une
+épaisse couche de nuages à ce moment.
+
 =head2 Année C<year>
 
 Q : Pourquoi C<Astro::Sunrise> a-t-il besoin de l'année pour calculer le lever
@@ -917,6 +1022,14 @@ due à la variation de la position du Soleil
 en deux minutes est négligeable. En fait, la météo a plus d'importance. Selon
 que le ciel sera dégagé ou bien bouché par de gros nuages orageux, il faudra 
 attendre l'heure dite ou allumer plus tôt.
+
+Q : Tu sembles dire qu'un algorithme sans année aurait suffi pour calculer les
+heures de crépuscule ? Alors pourquoi utiliser un algorithme avec année ?
+
+R : Tout d'abord parce que l'algorithme de base était déjà codé et qu'un algorithme
+légèrement moins bon aurait été superflu. Ensuite parce que je n'ai pas connaissance
+de la licence des autres algorithmes, tandis que celui de Paul Schlyter est
+explicitement dans le domaine public.
 
 Q : Je remarque que tu n'a pas utilisé les termes S<« avancer »>, S<« reculer »>
 et S<« retarder »>.

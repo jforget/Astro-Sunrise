@@ -853,6 +853,103 @@ calling the module's functions. These explanations would have been too
 long if they had been included in the module's POD and a casual doc reader
 would have been drowned in a deluge of informations.
 
+=head2 Choosing The Algorithm C<precise>
+
+Q: When should I choose the precise algorithm?
+
+A: The short answer is "Never". The long answer is the following:
+
+=over 4
+
+=item *
+
+If you want some twilight, use the basic algorithm.
+
+=item *
+
+If you live between the polar circles, use the basic algorithm.
+
+=item *
+
+If the date is far from a transition between day+night and either polar
+night or midnight sun, use the basic algorithm.
+
+=item *
+
+If the date is near a transition between day+night and polar
+night, use the basic algorithm.
+
+=item *
+
+If you live in a polar location AND the date is near a transition between
+day+night and midnight Sun AND you are interested in the
+visibility of the Sun's disk above the horizon, then you may use the
+precise algorithm.
+
+=back
+
+Q: And can we know why?
+
+A: Let us go back to the animated picture of the solar course curve that
+moves along the pseudo-analemma. But instead of using a location
+at Greenwich, we use a polar location still at longitude zero, but at
+XXX degrees from the equator.
+
+As you can see, around XXX and XXX, the solar course
+is tangent or nearly so with the line of horizon.
+With these conditions, a variation of 6' of the solar altitude
+can produce a much bigger variation of the points where the
+solar course crosses the horizon.
+
+Q: Where does this 6' value come from?
+
+A; This is the value I calculated in the chapter 
+L<Principle of the Iterative Computation>.
+
+NUMERICAL EXEMPLE
+
+On the other hand, if you live in a temperate location far from the
+arctic circles, the slope of the solar course when crossing
+the horizon is always a bit steep.
+For example, at Greenwich, the shallowest slope occurs at each solstice
+and is XXX. So a variation of 6' shifts the sunrise and sunset times by
+only XXX.
+
+Q: And what happens to people living in polar locations when
+the date is far from any transition?
+
+A: If the period is day+night, the explanations above about the slope
+of the curve still apply. If the period is the polar night or the
+midnight Sun, then the course of the Sun never crosses the horizon and
+any variation of altitude, within limits, can create an intersection
+with the horizon.
+
+Q: For the transition with the polar night, the solar course is tangent
+to the equator, like it is at the transition with the midnight Sun period.
+So, why do you still advise to use the basic algorithm in this case?
+
+A: The precise algorithm deals with the fact that the first candidate value
+for the Sun altitude at virtual solar noon is far from the value after the algorithm
+has converged. There may be nearly 12 hours between the instants when this 
+virtual solar noon is computed. On the other hand, for the transition with
+the polar night, the first computed value is very near the final value
+of the precise algorithm, so the basic algorithm will give a good enough value.
+
+Q: And what about the computation of twilights? We can encounter a situation
+where the solar course is tangent to the horizon, if I may use this word for a
+line situated 24 degrees below the horizontal plane. And we have a ~12 hour
+gap as for the midnight Sun transition, not a 1-hour gap as for the polar night
+transition.
+
+A: Why do you compute twilight times? Because you want a low enough light
+level and good enough conditions to observe celestiol bodies.
+Do you think there is a big difference between a night when the Sun is
+at its lowest at 23°57' below the horizon and a night when it is at its
+lowest at 24°3' below? In some circumstances, you'd better begin your observations
+when the Sun is at, say, -15° than to wait for the -24° twilight if you know
+that the Moon will rise at the same time or if a weather report gives a warning
+about an incoming overcast layer.
+
 =head2 C<year>
 
 Q: Why does C<Astro::Sunrise> need the year to compute sunrise and sunset?
@@ -889,6 +986,14 @@ Under our latitudes, the light variation in two minutes is negligible.
 Actually, the weather may have a much important effect. If you have a clear
 sky or a heavy layer of black thunder clouds, you will have to light
 later or sooner than the computed time.
+
+Q: By the way, you seem to say that a yearless algorithm would be sufficient
+to compute twilght times? So why use an algorithm requiring the year?
+
+A: Firstly, because the basic algorithm was already coded and a slightly worse
+algorithm would be redundant. Then because I do not know which licenses
+apply to these yearless algorithms, while at the same time, Paul Schlyter's
+algorithm is in the public domain.
 
 Q: By the way, how did you get the seconds in the table? C<Astro::Sunrise>
 does not provide the seconds.
