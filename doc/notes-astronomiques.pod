@@ -736,8 +736,8 @@ Tout d'abord, j'ai représenté la course  du Soleil par une sinusoïde parce
 que c'était facile à programmer, mais je n'ai pas vérifié si ça collait à la
 vérité et je parierais que la correspondance est approximative. Ensuite, l'équation du temps
 est très largement exagérée. Au lieu d'un midi solaire vrai qui varie entre
-11:43 et 12:15 du temps moyen, ici la variation est 8 fois plus importante,
-faisant varier le midi solaire entre 10h et 14h. Mais on n'aurait rien vu
+11:43 et 12:15 du temps moyen, ici la variation est 4 fois plus importante,
+faisant varier le midi solaire entre 11h et 13h. Mais on n'aurait rien vu
 sans cet élargissement.
 
 Q : Et cette courbe en forme de huit, c'est l'analemme ?
@@ -918,9 +918,14 @@ Q : On peut savoir pourquoi ?
 R : Reprenons l'animation de la courbe de la course du Soleil qui se déplace
 par rapport à la pseudo-analemme. Mais au lieu de nous situer à Greenwich,
 nous nous placerons au-delà du cercle polaire. Nous ne quittons pas le méridien
-de Greenwich, mais nous prenons place à XXX degrés de l'équateur.
+de Greenwich, mais nous prenons place à 76 degrés et 59 minutes de l'équateur.
 
-Comme tu peux le voir, aux alentours du XXX et du XXX,
+=for html
+<p>
+<img src='ps-an-pol.gif' alt="Evolution de la course du Soleil pendant un an (variante arctique)" />
+</p>
+
+Comme tu peux le voir, aux alentours du 21 avril et du 21 août,
 la course du Soleil est tangente ou quasiment tangente à la ligne d'horizon.
 Dans ces conditions, une légère variation de 6' de la hauteur du Soleil
 entraîne une variation nettement plus importante des points d'intersection

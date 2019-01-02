@@ -24,8 +24,8 @@
 
 local substr = string.sub;
 local floor  = math.floor;
-local dq = string.char(34); -- double-quote
-local pedag = 8; -- stretch factor for pedagogical purposes
+local dq     = string.char(34); -- double-quote
+local pedag  = 4; -- stretch factor for pedagogical purposes
 
 function tim2x(tim)
   local hh = substr(tim, 1, 2);
@@ -49,23 +49,7 @@ function alt2y(alt)
   return sign * floor(dg + mn / 60 + ss / 3600);
 end
 
-function dessin(date)
-  -- values obtained from Stellarium
-  -- alt12 and alt24: not using the "degree" character U+00B0, because of encoding problems between lua and lualatex
-  local t = {
-       { date = "2017-01-21", noon = "12:11:24", alt12 = "+18 43 46", alt24 = "-58 25 33", label = "J" },
-       { date = "2017-02-21", noon = "12:13:35", alt12 = "+28 08 20", alt24 = "-49 05 11", label = "F" },
-       { date = "2017-03-21", noon = "12:07:08", alt12 = "+38 56 42", alt24 = "-38 17 49", label = "M" },
-       { date = "2017-04-21", noon = "11:58:41", alt12 = "+50 32 27", alt24 = "-26 40 25", label = "A" },
-       { date = "2017-05-21", noon = "11:56:38", alt12 = "+58 48 02", alt24 = "-18 20 44", label = "M" },
-       { date = "2017-06-21", noon = "12:01:52", alt12 = "+61 57 27", alt24 = "-15 05 16", label = "J" },
-       { date = "2017-07-21", noon = "12:06:28", alt12 = "+58 53 35", alt24 = "-18 03 18", label = "J" },
-       { date = "2017-08-21", noon = "12:03:07", alt12 = "+50 28 12", alt24 = "-26 24 29", label = "A" },
-       { date = "2017-09-21", noon = "11:53:02", alt12 = "+39 02 20", alt24 = "-37 48 40", label = "S" },
-       { date = "2017-10-21", noon = "11:44:38", alt12 = "+27 39 33", alt24 = "-49 12 25", label = "O" },
-       { date = "2017-11-21", noon = "11:45:58", alt12 = "+18 30 28", alt24 = "-58 25 33", label = "N" },
-       { date = "2017-12-21", noon = "11:58:13", alt12 = "+15 04 59", alt24 = "-61 57 30", label = "D" },
-      };
+function dessin(date, t)
   tex.print("\\begin{mplibcode}\n");
   tex.print("beginfig(1);\n");
   tex.print("draw (-120, 0) -- (120, 0);\n");
@@ -129,4 +113,45 @@ function dessin(date)
   tex.print("endfig;\n");
   tex.print("\\end{mplibcode}\n");
   tex.print("\\eject\n");
+end
+
+function dessingr(date)
+  -- values obtained from Stellarium
+  -- alt12 and alt24: not using the "degree" character U+00B0, because of encoding problems between lua and lualatex
+  local t = {
+       { date = "2017-01-21", noon = "12:11:24", alt12 = "+18 43 46", alt24 = "-58 25 33", label = "J" },
+       { date = "2017-02-21", noon = "12:13:35", alt12 = "+28 08 20", alt24 = "-49 05 11", label = "F" },
+       { date = "2017-03-21", noon = "12:07:08", alt12 = "+38 56 42", alt24 = "-38 17 49", label = "M" },
+       { date = "2017-04-21", noon = "11:58:41", alt12 = "+50 32 27", alt24 = "-26 40 25", label = "A" },
+       { date = "2017-05-21", noon = "11:56:38", alt12 = "+58 48 02", alt24 = "-18 20 44", label = "M" },
+       { date = "2017-06-21", noon = "12:01:52", alt12 = "+61 57 27", alt24 = "-15 05 16", label = "J" },
+       { date = "2017-07-21", noon = "12:06:28", alt12 = "+58 53 35", alt24 = "-18 03 18", label = "J" },
+       { date = "2017-08-21", noon = "12:03:07", alt12 = "+50 28 12", alt24 = "-26 24 29", label = "A" },
+       { date = "2017-09-21", noon = "11:53:02", alt12 = "+39 02 20", alt24 = "-37 48 40", label = "S" },
+       { date = "2017-10-21", noon = "11:44:38", alt12 = "+27 39 33", alt24 = "-49 12 25", label = "O" },
+       { date = "2017-11-21", noon = "11:45:58", alt12 = "+18 30 28", alt24 = "-58 25 33", label = "N" },
+       { date = "2017-12-21", noon = "11:58:13", alt12 = "+15 04 59", alt24 = "-61 57 30", label = "D" },
+      };
+  dessin(date, t)
+end
+
+function dessinpl(date)
+  -- values obtained from Stellarium
+  -- latitude 76° 59'
+  -- alt12 and alt24: not using the "degree" character U+00B0, because of encoding problems between lua and lualatex
+  local t = {
+       { date = "2017-01-21", noon = "12:11:24", alt12 = "-06 46 28", alt24 = "-32 41 38", label = "J" },
+       { date = "2017-02-21", noon = "12:13:35", alt12 = "+02 37 58", alt24 = "-23 13 05", label = "F" },
+       { date = "2017-03-21", noon = "12:07:08", alt12 = "+13 26 17", alt24 = "-12 23 52", label = "M" },
+       { date = "2017-04-21", noon = "11:58:41", alt12 = "+25 01 58", alt24 = "-00 49 54", label = "A" },
+       { date = "2017-05-21", noon = "11:56:38", alt12 = "+33 17 31", alt24 = "+07 21 27", label = "M" },
+       { date = "2017-06-21", noon = "12:01:52", alt12 = "+36 26 55", alt24 = "+10 24 47", label = "J" },
+       { date = "2017-07-21", noon = "12:06:28", alt12 = "+33 23 07", alt24 = "+07 15 10", label = "J" },
+       { date = "2017-08-21", noon = "12:03:07", alt12 = "+24 57 48", alt24 = "-01 14 15", label = "A" },
+       { date = "2017-09-21", noon = "11:53:02", alt12 = "+13 31 59", alt24 = "-12 41 40", label = "S" },
+       { date = "2017-10-21", noon = "11:44:38", alt12 = "+02 09 15", alt24 = "-24 03 21", label = "O" },
+       { date = "2017-11-21", noon = "11:45:58", alt12 = "-06 59 45", alt24 = "-33 08 13", label = "N" },
+       { date = "2017-12-21", noon = "11:58:13", alt12 = "-10 25 13", alt24 = "-36 27 11", label = "D" },
+      };
+  dessin(date, t)
 end

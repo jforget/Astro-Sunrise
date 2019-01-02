@@ -712,8 +712,8 @@ I figured the Sun's trajectory as a sinusoidal curve, because it is easy to comp
 but I did not check whether it was the real curve. And I would bet that it is
 only approximately close to the real curve. Second, the equation of time is very much
 increased. Instead of a true solar noon varying from 11:43 to 12:15 (in mean solar time),
-here the variation is multiplied by 8 and the solar noon varies from 10h, or even less,
-to 14h. But without this stretching, you would not have seen anything.
+here the variation is multiplied by 4 and the solar noon varies from 11h, or even less,
+to 13h. But without this stretching, you would not have seen anything.
 
 Q: And this figure eight, is this the analemma?
 
@@ -893,9 +893,15 @@ Q: And can we know why?
 A: Let us go back to the animated picture of the solar course curve that
 moves along the pseudo-analemma. But instead of using a location
 at Greenwich, we use a polar location still at longitude zero, but at
-XXX degrees from the equator.
+76 degrees and 59 minutes from the equator.
 
-As you can see, around XXX and XXX, the solar course
+=for html
+<p>
+<img src='ps-an-pol.gif' alt="Evolution of the Sun's trajectory during a year (arctic variant)" />
+</p>
+
+
+As you can see, around 21st April and 21st August, the solar course
 is tangent or nearly so with the line of horizon.
 With these conditions, a variation of 6' of the solar altitude
 can produce a much bigger variation of the points where the
