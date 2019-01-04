@@ -981,17 +981,6 @@ peut provoquer une grande différence sur l'heure du coucher du Soleil,
 tu n'auras pas une I<faible> erreur, mais une erreur I<infime> sur la 
 longitude écliptique.
 
-R : L'algorithme précis est là pour contrebalancer le fait que la valeur
-du midi solaire virtuel obtenue â la première itération peut se révéler
-éloignée de la valeur finale à la convergence. Il peut y avoir presque 12 heures
-entre le point temporel de calcul de la premiêre itération et le point
-temporel à la convergence. À l'inverse, pour la transition avec
-la nuit polaire, le premier midi solaire calculé est très proche
-du lever ou du coucher du Soleil, donc du point de convergence.
-L'écart sur la hauteur du Soleil sera très faible même si l'on utilise 
-l'algorithme de base. Donc, il n'est pas vraiment utile de 
-passer à l'algorithme précis.
-
 Q : Et le cas des crépuscules ? On peut avoir le cas où la course du Soleil est
 tangente à la ligne d'horizon, si je peux me permettre d'utiliser ce terme pour
 une ligne située 24 degrés sous le plan horizontal. Et nous avons un écart de
