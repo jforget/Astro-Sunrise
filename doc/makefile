@@ -7,7 +7,9 @@ visu: equ-time.png
 	display equ-time.png
 
 equ-time.png: equ-time.pdf
-	convert -crop '700x300+100+100' -background white -alpha deactivate equ-time.pdf equ-time.png
+	#convert -crop '700x300+100+100' -background white -alpha deactivate equ-time.pdf equ-time.png
+	pdftoppm -png -f 1 -l 1 -x 220 -y 220 -W 900 -H 550 equ-time.pdf equ-time
+	mv equ-time-1.png equ-time.png
 
 equ-time.pdf: equ-time.tex
 	lualatex equ-time.tex

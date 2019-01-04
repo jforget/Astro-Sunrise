@@ -56,7 +56,7 @@ EOF
   my $ln = int(366 / $xscale);
   print $fh "draw (0, 0) -- ($ln, 0);\n";
   $ln = int(1200 / $yscale);
-  print $fh "draw (0, -$ln) -- (0, $ln);\n";
+  print $fh "drawarrow (0, -$ln) -- (0, $ln);\nlabel.lft(btex mn etex, (0, $ln));\n";
   for (-15, -10, -5, 0, 5, 10, 15) {
     $ln = int($_ * 60 / $yscale);
     print $fh qq<label.lft("$_", (0, $ln));\n>;
