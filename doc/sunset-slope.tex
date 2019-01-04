@@ -1,0 +1,67 @@
+% -*- encoding: utf-8 -*-
+%
+%     Utility script for Astro::Sunrise's astronomical documentation
+%     Copyright (C) 2017 Jean Forget
+%
+%     This program is distributed under the same terms as Perl 5.16.3:
+%     GNU Public License version 1 or later and Perl Artistic License.
+%
+%    Here is the summary of GPL:
+%
+%    This program is free software; you can redistribute it and/or modify
+%    it under the terms of the GNU General Public License as published by
+%    the Free Software Foundation; either version 1, or (at your option)
+%    any later version.
+%
+%    This program is distributed in the hope that it will be useful,
+%    but WITHOUT ANY WARRANTY; without even the implied warranty of
+%    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+%    GNU General Public License for more details.
+%
+%    You should have received a copy of the GNU General Public License
+%    along with this program; if not, write to the Free Software Foundation,
+%    Inc., https://www.fsf.org/.
+%
+
+\documentclass[a4paper]{article}
+\usepackage{luamplib}
+\begin{document}
+\begin{mplibcode}
+beginfig(1);
+
+path h_arctic, l_arctic, s_arctic;
+h_arctic = (  0, 0) -- (100, 0);
+l_arctic = (  0,10) -- (100,10);
+s_arctic = (  0,15) .. {dir 0}(100,-2)  ;
+draw h_arctic;
+draw l_arctic;
+draw s_arctic;
+pair zda, zfa, zma;
+zda = h_arctic intersectionpoint s_arctic;
+zfa = l_arctic intersectionpoint s_arctic;
+drawdblarrow (xpart zda, -10) -- (xpart zfa, -10);
+zma = 0.5 * (zda + zfa);
+label.bot(btex 8 mn 18 s          etex, (xpart zma, -10));
+label.top(btex 20/04, lat 76° 59' etex, (xpart zma,  20));
+
+path h_greenw, l_greenw, s_greenw;
+h_greenw = (150, 0) -- (180, 0);                   
+l_greenw = (150,10) -- (180,10);                   
+s_greenw = (150,15){dir -40} .. { dir -10}(180,-2);
+draw h_greenw;
+draw l_greenw;
+draw s_greenw;
+pair zdg, zfg, zmg;
+zdg = h_greenw intersectionpoint s_greenw;
+zfg = l_greenw intersectionpoint s_greenw;
+drawdblarrow (xpart zdg, -10) -- (xpart zfg, -10);
+zmg = 0.5 * (zdg + zfg);
+label.bot(btex 50 s               etex, (xpart zmg, -10));
+label.top(btex 21/12, lat 59° 58' etex, (xpart zmg,  20));
+
+drawdblarrow (-10,0) -- (-10,10);
+label.lft(btex 6' etex, (-10,5));
+
+endfig;
+\end{mplibcode}
+\end{document}

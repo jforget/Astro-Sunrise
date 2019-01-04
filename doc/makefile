@@ -31,3 +31,14 @@ ps-an-pol.gif: pseudo-analemma.pdf
 
 pseudo-analemma.pdf: pseudo-analemma.lua pseudo-analemma.tex
 	lualatex pseudo-analemma.tex
+
+visu3: sunset-slope.png
+	display sunset-slope.png
+
+sunset-slope.png: sunset-slope.pdf
+	pdftoppm -png -f 1 -l 1 -x 240 -y 225 -W 500 -H 160 sunset-slope.pdf sunset-slope
+	mv sunset-slope-1.png sunset-slope.png
+
+sunset-slope.pdf: sunset-slope.tex
+	lualatex sunset-slope.tex
+

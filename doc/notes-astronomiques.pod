@@ -876,7 +876,7 @@ informations qui auraient été trop longues pour la documentation interne
 du module et qui auraient noyé dans un flot d'informations un lecteur non
 averti.
 
-=head2 Choix de l'algorithme C<precise>
+=head2 Choix de l'algorithme, paramètre C<precise>
 
 Q : Quand est-il préférable de choisir l'algorithme précis ?
 
@@ -930,19 +930,25 @@ la course du Soleil est tangente ou quasiment tangente à la ligne d'horizon.
 Dans ces conditions, une légère variation de 6' de la hauteur du Soleil
 entraîne une variation nettement plus importante des points d'intersection
 de la course du Soleil avec la ligne d'horizon.
+Ainsi, le 20 avril 2017, au moment du coucher du Soleil,
+il faut 8 mn 18 s pour que la hauteur diminue de 6'.
 
 Q : D'où sors-tu cette valeur de 6' ?
 
 R : C'est la valeur que j'ai calculée au chapitre
-L<Principe du calcul itératif>.
-
-EXEMPLE NUMÉRIQUE
+L<Principe du calcul itératif>. C'est juste un exemple pour 
+faire un calcul concret.
 
 À l'inverse, si tu habites dans un lieu tempéré loin des cercles polaires,
 la pente de la course du Soleil au point d'intersection est toujours
 nettement oblique. Par exemple, à Greenwich, la pente la plus faible se produit
-à chaque solstice et vaut XXX. Donc une variation de hauteur de 6' produira au
-maximum une variation de l'heure de XXX.
+à chaque solstice et vaut de l'ordre de 6 à 7 degrés de hauteur par heure. Donc une variation de hauteur de 6' produira au
+maximum une variation de l'heure de 50 secondes.
+
+=for html
+<p>
+<img src='sunset-slope.png' alt="Course du Soleil, comparaison entre Greenwich le 21/12 et la latitude 76 le 21/04" />
+</p>
 
 Q : Et pour ceux qui habitent dans une région polaire, que se passe-t-il
 aux dates éloignées des transitions ?
@@ -973,7 +979,7 @@ passer à l'algorithme précis.
 Q : Et le cas des crépuscules ? On peut avoir le cas où la course du Soleil est
 tangente à la ligne d'horizon, si je peux me permettre d'utiliser ce terme pour
 une ligne située 24 degrés sous le plan horizontal. Et nous avons un écart de
-~12 heures comme dans le cas de la transition avec le Soleil de minuit, 
+≅12 heures comme dans le cas de la transition avec le Soleil de minuit, 
 pas un écart d'une heure ou moins comme dans le cas de la transition
 avec la nuit polaire.
 
@@ -986,7 +992,7 @@ le Soleil est à, disons, -15° si tu sais que la Lune va se lever lorsque l'on
 atteindra le crépuscule astronomique pour le Soleil ou si la météo annonce l'arrivée d'une
 épaisse couche de nuages à ce moment.
 
-=head2 Année C<year>
+=head2 Année, paramètre C<year>
 
 Q : Pourquoi C<Astro::Sunrise> a-t-il besoin de l'année pour calculer le lever
 et le coucher du S<soleil ?> J'ai vu un algorihme qui ne demandait
