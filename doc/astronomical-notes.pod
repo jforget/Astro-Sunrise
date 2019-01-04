@@ -547,8 +547,8 @@ all along the ecliptic, making a whole turn in about
 
 The angle between the equatorial plane and the ecliptic
 plane varies slightly. In Paul Schlyter's C program, the
-angle decreases by 356 nanodegrees per day (3.56 E-7 °/d,
-1.3 E-4 °/yr).
+angle decreases by 356 nanodegrees per day (3.56e-7 °/d,
+1.3e-4 °/yr).
 
 =head3 Perihelion Precession
 
@@ -939,12 +939,19 @@ Q: For the transition with the polar night, the solar course is tangent
 to the equator, like it is at the transition with the midnight Sun period.
 So, why do you still advise to use the basic algorithm in this case?
 
-A: The precise algorithm deals with the fact that the first candidate value
-for the Sun altitude at virtual solar noon is far from the value after the algorithm
-has converged. There may be nearly 12 hours between the instants when this 
-virtual solar noon is computed. On the other hand, for the transition with
-the polar night, the first computed value is very near the final value
-of the precise algorithm, so the basic algorithm will give a good enough value.
+A: The basic algorithm and the precise algorithm both try to estimate
+the ecliptic longitude and the altitude of the virtual noon sun at
+the time of sunset. But while the precise algorithm uses the real
+orbital speed which varies from 0.9552°/d to 1.0166°/d, the basic
+algorithm uses a constant speed of 0.986°/d, with an error of
+±0.0308°/d. For the transition between day+night and midnight Sun,
+this error runs for more than 11 hours, which might result in an error
+of 0.015° on the Sun's ecliptic longitude. But for the transition
+between day+night and polar night, the error runs for one hour or
+less, yielding an error on the ecliptic longitude of 0.0013° only. So
+even if a small error on the sun altitude gives a big error on the
+sunset time, at the transition with the polar night, you will have a
+I<tiny> error, not a I<small> one.
 
 Q: And what about the computation of twilights? We can encounter a situation
 where the solar course is tangent to the horizon, if I may use this word for a
@@ -1044,7 +1051,8 @@ First, let us deal with observers located north of the Arctic Polar Circle.
 They just have to know that the analemma and the pseudo-analemma cross the horizon
 and are partly hidden by the ground. The hidden part, more or less important depending
 on the observer's latitude, corresponds to the year period when the I<polar night> is
-in effect.
+in effect. You can find an example of the arctic pseudo-analemma in the 
+paragraph about the C<precise> parameter.
 
 For observers between the Tropic of Capricorn and the Antarctic Polar Circle,
 this is more strange. True solar noon corresponds to a right ascension of 0°,

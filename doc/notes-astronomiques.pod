@@ -574,7 +574,7 @@ environ.
 
 L'angle entre le plan équatorial et le plan de l'écliptique varie très
 légèrement. Dans le programme C de Paul Schlyter, l'angle diminue de 
-356 nanodegrés par jour (3.56 E-7 °/j, 1.3 E-4 °/année).
+356 nanodegrés par jour (3,56e-7 °/j, 1,3e-4 °/année).
 
 =head3 Avance du périhélie
 
@@ -965,6 +965,22 @@ la course du Soleil est tangente à la ligne d'horizon, comme pour
 la transition avec la période du Soleil de minuit. Alors pourquoi,
 dans ce cas, conseilles-tu quand même l'algorithme de base ?
 
+R : L'algorithme de base et l'algorithme précis essaient tous deux d'estimer
+la longitude écliptique et la hauteur du Soleil au midi solaire virtuel correspondant
+à l'heure du coucher du Soleil. Mais alors que l'algorithme précis utilise 
+la vitesse réelle du Soleil, qui varie de 0,9552°/j à 1,0166°/j, l'algorithme
+de base utilise une vitesse moyenne de 0,986°/j, ce qui fait une erreur
+de ±0,0308°/j. À l'occasion de la transition entre jour+nuit et le Soleil
+de minuit, ce taux d'erreur prend effet pendant 11 heures, voire plus,
+ce qui peut donner une erreur de 0,015° sur la longitude écliptique du Soleil.
+En revanche, pour la transition entre jour+nuit et la nuit polaire, 
+ce taux d'erreur court sur une heure ou moins, ce qui fait que l'erreur
+sur la longitude écliptique ne peut pas dépasser 0,0013°.
+Donc, même si à ce moment, une faible erreur sur la longitude écliptique
+peut provoquer une grande différence sur l'heure du coucher du Soleil,
+tu n'auras pas une I<faible> erreur, mais une erreur I<infime> sur la 
+longitude écliptique.
+
 R : L'algorithme précis est là pour contrebalancer le fait que la valeur
 du midi solaire virtuel obtenue â la première itération peut se révéler
 éloignée de la valeur finale à la convergence. Il peut y avoir presque 12 heures
@@ -1088,7 +1104,8 @@ cercle polaire arctique, il faut juste savoir qu'une partie
 de l'analemme et de la pseudo-analemme se trouve au-dessous
 de l'horizon. Cette partie, plus ou moins importante selon
 la latitude de l'observateur, correspond à la période de
-l'année de la I<nuit polaire>.
+l'année de la I<nuit polaire>. Vous trouverez un exemple de pseudo-analemme
+arctique dans le paragraphe sur le paramètre C<precise>.
 
 Pour les observateurs de l'hémisphère austral entre le tropique du capricorne
 et le cercle polaire antarctique, la situation est plus curieuse.
