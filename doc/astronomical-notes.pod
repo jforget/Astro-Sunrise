@@ -7,7 +7,7 @@
 This text is published under the I<Creative Commons> license
 CC-BY-ND.
 
-Copyright (c) 2017, 2018 Jean Forget. All rights reserved.
+Copyright (c) 2017, 2018, 2019 Jean Forget. All rights reserved.
 
 I must precise that I am not a professional astronomer. The text
 below may contain errors, be aware of this. I will not be held
@@ -119,6 +119,14 @@ hemisphere.
 But using politically correct sentences would yield convoluted phrases, 
 which hinders the pedagogical purpose of the text and the understanding
 of the described phenomena.
+
+About minutes and seconds: the problem is that minutes and seconds are both
+angular units (for longitudes and latitudes) and time units (for instants
+and for durations). I have adopted three different formats to help distinguish
+between these cases: C<12:28:35> for time instants, C<2 h 28 mn 35 s> for
+time durations and C<59° 28' 35"> for angles (latitudes, longitudes and others).
+So, even if the hour-part or the degree-part is missing, you will be able
+to distinguish between a C<28' 35"> angle and a C<28 mn 35 s> duration.
 
 =head1 Sources
 
@@ -682,7 +690,7 @@ angular speed (either in equatorial coordinates or ecliptic coordinates, dependi
 which is more convenient).
 
 The concept of I<Mean Sun> is a virtual Sun like this, calibrated so it crosses
-the meridian at 12h00 (Local Mean Time) each day, and which minimizes the difference
+the meridian at 12:00 (Local Mean Time) each day, and which minimizes the difference
 between the real local noon and the mean local noon. 
 
 I will also consider several "virtual homocinetic suns" or VHS (no relation with
@@ -712,8 +720,8 @@ I figured the Sun's trajectory as a sinusoidal curve, because it is easy to comp
 but I did not check whether it was the real curve. And I would bet that it is
 only approximately close to the real curve. Second, the equation of time is very much
 increased. Instead of a true solar noon varying from 11:43 to 12:15 (in mean solar time),
-here the variation is multiplied by 4 and the solar noon varies from 11h, or even less,
-to 13h. But without this stretching, you would not have seen anything.
+here the variation is multiplied by 4 and the solar noon varies from 11:00, or even less,
+to 13:00. But without this stretching, you would not have seen anything.
 
 Q: And this figure eight, is this the analemma?
 
@@ -955,7 +963,7 @@ I<tiny> error, not a I<small> one.
 
 Q: And what about the computation of twilights? We can encounter a situation
 where the solar course is tangent to the horizon, if I may use this word for a
-line situated 24 degrees below the horizontal plane. And we have a ≅12 hour
+line situated 24 degrees below the horizontal plane. And we have a ≈12 hour
 gap as for the midnight Sun transition, not a 1-hour gap as for the polar night
 transition.
 

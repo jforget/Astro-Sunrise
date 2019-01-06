@@ -1,6 +1,6 @@
 --[[
      Utility script for Astro::Sunrise's astronomical documentation
-     Copyright (C) 2017 Jean Forget
+     Copyright (C) 2017, 2019 Jean Forget
 
      This program is distributed under the same terms as Perl 5.16.3:
      GNU Public License version 1 or later and Perl Artistic License.

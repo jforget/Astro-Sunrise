@@ -1,7 +1,7 @@
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Perl extension for computing the sunrise/sunset on a given day
-#     Copyright (C) 1999-2003, 2013, 2015, 2017 Ron Hill and Jean Forget
+#     Copyright (C) 1999-2003, 2013, 2015, 2017, 2019 Ron Hill and Jean Forget
 #
 #     See the license in the embedded documentation below.
 #

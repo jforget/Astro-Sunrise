@@ -8,7 +8,7 @@ Ce texte est diffusé sous la licence I<Creative Commons>
 S<CC-BY-ND :> avec attribution et me demander avant de modifier
 le contenu.
 
-Copyright (c) 2017, 2018 Jean Forget, tous droits réservés.
+Copyright (c) 2017, 2018, 2019 Jean Forget, tous droits réservés.
 
 Je tiens à signaler que je ne suis pas un astronome professionnel.
 Il est possible que le texte ci-dessous contienne des erreurs.
@@ -133,6 +133,15 @@ Mais vouloir faire du politiquement correct conduit à des
 tournures de phrase alambiquées, ce qui nuit à la compréhension
 des phénomènes présentés.
 
+À propos des minutes et des S<secondes :> il y a un problème dans la mesure où
+les minutes et les secondes sont à la fois des unités d'angle (longitudes et latitudes)
+et des unités de temps (durée et repérage d'un instant). J'ai adopté trois
+formats différents pour favoriser la distinction entre ces S<cas :>
+S<« 12:28:35 »> pour le repérage d'un instant, S<« 2 h 28 mn 35 s »> pour les
+durées et S<« 59° 28' 35" »> pour les angles (latitudes, longitudes et autres).
+Donc, même s'il n'y a pas d'indication de degré ou d'heure, vous pourrez faire
+la distinction entre un angle S<« 28' 35" »> et une durée S<« 28 mn 35 s »>.
+
 =head1 Sources
 
 Je ne donnerai ici que les sources fournissant ou générant des jeux étendus
@@ -219,7 +228,7 @@ obtenir le lever du Soleil, son coucher ou le midi vrai (version 0.18.0).
 
 =item *
 
-Déterminer une valeur approximative de l'heure S<recherchée :> 12h00 pour le midi vrai,
+Déterminer une valeur approximative de l'heure S<recherchée :> 12:00 pour le midi vrai,
 ou bien utiliser C<Astro::Sunrise> en mode simple pour le lever ou le coucher.
 
 =item *
@@ -703,7 +712,7 @@ Dans la suite de la discussion, il est utile d'imaginer un soleil dont la vitess
 angulaire serait constante (soit en coordonnées équatoriales, soit en coordonnées
 écliptiques, selon le cas).
 
-On parle ainsi du S<« Soleil> S<moyen »>, qui est censé passer au méridien à 12h00
+On parle ainsi du S<« Soleil> S<moyen »>, qui est censé passer au méridien à 12:00
 pile lorsque l'on utilise le S<« temps> solaire S<moyen »> et qui minimise l'écart
 tout au long de l'année entre le midi solaire moyen et le midi solaire vrai.
 
@@ -737,7 +746,7 @@ que c'était facile à programmer, mais je n'ai pas vérifié si ça collait à 
 vérité et je parierais que la correspondance est approximative. Ensuite, l'équation du temps
 est très largement exagérée. Au lieu d'un midi solaire vrai qui varie entre
 11:43 et 12:15 du temps moyen, ici la variation est 4 fois plus importante,
-faisant varier le midi solaire entre 11h et 13h. Mais on n'aurait rien vu
+faisant varier le midi solaire entre 11:00 (et même moins) et 13:00. Mais on n'aurait rien vu
 sans cet élargissement.
 
 Q : Et cette courbe en forme de huit, c'est l'analemme ?
@@ -984,7 +993,7 @@ longitude écliptique.
 Q : Et le cas des crépuscules ? On peut avoir le cas où la course du Soleil est
 tangente à la ligne d'horizon, si je peux me permettre d'utiliser ce terme pour
 une ligne située 24 degrés sous le plan horizontal. Et nous avons un écart de
-≅12 heures comme dans le cas de la transition avec le Soleil de minuit, 
+≈12 heures comme dans le cas de la transition avec le Soleil de minuit, 
 pas un écart d'une heure ou moins comme dans le cas de la transition
 avec la nuit polaire.
 
