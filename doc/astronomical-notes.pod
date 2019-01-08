@@ -850,8 +850,8 @@ And the sunset occurs at 16:04:23.
 During iteration 3, between the real solar noon 12:04:56 and the time given
 by iteration 2, 16:04:23, the Sun orbitates with its real speed 1.0166 degree per day.
 Then at 16:04:23, it freezes, letting the Earth continue its spin. And sunset 
-happens less than a second later, at 16:04:23. So, there are 3 h 59 mn 27 s when we use
-the Sun's real orbital speed and less than one second when we use an obviously wrong orbital
+happens 9 milliseconds later, at 16:04:23. So, there are 3 h 59 mn 27 s when we use
+the Sun's real orbital speed and 9 milliseconds when we use an obviously wrong orbital
 speed. In the end, it is better than the basic algorithm, which uses an approximate
 but still wrong orbital speed, but for the whole span of 3 h, 59 mn and 57 s.
 

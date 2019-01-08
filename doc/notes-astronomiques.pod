@@ -873,8 +873,8 @@ Cela donne une nouvelle valeur 16:04:23 pour le coucher du Soleil.
 Lors de la troisième itération, entre le midi solaire réel 12:04:56 et la valeur donnée
 par la deuxième itération 16:04:23, le Soleil tourne à la vitesse réelle de 1,0166 degré par jour,
 puis à 16:04:23, il se fige et ensuite on ajuste en faisant tourner la Terre seule sur elle-même. Le coucher du
-Soleil se produit une fraction de seconde plus tard à 16:04:23. Il y a donc 3 h 59 mn 27 s où l'on utilise
-la vitesse réelle du Soleil et une fraction de seconde où l'on utilise une vitesse franchement erronée.
+Soleil se produit 9 millisecondes plus tard à 16:04:23. Il y a donc 3 h 59 mn 27 s où l'on utilise
+la vitesse réelle du Soleil et 9 millisecondes où l'on utilise une vitesse franchement erronée.
 On y gagne par rapport au calcul simple qui utilise une vitesse légèrement erronée pendant toute
 la période de 3 h, 59 mn et 57 s.
 
