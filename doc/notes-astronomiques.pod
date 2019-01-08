@@ -345,7 +345,7 @@ elliptique avec le centre d'inertie du système solaire, situé sur l'un
 des foyers de cette ellipse.
 
 En faisant remarquer que le centre de gravité du Soleil et celui du système
-solaire sont deux points différents. Et même, il y a des périodes où le
+solaire sont deux points différents. Il y a même des périodes où le
 centre d'inertie du système solaire se trouve I<à l'extérieur> du Soleil.
 La L<page web|http://hp41programs.yolasite.com/solar-sys-bary.php>
 d'un programme pour HP-41 indique que le 15 mars 1983, la distance entre
@@ -447,7 +447,7 @@ polaire arctique.
 =back
 
 Remarquez que, de temps en temps, dans certains paragraphes, je laisserai tomber certains de ces
-mensonges. Toutefois, la plupart du temps, tous ces mensonges sont en vigueur.
+mensonges. Toutefois, le plus souvent, la plupart de ces mensonges sont en vigueur.
 
 =head2 Conclusion
 
@@ -526,8 +526,8 @@ et que les angles s'appellent
 S<« ascension> S<droite »> et S<« déclinaison »>.
 À cause d'une tradition, d'une charte ancienne ou de quelque chose comme ça,
 l'ascension droite est exprimée en heures, minutes et secondes
-et non pas en degrés. J'essaierai de donner les deux valeurs chaque fois que
-j'en aurai besoin.
+et non pas en degrés. J'essaierai de donner les valeurs dans les deux
+systèmes d'unités chaque fois que j'en aurai besoin.
 
 Les I<coordonnées écliptiques> suivent le même principe,
 en traçant le premier arc le long de l'écliptique au lieu
@@ -636,11 +636,11 @@ de 133°32'52". Ce sont les valeurs extrêmes des écarts pour l'obliquité
 de 23° 26'. Et si vous préférez les heures, minutes, secondes, voici 
 un tableau donnant les valeurs dans les deux S<systèmes :>
 
-  .   longitude  ascension droite      écart   longitude  ascension droite   écart
-  .   3h05mn22s      2h55mn30s       -9mn51s   46°20'31"     43°52'36"     -2°27'54"
-  .   8h54mn11s      9h04mn03s        9mn51s  133°32'52"    136°00'47"      2°27'54"
-  .  15h05mn22s     14h55mn30s       -9mn51s  226°20'31"    223°52'36"     -2°27'54"
-  .  20h54mn11s     21h04mn03s        9mn51s  313°32'52"    316°00'47"      2°27'54"
+  .   longitude  ascension droite    écart      longitude  ascension droite   écart
+  .   3h05mn22s      2h55mn30s     -9mn51s      46°20'31"     43°52'36"     -2°27'54"
+  .   8h54mn11s      9h04mn03s      9mn51s     133°32'52"    136°00'47"      2°27'54"
+  .  15h05mn22s     14h55mn30s     -9mn51s     226°20'31"    223°52'36"     -2°27'54"
+  .  20h54mn11s     21h04mn03s      9mn51s     313°32'52"    316°00'47"      2°27'54"
 
 =head4 Deuxième Loi de Kepler
 
@@ -851,13 +851,14 @@ donne l'heure 16:04:11.
 Pour la seconde itération, on détermine le midi solaire virtuel correspondant à la position du Soleil
 à cette heure approximative 16:04:11. Ce midi solaire virtuel se produit à 12:05:01.
 En partant de cette position, on applique la rotation de la Terre et on aboutit
-à la seconde évaluation du coucher du Soleil, 16:04:23.
+à la seconde évaluation du coucher du Soleil, 16:04:23 (16.0731615074431 en notation décimale).
 
 Pour la troisième itération, on détermine le midi solaire virtuel
 correspondant à la position du Soleil à 16:04:23. Ce midi solaire virtuel se produit à 12:05:01. Là encore
 nous appliquons la rotation de la Terre, pour aboutir à une troisième évaluation
 du coucher du Soleil, 16:04:23, différant de la valeur de la seconde itération 
-par une fraction de seconde.
+par une fraction de S<seconde :> 16.0731642391519 au lieu de 16.0731615074431.
+La différence étant 2,73e-6 heure, soit 9 ms, on quitte la boucle de calcul.
 
 C'est une première façon de voir le S<calcul :> le Soleil anticipe sa position
 dans la soirée et reste immobile à cette position. Une autre façon de voir ce
@@ -960,14 +961,14 @@ Attention, le diagramme n'est pas à l'échelle.
 
 =for html
 <p>
-<img src='sunset-slope.png' alt="Course du Soleil, comparaison entre Greenwich le 21/12 et la latitude 76 le 21/04" />
+<img src='sunset-slope.png' alt="Course du Soleil, comparaison entre Greenwich le 21/12 et la latitude 76 le 20/04" />
 </p>
 
 Q : Et pour ceux qui habitent dans une région polaire, que se passe-t-il
 aux dates éloignées des transitions ?
 
 R : Si la période en cours est l'alternance jour/nuit, alors les mêmes
-considérations que ci-dessus au sujet de la pente de la courbe s'appliquent.
+considérations que ci-dessus au sujet de la pente S<« nettement> S<oblique »> de la courbe s'appliquent.
 Et dans le cas des deux autres périodes, nuit polaire et Soleil de minuit,
 il n'y a pas d'intersection entre la course du Soleil et l'horizon et
 aucune variation de hauteur, dans certaines limites, ne peut créer
@@ -983,7 +984,7 @@ la longitude écliptique et la hauteur du Soleil au midi solaire virtuel corresp
 à l'heure du coucher du Soleil. Mais alors que l'algorithme précis utilise 
 la vitesse réelle du Soleil, qui varie de 0,9552°/j à 1,0166°/j, l'algorithme
 de base utilise une vitesse moyenne de 0,9856°/j, ce qui fait une erreur
-de ±0,0308°/j. À l'occasion de la transition entre jour+nuit et le Soleil
+de ±0,0310°/j. À l'occasion de la transition entre jour+nuit et le Soleil
 de minuit, ce taux d'erreur prend effet pendant 11 heures, voire plus,
 ce qui peut donner une erreur de 0,015° sur la longitude écliptique du Soleil.
 En revanche, pour la transition entre jour+nuit et la nuit polaire, 
@@ -1063,7 +1064,7 @@ explicitement dans le domaine public.
 Q : Je remarque que tu n'a pas utilisé les termes S<« avancer »>, S<« reculer »>
 et S<« retarder »>.
 
-R : Effectivement, j'ai un problème avec ce verbes. Lorsque l'on passe du 28/02/2015
+R : Effectivement, j'ai un problème avec ce verbe. Lorsque l'on passe du 28/02/2015
 au 28/02/2016, on I<avance> de 365 jours. Mais lorsque le coucher du soleil passe
 de 17:35:43 à 17:37:29, il I<recule> ou il I<retarde> de 1 mn 46 s. Alors que la variation
 est dans le même sens.

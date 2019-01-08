@@ -428,7 +428,7 @@ on Earth are between the Tropic of Cancer and the Arctic Circle.
 =back
 
 In some paragraphs, I will temporarily set aside some of these lies. But in most
-paragraphs all these lies will be in effect.
+paragraphs most of these lies will be in effect.
 
 =head2 Conclusion
 
@@ -463,10 +463,10 @@ Q: I thought that the Earth was spinning in 24h!
 
 A: While the Earth spins, the Sun orbits around it. And what we see is
 the combination of both movements, which gives a combined speed of 360 degrees per day.
-What the commoner is interesting in is to find the Sun at the same place in the
+What the commoner is interested in is to find the Sun at the same place in the
 sky at regular times day after day.  Only after this is achieved, the commoner
 becomes a learned person and is interested in knowing and understanding the
-position of the Moon, the stars and the planets.
+positions of the Moon, the stars and the planets.
 
 Q: And why did you say "average" two or three times?
 
@@ -630,7 +630,7 @@ Q: You cannot apply Kepler's second law to a geocentric model!
 A: No. Kepler's second law applies to a barycentric model as D above. It applies
 I<approximately> to an heliocentric model as C. But once we have computed
 Earth's angular speed on its orbit around the Sun in model C, the computation of the
-Sun's coordinates and speed in the geocentric model B is very simple. Especially,
+Sun's coordinates and speed in the geocentric model is very simple. Especially,
 the Sun's angular speed in a geocentric model is equal to the Earth's speed in
 an heliocentric model.
 
@@ -785,7 +785,7 @@ we can find that after 23225 seconds (i.e. at 18:23:59), the true solar
 noon has varied by 5.6 seconds. Likewise, the altitude varies
 by 22'53" in 86379 seconds and by 6'9" in 23225 seconds. So at
 18:23:59, we have a I<virtual> true solar noon of 11:56:28
-and a I<virtual> altitude of 42°47'31".
+and a I<virtual> noon altitude of 42°47'31".
 
 So we move a little bit the course of the Sun so it will
 be at its highest at his virtual point
@@ -826,13 +826,14 @@ On 4th Jan, this first value is 16:04:11.
 For iteration 2, we determine the virtual solar noon that corresponds to the
 Sun's position at 16:04:11. This virtual solar noon occurs at 12:05:01.
 With this reference, we apply the Earth's rotation and we get a second
-value for sunset, 16:04:23.
+value for sunset, 16:04:23 (16.0731615074431 in decimal hours).
 
 For iteration 3, we determine the virtual solar noon 
 that corresponds to the Sun's position at 16:04:23. This new virtual solar
 noon occurs at 12:05:01. And one more time we apply the Earth's rotation
 and we obtain a third value for sunset, 16:04:23, differing from the previous
-value by less than a second.
+value by less than a second: 16.0731642391519 instead of 16.0731615074431.
+The difference is 2,73e-6 hours, that is 9 ms, so we leave the computation loop.
 
 This is one way to describe the algorithm: the Sun reaches by anticipation
 its position in the evening and stays there, waiting for the spinning Earth
@@ -861,7 +862,7 @@ calling the module's functions. These explanations would have been too
 long if they had been included in the module's POD and a casual doc reader
 would have been drowned in a deluge of informations.
 
-=head2 Choosing The Algorithm, C<precise> parameter
+=head2 Choosing The Algorithm, C<precise> Parameter
 
 Q: When should I choose the precise algorithm?
 
@@ -935,16 +936,16 @@ Warning: it is not to scale.
 
 =for html
 <p>
-<img src='sunset-slope.png' alt="Sun course, comparison between Greenwich on 21/12 and latitude 76 on 21/04" />
+<img src='sunset-slope.png' alt="Sun course, comparison between Greenwich on 21/12 and latitude 76 on 20/04" />
 </p>
 
 Q: And what happens to people living in polar locations when
 the date is far from any transition?
 
-A: If the period is day+night, the explanations above about the slope
+A: If the period is day+night, the explanations above about the steep enough slope
 of the curve still apply. If the period is the polar night or the
 midnight Sun, then the course of the Sun never crosses the horizon and
-any variation of altitude, within limits, can create an intersection
+any variation of altitude, within limits, cannot create an intersection
 with the horizon.
 
 Q: For the transition with the polar night, the solar course is tangent
@@ -972,7 +973,7 @@ gap as for the midnight Sun transition, not a 1-hour gap as for the polar night
 transition.
 
 A: Why do you compute twilight times? Because you want a low enough light
-level and good enough conditions to observe celestiol bodies.
+level and good enough conditions to observe celestial bodies.
 Do you think there is a big difference between a night when the Sun is
 at its lowest at 23°57' below the horizon and a night when it is at its
 lowest at 24°3' below? In some circumstances, you'd better begin your observations
@@ -980,7 +981,7 @@ when the Sun is at, say, -15° than to wait for the -24° twilight if you know
 that the Moon will rise at the same time or if a weather report gives a warning
 about an incoming overcast layer.
 
-=head2 C<year> parameter
+=head2 C<year> Parameter
 
 Q: Why does C<Astro::Sunrise> need the year to compute sunrise and sunset?
 I have seen an algorithm which only needs the month and the day.
@@ -1025,7 +1026,7 @@ algorithm would be redundant. Then because I do not know which licenses
 apply to these yearless algorithms, while at the same time, Paul Schlyter's
 algorithm is in the public domain.
 
-Q: By the way, how did you get the seconds in the table? C<Astro::Sunrise>
+Q: Another thing, how did you get the seconds in the table? C<Astro::Sunrise>
 does not provide the seconds.
 
 A: Because I have used C<DateTime::Event::Sunrise> instead of C<Astro::Sunrise>,
