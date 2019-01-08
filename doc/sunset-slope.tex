@@ -29,38 +29,38 @@
 \begin{mplibcode}
 beginfig(1);
 
-path h_arctic, l_arctic, s_arctic;
-h_arctic = (  0, 0) -- (100, 0);
-l_arctic = (  0,10) -- (100,10);
-s_arctic = (  0,15) .. {dir 0}(100,-2)  ;
-draw h_arctic;
+path h_arctic, l_arctic, sl_arctic, sh_arctic;
+l_arctic = (  0, 0) -- (100, 0);
+sl_arctic = (  0,5) .. {dir 0}(100,-12)  ;
+sh_arctic = sl_arctic shifted (0,10);
 draw l_arctic;
-draw s_arctic;
+draw sl_arctic;
+draw sh_arctic;
 pair zda, zfa, zma;
-zda = h_arctic intersectionpoint s_arctic;
-zfa = l_arctic intersectionpoint s_arctic;
-drawdblarrow (xpart zda, -10) -- (xpart zfa, -10);
+zda = l_arctic intersectionpoint sl_arctic;
+zfa = l_arctic intersectionpoint sh_arctic;
+drawdblarrow (xpart zda, -15) -- (xpart zfa, -15);
 zma = 0.5 * (zda + zfa);
-label.bot(btex 8 mn 18 s          etex, (xpart zma, -10));
+label.bot(btex 8 mn 18 s          etex, (xpart zma, -15));
 label.top(btex 20/04, lat 76° 59' etex, (xpart zma,  20));
 
-path h_greenw, l_greenw, s_greenw;
-h_greenw = (150, 0) -- (180, 0);                   
-l_greenw = (150,10) -- (180,10);                   
-s_greenw = (150,15){dir -40} .. { dir -10}(180,-2);
-draw h_greenw;
+path h_greenw, l_greenw, sl_greenw, sh_greenw;
+l_greenw = (150, 0) -- (180, 0);                   
+sl_greenw = (150,5){dir -40} .. { dir -10}(180,-12);
+sh_greenw = sl_greenw shifted (0,10);
 draw l_greenw;
-draw s_greenw;
+draw sl_greenw;
+draw sh_greenw;
 pair zdg, zfg, zmg;
-zdg = h_greenw intersectionpoint s_greenw;
-zfg = l_greenw intersectionpoint s_greenw;
-drawdblarrow (xpart zdg, -10) -- (xpart zfg, -10);
+zdg = l_greenw intersectionpoint sl_greenw;
+zfg = l_greenw intersectionpoint sh_greenw;
+drawdblarrow (xpart zdg, -15) -- (xpart zfg, -15);
 zmg = 0.5 * (zdg + zfg);
-label.bot(btex 50 s               etex, (xpart zmg, -10));
+label.bot(btex 50 s               etex, (xpart zmg, -15));
 label.top(btex 21/12, lat 59° 58' etex, (xpart zmg,  20));
 
-drawdblarrow (-10,0) -- (-10,10);
-label.lft(btex 6' etex, (-10,5));
+drawdblarrow (-10,5) -- (-10,15);
+label.lft(btex 6' etex, (-10,10));
 
 endfig;
 \end{mplibcode}

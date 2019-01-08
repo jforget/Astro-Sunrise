@@ -954,6 +954,10 @@ nettement oblique. Par exemple, à Greenwich, la pente la plus faible se produit
 à chaque solstice et vaut de l'ordre de 6 à 7 degrés de hauteur par heure. Donc une variation de hauteur de 6' produira au
 maximum une variation de l'heure de 50 secondes.
 
+Le diagramme ci-dessous montre l'effet d'une translation verticale de 6' sur la course
+du Soleil dans les deux S<cas :> 20 avril à 76° 59' et 21 décembre à Greenwich.
+Attention, le diagramme n'est pas à l'échelle.
+
 =for html
 <p>
 <img src='sunset-slope.png' alt="Course du Soleil, comparaison entre Greenwich le 21/12 et la latitude 76 le 21/04" />

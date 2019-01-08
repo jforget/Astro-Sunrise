@@ -929,6 +929,10 @@ For example, at Greenwich, the shallowest slope occurs at each solstice
 and is about 6 or 7 degrees of altitude per hour. So a variation of 6' shifts the sunrise and sunset times by
 only 50 seconds or less.
 
+The diagram below shows the effect of a 6' vertical translation on the solar course in
+two cases: 20th April at 76° 59' N and 21st December at Greenwich.
+Warning: it is not to scale.
+
 =for html
 <p>
 <img src='sunset-slope.png' alt="Sun course, comparison between Greenwich on 21/12 and latitude 76 on 21/04" />
