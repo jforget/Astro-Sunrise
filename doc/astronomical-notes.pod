@@ -454,10 +454,10 @@ by people who believe that heliocentrism is the one and only truth.
 
 In an heliocentric system pointing at fixed stars, Earth orbits around the
 Sun in one year. In other words, in a geocentric system, the Sun orbits around
-the Earth in one year, with an average speed of 0.986 degrees per day.
+the Earth in one year, with an average speed of 0.9856 degrees per day.
 
 Also, the Earth spins around itself, making one turn in 23h 56mn 4s,
-with a speed of 4.178e-3 degrees per second, that is, 360.986 degrees per day.
+with a speed of 4.178e-3 degrees per second, that is, 360.9856 degrees per day.
 
 Q: I thought that the Earth was spinning in 24h!
 
@@ -649,7 +649,7 @@ of 0.9552 degree per day in July at apogee (or aphelion).
 
 =head4 Equation of Time
 
-The Earth's spin velocity is constant, that is 360.986 degrees per day
+The Earth's spin velocity is constant, that is 360.9856 degrees per day
 but the Sun's orbital speed around the Earth is not. The combination of
 both speed is variable and it is I<not> 360 degrees per day. The crossing
 of the meridian by the Sun is not exactly every 86400 seconds.
@@ -802,8 +802,8 @@ We will use the example of the sunset at Greenwich, on 4th January, 2018.
 The basic algorithm begins by computing the day's true solar noon.
 On 4th Jan, the true solar noon at Greenwich happens at 12:04:56.
 
-Then we apply both Earth's spin (360.986 degrees per day) and 
-the movement of a VHS ("virtual homocinetic sun"), that is, 0.986 degrees per
+Then we apply both Earth's spin (360.9856 degrees per day) and 
+the movement of a VHS ("virtual homocinetic sun"), that is, 0.9856 degrees per
 day. The result is a combined rotational speed of 360 degrees per day, that is,
 15 degrees per hour. And sunset happens when the VHS reaches the target altitude.
 
@@ -813,7 +813,7 @@ the VHS occurs at 16:04:50.
 
 =head2 Implementation of Precise Algorithm
 
-With the precise algorithm, we keep separate Earth's spin (360.986 degrees
+With the precise algorithm, we keep separate Earth's spin (360.9856 degrees
 per day) and the Sun's rotational speed around Earth. In addition, this
 rotational speed is the real speed, spanning from 0.9552 to 1.0166 
 degree per day.
@@ -841,7 +841,7 @@ the algorithm is as follows:
 
 During iteration 2, between the real solar noon 12:04:56 and the time given
 by iteration 1, 16:04:11, the Sun orbitates with its real speed of 1.0166 degree per day
-while the Earth spins at 360.986 degrees per day.
+while the Earth spins at 360.9856 degrees per day.
 Then, at 16:04:11, the Sun freezes in its track and after that, we adjust the
 position with only the Earth's spin to reach the required altitude.
 And the sunset occurs at 16:04:23.
@@ -955,8 +955,8 @@ A: The basic algorithm and the precise algorithm both try to estimate
 the ecliptic longitude and the altitude of the virtual noon sun at
 the time of sunset. But while the precise algorithm uses the real
 orbital speed which varies from 0.9552°/d to 1.0166°/d, the basic
-algorithm uses a constant speed of 0.986°/d, with an error of
-±0.0308°/d. For the transition between day+night and midnight Sun,
+algorithm uses a constant speed of 0.9856°/d, with an error of
+±0.0310°/d. For the transition between day+night and midnight Sun,
 this error runs for more than 11 hours, which might result in an error
 of 0.015° on the Sun's ecliptic longitude. But for the transition
 between day+night and polar night, the error runs for one hour or

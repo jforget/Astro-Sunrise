@@ -25,7 +25,7 @@ traîne par rapport à la version française.
 
 Ce texte fait partie intégrante de la distribution du module.
 Il est donc visible sur les sites web de CPAN
-(L<https://metacpan.org>, par exemple)
+(L<https://metacpan.org>, par exemple).
 Mais il ne donne lieu à aucune installation.
 Du coup, je pense qu'il est absent des paquets C<.deb>
 et C<.rpm> qui pourraient être construits pour ce module.
@@ -475,11 +475,11 @@ inconditionnels de l'héliocentrisme.
 Dans un repère héliocentrique axé sur les étoiles fixes, la Terre
 tourne autour du Soleil en un an. Ou, ce qui revient au même, dans un
 repère géocentrique, le Soleil tourne autour de la Terre en un an
-avec une vitesse angulaire moyenne de 0,986 degré par jour.
+avec une vitesse angulaire moyenne de 0,9856 degré par jour.
 
 D'autre part, la Terre tourne sur elle-même en 23h 56mn 4s,
 avec une vitesse de rotation de 4,178e-3 degré par seconde,
-soit 360,986 degrés par jour.
+soit 360,9856 degrés par jour.
 
 Q: Je croyais que la Terre tournait sur elle-même en 24h !
 
@@ -672,7 +672,7 @@ par jour à l'apogée (ou aphélie).
 
 =head4 Équation du temps
 
-La vitesse de rotation de la Terre sur elle-même est constante, 360,986 degrés par jour
+La vitesse de rotation de la Terre sur elle-même est constante, 360,9856 degrés par jour
 mais la vitesse de rotation du Soleil autour de la Terre ne l'est pas. La combinaison des
 deux vitesses est donc variable et elle I<n'est pas> 360 degrés par jour. Le passage du
 Soleil au méridien ne se produit donc pas exactement toutes les S<86 400 secondes.>
@@ -824,8 +824,8 @@ L'algorithme simple commence par déterminer le midi solaire vrai du jour.
 En reprenant l'exemple du paragraphe précédent, le 4 janvier
 à Greenwich, le midi solaire vrai se produit à 12:04:56.
 
-Puis on applique simultanément la rotation de la Terre sur elle-même (360,986 degrés par jour)
-et la rotation d'un SVH (rappel : soleil virtuel homocinétique) autour de la Terre (0,986 degré par jour)
+Puis on applique simultanément la rotation de la Terre sur elle-même (360,9856 degrés par jour)
+et la rotation d'un SVH (rappel : soleil virtuel homocinétique) autour de la Terre (0,9856 degré par jour)
 ce qui fait une vitesse combinée de 360 degrés par jour, soit 15 degrés
 par heure. Et le coucher du Soleil se produit au moment où cette rotation combinée
 amène le SVH à l'altitude cible.
@@ -837,7 +837,7 @@ pour parcourir cet angle et le coucher du SVH se produit à 16:04:50.
 =head2 Mise en Œuvre de l'Algorithme Précis
 
 Avec l'algorithme précis, on dissocie la rotation de le Terre sur elle-même
-(360,986 degrés par jour) et la rotation du Soleil autour de la Terre.
+(360,9856 degrés par jour) et la rotation du Soleil autour de la Terre.
 De plus, on utilise implicitement la valeur réelle de la rotation du Soleil,
 entre 0,9552 degré et 1,0166 degré par jour.
 
@@ -865,7 +865,7 @@ calcul S<est :>
 
 Lors de la seconde itération, entre le midi solaire réel 12:04:56 et la valeur donnée
 par la première itération 16:04:11, le Soleil tourne à la vitesse réelle de 1,0166 degré par jour
-en même temps que la Terre tourne sur elle-même à la vitesse de 360,986 degrés par jour.
+en même temps que la Terre tourne sur elle-même à la vitesse de 360,9856 degrés par jour.
 Puis à 16:04:11, le Soleil s'immobilise et on ajuste en faisant tourner la Terre seulement.
 Cela donne une nouvelle valeur 16:04:23 pour le coucher du Soleil.
 
@@ -982,7 +982,7 @@ R : L'algorithme de base et l'algorithme précis essaient tous deux d'estimer
 la longitude écliptique et la hauteur du Soleil au midi solaire virtuel correspondant
 à l'heure du coucher du Soleil. Mais alors que l'algorithme précis utilise 
 la vitesse réelle du Soleil, qui varie de 0,9552°/j à 1,0166°/j, l'algorithme
-de base utilise une vitesse moyenne de 0,986°/j, ce qui fait une erreur
+de base utilise une vitesse moyenne de 0,9856°/j, ce qui fait une erreur
 de ±0,0308°/j. À l'occasion de la transition entre jour+nuit et le Soleil
 de minuit, ce taux d'erreur prend effet pendant 11 heures, voire plus,
 ce qui peut donner une erreur de 0,015° sur la longitude écliptique du Soleil.
