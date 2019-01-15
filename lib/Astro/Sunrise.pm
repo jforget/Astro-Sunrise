@@ -833,7 +833,9 @@ This parameter should either be a false value or a filehandle opened for output.
 In the latter case, a few messages are printed to the filehandle, which allows
 the programmer to see step by step how the sunrise and the sunset are computed.
 
-Used for analysis and debugging purposes.
+Used for analysis and debugging purposes. You need to read the text
+F<doc/astronomical-notes.pod> to understand what the traced values
+represent.
 
 This parameter is optional and it can be specified only by keyword.
 
