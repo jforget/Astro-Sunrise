@@ -1,6 +1,6 @@
 #
 #     Configuration script for Astro::Sunrise
-#     Copyright (C) 2001, 2002, 2003, 2013, 2015, 2017 Ron Hill and Jean Forget
+#     Copyright (C) 2001, 2002, 2003, 2013, 2015, 2017, 2019 Ron Hill and Jean Forget
 #
 #     This program is distributed under the same terms as Perl 5.16.3:
 #     GNU Public License version 1 or later and Perl Artistic License

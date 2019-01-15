@@ -3,9 +3,12 @@ LICENSE
 MANIFEST
 Makefile.PL
 README
-TODO
 doc/astronomical-notes.pod
 doc/notes-astronomiques.pod
+doc/equ-time.png
+doc/ps-an-pol.gif
+doc/pseudo-analemma.gif
+doc/sunset-slope.png
 lib/Astro/Sunrise.pm
 t/00load.t
 t/01basic.t
