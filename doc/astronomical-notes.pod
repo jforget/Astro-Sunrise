@@ -799,6 +799,15 @@ from Stellarium: 18:23:24.
 Before describing the precise algorithm, let us talk about the basic algorithm.
 We will use the example of the sunset at Greenwich, on 4th January, 2018.
 
+This paragraph and the following are based on the Perl code below:
+
+  for(0, 1) { 
+    say join( " | ",$_, sunrise({ year =>  2018, month =>  1, day => 4,
+                                  lon  =>    0,  lat   => +51.5, tz  =>  0, isdst => 0,
+                                  alt  => -.833, upper_limb => 0, precise => $_, polar => 'retval',
+                                  trace => *STDOUT } ));
+  }
+
 The basic algorithm begins by computing the day's true solar noon.
 On 4th Jan, the true solar noon at Greenwich happens at 12:04:56.
 
@@ -895,9 +904,14 @@ day+night and midnight Sun AND you are interested in the
 visibility of the Sun's disk above the horizon, then you may use the
 precise algorithm.
 
+Note that if you live a bit southward of the arctic circle (say, Reykjavik),
+you should use the precise algorithm around the 21st of June, even if midnight
+sun does not happen there. Same thing aoround the 21st of December if you live
+a bit northward of the antarctic circle.
+
 =back
 
-Q: And can we know why?
+Q: And can we know why the use of the precise algorithm is so narrow?
 
 A: Let us go back to the animated picture of the solar course curve that
 moves along the pseudo-analemma. But instead of using a location

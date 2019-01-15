@@ -56,10 +56,11 @@ EOF
   my $ln = int(366 / $xscale);
   print $fh "draw (0, 0) -- ($ln, 0);\n";
   $ln = int(1200 / $yscale);
-  print $fh "drawarrow (0, -$ln) -- (0, $ln);\nlabel.lft(btex mn etex, (0, $ln));\n";
-  for (-15, -10, -5, 0, 5, 10, 15) {
-    $ln = int($_ * 60 / $yscale);
-    print $fh qq<label.lft("$_", (0, $ln));\n>;
+  print $fh "drawarrow (0, -$ln) -- (0, $ln);\n";
+  for ([-15, "11:45"], [-10, "11:50"], [-5, "11:55"], [0, "12:00"], [5, "12:05"], [10, "12:10"], [15, "12:15"]) {
+    my ($delta, $label) = @$_;
+    $ln = int($delta * 60 / $yscale);
+    print $fh qq<label.lft("$label", (0, $ln));\n>;
   }
   my @month = qw/J F M A M J J A S O N D/;
   for (0..11) {

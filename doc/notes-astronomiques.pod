@@ -820,6 +820,15 @@ du Soleil. On obtiendra un point différent de 18:23:59, mais très proche de
 Faisons d'abord une digression avec l'algorithme simple. Nous prendrons l'exemple
 du coucher du Soleil à Greenwich, le 4 janvier 2018. 
 
+Le présent paragraphe et le suivant se basent sur le code Perl S<suivant :>
+
+  for(0, 1) { 
+    say join( " | ",$_, sunrise({ year =>  2018, month =>  1, day => 4,
+                                  lon  =>    0,  lat   => +51.5, tz  =>  0, isdst => 0,
+                                  alt  => -.833, upper_limb => 0, precise => $_, polar => 'retval',
+                                  trace => *STDOUT } ));
+  }
+
 L'algorithme simple commence par déterminer le midi solaire vrai du jour.
 En reprenant l'exemple du paragraphe précédent, le 4 janvier
 à Greenwich, le midi solaire vrai se produit à 12:04:56.
@@ -921,9 +930,15 @@ du Soleil de minuit ET si tu t'intéresses
 à la visibilité du disque solaire au-dessus de l'horizon, alors tu
 peux utiliser l'algorithme précis.
 
+À noter que quelqu'un situé légèrement au sud du cercle polaire arctique
+(par exemple, à Reykjavik) a intérêt à utiliser l'algorithme précis aux
+alentours du 21 juin. De même, l'algorithme précis est conseillé aux alentours
+du 21 décembre pour les endroits légèrement au nord du cercle polaire
+antarctique
+
 =back
 
-Q : On peut savoir pourquoi ?
+Q : On peut savoir les raisons pour lesquelles l'algorithme précis sert si peu ?
 
 R : Reprenons l'animation de la courbe de la course du Soleil qui se déplace
 par rapport à la pseudo-analemme. Mais au lieu de nous situer à Greenwich,
