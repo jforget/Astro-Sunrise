@@ -40,6 +40,7 @@ is provided “as is” and without any express or implied warranties. For
 details, see the full text of the licenses in the file LICENSE.
 
 Based on a public domain C program sunriset.c (c) Paul Schlyter, 1989, 1992
+
 NAME
 
     Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
