@@ -43,5 +43,6 @@ Change version number in:
 -- Makefile.PL
 -- README
 -- lib/Astro/Sunrise.pm
+-- t/08timezone.t
 
 

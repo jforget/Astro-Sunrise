@@ -98,9 +98,9 @@ In 2017, the bug-inducing dates are 2017-03-12 and 2017-11-05.
 To check the bug fix, I need to change the computer's internal date. I do not dare
 change it on my physical computer, so I use a VM. So, on the command line in the VM:
 
-  scp jf@192.168.x.y:/path/to/Astro-Sunrise/Astro-Sunrise-0.96.tar.gz .
-  tar -zxvf Astro-Sunrise-0.96.tar.gz
-  cd Astro-Sunrise-0.96
+  scp jf@192.168.x.y:/path/to/Astro-Sunrise/Astro-Sunrise-0.99.tar.gz .
+  tar -zxvf Astro-Sunrise-0.99.tar.gz
+  cd Astro-Sunrise-0.99
   perl Makefile.PL
   make
   make test
