@@ -57,11 +57,11 @@ Ainsi donc, j'écris ce texte pour raconter à mon nounours
 les problèmes que j'ai rencontrés lors de la maintenance
 du module et les choix que j'ai faits alors.
 Mais surtout, c'est pour lui expliquer le fonctionnement de l'algorithme itératif, 
-L<décrit succintement|http://www.stjarnhimlen.se/comp/riset.html#3> 
+L<décrit succintement|https://www.stjarnhimlen.se/comp/riset.html#3> 
 par Paul Schlyter
 dans son site web et qu'il n'a pas mis à disposition du public
 sous une forme compilable et exécutable (contrairement à la
-L<version simple sans itération|http://www.stjarnhimlen.se/comp/sunriset.c>).
+L<version simple sans itération|https://www.stjarnhimlen.se/comp/sunriset.c>).
 
 =head2 Pour qui ? pour le prochain mainteneur du module
 
@@ -184,11 +184,11 @@ mais je ne l'ai pas essayé.
 
 =item Le site web de Paul Schlyter
 
-Ce L<site|http://www.stjarnhimlen.se/english.html>
+Ce L<site|https://www.stjarnhimlen.se/english.html>
 fournit un
-L<programme C|http://stjarnhimlen.se/comp/sunriset.c> 
+L<programme C|https://stjarnhimlen.se/comp/sunriset.c> 
 prêt à l'emploi donnant les heures
-de L<lever et de coucher|http://stjarnhimlen.se/comp/riset.html> 
+de L<lever et de coucher|https://stjarnhimlen.se/comp/riset.html> 
 du Soleil.
 Comme le fait remarquer Paul Schlyter, c'est la version simple de l'algorithme,
 qui peut présenter des erreurs d'une ou deux minutes en général, ou plus si
@@ -196,7 +196,7 @@ en fonction du lieu et de la date, on est proche du début ou de la fin de la
 période où le Soleil est visible à minuit.
 
 Le site web de Paul Schlyter propose
-de L<nombreuses informations|http://stjarnhimlen.se/comp/ppcomp.html> 
+de L<nombreuses informations|https://stjarnhimlen.se/comp/ppcomp.html> 
 concernant le calcul des positions des corps célestes. Ce site est très
 intéressant, mais j'ai préféré reprendre à ma sauce (et en français) la
 description du calcul de la position du Soleil, en laissant tomber les autres
@@ -462,7 +462,7 @@ calculs conformes à S<l'observation. »>
 
 Extrait de la préface d'Osiander au livre de Copernic, extrait repris
 par Jean-Pierre Petit comme avant-propos à son livre 
-L<S<« Cosmic> S<Story »>|http://www.savoir-sans-frontieres.com/JPP/telechargeables/Francais/cosmic_story.htm>.
+L<S<« Cosmic> S<Story »>|https://www.savoir-sans-frontieres.com/JPP/telechargeables/Francais/cosmic_story.htm>.
 À l'époque de Copernic, le but d'Osiander était de faire admettre l'héliocentrisme à des
 lecteurs partisans inconditionnels du géocentrisme. Ironiquement, je reprends
 cette citation pour faire admettre le géocentrisme à des lecteurs partisans
