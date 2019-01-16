@@ -75,7 +75,7 @@ not enough, you must also be competent in astronomy. So, if you think you might
 maintain this module, first read the present text. If you understand why I bother
 about such and such question, if you can follow my train of thought without being
 lost, then you are competent enough. If you think I am playing
-L<Captain Obvious|http://tvtropes.org/pmwiki/pmwiki.php/Main/CaptainObvious>
+L<Captain Obvious|https://tvtropes.org/pmwiki/pmwiki.php/Main/CaptainObvious>
 and if you have instant answers to my questions, then you are the ideal
 person that could maintain this module. If you do not understand what all
 this is about, and if sines and cosines put you off, do not consider
@@ -175,7 +175,7 @@ This L<site|https://www.stjarnhimlen.se/english.html>
 provides a
 L<C program|https://stjarnhimlen.se/comp/sunriset.c> 
 ready to compile and use, giving the 
-L<sunrise and sunset|http://stjarnhimlen.se/comp/riset.html> 
+L<sunrise and sunset|https://stjarnhimlen.se/comp/riset.html> 
 times. This is the basis of the simple algorithm used in
 C<Astro::Sunrise>. Its precision, as stated by the author,
 is one or two minutes, but it can be much less precise depending
@@ -637,11 +637,11 @@ an heliocentric model.
 Here are the Sun's positions for 2017, as given by Stellarium. The software
 gives the equatorial coordinates and I translate them  into ecliptic coordinates.
 
-  date       right asc.   declination  ecliptic longitude
-  4 January  18h59mn1s     -22°44'43"   -76°24'58" or -76,4162°
-  5 January  19h3mn24s     -22°38'18"   -75°23'58" or -75,3996°
-  3 July      6h48mn        22°58'35"   101°2'7"   or 101,0355°
-  4 July      6h52mn8s      22°53'39"   101°59'26" or 101,9907°
+  date       right ascension         declination  ecliptic longitude
+  4 January  18h59mn1s 284°45'15"    -22°44'43"   -76°24'58" or -76,4162°
+  5 January  19h3mn24s 285°51'       -22°38'18"   -75°23'58" or -75,3996°
+  3 July      6h48mn   102°           22°58'35"   101°2'7"   or 101,0355°
+  4 July      6h52mn8s 103°02'        22°53'39"   101°59'26" or 101,9907°
 
 This translates as a speed of 1.0166 degree per day in January at perigee (when
 in a geocentric model, that is perihelion in an heliocentric model) and a speed

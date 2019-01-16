@@ -660,11 +660,11 @@ de la Terre autour du Soleil dans un modèle héliocentrique.
 Voici les positions du Soleil données par Stellarium en 2017 en coordonnées équatoriales
 puis converties en coordonnées écliptiques.
 
-  date       asc. droite  déclinaison  longitude écliptique
-  4 janvier  18h59mn1s     -22°44'43"   -76°24'58" ou -76,4162°
-  5 janvier  19h3mn24s     -22°38'18"   -75°23'58" ou -75,3996°
-  3 juillet   6h48mn        22°58'35"   101°2'7"   ou 101,0355°
-  4 juillet   6h52mn8s      22°53'39"   101°59'26" ou 101,9907°
+  date       ascension droite        déclinaison  longitude écliptique
+  4 janvier  18h59mn1s 284°45'15"    -22°44'43"   -76°24'58" ou -76,4162°
+  5 janvier  19h3mn24s 285°51'       -22°38'18"   -75°23'58" ou -75,3996°
+  3 juillet   6h48mn   102°           22°58'35"   101°2'7"   ou 101,0355°
+  4 juillet   6h52mn8s 103°02'        22°53'39"   101°59'26" ou 101,9907°
 
 Soit une vitesse angulaire de 1,0166 degré par jour en longitude écliptique au périgée (dans un
 modèle géocentrique, c'est-à-dire périhélie dans un modèle héliocentrique) et de 0,9552 degré
