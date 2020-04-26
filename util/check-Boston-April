@@ -1,0 +1,205 @@
+#!/home/jf/perl5/perlbrew/perls/perl-5.28.0/bin/perl -I../../DateTime-Event-Sunrise/lib
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
+#
+#     Script to check the work-in-progress version of DateTime::Event::Sunrise 
+#     Copyright © 2020 Jean Forget
+#
+#     See the license in the embedded documentation below.
+#
+
+use v5.10;
+use strict;
+use warnings;
+use DateTime;
+use DateTime::Event::Sunrise;
+use Astro::Sunrise;
+
+my $lat =  42.3358; # 42°20'08"
+my $lon = -71.2044; # 71°12'15"
+
+# https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=42.3358&lon=-71.2044&year=2020
+my @noaa_rise = qw/ dummy 06:26 06:25 06:23 06:21 06:20 06:18 06:16 06:15 06:13 06:11 
+                          06:10 06:08 06:06 06:05 06:03 06:02 06:00 05:58 05:57 05:55 
+                          05:54 05:52 05:51 05:49 05:48 05:46 05:45 05:44 05:42 05:11 /;
+my @noaa_set  = qw/ dummy 19:11 19:12 19:13 19:15 19:16 19:17 19:18 19:19 19:20 19:21 
+                          19:22 19:24 19:25 19:26 19:27 19:28 19:29 19:30 19:32 19:33 
+                          19:34 19:35 19:36 19:37 19:38 19:39 19:41 19:42 19:43 19:44 /;
+
+my @stel_rise = qw/ dummy 06:25:56 06:24:13 06:22:30 06:20:48 06:19:07 06:17:25 06:15:44 06:14:04 06:12:24 06:10:44
+                          06:09:05 06:07:27 06:05:49 06:04:12 06:02:36 06:01:00 05:59:25 05:57:51 05:56:18 05:54:45
+                          05:53:14 05:51:43 05:50:13 05:48:45 05:47:17 05:45:50 05:44:25 05:43:00 05:41:37 05:40:15/;
+my @stel_set  = qw/ dummy 19:10:46 19:11:54 19:13:02 19:14:09 19:15:16 19:16:24 19:17:31 19:18:39 19:19:46 19:20:54 
+                          19:22:01 19:23:08 19:24:16 19:25:23 19:26:31 19:27:39 19:28:46 19:29:54 19:31:02 19:32:09 
+                          19:33:17 19:34:25 19:35:32 19:36:40 19:37:47 19:38:55 19:40:02 19:41:09 19:42:16 19:43:23 /;
+
+my $sunriseset0 = DateTime::Event::Sunrise->new(
+                     longitude => $lon,
+                     latitude  => $lat,
+                     altitude  => -0.833,
+                     precise   => 0);
+my $sunriseset1 = DateTime::Event::Sunrise->new(
+                     longitude => $lon,
+                     latitude  => $lat,
+                     altitude  => -0.833,
+                     precise   => 1);
+
+my $dt = DateTime->new(
+                year      => 2020,
+                month     =>    4, 
+                day       =>   12,
+                time_zone => 'America/New_York');
+
+for my $i (1 .. 30) {
+    $dt->set(day => $i);
+    my ($sunrise0, $sunset0) = sunrise ( { year  => $dt->year, month   => $dt->month, day      => $dt->day,
+                                          lon    => $lon,      lat     => $lat,       altitude => -0.833,
+                                          tz     => -4,        precise => 0,
+                                          #trace => *STDOUT,
+                                        });
+    my ($sunrise1, $sunset1) = sunrise ( { year  => $dt->year, month   => $dt->month, day      => $dt->day,
+                                          lon    => $lon,      lat     => $lat,       altitude => -0.833,
+                                          tz     => -4,        precise => 1,
+                                          #trace => *STDOUT,
+                                        });
+    my $hms0r = $sunriseset0->sunrise_datetime($dt)->hms;
+    my $hms0s = $sunriseset0->sunset_datetime ($dt)->hms;
+    my $hms1r = $sunriseset1->sunrise_datetime($dt)->hms;
+    my $hms1s = $sunriseset1->sunset_datetime ($dt)->hms;
+    my $delta0r = sprintf "(%3d)", delta_hms($stel_rise[$i], $hms0r);
+    my $delta0s = sprintf "(%3d)", delta_hms($stel_set [$i], $hms0s);
+    my $delta1r = sprintf "(%3d)", delta_hms($stel_rise[$i], $hms1r);
+    my $delta1s = sprintf "(%3d)", delta_hms($stel_set [$i], $hms1s);
+    say join "  ", $dt->ymd, $sunrise0, $sunrise1, $noaa_rise[$i],$stel_rise[$i], "$hms0r $delta0r", "$hms1r $delta1r"
+                           , $sunset0 , $sunset1,  $noaa_set [$i],$stel_set [$i], "$hms0s $delta0s", "$hms1s $delta1s"
+};
+
+sub delta_hms {
+  my ($hms1, $hms2) = @_;
+  return to_sec($hms2) - to_sec($hms1);
+}
+sub to_sec {
+  my ($hms) = @_;
+  my ($hh, $mm, $ss) = split ':', $hms;
+  return (60 * $hh + $mm) * 60 + $ss;
+}
+
+__END__
+
+# Stellarium
+Date        UTC+2     UTC-4     UTC+2     UTC-4
+2020-04-01  12:25:56  06:25:56  01:10:46  19:10:46
+2020-04-02  12:24:13  06:24:13  01:11:54  19:11:54
+2020-04-03  12:22:30  06:22:30  01:13:02  19:13:02
+2020-04-04  12:20:48  06:20:48  01:14:09  19:14:09
+2020-04-05  12:19:07  06:19:07  01:15:16  19:15:16
+2020-04-06  12:17:25  06:17:25  01:16:24  19:16:24
+2020-04-07  12:15:44  06:15:44  01:17:31  19:17:31
+2020-04-08  12:14:04  06:14:04  01:18:39  19:18:39
+2020-04-09  12:12:24  06:12:24  01:19:46  19:19:46
+2020-04-10  12:10:44  06:10:44  01:20:54  19:20:54
+2020-04-11  12:09:05  06:09:05  01:22:01  19:22:01
+2020-04-12  12:07:27  06:07:27  01:23:08  19:23:08
+2020-04-13  12:05:49  06:05:49  01:24:16  19:24:16
+2020-04-14  12:04:12  06:04:12  01:25:23  19:25:23
+2020-04-15  12:02:36  06:02:36  01:26:31  19:26:31
+2020-04-16  12:01:00  06:01:00  01:27:39  19:27:39
+2020-04-17  11:59:25  05:59:25  01:28:46  19:28:46
+2020-04-18  11:57:51  05:57:51  01:29:54  19:29:54
+2020-04-19  11:56:18  05:56:18  01:31:02  19:31:02
+2020-04-20  11:54:45  05:54:45  01:32:09  19:32:09
+2020-04-21  11:53:14  05:53:14  01:33:17  19:33:17
+2020-04-22  11:51:43  05:51:43  01:34:25  19:34:25
+2020-04-23  11:50:13  05:50:13  01:35:32  19:35:32
+2020-04-24  11:48:45  05:48:45  01:36:40  19:36:40
+2020-04-25  11:47:17  05:47:17  01:37:47  19:37:47
+2020-04-26  11:45:50  05:45:50  01:38:55  19:38:55
+2020-04-27  11:44:25  05:44:25  01:40:02  19:40:02
+2020-04-28  11:43:00  05:43:00  01:41:09  19:41:09
+2020-04-29  11:41:37  05:41:37  01:42:16  19:42:16
+2020-04-30  11:40:15  05:40:15  01:43:23  19:43:23
+
+
+=encoding utf8
+
+=head1 NAME
+
+check-Boston-April - Comparing the work-in-progress version of DateTime::Event::Sunrise with Stellarium and the NOAA website
+
+=head1 DESCRIPTION
+
+This   program   runs    the   not-yet-released-to-CPAN   version   of
+DT::E::Sunrise, by computing the sunrise and sunset times in Boston in
+April  2020, and  comparing with  values copied-pasted  from the  NOAA
+solar calculator webpage and from Stellarium.
+
+This program displays the values for sunrise and sunset produced by:
+
+=over 4
+
+=item * L<Astro::Sunrise>, basic algorithm
+
+=item * L<Astro::Sunrise>, precise algorithm
+
+=item * The NOAA solar calculator webpage
+
+=item * Stellarium
+
+=item * L<DateTime::Event::Sunrise>, basic algorithm
+
+=item * L<DateTime::Event::Sunrise>, precise algorithm
+
+=back
+
+In the last two cases, the  program computes the difference in seconds
+with the Stellarium value.
+
+=head2 Why Boston? Why April?
+
+Because there was a bug report for DT::E::Sunrise with precisely these
+values.
+
+=head2 First Conclusions
+
+The  basic  algorithm  gives  results very  close  to  the  Stellarium
+reference values: within 6 seconds  for sunrise, within 12 seconds for
+sunset.
+
+On the  other hand, the values  produced by the precise  algorithm are
+much farther  from the reference  values: about 36 seconds  for sunset
+and up to 99 seconds for sunrise.
+
+=head1 SEE ALSO
+
+L<https://rt.cpan.org/Public/Bug/Display.html?id=132336>
+
+L<https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=42.3358&lon=-71.2044&year=2020>
+
+L<http://stellarium.org/>
+
+=head1 COPYRIGHT
+
+Copyright ©  2020 Jean  Forget. All rights  reserved. This  program is
+free software; you can redistribute it and/or modify it under the same
+terms as Perl  itself: GNU Public License version 1  or later and Perl
+Artistic License.
+
+The full text of the license can be found in the F<LICENSE> file at
+L<https://dev.perl.org/licenses/artistic.html>
+and L<https://www.gnu.org/licenses/gpl-1.0.html>.
+
+Here is the summary of GPL:
+
+This program is  free software; you can redistribute  it and/or modify
+it under the  terms of the GNU General Public  License as published by
+the Free  Software Foundation; either  version 1, or (at  your option)
+any later version.
+
+This program  is distributed in the  hope that it will  be useful, but
+WITHOUT   ANY  WARRANTY;   without  even   the  implied   warranty  of
+MERCHANTABILITY  or FITNESS  FOR A  PARTICULAR PURPOSE.   See  the GNU
+General Public License for more details.
+
+You  should have received  a copy  of the  GNU General  Public License
+along with this program; if not, see <https://www.gnu.org/licenses/> or
+write to the Free Software Foundation, Inc., L<https://fsf.org>.
+

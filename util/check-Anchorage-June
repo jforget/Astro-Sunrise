@@ -1,0 +1,217 @@
+#!/home/jf/perl5/perlbrew/perls/perl-5.28.0/bin/perl -I../../DateTime-Event-Sunrise/lib
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
+#
+#     Script to check the work-in-progress version of DateTime::Event::Sunrise 
+#     Copyright © 2020 Jean Forget
+#
+#     See the license in the embedded documentation below.
+#
+
+use v5.10;
+use strict;
+use warnings;
+use DateTime;
+use DateTime::Event::Sunrise;
+use Astro::Sunrise;
+ 
+my $lat =   61.2; #  61°12' pour 61°13'5.01"
+my $lon = -149.9; # 149°54' pour 149°54'1.02"
+
+# https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=61.2&lon=-149.9&year=2020
+my @noaa_rise = qw/ dummy 04:35 04:33 04:32 04:30 04:29 04:28 04:27 04:26 04:25 04:24
+                          04:23 04:22 04:22 04:21 04:21 04:21 04:20 04:20 04:20 04:20
+                          04:21 04:21 04:21 04:22 04:23 04:23 04:24 04:25 04:26 04:27 /;
+my @noaa_set  = qw/ dummy 23:22 23:23 23:25 23:27 23:29 23:30 23:32 23:33 23:34 23:35 
+                          23:37 23:38 23:39 23:39 23:40 23:41 23:41 23:42 23:42 23:42 
+                          23:42 23:42 23:42 23:42 23:42 23:41 23:41 23:40 23:40 23:39 /;
+
+my @stel_rise = qw/ dummy 04:34:47 04:33:13 04:31:44 04:30:19 04:28:59 04:27:45 04:26:35 04:25:30 04:24:31 04:23:38
+                          04:22:50 04:22:08 04:21:33 04:21:04 04:20:40 04:20:22 04:20:11 04:20:06 04:20:07 04:20:15
+                          04:20:29 04:20:49 04:21:15 04:21:47 04:22:26 04:23:10 04:24:00 04:24:57 04:25:59 04:27:06 /;
+my @stel_set  = qw/ dummy 23:21:52 23:23:42 23:25:29 23:27:11 23:28:49 23:30:21 23:31:50 23:33:14 23:34:32 23:35:45
+                          23:36:53 23:37:55 23:38:52 23:39:42 23:40:27 23:41:06 23:41:38 23:42:04 23:42:24 23:42:38
+                          23:42:45 23:42:46 23:42:41 23:42:29 23:42:11 23:41:46 23:41:16 23:40:39 23:39:57 23:39:09 /;
+
+my $sunriseset0 = DateTime::Event::Sunrise->new(
+                     longitude => $lon,
+                     latitude  => $lat,
+                     altitude  => -0.833,
+                     precise   => 0);
+my $sunriseset1 = DateTime::Event::Sunrise->new(
+                     longitude => $lon,
+                     latitude  => $lat,
+                     altitude  => -0.833,
+                     precise   => 1);
+
+my $dt = DateTime->new(
+                year   => 2020,
+                month  => 6, 
+                day    => 1,
+                time_zone => 'America/Anchorage');
+
+for my $i (1 .. 30) {
+    $dt->set(day => $i);
+    my ($sunrise0, $sunset0) = sunrise ( { year => $dt->year, month => $dt->month, day => $dt->day,
+                                           lon  => $lon,      lat   => $lat,       altitude => -0.833,
+                                           tz   => -8,        precise => 0,
+                                           #trace => *STDOUT,
+                                        });
+    my ($sunrise1, $sunset1) = sunrise ( { year => $dt->year, month => $dt->month, day => $dt->day,
+                                          lon  => $lon,      lat   => $lat,       altitude => -0.833,
+                                          tz   => -8,        precise => 1,
+                                          #trace => *STDOUT,
+                                        });
+    my $hms0r = $sunriseset0->sunrise_datetime($dt)->hms;
+    my $hms0s = $sunriseset0->sunset_datetime ($dt)->hms;
+    my $hms1r = $sunriseset1->sunrise_datetime($dt)->hms;
+    my $hms1s = $sunriseset1->sunset_datetime ($dt)->hms;
+    my $delta0r = sprintf "(%3d)", delta_hms($stel_rise[$i], $hms0r);
+    my $delta0s = sprintf "(%3d)", delta_hms($stel_set [$i], $hms0s);
+    my $delta1r = sprintf "(%3d)", delta_hms($stel_rise[$i], $hms1r);
+    my $delta1s = sprintf "(%3d)", delta_hms($stel_set [$i], $hms1s);
+    say join "  ", $dt->ymd, $sunrise0, $sunrise1, $noaa_rise[$i], $stel_rise[$i], "$hms0r $delta0r", "$hms1r $delta1r"
+                           , $sunset0 , $sunset1,  $noaa_set [$i], $stel_set [$i], "$hms0s $delta0s", "$hms1s $delta1s"
+};
+
+sub delta_hms {
+  my ($hms1, $hms2) = @_;
+  return to_sec($hms2) - to_sec($hms1);
+}
+sub to_sec {
+  my ($hms) = @_;
+  my ($hh, $mm, $ss) = split ':', $hms;
+  return (60 * $hh + $mm) * 60 + $ss;
+}
+
+__END__
+# Stellarium  UTC+2      UTC-8      UTC+2      UTC-8
+# 2020-06-01  14:34:47   04:34:47   09:21:52   23:21:52
+# 2020-06-02  14:33:13   04:33:13   09:23:42   23:23:42
+# 2020-06-03  14:31:44   04:31:44   09:25:29   23:25:29
+# 2020-06-04  14:30:19   04:30:19   09:27:11   23:27:11
+# 2020-06-05  14:28:59   04:28:59   09:28:49   23:28:49
+# 2020-06-06  14:27:45   04:27:45   09:30:21   23:30:21
+# 2020-06-07  14:26:35   04:26:35   09:31:50   23:31:50
+# 2020-06-08  14:25:30   04:25:30   09:33:14   23:33:14
+# 2020-06-09  14:24:31   04:24:31   09:34:32   23:34:32
+# 2020-06-10  14:23:38   04:23:38   09:35:45   23:35:45
+# 2020-06-11  14:22:50   04:22:50   09:36:53   23:36:53
+# 2020-06-12  14:22:08   04:22:08   09:37:55   23:37:55
+# 2020-06-13  14:21:33   04:21:33   09:38:52   23:38:52
+# 2020-06-14  14:21:04   04:21:04   09:38:42   23:38:42
+# 2020-06-15  14:20:40   04:20:40   09:40:27   23:40:27
+# 2020-06-16  14:20:22   04:20:22   09:41:06   23:41:06
+# 2020-06-17  14:20:11   04:20:11   09:41:38   23:41:38
+# 2020-06-18  14:20:06   04:20:06   09:42:04   23:42:04
+# 2020-06-19  14:20:07   04:20:07   09:42:24   23:42:24
+# 2020-06-20  14:20:15   04:20:15   09:42:38   23:42:38
+# 2020-06-21  14:20:29   04:20:29   09:42:45   23:42:45
+# 2020-06-22  14:20:49   04:20:49   09:42:46   23:42:46
+# 2020-06-23  14:21:15   04:21:15   09:42:41   23:42:41
+# 2020-06-24  14:21:47   04:21:47   09:42:29   23:42:29
+# 2020-06-25  14:22:26   04:22:26   09:42:11   23:42:11
+# 2020-06-26  14:23:10   04:23:10   09:41:46   23:41:46
+# 2020-06-27  14:24:00   04:24:00   09:41:16   23:41:16
+# 2020-06-28  14:24:57   04:24:57   09:40:39   23:40:39
+# 2020-06-29  14:25:59   04:25:59   09:39:57   23:39:57
+# 2020-06-30  14:27:06   04:27:06   09:39:09   23:39:09
+
+=encoding utf8
+
+=head1 NAME
+
+check-Anchorage-June - Comparing the work-in-progress version of DateTime::Event::Sunrise with Stellarium and the NOAA website
+
+=head1 DESCRIPTION
+
+This   program   runs    the   not-yet-released-to-CPAN   version   of
+DT::E::Sunrise, by computing the sunrise and sunset times in Anchorage
+in June  2020, and comparing  with values copied-pasted from  the NOAA
+solar calculator webpage and from Stellarium.
+
+This program displays the values for sunrise and sunset produced by:
+
+=over 4
+
+=item * L<Astro::Sunrise>, basic algorithm
+
+=item * L<Astro::Sunrise>, precise algorithm
+
+=item * The NOAA solar calculator webpage
+
+=item * Stellarium
+
+=item * L<DateTime::Event::Sunrise>, basic algorithm
+
+=item * L<DateTime::Event::Sunrise>, precise algorithm
+
+=back
+
+In the last two cases, the  program computes the difference in seconds
+with the Stellarium value.
+
+=head2 Why Anchorage?
+
+I want to check the "precise" algorithm of DT::E::Sunrise. The precise
+algorithm  gives  significantly  different   results  from  the  basic
+algorithm when  switching from a "day  + night" period to  a "midnight
+sun" period  or the other way.  For location near a  Polar Circle, the
+precise  algorithm  gives  significantly different  results  near  the
+summer solstice (June in the Northern hemisphere).
+
+So it was Reykjavik or Anchorage.
+
+Another point is  that I have tested Astro::Sunrise  with locations on
+the Greenwich  meridian, and so  I missed a  bug which would  be minor
+near said Greenwich  meridian but significant at  far away longitudes.
+So  I decided  to use  Anchorage (61°N,  171°W) rather  than Reykjavik
+(64°N, 22°W)
+
+=head2 First Conclusions
+
+First, Stellarium and the NOAA solar calc seem to agree.
+
+Stangely, the basic algorithm gives  results closer to Stellarium, but
+with a  big variability:  -29 to  +37 seconds for  sunrise, -60  to +4
+seconds for  sunset. On  the other hand,  the precise  algorithm gives
+results  farther to  the  Stellarium references,  but  with much  less
+variability: 102 ± 2 seconds for sunrise, -110 ± 2 seconds for sunset.
+
+Yet, at 61°N, we  are still a long way from the  Arctic circle and the
+night is always more than 4 h 30 mn. So we are not in the domain where
+the  precise algorithm  gives  results significantly  better than  the
+basic alogorithm. Maybe I should try also Reykjavik after all.
+
+=head1 SEE ALSO
+
+L<https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=61.2&lon=-149.9&year=2020>
+
+L<http://stellarium.org/>
+
+=head1 COPYRIGHT
+
+Copyright ©  2020 Jean  Forget. All rights  reserved. This  program is
+free software; you can redistribute it and/or modify it under the same
+terms as Perl  itself: GNU Public License version 1  or later and Perl
+Artistic License.
+
+The full text of the license can be found in the F<LICENSE> file at
+L<https://dev.perl.org/licenses/artistic.html>
+and L<https://www.gnu.org/licenses/gpl-1.0.html>.
+
+Here is the summary of GPL:
+
+This program is  free software; you can redistribute  it and/or modify
+it under the  terms of the GNU General Public  License as published by
+the Free  Software Foundation; either  version 1, or (at  your option)
+any later version.
+
+This program  is distributed in the  hope that it will  be useful, but
+WITHOUT   ANY  WARRANTY;   without  even   the  implied   warranty  of
+MERCHANTABILITY  or FITNESS  FOR A  PARTICULAR PURPOSE.   See  the GNU
+General Public License for more details.
+
+You  should have received  a copy  of the  GNU General  Public License
+along with this program; if not, see <https://www.gnu.org/licenses/> or
+write to the Free Software Foundation, Inc., L<https://fsf.org>.
+
