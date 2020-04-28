@@ -1,4 +1,4 @@
-#!/home/jf/perl5/perlbrew/perls/perl-5.28.0/bin/perl -I../../DateTime-Event-Sunrise/lib
+#!/usr/bin/perl -I../../DateTime-Event-Sunrise/lib
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Script to check the work-in-progress version of DateTime::Event::Sunrise 
@@ -38,9 +38,12 @@ my $sunriseset0 = DateTime::Event::Sunrise->new(
                      altitude  => -0.833,
                      precise   => 0);
 my $sunriseset1 = DateTime::Event::Sunrise->new(
-                     longitude => $lon,
-                     latitude  => $lat,
-                     altitude  => -0.833,
+                     longitude  => $lon,
+                     latitude   => $lat,
+                     altitude   => -0.833,
+                     upper_limb => 0,
+                     #altitude   => -0.583,
+                     #upper_limb => 1,
                      precise   => 1);
 
 my $dt = DateTime->new(
@@ -84,37 +87,6 @@ sub to_sec {
 }
 
 __END__
-# Stellarium  UTC+2      UTC-8      UTC+2      UTC-8
-# 2020-06-01  14:34:47   04:34:47   09:21:52   23:21:52
-# 2020-06-02  14:33:13   04:33:13   09:23:42   23:23:42
-# 2020-06-03  14:31:44   04:31:44   09:25:29   23:25:29
-# 2020-06-04  14:30:19   04:30:19   09:27:11   23:27:11
-# 2020-06-05  14:28:59   04:28:59   09:28:49   23:28:49
-# 2020-06-06  14:27:45   04:27:45   09:30:21   23:30:21
-# 2020-06-07  14:26:35   04:26:35   09:31:50   23:31:50
-# 2020-06-08  14:25:30   04:25:30   09:33:14   23:33:14
-# 2020-06-09  14:24:31   04:24:31   09:34:32   23:34:32
-# 2020-06-10  14:23:38   04:23:38   09:35:45   23:35:45
-# 2020-06-11  14:22:50   04:22:50   09:36:53   23:36:53
-# 2020-06-12  14:22:08   04:22:08   09:37:55   23:37:55
-# 2020-06-13  14:21:33   04:21:33   09:38:52   23:38:52
-# 2020-06-14  14:21:04   04:21:04   09:38:42   23:38:42
-# 2020-06-15  14:20:40   04:20:40   09:40:27   23:40:27
-# 2020-06-16  14:20:22   04:20:22   09:41:06   23:41:06
-# 2020-06-17  14:20:11   04:20:11   09:41:38   23:41:38
-# 2020-06-18  14:20:06   04:20:06   09:42:04   23:42:04
-# 2020-06-19  14:20:07   04:20:07   09:42:24   23:42:24
-# 2020-06-20  14:20:15   04:20:15   09:42:38   23:42:38
-# 2020-06-21  14:20:29   04:20:29   09:42:45   23:42:45
-# 2020-06-22  14:20:49   04:20:49   09:42:46   23:42:46
-# 2020-06-23  14:21:15   04:21:15   09:42:41   23:42:41
-# 2020-06-24  14:21:47   04:21:47   09:42:29   23:42:29
-# 2020-06-25  14:22:26   04:22:26   09:42:11   23:42:11
-# 2020-06-26  14:23:10   04:23:10   09:41:46   23:41:46
-# 2020-06-27  14:24:00   04:24:00   09:41:16   23:41:16
-# 2020-06-28  14:24:57   04:24:57   09:40:39   23:40:39
-# 2020-06-29  14:25:59   04:25:59   09:39:57   23:39:57
-# 2020-06-30  14:27:06   04:27:06   09:39:09   23:39:09
 
 =encoding utf8
 
@@ -167,6 +139,50 @@ near said Greenwich  meridian but significant at  far away longitudes.
 So  I decided  to use  Anchorage (61°N,  171°W) rather  than Reykjavik
 (64°N, 22°W)
 
+=head2 Data
+
+The version  of Stellarium installed  on my  PC is version  0.15.0, in
+which I  cannot select the time  zone depending on the  location. So I
+have  used the  system time  zone on  my computer  and I  converted to
+Fairbanks local time zone.
+
+A  consequence of  this is  that  when seeking  the sunset,  I had  to
+display the next day.  For example, to get the sunset  for 1st June, I
+had to  type the date-time  2020-06-02T09:21:52, that is, 2nd  June in
+the morning.
+
+    Stellarium  UTC+2      UTC-8      UTC+2      UTC-8
+    2020-06-01  14:34:47   04:34:47   09:21:52   23:21:52
+    2020-06-02  14:33:13   04:33:13   09:23:42   23:23:42
+    2020-06-03  14:31:44   04:31:44   09:25:29   23:25:29
+    2020-06-04  14:30:19   04:30:19   09:27:11   23:27:11
+    2020-06-05  14:28:59   04:28:59   09:28:49   23:28:49
+    2020-06-06  14:27:45   04:27:45   09:30:21   23:30:21
+    2020-06-07  14:26:35   04:26:35   09:31:50   23:31:50
+    2020-06-08  14:25:30   04:25:30   09:33:14   23:33:14
+    2020-06-09  14:24:31   04:24:31   09:34:32   23:34:32
+    2020-06-10  14:23:38   04:23:38   09:35:45   23:35:45
+    2020-06-11  14:22:50   04:22:50   09:36:53   23:36:53
+    2020-06-12  14:22:08   04:22:08   09:37:55   23:37:55
+    2020-06-13  14:21:33   04:21:33   09:38:52   23:38:52
+    2020-06-14  14:21:04   04:21:04   09:38:42   23:38:42
+    2020-06-15  14:20:40   04:20:40   09:40:27   23:40:27
+    2020-06-16  14:20:22   04:20:22   09:41:06   23:41:06
+    2020-06-17  14:20:11   04:20:11   09:41:38   23:41:38
+    2020-06-18  14:20:06   04:20:06   09:42:04   23:42:04
+    2020-06-19  14:20:07   04:20:07   09:42:24   23:42:24
+    2020-06-20  14:20:15   04:20:15   09:42:38   23:42:38
+    2020-06-21  14:20:29   04:20:29   09:42:45   23:42:45
+    2020-06-22  14:20:49   04:20:49   09:42:46   23:42:46
+    2020-06-23  14:21:15   04:21:15   09:42:41   23:42:41
+    2020-06-24  14:21:47   04:21:47   09:42:29   23:42:29
+    2020-06-25  14:22:26   04:22:26   09:42:11   23:42:11
+    2020-06-26  14:23:10   04:23:10   09:41:46   23:41:46
+    2020-06-27  14:24:00   04:24:00   09:41:16   23:41:16
+    2020-06-28  14:24:57   04:24:57   09:40:39   23:40:39
+    2020-06-29  14:25:59   04:25:59   09:39:57   23:39:57
+    2020-06-30  14:27:06   04:27:06   09:39:09   23:39:09
+
 =head2 First Conclusions
 
 First, Stellarium and the NOAA solar calc seem to agree.
@@ -177,16 +193,51 @@ seconds for  sunset. On  the other hand,  the precise  algorithm gives
 results  farther to  the  Stellarium references,  but  with much  less
 variability: 102 ± 2 seconds for sunrise, -110 ± 2 seconds for sunset.
 
+Replacing  the   altitude  with   0.583  degree  and   activating  the
+C<upper_limb> option improves the results,  but barely. So this is not
+the solution.
+
 Yet, at 61°N, we  are still a long way from the  Arctic circle and the
 night is always more than 4 h 30 mn. So we are not in the domain where
 the  precise algorithm  gives  results significantly  better than  the
 basic alogorithm. Maybe I should try also Reykjavik after all.
+
+=head1 USAGE
+
+Here are  some guidelines to run  the program. Of course,  you have to
+adapt  these instructions,  especially the  directory names  which are
+different between your system and mine.
+
+=head2 First Run
+
+Make sure  that all prerequisites for  C<DateTime::Event::Sunrise> are
+installed:   C<DateTime>,  C<DateTime::Duration>,   C<DateTime::Span>,
+C<DateTime::Spanset>, C<POSIX>, C<Math::Trig>. Use your distribution's
+package   manager    or   C<CPAN.pm>   or   cpanminus    (C<cpanm>   /
+C<App::cpanminus>).
+
+  cd /home/me/prog-workbench
+  git clone https://github.com/jforget/DateTime-Event-Sunrise.git
+  git clone https://github.com/jforget/Astro-Sunrise.git
+  cd Astro-Sunrise/util
+  ./check-Anchorage-June
+
+=head2 Next Runs
+
+  cd /home/me/prog-workbench/DateTime-Event-Sunrise
+  git pull
+  cd ../Astro-Sunrise
+  git pull
+  cd util
+  ./check-Anchorage-June
 
 =head1 SEE ALSO
 
 L<https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=61.2&lon=-149.9&year=2020>
 
 L<http://stellarium.org/>
+
+L<https://github.com/jforget/Astro-Sunrise/blob/master/doc/astronomical-notes.pod>
 
 =head1 COPYRIGHT
 
