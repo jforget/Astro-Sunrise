@@ -1,0 +1,265 @@
+#!/usr/bin/perl -I../../DateTime-Event-Sunrise/lib
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
+#
+#     Script to check the work-in-progress version of DateTime::Event::Sunrise 
+#     Copyright © 2020 Jean Forget
+#
+#     See the license in the embedded documentation below.
+#
+
+use v5.10;
+use strict;
+use warnings;
+use DateTime;
+use DateTime::Event::Sunrise;
+use Astro::Sunrise;
+ 
+my $lat =   64.83778; #  64°50'16"
+my $lon = -147.71639; # 147°42'59"
+
+# https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=64.83778&lon=-147.71639&year=2020
+my @noaa_rise = qw/ dummy 03:30 03:27 03:25 03:22 03:19 03:17 03:14 03:12 03:10 03:08
+                          03:06 03:04 03:03 03:01 03:00 02:59 02:58 02:58 02:58 02:58
+                          02:58 02:58 02:59 03:00 03:01 03:03 03:04 03:06 03:08 03:10 /;
+my @noaa_set  = qw/ dummy 00:10 00:13 00:16 00:19 00:22 00:25 00:28 00:30 00:33 00:35
+                          00:37 00:39 00:41 00:43 00:44 00:45 00:46 00:47 00:47 00:48
+                          00:48 00:47 00:47 00:46 00:45 00:44 00:43 00:41 00:39 00:37 /;
+
+my @stel_rise = qw/ dummy 03:30:23 03:27:32 03:24:45 03:22:03 03:19:24 03:16:53 03:14:28 03:12:10 03:09:59 03:07:56
+                          03:06:02 03:04:17 03:02:44 03:01:21 03:00:10 02:59:12 02:58:29 02:57:58 02:57:43 02:57:42
+                          02:57:56 02:58:25 02:59:08 03:00:06 03:01:19 03:02:43 03:04:21 03:06:11 03:08:11 03:10:20 /;
+my @stel_set  = qw/ dummy 00:10:05 00:13:13 00:16:15 00:19:15 00:22:09 00:24:59 00:27:42 00:30:18 00:32:46 00:35:06
+                          00:37:16 00:39:16 00:41:06 00:42:43 00:44:09 00:45:20 00:46:18 00:47:01 00:47:30 00:47:44
+                          00:47:42 00:47:26 00:46:55 00:46:10 00:45:11 00:44:00 00:42:37 00:41:02 00:39:17 00:37:22 /;
+
+my $sunriseset0 = DateTime::Event::Sunrise->new(
+                     longitude => $lon,
+                     latitude  => $lat,
+                     altitude  => -0.833,
+                     precise   => 0);
+my $sunriseset1 = DateTime::Event::Sunrise->new(
+                     longitude  => $lon,
+                     latitude   => $lat,
+                     altitude   => -0.833,
+                     upper_limb => 0,
+                     #altitude   => -0.583,
+                     #upper_limb => 1,
+                     precise   => 1);
+
+my $dt = DateTime->new(
+                year   => 2020,
+                month  => 6, 
+                day    => 1,
+                time_zone => 'America/Anchorage');
+
+for my $i (1 .. 30) {
+    $dt->set(day => $i);
+    my ($sunrise0, $sunset0) = sunrise ( { year => $dt->year, month => $dt->month, day => $dt->day,
+                                           lon  => $lon,      lat   => $lat,       altitude => -0.833,
+                                           tz   => -8,        precise => 0,
+                                           #trace => *STDOUT,
+                                        });
+    my ($sunrise1, $sunset1) = sunrise ( { year => $dt->year, month => $dt->month, day => $dt->day,
+                                          lon  => $lon,      lat   => $lat,       altitude => -0.833,
+                                          tz   => -8,        precise => 1,
+                                          #trace => *STDOUT,
+                                        });
+    my $hms0r = $sunriseset0->sunrise_datetime($dt)->hms;
+    my $hms0s = $sunriseset0->sunset_datetime ($dt)->hms;
+    my $hms1r = $sunriseset1->sunrise_datetime($dt)->hms;
+    my $hms1s = $sunriseset1->sunset_datetime ($dt)->hms;
+    my $delta0r = sprintf "(%3d)", delta_hms($stel_rise[$i], $hms0r);
+    my $delta0s = sprintf "(%3d)", delta_hms($stel_set [$i], $hms0s);
+    my $delta1r = sprintf "(%3d)", delta_hms($stel_rise[$i], $hms1r);
+    my $delta1s = sprintf "(%3d)", delta_hms($stel_set [$i], $hms1s);
+    say join "  ", $dt->ymd, $sunrise0, $sunrise1, $noaa_rise[$i], $stel_rise[$i], "$hms0r $delta0r", "$hms1r $delta1r"
+                           , $sunset0 , $sunset1,  $noaa_set [$i], $stel_set [$i], "$hms0s $delta0s", "$hms1s $delta1s"
+};
+
+sub delta_hms {
+  my ($hms1, $hms2) = @_;
+  return to_sec($hms2) - to_sec($hms1);
+}
+sub to_sec {
+  my ($hms) = @_;
+  my ($hh, $mm, $ss) = split ':', $hms;
+  return (60 * $hh + $mm) * 60 + $ss;
+}
+
+__END__
+
+=encoding utf8
+
+=head1 NAME
+
+check-Fairbanks-June - Comparing the work-in-progress version of DateTime::Event::Sunrise with Stellarium and the NOAA website
+
+=head1 DESCRIPTION
+
+This   program   runs    the   not-yet-released-to-CPAN   version   of
+DT::E::Sunrise, by computing the sunrise and sunset times in Fairbanks
+in June  2020, and comparing  with values copied-pasted from  the NOAA
+solar calculator webpage and from Stellarium.
+
+This program displays the values for sunrise and sunset produced by:
+
+=over 4
+
+=item * L<Astro::Sunrise>, basic algorithm
+
+=item * L<Astro::Sunrise>, precise algorithm
+
+=item * The NOAA solar calculator webpage
+
+=item * Stellarium
+
+=item * L<DateTime::Event::Sunrise>, basic algorithm
+
+=item * L<DateTime::Event::Sunrise>, precise algorithm
+
+=back
+
+In the last two cases, the  program computes the difference in seconds
+with the Stellarium value.
+
+=head2 Why Fairbanks?
+
+I want to check the "precise" algorithm of DT::E::Sunrise. The precise
+algorithm  gives  significantly  different   results  from  the  basic
+algorithm when  switching from a "day  + night" period to  a "midnight
+sun" period or  the other way. For locations near  a Polar Circle, the
+precise  algorithm  gives  significantly different  results  near  the
+summer solstice (June in the Northern hemisphere).
+
+So at first it was Reykjavik or Anchorage.
+
+Another point is  that I have tested Astro::Sunrise  with locations on
+the Greenwich  meridian, and so  I missed a  bug which would  be minor
+near said Greenwich  meridian but significant at  far away longitudes.
+So  I decided  to use  Anchorage (61°N,  171°W) rather  than Reykjavik
+(64°N, 22°W).
+
+But actually,  61°N seems too far  from the Arctic Circle,  the nights
+would never last less  than 4h30. So I needed a  location a bit higher
+in  latitude.  And  instead  of  Reykjavik,  I  remembered  there  was
+Fairbanks in Alaska. So it was Fairbanks, 64°N, 147°W.
+
+=head2 Data
+
+The version  of Stellarium installed  on my  PC is version  0.15.0, in
+which I  cannot select the time  zone depending on the  location. So I
+have  used the  system time  zone on  my computer  and I  converted to
+Fairbanks local time zone.
+
+A  consequence of  this is  that  when seeking  the sunset,  I had  to
+display the next day.  For example, to get the sunset  for 1st June, I
+had to  type the date-time  2020-06-02T10:10:05, that is, 2nd  June in
+the morning.
+
+    Stellarium  UTC+2      UTC-8      UTC+2      UTC-8
+    2020-06-01  13:30:23   03:30:23   10:10:05   00:10:05
+    2020-06-02  13:27:32   03:27:32   10:13:13   00:13:13
+    2020-06-03  13:24:45   03:24:45   10:16:15   00:16:15
+    2020-06-04  13:22:03   03:22:03   10:19:15   00:19:15
+    2020-06-05  13:19:24   03:19:24   10:22:09   00:22:09
+    2020-06-06  13:16:53   03:16:53   10:24:59   00:24:59
+    2020-06-07  13:14:28   03:14:28   10:27:42   00:27:42
+    2020-06-08  13:12:10   03:12:10   10:30:18   00:30:18
+    2020-06-09  13:09:59   03:09:59   10:32:46   00:32:46
+    2020-06-10  13:07:56   03:07:56   10:35:06   00:35:06
+    2020-06-11  13:06:02   03:06:02   10:37:16   00:37:16
+    2020-06-12  13:04:17   03:04:17   10:39:16   00:39:16
+    2020-06-13  13:02:44   03:02:44   10:41:06   00:41:06
+    2020-06-14  13:01:21   03:01:21   10:42:43   00:42:43
+    2020-06-15  13:00:10   03:00:10   10:44:09   00:44:09
+    2020-06-16  12:59:12   02:59:12   10:45:20   00:45:20
+    2020-06-17  12:58:29   02:58:29   10:46:18   00:46:18
+    2020-06-18  12:57:58   02:57:58   10:47:01   00:47:01
+    2020-06-19  12:57:43   02:57:43   10:47:30   00:47:30
+    2020-06-20  12:57:42   02:57:42   10:47:44   00:47:44
+    2020-06-21  12:57:56   02:57:56   10:47:42   00:47:42
+    2020-06-22  12:58:25   02:58:25   10:47:26   00:47:26
+    2020-06-23  12:59:08   02:59:08   10:46:55   00:46:55
+    2020-06-24  13:00:06   03:00:06   10:46:10   00:46:10
+    2020-06-25  13:01:19   03:01:19   10:45:11   00:45:11
+    2020-06-26  13:02:43   03:02:43   10:44:00   00:44:00
+    2020-06-27  13:04:21   03:04:21   10:42:37   00:42:37
+    2020-06-28  13:06:11   03:06:11   10:41:02   00:41:02
+    2020-06-29  13:08:11   03:08:11   10:39:17   00:39:17
+    2020-06-30  13:10:20   03:10:20   10:37:22   00:37:22
+
+=head2 First Conclusions
+
+Like it was for Anchorage, the basic algorithm gives results closer to
+Stellarium than precise with Stellarium, but with a greater variation:
+-80 to +52 for  sunrise, -86 to +53 for sunset. It was  only -29 to 37
+and  -60 to  +4  for  Anchorage. The  difference  between the  precise
+algorithm  and Stellarium  is quite  the  same for  Fairbanks and  for
+Anchorage: the sunrise is about 103 seconds different in Anchorage and
+98 seconds  different in  Fairbanks, the sunset  is about  110 seconds
+different in Anchorage and 106 seconds different in Fairbanks.
+
+=head1 USAGE
+
+Here are  some guidelines to run  the program. Of course,  you have to
+adapt  these instructions,  especially the  directory names  which are
+different between your system and mine.
+
+=head2 First Run
+
+Make sure  that all prerequisites for  C<DateTime::Event::Sunrise> are
+installed:   C<DateTime>,  C<DateTime::Duration>,   C<DateTime::Span>,
+C<DateTime::Spanset>, C<POSIX>, C<Math::Trig>. Use your distribution's
+package   manager    or   C<CPAN.pm>   or   cpanminus    (C<cpanm>   /
+C<App::cpanminus>).
+
+  cd /home/me/prog-workbench
+  git clone https://github.com/jforget/DateTime-Event-Sunrise.git
+  git clone https://github.com/jforget/Astro-Sunrise.git
+  cd Astro-Sunrise/util
+  ./check-Fairbanks-June
+
+=head2 Next Runs
+
+  cd /home/me/prog-workbench/DateTime-Event-Sunrise
+  git pull
+  cd ../Astro-Sunrise
+  git pull
+  cd util
+  ./check-Fairbanks-June
+
+=head1 SEE ALSO
+
+L<https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=64.83778&lon=-147.71639&year=2020>
+
+L<http://stellarium.org/>
+
+L<https://github.com/jforget/Astro-Sunrise/blob/master/doc/astronomical-notes.pod>
+
+=head1 COPYRIGHT
+
+Copyright ©  2020 Jean  Forget. All rights  reserved. This  program is
+free software; you can redistribute it and/or modify it under the same
+terms as Perl  itself: GNU Public License version 1  or later and Perl
+Artistic License.
+
+The full text of the license can be found in the F<LICENSE> file at
+L<https://dev.perl.org/licenses/artistic.html>
+and L<https://www.gnu.org/licenses/gpl-1.0.html>.
+
+Here is the summary of GPL:
+
+This program is  free software; you can redistribute  it and/or modify
+it under the  terms of the GNU General Public  License as published by
+the Free  Software Foundation; either  version 1, or (at  your option)
+any later version.
+
+This program  is distributed in the  hope that it will  be useful, but
+WITHOUT   ANY  WARRANTY;   without  even   the  implied   warranty  of
+MERCHANTABILITY  or FITNESS  FOR A  PARTICULAR PURPOSE.   See  the GNU
+General Public License for more details.
+
+You  should have received  a copy  of the  GNU General  Public License
+along with this program; if not, see <https://www.gnu.org/licenses/> or
+write to the Free Software Foundation, Inc., L<https://fsf.org>.
+
