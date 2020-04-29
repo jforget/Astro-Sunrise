@@ -14,8 +14,8 @@ use DateTime;
 use DateTime::Event::Sunrise;
 use Astro::Sunrise;
  
-my $lat =   61.2; #  61°12' pour 61°13'5.01"
-my $lon = -149.9; # 149°54' pour 149°54'1.02"
+my $lat =   61.2; #  61°12' for  61°13'5.01"
+my $lon = -149.9; # 149°54' for 149°54'1.02"
 
 # https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=61.2&lon=-149.9&year=2020
 my @noaa_rise = qw/ dummy 04:35 04:33 04:32 04:30 04:29 04:28 04:27 04:26 04:25 04:24
@@ -54,14 +54,14 @@ my $dt = DateTime->new(
 
 for my $i (1 .. 30) {
     $dt->set(day => $i);
-    my ($sunrise0, $sunset0) = sunrise ( { year => $dt->year, month => $dt->month, day => $dt->day,
-                                           lon  => $lon,      lat   => $lat,       altitude => -0.833,
+    my ($sunrise0, $sunset0) = sunrise ( { year => $dt->year, month   => $dt->month, day      => $dt->day,
+                                           lon  => $lon,      lat     => $lat,       altitude => -0.833,
                                            tz   => -8,        precise => 0,
                                            #trace => *STDOUT,
                                         });
-    my ($sunrise1, $sunset1) = sunrise ( { year => $dt->year, month => $dt->month, day => $dt->day,
-                                          lon  => $lon,      lat   => $lat,       altitude => -0.833,
-                                          tz   => -8,        precise => 1,
+    my ($sunrise1, $sunset1) = sunrise ( { year => $dt->year, month   => $dt->month, day      => $dt->day,
+                                          lon   => $lon,      lat     => $lat,       altitude => -0.833,
+                                          tz    => -8,        precise => 1,
                                           #trace => *STDOUT,
                                         });
     my $hms0r = $sunriseset0->sunrise_datetime($dt)->hms;

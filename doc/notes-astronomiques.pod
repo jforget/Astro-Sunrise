@@ -216,6 +216,13 @@ L<informations très intéressantes|http://aa.usno.navy.mil/faq/index.php>
 (en anglais) sur le calcul de la position des corps célestes, mais sans se focaliser sur
 la position du Soleil comme je le fais ici.
 
+=item Le calculateur solaire de la NOAA
+
+L<Les laboratoires de recherche sur la Terre de la NOAA|https://www.esrl.noaa.gov/>
+proposent un
+L<calculateur solaire|https://www.esrl.noaa.gov/gmd/grad/solcalc/>
+similaire à celui de l'observatoire de l'US Navy.
+
 =item Stellarium
 
 Stellarium est un planétarium pour PC. Si l'on ne se préoccupe pas de la visualisation en temps

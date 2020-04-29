@@ -203,6 +203,13 @@ L<very interesting informations|http://aa.usno.navy.mil/faq/index.php>
 about celestial computations, but without restricting itself to the sun,
 like I am doing here.
 
+=item The NOAA solar calculator
+
+L<The NOAA's Earth System Research Laboratories|https://www.esrl.noaa.gov/>
+provide a
+L<solar calculator|https://www.esrl.noaa.gov/gmd/grad/solcalc/>
+similar to the USNO.
+
 =item Stellarium
 
 Stellarium is a PC app to simulate a night sky. If you do not bother with
