@@ -1,0 +1,232 @@
+#!/usr/bin/perl -I../../DateTime-Event-Sunrise/lib
+# -*- encoding: utf-8; indent-tabs-mode: nil -*-
+#
+#     Script to check the work-in-progress version of DateTime::Event::Sunrise 
+#     Copyright © 2020 Jean Forget
+#
+#     See the license in the embedded documentation below.
+#
+
+use v5.10;
+use strict;
+use warnings;
+use DateTime;
+use DateTime::Event::Sunrise;
+use Astro::Sunrise;
+ 
+my $lat =   61.2; #  61°12' for  61°13'5.01"
+my $lon = -149.9; # 149°54' for 149°54'1.02"
+
+# https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=61.2&lon=-149.9&year=2020
+my @noaa_rise = qw/ dummy 10:14 09:21 07:58 07:20 05:49 04:35
+                          04:28 05:34 06:53 08:08 08:29 09:47 /;
+my @noaa_set  = qw/ dummy 15:53 17:07 18:27 20:47 22:06 23:22
+                          23:38 22:36 21:04 19:29 16:56 15:51 /;
+
+my @stel_rise = qw/ dummy 10:13:57 09:20:43 07:58:02 07:20:27 05:48:37 04:34:47
+                          04:28:18 05:33:48 06:53:14 08:08:02 08:29:34 09:47:04 /;
+my @stel_set  = qw/ dummy 15:52:38 17:06:33 18:26:49 20:47:38 22:06:35 23:21:52
+                          23:38:14 22:36:10 21:03:47 19:28:38 16:55:51 15:50:28 /;
+
+my $sunriseset0 = DateTime::Event::Sunrise->new(
+                     longitude => $lon,
+                     latitude  => $lat,
+                     altitude  => -0.833,
+                     precise   => 0);
+my $sunriseset1 = DateTime::Event::Sunrise->new(
+                     longitude  => $lon,
+                     latitude   => $lat,
+                     altitude   => -0.833,
+                     upper_limb => 0,
+                     #altitude   => -0.583,
+                     #upper_limb => 1,
+                     precise   => 1);
+
+my $dt = DateTime->new(
+                year      => 2020,
+                month     =>    6,
+                day       =>    1,
+                time_zone => 'America/Anchorage');
+
+for my $i (1 .. 12) {
+    $dt->set(month => $i);
+    my ($sunrise0, $sunset0) = sunrise ( { year => $dt->year, month   => $dt->month, day      => $dt->day,
+                                           lon  => $lon,      lat     => $lat,       altitude => -0.833,
+                                           tz   => -8,        precise => 0,
+                                           #trace => *STDOUT,
+                                        });
+    my ($sunrise1, $sunset1) = sunrise ( { year => $dt->year, month   => $dt->month, day      => $dt->day,
+                                           lon  => $lon,      lat     => $lat,       altitude => -0.833,
+                                           tz   => -8,        precise => 1,
+                                          #trace => *STDOUT,
+                                        });
+    my $hms0r = $sunriseset0->sunrise_datetime($dt)->hms;
+    my $hms0s = $sunriseset0->sunset_datetime ($dt)->hms;
+    my $hms1r = $sunriseset1->sunrise_datetime($dt)->hms;
+    my $hms1s = $sunriseset1->sunset_datetime ($dt)->hms;
+    my $delta0r = sprintf "(%4d)", delta_hms($stel_rise[$i], $hms0r);
+    my $delta0s = sprintf "(%4d)", delta_hms($stel_set [$i], $hms0s);
+    my $delta1r = sprintf "(%4d)", delta_hms($stel_rise[$i], $hms1r);
+    my $delta1s = sprintf "(%4d)", delta_hms($stel_set [$i], $hms1s);
+    say join "  ", $dt->ymd, $sunrise0, $sunrise1, $noaa_rise[$i], $stel_rise[$i], "$hms0r $delta0r", "$hms1r $delta1r"
+                           , $sunset0 , $sunset1,  $noaa_set [$i], $stel_set [$i], "$hms0s $delta0s", "$hms1s $delta1s"
+};
+
+sub delta_hms {
+  my ($hms1, $hms2) = @_;
+  return to_sec($hms2) - to_sec($hms1);
+}
+sub to_sec {
+  my ($hms) = @_;
+  my ($hh, $mm, $ss) = split ':', $hms;
+  return (60 * $hh + $mm) * 60 + $ss;
+}
+
+__END__
+
+=encoding utf8
+
+=head1 NAME
+
+check-Anchorage-2020 - Comparing the work-in-progress version of DateTime::Event::Sunrise with Stellarium and the NOAA website
+
+=head1 DESCRIPTION
+
+This   program   runs    the   not-yet-released-to-CPAN   version   of
+DT::E::Sunrise, by computing the sunrise and sunset times in Anchorage
+in 2020, and  comparing with values copied-pasted from  the NOAA solar
+calculator webpage and from Stellarium.
+
+This program displays the values for sunrise and sunset produced by:
+
+=over 4
+
+=item * L<Astro::Sunrise>, basic algorithm
+
+=item * L<Astro::Sunrise>, precise algorithm
+
+=item * The NOAA solar calculator webpage
+
+=item * Stellarium
+
+=item * L<DateTime::Event::Sunrise>, basic algorithm
+
+=item * L<DateTime::Event::Sunrise>, precise algorithm
+
+=back
+
+In the last two cases, the  program computes the difference in seconds
+with the Stellarium value.
+
+=head2 Why Anchorage?
+
+I want to check the "precise" algorithm of DT::E::Sunrise. The precise
+algorithm  gives  significantly  different   results  from  the  basic
+algorithm when  switching from a "day  + night" period to  a "midnight
+sun" period  or the other way.  For location near a  Polar Circle, the
+precise  algorithm  gives  significantly different  results  near  the
+summer solstice (June in the Northern hemisphere).
+
+So it was Reykjavik or Anchorage.
+
+Another point is  that I have tested Astro::Sunrise  with locations on
+the Greenwich  meridian, and so  I missed a  bug which would  be minor
+near said Greenwich  meridian but significant at  far away longitudes.
+So  I decided  to use  Anchorage (61°N,  171°W) rather  than Reykjavik
+(64°N, 22°W)
+
+=head2 Data
+
+For the  previous C<check->I<city>I<period> scripts I  have written, I
+used Stellarium  0.15.0 installed on  my PC.  For this script,  I have
+installed  a recent  distribution  on a  VirtualBox  machine, and  the
+package depots for this distribution  provide Stellarium 0.19.3. So no
+problems this time  with choosing the timezone with  the location. And
+it even takes in account daylight saving times.
+
+    Stellarium  UTC-8 or 9 UTC-8 or 9
+    2020-01-01  10:13:57   15:52:38
+    2020-02-01  09:20:43   17:06:33
+    2020-03-01  07:58:02   18:26:49
+    2020-04-01  07:20:27   20:47:38
+    2020-05-01  05:48:37   22:06:35
+    2020-06-01  04:34:47   23:21:52
+    2020-07-01  04:28:18   23:38:14
+    2020-08-01  05:33:48   22:36:10
+    2020-09-01  06:53:14   21:03:47
+    2020-10-01  08:08:02   19:28:38
+    2020-11-01  08:29:34   16:55:51
+    2020-12-01  09:47:04   15:50:28
+
+
+=head2 First Conclusions
+
+Like we can see here over a  full year, the precise algorithm has less
+variability than the  basic algorithm, but it  is consistantly farther
+from  Stellarium than  the  basic  algorithm. More  or  less the  same
+conclusion as with C<check-Anchorage-June>.
+
+=head1 USAGE
+
+Here are  some guidelines to run  the program. Of course,  you have to
+adapt  these instructions,  especially the  directory names  which are
+different between your system and mine.
+
+=head2 First Run
+
+Make sure  that all prerequisites for  C<DateTime::Event::Sunrise> are
+installed:   C<DateTime>,  C<DateTime::Duration>,   C<DateTime::Span>,
+C<DateTime::Spanset>, C<POSIX>, C<Math::Trig>. Use your distribution's
+package   manager    or   C<CPAN.pm>   or   cpanminus    (C<cpanm>   /
+C<App::cpanminus>).
+
+  cd /home/me/prog-workbench
+  git clone https://github.com/jforget/DateTime-Event-Sunrise.git
+  git clone https://github.com/jforget/Astro-Sunrise.git
+  cd Astro-Sunrise/util
+  ./check-Anchorage-2020
+
+=head2 Next Runs
+
+  cd /home/me/prog-workbench/DateTime-Event-Sunrise
+  git pull
+  cd ../Astro-Sunrise
+  git pull
+  cd util
+  ./check-Anchorage-2020
+
+=head1 SEE ALSO
+
+L<https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=61.2&lon=-149.9&year=2020>
+
+L<http://stellarium.org/>
+
+L<https://github.com/jforget/Astro-Sunrise/blob/master/doc/astronomical-notes.pod>
+
+=head1 COPYRIGHT
+
+Copyright ©  2020 Jean  Forget. All rights  reserved. This  program is
+free software; you can redistribute it and/or modify it under the same
+terms as Perl  itself: GNU Public License version 1  or later and Perl
+Artistic License.
+
+The full text of the license can be found in the F<LICENSE> file at
+L<https://dev.perl.org/licenses/artistic.html>
+and L<https://www.gnu.org/licenses/gpl-1.0.html>.
+
+Here is the summary of GPL:
+
+This program is  free software; you can redistribute  it and/or modify
+it under the  terms of the GNU General Public  License as published by
+the Free  Software Foundation; either  version 1, or (at  your option)
+any later version.
+
+This program  is distributed in the  hope that it will  be useful, but
+WITHOUT   ANY  WARRANTY;   without  even   the  implied   warranty  of
+MERCHANTABILITY  or FITNESS  FOR A  PARTICULAR PURPOSE.   See  the GNU
+General Public License for more details.
+
+You  should have received  a copy  of the  GNU General  Public License
+along with this program; if not, see <https://www.gnu.org/licenses/> or
+write to the Free Software Foundation, Inc., L<https://fsf.org>.
+
