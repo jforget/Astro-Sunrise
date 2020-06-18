@@ -40,7 +40,8 @@ my $sunriseset1 = DateTime::Event::Sunrise->new(
                      upper_limb => 0,
                      #altitude   => -0.583,
                      #upper_limb => 1,
-                     precise   => 1);
+                     precise   => 1,
+                     algo      => 'Stellarium');
 
 my $dt = DateTime->new(
                 year      => 2020,
