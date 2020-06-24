@@ -675,7 +675,7 @@ puis converties en coordonnées écliptiques.
 
 Soit une vitesse angulaire de 1,0166 degré par jour en longitude écliptique au périgée (dans un
 modèle géocentrique, c'est-à-dire périhélie dans un modèle héliocentrique) et de 0,9552 degré
-par jour à l'apogée (ou aphélie).
+par jour à l'apogée (ou aphélie). Autre expression pour ces vitesses : 0,0423°/h et 0,0398°/h.
 
 =head4 Équation du temps
 
@@ -1027,8 +1027,8 @@ avec la nuit polaire.
 R : Qu'est-ce qui t'intéresse lorsque tu calcules les heures de crépuscule ?
 C'est d'avoir une luminosité la plus faible possible et les meilleures conditions
 possibles pour l'observation des astres. Crois-tu qu'il y a une nette différence entre
-une nuit où le point le plus bas du Soleil est 23°57' sous l'horizon et une nuit où ce même
-point est à 24°3' ? Et il vaut mieux commencer à observer les astres lorsque
+une nuit où le point le plus bas du Soleil est 17°57' sous l'horizon et une nuit où ce même
+point est à 18°3' ? Et il vaut mieux commencer à observer les astres lorsque
 le Soleil est à, disons, -15° si tu sais que la Lune va se lever lorsque l'on
 atteindra le crépuscule astronomique pour le Soleil ou si la météo annonce l'arrivée d'une
 épaisse couche de nuages à ce moment.
@@ -1072,7 +1072,7 @@ d'éclairage dans son salon. Dans ce cas, allumer à 17:37:03 ou à 17:38:26
 n'a pas tellement d'importance. Sous nos latitudes, la variation de luminosité
 due à la variation de la position du Soleil
 en deux minutes est négligeable. En fait, la météo a plus d'importance. Selon
-que le ciel sera dégagé ou bien bouché par de gros nuages orageux, il faudra 
+que le ciel sera dégagé ou bien bouché par de gros nuages pluvieux ou orageux, il faudra 
 attendre l'heure dite ou allumer plus tôt.
 
 Q : Tu sembles dire qu'un algorithme sans année aurait suffi pour calculer les

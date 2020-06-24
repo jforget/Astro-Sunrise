@@ -652,13 +652,14 @@ gives the equatorial coordinates and I translate them  into ecliptic coordinates
 
 This translates as a speed of 1.0166 degree per day in January at perigee (when
 in a geocentric model, that is perihelion in an heliocentric model) and a speed
-of 0.9552 degree per day in July at apogee (or aphelion).
+of 0.9552 degree per day in July at apogee (or aphelion). Values are respectively
+0.0423°/h and 0.0398°/h.
 
 =head4 Equation of Time
 
 The Earth's spin velocity is constant, that is 360.9856 degrees per day
 but the Sun's orbital speed around the Earth is not. The combination of
-both speed is variable and it is I<not> 360 degrees per day. The crossing
+both speeds is variable and it is I<not> 360 degrees per day. The crossing
 of the meridian by the Sun is not exactly every 86400 seconds.
 There is a difference between the Solar I<Mean> Time, where noon occurs
 every 86400 seconds, no more, no less, and the Solar I<Real> Time, in which
@@ -996,9 +997,9 @@ transition.
 A: Why do you compute twilight times? Because you want a low enough light
 level and good enough conditions to observe celestial bodies.
 Do you think there is a big difference between a night when the Sun is
-at its lowest at 23°57' below the horizon and a night when it is at its
-lowest at 24°3' below? In some circumstances, you'd better begin your observations
-when the Sun is at, say, -15° than to wait for the -24° twilight if you know
+at its lowest at 17°57' below the horizon and a night when it is at its
+lowest at 18°3' below? In some circumstances, you'd better begin your observations
+when the Sun is at, say, -15° than to wait for the -18° twilight if you know
 that the Moon will rise at the same time or if a weather report gives a warning
 about an incoming overcast layer.
 
