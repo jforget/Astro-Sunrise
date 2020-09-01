@@ -503,7 +503,8 @@ first angle is counted from the line of nodes instead of the Gulf
 of Guinea and is called I<right ascension>; the second angle is called I<declination>.
 Because of tradition, an old charter or something,
 the right ascension is usually expressed as hours, minutes and seconds instead of
-degrees. The declination still uses degrees.
+degrees. The declination still uses degrees. And Paul Schlyter's program uses
+decimal degrees for the right ascension, like any other angle.
 
 I<Ecliptic coordinates> follow the same principle, but the first arc is drawn
 along the ecliptic instead of the equator. Likewise, the second arc is perpendicular
@@ -522,6 +523,58 @@ project its location to the ground, or rather to the plane that is tangent to
 the ground. The angle between the North and this location on the tangent plane
 is called I<azimuth> and the angle between the tangent plane and the line to the 
 celestial body is called I<altitude>.
+
+=head3 Sidereal Time
+
+The sidereal time is an ambivalent notion.
+People are divided into two categories, those
+who describe it as an angle,
+and those who describe it as a time. Strangely,
+there is no flame war about these diverging
+attitudes, each category of people seeming to ignore
+"the other side".
+
+In the first category, people consider that despite its name, the
+sidereal time is an angle. See these French webpages:
+L<https://fr.wikipedia.org/wiki/Temps_sid%C3%A9ral>
+L<https://www.futura-sciences.com/sciences/definitions/univers-temps-sideral-960/>
+L<http://users.skynet.be/zmn/docs/temps/TempsSideral2.html>
+L<https://astrochinon.fr/index.php/documents/nos-dossiers/95-le-temps-sideral-de-greenwich>.
+Even if this notion is measured with hours, minutes
+and seconds, this is an angle. After all, the right ascension
+also is measured with hours, minutes and seconds and it is
+still an angle.
+
+Paul Schlyter is definetely in this category. He even
+defines the sidereal time as the right ascension of an
+earth-bound location and in his programs, he measures sidereal
+times in decimal degrees instead of hms values, just like
+he does for right ascensions.
+
+The second category considers that the sidereal time
+is a measure of time. See
+L<https://www.localsiderealtime.com/whatissiderealtime.html>
+and L<https://en.wikipedia.org/wiki/Sidereal_time>,
+as well as
+L<https://sites.google.com/site/astronomievouteceleste/5---temps-sideral>
+L<http://www.astrosurf.com/toussaint/dossiers/heuredetoiles/heuredetoiles.htm>
+L<http://dictionnaire.sensagent.leparisien.fr/Temps%20sid%C3%A9ral/fr-fr/>
+in French.
+
+But these descriptions seem to never mention issues linked
+with the measure of time: How is sidereal time influenced by
+timezones and daylight-saving time? What about leap seconds?
+With sidereal time as an angle, we can see that if you take two points
+on the surface of Earth within a few kilometers from each
+other in the E → W direction, these points have a different sidereal
+time. With sidereal time as a time, that would translate as saying
+that sidereal time and the principle of timezones are incompatible.
+Am I right or am I wrong? I found nothing about that in the 
+"sidereal time as a time" explanations.
+
+So, between a simple and comprehensive definition on one side
+and a convoluted and incomplete definition on the other side, 
+I will stick with "sidereal time as an angle" definition.
 
 =head2 Other Movements
 

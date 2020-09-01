@@ -533,7 +533,8 @@ et que les angles s'appellent
 S<« ascension> S<droite »> et S<« déclinaison »>.
 À cause d'une tradition, d'une charte ancienne ou de quelque chose comme ça,
 l'ascension droite est exprimée en heures, minutes et secondes
-et non pas en degrés. J'essaierai de donner les valeurs dans les deux
+et non pas en degrés. Cela dit, Paul Schlyter utilise des degrés décimaux pour
+l'ascension droite. J'essaierai de donner les valeurs dans les deux
 systèmes d'unités chaque fois que j'en aurai besoin.
 
 Les I<coordonnées écliptiques> suivent le même principe,
@@ -555,6 +556,51 @@ ciel, on cherche la projection sur le sol ou plus exactement sur le plan tangent
 au sol. L'angle entre le nord et cette projection est appelé S<« azimut »>
 (ou S<« azimuth »>)
 et l'angle entre la projection et l'astre lui-même est appelé S<« hauteur »>.
+
+=head3 Le temps sidéral
+
+Le temps sidéral est une notion ambivalente. Il existe deux écoles
+de pensée pour définir cette notion. Curieusement, alors que les deux classes de
+définition sont très divergentes, je n'ai pas rencontré de controverse
+sur les deux écoles de pensée, chacun semblant ignorer "ceux d'en face".
+
+La première école de pensée considère que le temps sidéral, malgré le terme utilisé,
+désigne un angle. Voir
+L<https://fr.wikipedia.org/wiki/Temps_sid%C3%A9ral>
+L<https://www.futura-sciences.com/sciences/definitions/univers-temps-sideral-960/>
+L<http://users.skynet.be/zmn/docs/temps/TempsSideral2.html>
+L<https://astrochinon.fr/index.php/documents/nos-dossiers/95-le-temps-sideral-de-greenwich>.
+Certes, cette notion est exprimée en heures, minutes et secondes, mais c'est déjà le
+cas pour l'ascension droite dont tout le monde s'accorde à dire que c'est un angle.
+Paul Schlyter appartient à cette école de pensée. Il déclare carrément que le
+temps sidéral est l'ascension droite du méridien local. Il va même jusqu'à
+calculer le temps sidéral en degrés décimaux, comme il le fait pour l'ascension droite. 
+
+La deuxième école de pensée considère que le temps sidéral est bel et bien une
+mesure du temps. Voir
+L<https://sites.google.com/site/astronomievouteceleste/5---temps-sideral>
+L<http://www.astrosurf.com/toussaint/dossiers/heuredetoiles/heuredetoiles.htm>
+L<http://dictionnaire.sensagent.leparisien.fr/Temps%20sid%C3%A9ral/fr-fr/>
+et en anglais
+L<https://www.localsiderealtime.com/whatissiderealtime.html>
+et L<https://en.wikipedia.org/wiki/Sidereal_time>.
+Mais jamais ces descriptions n'abordent les questions qui
+reviennent toujours à propos du temps : quelle est l'influence
+des fuseaux horaires et de l'heure d'été sur le temps sidéral ?
+Et les secondes intercalaires ?
+
+En revenant à la définition "temps sidéral = angle", on constate
+que si l'on prend deux points à la surface de la Terre, éloignés l'un
+de l'autre dans la direction est → ouest  de quelques kilomètres, ces deux
+points ont des temps sidéraux légèrement différents
+Donc, en revenant à la définition "temps sidéral = temps", on en déduit
+que la notion de temps sidéral est incompatible avec le principe des
+fuseaux horaires. Ai-je raison ou tort ? Je n'ai rien lu dans les descriptions
+du temps sidéral en tant que temps à ce sujet.
+
+Entre une définition simple et exhaustive d'un côté et une définition floue et incomplète
+de l'autre côté, j'opte pour la simplicité et je considère que le
+temps sidéral est un angle.
 
 =head2 Les autres mouvements
 
