@@ -647,8 +647,10 @@ les planètes du système solaire subissent une avance de leur périhélie, y co
 =head3 Autres dérives et fluctuations
 
 Les formules donnant les positions des astres reposent sur des constantes.
-Mais ces valeurs sont constantes sur une échelle de temps brève (à l'échelle
-astronomique, ou pour reprendre la métaphore ci-dessus, à l'échelle climatique).
+Mais ces valeurs sont constantes sur un intervalle de temps bref (à l'échelle
+astronomique, ou pour reprendre la métaphore ci-dessus, sur un intervalle de
+temps « plutôt météorologique »). Mais elles varient sur un intervalle de
+temps nettement plus long (ou un intervalle « plutôt climatique »).
 Par exemple, il est acquis que le jour dure 24 h (le jour solaire moyen, pas le jour
 sidéral). J'ai lu quelque part qu'aux temps paléontologiques, le jour durait
 22 heures environ.

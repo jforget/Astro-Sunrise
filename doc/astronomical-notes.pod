@@ -630,7 +630,8 @@ the Earth.
 The formulas computing the positions of celestial bodies
 use some constants. But these values are constant only
 on a short timespan (astronomically speaking; or, with the
-metaphor above, on a meteorological timespan). For example,
+metaphor above, on a "meteorological" timespan). But they are
+variable on a longer timespan (or a "climatic" timespan) For example,
 everybody knows that the day lasts 24 hours (the mean
 solar day, not the sidereal day). Yet, as I have read it
 somewhere, in paleontological times, it used to last
