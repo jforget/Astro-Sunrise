@@ -1057,6 +1057,73 @@ when the Sun is at, say, -15° than to wait for the -18° twilight if you know
 that the Moon will rise at the same time or if a weather report gives a warning
 about an incoming overcast layer.
 
+=head2 C<alt> Parameter (Altitude) and C<upper_limb> Parameter
+
+Parameter C<alt>, in decimal degrees, allows you to specify the altitude
+of the sun corresponding to the event you are looking for: sun rise, sun
+set or a twilight of some degree.
+
+First, the various twilight values: they are arbitrary values. Nothing
+to add.
+
+For sunrise and sunset, the usual value is -0.833°, that is, -50'.
+It comes from two values:
+
+=over 4
+
+=item * -0.583° or -35' for the refraction,
+
+=item * -0.25° or -15' for the radius of the solar disk.
+
+=back
+
+Actually, in both cases, these are approximate values for variable phenomena.
+The radius of the sun disk varies between 0.271° (or 16'16") on 3rd January, when
+the sun is closest from the Earth, and 0.262° (or 15'44") on 3rd July, when it is
+farthest from the Earth.
+
+And the deviation caused by refraction is highly dependent on the temperature
+profile in the atmosphere, therefore dependent on the current weather.
+
+You can refine the computation by using value -0.583 for the C<alt> parameter and
+giving a true value to the C<upper_limb>) parameter (usually 1). In this case, the
+radius of the sun disk is computed anew for each day. On the other hand, there is
+no way within the module to refine the computation of the refraction. The answer
+can only come from outside the module computing sunrises and sunsets.
+
+Q: So using a parameter C<alt> with -0.833 and a parameter C<upper_limb> with 1 is stupid?
+
+A: I would not say "stupid", but "suspicious". Actually, the usual -0.833 value comes from
+three elements:
+
+=over 4
+
+=item * 0 for the position of the observer relative to the surrounding landscape,
+
+=item * -0.583° or -35' for the refraction,
+
+=item * -0.25° or -15' for the radius of the solar disk, or 0 if you give a true value to C<upper_limb>.
+
+=back
+
+But if you are at the top of a 60-meter tower, the horizon line no longer
+coincides with the horizontal plane, but with a cone making a 0.25° angle with the
+horizontal direction. In this case, we have:
+
+=over 4
+
+=item * -0.25° for the position of the observer relative to the surrounding landscape,
+
+=item * -0.583° for the refraction,
+
+=item * 0° for the radius of the solar disk if you give a true value to C<upper_limb>, or -0.25° for a false value.
+
+=back
+
+So this parameter combination is valid, but it is suspicious because it does not correspond
+to a usual and mundane situation.
+
+
 =head2 C<year> Parameter
 
 Q: Why does C<Astro::Sunrise> need the year to compute sunrise and sunset?

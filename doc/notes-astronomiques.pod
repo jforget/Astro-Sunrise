@@ -1081,6 +1081,69 @@ le Soleil est à, disons, -15° si tu sais que la Lune va se lever lorsque l'on
 atteindra le crépuscule astronomique pour le Soleil ou si la météo annonce l'arrivée d'une
 épaisse couche de nuages à ce moment.
 
+=head2 Hauteur, paramètre C<alt> et paramètre C<upper_limb>
+
+Le paramètre C<alt>, exprimé en degrés décimaux, permet de spécifier la hauteur
+du soleil recherchée pour le lever ou le coucher du soleil ou le crépuscule.
+
+Tout d'abord, les valeurs  recommandées pour les différents crépuscules sont
+des valeurs purement conventionnelles. Il n'y a pas grand chose à dire à ce sujet.
+
+Pour le lever et le coucher du soleil, la valeur habituelle est -0,833° (ou -50').
+Elle se décompose en deux parties :
+
+=over 4
+
+=item * -0,583° ou -35' pour la réfraction,
+
+=item * -0,25° ou -15' pour le rayon du disque solaire
+
+=back
+
+En fait, dans les deux cas il s'agit de valeurs approchées pour des grandeurs variables.
+Le rayon du disque solaire varie entre 0,271° (ou 16'16") le 3 janvier,
+lorsque la distance Terre-Soleil est minimale et 0,262° (ou 15'44") lorsque
+la distance est maximale, le 3 juillet.
+
+Quant à la déviation due à la réfraction, elle est fortement dépendante
+du profil de température dans l'atmosphère, donc de la météo.
+
+Vous pouvez affiner le calcul en fournissant un paramètre C<alt> à -0,583 et en alimentant
+le paramètre C<upper_limb> à une valeur vraie (habituellement 1). Dans ce
+cas, le rayon du disque solaire est recalculé pour chaque jour. En revanche,
+pour la réfraction, vous devrez trouver la valeur réelle par un autre moyen que
+le module Perl de calcul des levers et couchers du soleil.
+
+Q: Donc, utiliser un paramètre C<alt> à -0,833 et un paramètre C<upper_limb> à 1 est stupide ?
+
+A: Je ne dirais pas que c'est stupide, je dirais plutôt que c'est douteux. En fait, la valeur
+du paramètre se décompose en trois parties et non pas simplement deux :
+
+=over 4
+
+=item * 0 pour la position du point d'observation par rapport au paysage environnant,
+
+=item * -0,583° ou -35' pour la réfraction,
+
+=item * -0,25° ou -15' pour le rayon du disque solaire, ou 0 si l'on alimente C<upper_limb> à 1.
+
+=back
+
+Mais si vous vous trouvez au sommet d'une tour de 60 mètres, la ligne d'horizon ne correspond plus
+au plan horizontal, mais à un cône faisant un angle de 0,25° avec l'horizontale. Ainsi, nous avons :
+
+=over 4
+
+=item * -0,25° (-15') pour la position du point d'observation par rapport au paysage environnant,
+
+=item * -0,583° ou -35' pour la réfraction,
+
+=item * pour le rayon du disque solaire, 0 si l'on alimente C<upper_limb> à 1, ou bien -0,25° (-15') si C<upper_limb> vaut 0.
+
+=back
+
+C'est donc parfaitement valide, mais douteux parce que cela ne correspond pas à une situation habituelle.
+
 =head2 Année, paramètre C<year>
 
 Q : Pourquoi C<Astro::Sunrise> a-t-il besoin de l'année pour calculer le lever
