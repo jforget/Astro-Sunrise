@@ -438,6 +438,10 @@ le temps UTC et le temps GMT sont identiques
 
 =item *
 
+la Terre est parfaitement sphérique, sans le moindre aplatissement aux pôles ni le moindre renflement à l'équateur.
+
+=item *
+
 la Terre est parfaitement sphérique, sans la moindre montagne, la moindre vallée et la moindre taupinière,
 
 =item *
@@ -562,7 +566,7 @@ et l'angle entre la projection et l'astre lui-même est appelé S<« hauteur »>
 Le temps sidéral est une notion ambivalente. Il existe deux écoles
 de pensée pour définir cette notion. Curieusement, alors que les deux classes de
 définition sont très divergentes, je n'ai pas rencontré de controverse
-sur les deux écoles de pensée, chacun semblant ignorer "ceux d'en face".
+entre les partisans de ces deux écoles de pensée, chacun semblant ignorer "ceux d'en face".
 
 La première école de pensée considère que le temps sidéral, malgré le terme utilisé,
 désigne un angle. Voir
@@ -596,7 +600,7 @@ points ont des temps sidéraux légèrement différents
 Donc, en revenant à la définition "temps sidéral = temps", on en déduit
 que la notion de temps sidéral est incompatible avec le principe des
 fuseaux horaires. Ai-je raison ou tort ? Je n'ai rien lu dans les descriptions
-du temps sidéral en tant que temps à ce sujet.
+du "temps sidéral = temps" à ce sujet.
 
 Entre une définition simple et exhaustive d'un côté et une définition floue et incomplète
 de l'autre côté, j'opte pour la simplicité et je considère que le
@@ -1114,9 +1118,18 @@ cas, le rayon du disque solaire est recalculé pour chaque jour. En revanche,
 pour la réfraction, vous devrez trouver la valeur réelle par un autre moyen que
 le module Perl de calcul des levers et couchers du soleil.
 
-Q: Donc, utiliser un paramètre C<alt> à -0,833 et un paramètre C<upper_limb> à 1 est stupide ?
+Q: Donc, utiliser un paramètre C<alt> à -0,583 et un paramètre C<upper_limb> à 0 est stupide ?
 
-A: Je ne dirais pas que c'est stupide, je dirais plutôt que c'est douteux. En fait, la valeur
+A: Non, je dirais que c'est juste inhabituel.  Comme le signale Paul Schlyter
+L<dans son site web|http://www.stjarnhimlen.se/comp/riset.html#2>, 
+les almanachs nationaux de Suède définissent le lever et le coucher du soleil comme
+l'instant où le I<centre> du disque solaire atteint l'horizon optique, alors que le consensus
+international les définit comme étant l'instant où le I<sommet> du disque solaire atteint l'horizon
+optique.
+
+Q: En revanche, utiliser un paramètre C<alt> à -0,833 et un paramètre C<upper_limb> à 1 est stupide, n'est-ce pas ?
+
+A: Je ne dirais pas que c'est stupide, ni inhabituel, je dirais plutôt que c'est douteux. En fait, la valeur
 du paramètre se décompose en trois parties et non pas simplement deux :
 
 =over 4

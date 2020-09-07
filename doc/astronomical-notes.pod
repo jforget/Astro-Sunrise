@@ -420,6 +420,10 @@ UTC time is equal to GMT time
 
 =item *
 
+the Earth's surface is a perfect sphere, without any polar flattening and without any equatorial bulge,
+
+=item *
+
 the Earth's surface is a perfect sphere, without any mountains, valleys or molehills,
 
 =item *
@@ -1091,9 +1095,17 @@ radius of the sun disk is computed anew for each day. On the other hand, there i
 no way within the module to refine the computation of the refraction. The answer
 can only come from outside the module computing sunrises and sunsets.
 
-Q: So using a parameter C<alt> with -0.833 and a parameter C<upper_limb> with 1 is stupid?
+Q: So using a parameter C<alt> with -0.583 and a parameter C<upper_limb> with 0 is stupid?
 
-A: I would not say "stupid", but "suspicious". Actually, the usual -0.833 value comes from
+A: No, it is just unusual. As stated by Paul Schlyter
+L<in his website|http://www.stjarnhimlen.se/comp/riset.html#2>, 
+the Swedish national almanacs define sunrise and sunset as the instants when the I<centre>
+of the sun disk reaches the optical horizon, not the instants when the I<upper limb> of
+the sun disk reaches the optical horizon.
+
+Q: On the other hand, using a parameter C<alt> with -0.833 and a parameter C<upper_limb> with 1 is stupid?
+
+A: I would say neither "stupid" nor "unusual", but "suspicious". Actually, the usual -0.833 value comes from
 three elements:
 
 =over 4
