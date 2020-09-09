@@ -1157,6 +1157,25 @@ au plan horizontal, mais à un cône faisant un angle de 0,25° avec l'horizonta
 
 C'est donc parfaitement valide, mais douteux parce que cela ne correspond pas à une situation habituelle.
 
+Q: Compte tenu de ce que tu as dit pour le paramètre C<precise>, est-ce que la différence entre 
+C<< alt => -0.833, upper_limb => 0 >> et C<< alt => -0.583, upper_limb => 1 >> est sensible ?
+
+R: Tu t'en doutes, quasiment pas. Prenons comme exemple le coucher du soleil à Fairbanks le 3 janvier 2020.
+Je prends le 3 janvier, parce que c'est le jour où le diamètre apparent est le plus grand, soit 32'32" 
+selon Stellarium, ce qui donne un rayon de 16'16". Et je prends Fairbanks, car au voisinage d'un cercle polaire,
+la courbe du Soleil est moins pentue qu'au voisinage de l'équateur. Ainsi donc, pour 
+C<< alt => -0.833, upper_limb => 0 >>, le coucher du soleil se produit lorsque
+le centre du disque solaire se situe à une hauteur de -50', tandis que pour
+C<< alt => -0.583, upper_limb => 1 >> 
+il a lieu lorsque le centre du disque solaire est à une hauteur de -51'16".
+Cela correspond aux heures 14:59:12 et 14:59:37 respectivement. À peine 25 secondes de différence.
+
+D'un autre côté, si l'on se déplace de quelques centaines de kilomètres vers le nord,
+au-delà du cercle polaire, jusqu'au point 68°01'46" N, 147°42'59" W, le calcul avec 
+C<< alt => -0.833, upper_limb => 0 >> indique que le soleil reste en-dessous de l'horizon,
+tandis que le calcul avec C<< alt => -0.583, upper_limb => 1 >> 
+indique un lever du soleil à 12:45:11 et le coucher à 13:05:53.
+
 =head2 Année, paramètre C<year>
 
 Q : Pourquoi C<Astro::Sunrise> a-t-il besoin de l'année pour calculer le lever

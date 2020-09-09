@@ -1135,6 +1135,27 @@ horizontal direction. In this case, we have:
 So this parameter combination is valid, but it is suspicious because it does not correspond
 to a usual and mundane situation.
 
+Q: After your explanation about the C<precise> parameter, is there a significant
+difference between C<< alt => -0.833, upper_limb => 0 >> and
+C<< alt => -0.583, upper_limb => 1 >>?
+
+A: You guessed, it, there is nearly no difference. The example I will take is sunset
+at Fairbanks on 3rd January 2020. I take 3rd January because it is the time of the year
+when the sun is at its largest. According to Stellarium, the diameter is 32'32", so the
+radius is 16'16". And I take Fairbanks, because near a polar circle, the course of the sun
+at sunset is much shallower than near the equator. So, for 
+C<< alt => -0.833, upper_limb => 0 >> the sunset occurs when the
+center of the sun dist is at -50' and for 
+C<< alt => -0.583, upper_limb => 1 >> it occurs when the center of the sun disk is at -51'16".
+Stellarium gives 15:59:12 in the first case and 15:59:37 in the second case.
+A meagre 25-second difference.
+
+On the other hand, let us move a few hundred kilometers to the North,
+to 68°01'46" N, 147°42'59" W, beyond the polar circle. The computation with 
+C<< alt => -0.833, upper_limb => 0 >> shows that the sun
+stays below the horizon and neither rises nor sets, while the computation with
+C<< alt => -0.583, upper_limb => 1 >> gives a sunrise at 12:45:11 and a
+sunset at 13:05:53.
 
 =head2 C<year> Parameter
 
