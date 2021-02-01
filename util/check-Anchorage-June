@@ -2,7 +2,7 @@
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Script to check the work-in-progress version of DateTime::Event::Sunrise 
-#     Copyright © 2020 Jean Forget
+#     Copyright (c) 2020, 2021 Jean Forget
 #
 #     See the license in the embedded documentation below.
 #
@@ -241,10 +241,10 @@ L<https://github.com/jforget/Astro-Sunrise/blob/master/doc/astronomical-notes.po
 
 =head1 COPYRIGHT
 
-Copyright ©  2020 Jean  Forget. All rights  reserved. This  program is
-free software; you can redistribute it and/or modify it under the same
-terms as Perl  itself: GNU Public License version 1  or later and Perl
-Artistic License.
+Copyright  (c)  2020, 2021  Jean  Forget.  All rights  reserved.  This
+program is  free software;  you can redistribute  it and/or  modify it
+under the same  terms as Perl itself: GNU Public  License version 1 or
+later and Perl Artistic License.
 
 The full text of the license can be found in the F<LICENSE> file at
 L<https://dev.perl.org/licenses/artistic.html>

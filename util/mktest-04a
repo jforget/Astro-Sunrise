@@ -3,7 +3,7 @@
 #
 #     Building the source for test-04a,
 #     which in turn will build the expected result for 04basic.t
-#     Copyright (C) 2013, 2017 Jean Forget
+#     Copyright (C) 2013, 2017, 2021 Jean Forget
 #
 #     This program is distributed under the same terms as Perl 5.16.3:
 #     GNU Public License version 1 or later and Perl Artistic License
@@ -25,7 +25,7 @@
 #     GNU General Public License for more details.
 #
 #     You should have received a copy of the GNU General Public License
-#     along with this program; if not, write to the Free Software Foundation,
+#     along with this program; if not, contact the Free Software Foundation,
 #     Inc., <https://www.fsf.org/>.
 #
 
