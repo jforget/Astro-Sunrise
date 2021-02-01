@@ -67,6 +67,9 @@ WriteMakefile(
                url  => 'https://github.com/jforget/Astro-Sunrise.git',
                web  => 'https://github.com/jforget/Astro-Sunrise',
            },
+	   bugtracker => {
+               web  => 'https://github.com/jforget/Astro-Sunrise/issues',
+	   },
        },
     },
 );
