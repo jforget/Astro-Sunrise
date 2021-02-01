@@ -8,7 +8,7 @@ Ce texte est diffusé sous la licence I<Creative Commons>
 S<CC-BY-ND :> avec attribution et me demander avant de modifier
 le contenu.
 
-Copyright (c) 2017, 2018, 2019 Jean Forget, tous droits réservés.
+Copyright (c) 2017--2021 Jean Forget, tous droits réservés.
 
 Je tiens à signaler que je ne suis pas un astronome professionnel.
 Il est possible que le texte ci-dessous contienne des erreurs.
@@ -29,6 +29,13 @@ Il est donc visible sur les sites web de CPAN
 Mais il ne donne lieu à aucune installation.
 Du coup, je pense qu'il est absent des paquets C<.deb>
 et C<.rpm> qui pourraient être construits pour ce module.
+
+Bien  que  ce  texte  fasse   partie  de  la  distribution  du  module
+L<Astro::Sunrise>,     il     documente    également     le     module
+L<DateTime::Event::Sunrise>, dont le noyau (calculs astronomiques) est
+très semblable  et dont l'API  est différente. Comme les  deux modules
+évoluent à des vitesses différentes,  le présent texte peut se révéler
+en déphasage avec le module L<Astro::Sunrise>.
 
 =head1 Pourquoi ce texte, et pour qui
 
@@ -236,17 +243,17 @@ obtenir le lever du Soleil, son coucher ou le midi vrai (version 0.18.0).
 =item *
 
 Déterminer une valeur approximative de l'heure S<recherchée :> 12:00 pour le midi vrai,
-ou bien utiliser C<Astro::Sunrise> en mode simple pour le lever ou le coucher.
+ou bien utiliser L<Astro::Sunrise> en mode simple pour le lever ou le coucher.
 
 =item *
 
 Déterminer le critère de S<recherche :> azimuth à 180 degrés pour le midi vrai, ou
 bien hauteur réelle à 0 degré et I<xx> minutes sous l'horizon. I<xx> est choisi pour
-être compatible avec le paramètre C<alt> (hauteur) des fonctions de C<Astro::Sunrise>.
+être compatible avec le paramètre C<alt> (hauteur) des fonctions de L<Astro::Sunrise>.
 
 S<Note :> on ne tient pas compte de la hauteur apparente fournie par Stellarium.
 Pour la déviation des rayons lumineux au voisinage de l'horizon, on adopte le
-point de vue de C<Astro::Sunrise>, utiliser une valeur conventionnelle de 35'
+point de vue de L<Astro::Sunrise>, utiliser une valeur conventionnelle de 35'
 ou 0,583 degré et on tente d'obtenir cette valeur dans Stellarium.
 Et si on veut en plus tenir compte du rayon du disque solaire, on prendra la
 valeur moyenne 15' au lieu de la recalculer en fonction de la distance Terre-Soleil.
@@ -946,6 +953,59 @@ la vitesse réelle du Soleil et 9 millisecondes où l'on utilise une vitesse fra
 On y gagne par rapport au calcul simple qui utilise une vitesse légèrement erronée pendant toute
 la période de 3 h, 59 mn et 57 s.
 
+=head2 Que s'est-il passé au printemps 2020 ?
+
+Remontons un  peu plus loin. En  janvier 2019, j'ai publié  la version
+0.98 de  L<Astro::Sunrise>, avec l'implémentation du  calcul itératif.
+Pour  les  données   de  test,  je  n'ai  pas  cherché   à  faire  des
+vérifications croisées  avec d'autres sources, j'ai  juste vérifié que
+le calcul  itératif aboutissait et  que le  résultat était à  peu près
+correct.    Je    n'ai    pas    cherché    à    mettre    à    niveau
+L<DateTime::Event::Sunrise>, j'estimais  que ce n'était pas  encore le
+moment.
+
+Puis, en avril 2020, un utilisateur  a créé un ticket expliquant qu'il
+avait comparé  les résultats  de L<DateTime::Event::Sunrise>  avec des
+sites web de référence et que les résultats n'étaient pas très précis.
+Certes, le module L<DateTime::Event::Sunrise> n'était pas au niveau de
+L<Astro::Sunrise>, donc  la remarque  était justifiée. Cela  m'a donné
+deux choses : tout d'abord une source de référence pour le calcul jour
+après jour du lever du Soleil, de son coucher et du midi solaire réel.
+D'autre    part,   cela    m'a   donné    l'impulsion   pour    mettre
+L<DateTime::Event::Sunrise>  au même  niveau que  L<Astro::Sunrise> et
+pour utiliser des données de tests correctes, issues des sites web que
+l'utilisateur avait pris pour références.
+
+Seulement voilà,  l'algorithme précis  hérité de  L<Astro::Sunrise> et
+les données  de tests extraites du  site de la NOAA  ne collaient pas.
+Après avoir  trituré l'algorithme  dans tous les  sens et  après avoir
+demandé conseil sur la liste DateTime
+(L<https://www.nntp.perl.org/group/perl.datetime/2020/06/msg8241.html>),
+je me  suis rendu à  l'évidence que l'algorithme donnait  de meilleurs
+résultats avec une  vitesse de 15 degrés par heure  qu'avec la vitesse
+normale  de 15,04107  degrés par  heure.  J'ai donc  publié le  module
+L<DateTime::Event::Sunrise>  avec   la  valeur   15,  alors   que  mes
+explications  donnaient  une  bonne  raison pour  utiliser  la  valeur
+15,04107.
+
+=head3 Qu'est-ce qui cloche ?
+
+Je pense que mes explications sur l'algorithme précis proposé par Paul
+Schlyter  sont   correctes  et  que  c'est   l'implémentation  de  cet
+algorithme qui  cloche. En reprenant  les valeurs données  ci-dessus à
+titre d'exemple,  lors de  la deuxième  itération, nous  sommes censés
+utiliser le Soleil tel qu'il est positionné à 16:04:11. Je pense qu'en
+réalité, le  programme calcul le  midi solaire virtuel  pour 16:04:11,
+qui donne 12:05:01 et qu'ensuite il utilise le Soleil à sa position de
+12:05:01.
+
+Comment le vérifier ?  Pour cela, il faudrait que je  puisse S<« créer »>
+une étoile fixe au point occupé par  le Soleil à 16:04:11. Et ça, je n'ai
+pas  trouvé  comment  faire.  Quelques  mois  plus  tard,  en  lisant  la
+documentation de Stellarium version 0.20.1-1, chapitre 13, j'ai découvert
+que l'on pouvait ajouter des  novas aux catalogues officiels. J'ai essayé
+avec Stellarium 0.18.0 et je n'ai pas réussi. Impossible donc de vérifier
+l'implémentation de l'algorithme itératif.
 
 =head1 Examen détaillé des paramètres
 
@@ -1178,7 +1238,7 @@ indique un lever du soleil à 12:45:11 et le coucher à 13:05:53.
 
 =head2 Année, paramètre C<year>
 
-Q : Pourquoi C<Astro::Sunrise> a-t-il besoin de l'année pour calculer le lever
+Q : Pourquoi L<Astro::Sunrise> a-t-il besoin de l'année pour calculer le lever
 et le coucher du S<soleil ?> J'ai vu un algorihme qui ne demandait
 que le mois et le jour.
 
@@ -1248,7 +1308,7 @@ résultat C<"hh:mm:ss"> au lieu de simplement C<"hh:mm"> ?
 R : Si, on pourrait. Mais cela a-t-il un S<sens ?> D'après Paul Schlyter, l'algorithme
 est précis à une ou deux minutes près, sauf dans les cas limites associés au début
 et à la fin de la période du Soleil de minuit. Donc cela ne vaut pas la peine de
-modifier C<Astro::Sunrise> pour afficher les secondes.
+modifier L<Astro::Sunrise> pour afficher les secondes.
 
 Q : Et dans la discussion ci-dessus, pourquoi avoir tenu compte des secondes, si elles
 ne sont pas S<significatives ?>
