@@ -995,7 +995,7 @@ Schlyter  sont   correctes  et  que  c'est   l'implémentation  de  cet
 algorithme qui  cloche. En reprenant  les valeurs données  ci-dessus à
 titre d'exemple,  lors de  la deuxième  itération, nous  sommes censés
 utiliser le Soleil tel qu'il est positionné à 16:04:11. Je pense qu'en
-réalité, le  programme calcul le  midi solaire virtuel  pour 16:04:11,
+réalité, le programme  calcule le midi solaire  virtuel pour 16:04:11,
 qui donne 12:05:01 et qu'ensuite il utilise le Soleil à sa position de
 12:05:01.
 

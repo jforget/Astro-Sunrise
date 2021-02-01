@@ -7,7 +7,7 @@
 This text is published under the I<Creative Commons> license
 CC-BY-ND.
 
-Copyright (c) 2017, 2018, 2019 Jean Forget. All rights reserved.
+Copyright (c) 2017-2021 Jean Forget. All rights reserved.
 
 I must precise that I am not a professional astronomer. The text
 below may contain errors, be aware of this. I will not be held
@@ -26,6 +26,13 @@ So you can read it on web pages generated from CPAN
 (for example L<https://metacpan.org>).
 But it is not used during the module installation process.
 So, I guess it will not appear in C<.deb> or C<.rpm> packages.
+
+Although this text  is stored in the  L<Astro::Sunrise> repository, it
+also  documents the  L<DateTime::Event::Sunrise> module,  which has  a
+very  similar core  (astronomical computations)  and a  different API.
+Since both  modules move at different  speeds, it may happen  that the
+text you  are reading is  not synchronised with  the L<Astro::Sunrise>
+module.
 
 =head1 Why This Text? For Whom?
 
@@ -177,7 +184,7 @@ L<C program|https://stjarnhimlen.se/comp/sunriset.c>
 ready to compile and use, giving the 
 L<sunrise and sunset|https://stjarnhimlen.se/comp/riset.html> 
 times. This is the basis of the simple algorithm used in
-C<Astro::Sunrise>. Its precision, as stated by the author,
+L<Astro::Sunrise>. Its precision, as stated by the author,
 is one or two minutes, but it can be much less precise depending
 on the location and date, especially when we are close to the
 beginning or the end of the period when the midnight sun is visible.
@@ -223,7 +230,7 @@ of sunrise, sunset or true solar noon (version 0.18.0).
 =item *
 
 Choose an approximate value for the requested time: 12:00 for
-the true solar noon or use C<Astro::Sunrise> (basic mode) for
+the true solar noon or use L<Astro::Sunrise> (basic mode) for
 sunrise or sunset.
 
 =item *
@@ -231,11 +238,11 @@ sunrise or sunset.
 Choose the search criterion: azimuth equal to 180° for true
 solar noon or real altitude equal to 0 degrees and I<xx>
 minutes below the horizon. I<xx> must be compatible with the
-C<altitude> parameter of C<Astro::Sunrise>'s functions.
+C<altitude> parameter of L<Astro::Sunrise>'s functions.
 
 Note: we do not use the I<apparent> altitude given by Stellarium.
 For the deviation angle of sun rays near the horizon, we use
-C<Astro::Sunrise>'s value, which is 35' or 0.583 degree and
+L<Astro::Sunrise>'s value, which is 35' or 0.583 degree and
 we aim at this value in Stellarium. And if we want to take into
 account the radius of the sun's disk, we will use the average value 15'
 instead of recomputing the precise value depending on the
@@ -930,6 +937,57 @@ the Sun's real orbital speed and 9 milliseconds when we use an obviously wrong o
 speed. In the end, it is better than the basic algorithm, which uses an approximate
 but still wrong orbital speed, but for the whole span of 3 h, 59 mn and 57 s.
 
+=head2 What Happened in Spring 2020?
+
+Let us look a bit farther into  the past. In January 2019, I published
+version  0.98   of  L<Astro::Sunrise>,  with  the   precise  algorithm
+implemented as explained in the  preceding paragraph. For test data, I
+did not know how to cross-check  with authoritative sources, so I just
+checked  they  looked plausible  and  that  the iterative  computation
+stopped after  a few iterations. At  this time, I did  not synchronise
+L<DateTime::Event::Sunrise> with L<Astro::Sunrise>, because it was not
+the proper time yet.
+
+Then in  April 2020, a user  created an RT ticket,  explaining that he
+had   compared  the   results   of  L<DateTime::Event::Sunrise>   with
+authoritative websites and  that the results were  not precise enough.
+Of course  the results were  not precise,  I had not  yet synchronised
+L<DateTime::Event::Sunrise>  with L<Astro::Sunrise>.  Yet this  ticket
+gave  me two  things: first,  a  website which  would provide  precise
+day-after-day computations of sunrise, sunset and real solar noon, and
+second a few round tuits to upgrade L<DateTime::Event::Sunrise> to the
+same level as L<Astro::Sunrise>, with real tests values.
+
+There   was   a   glitch.    The   precise   algorithm   copied   from
+L<Astro::Sunrise> and  the test  data from the  NOAA website  were not
+matching. After  tweaking the algorithm  and asking for advice  on the
+DateTime mailing-list
+(L<https://www.nntp.perl.org/group/perl.datetime/2020/06/msg8241.html>),
+I had to  admit that using a 15-degree-per-hour spin  speed was giving
+better results  than the  normal 15.04107-degree-per-hour value.  So I
+coded the  C<15> value in L<DateTime::Event::Sunrise>  and I published
+the module.
+
+=head3 What Went Wrong?
+
+I still think my explanations of  the precise algorithm are correct. I
+think that  the error  lies in the  implementation of  this algorithm.
+Using as an example the values above, during iteration 2 we should use
+the  Sun  at its  16:04:11  position  and  not moving.  Without  being
+certain, I think that actually, the program computes the virtual solar
+noon for 16:04:11,  which is 12:05:01 and that after  that it uses the
+Sun at its 12:05:01 position.
+
+How can I check  this hypothesis? I need to "create"  a new fixed star
+at the 16:04:11 position of the Sun. And  I do not know how to do that
+in  Stellarium. A  few  months  later, I  read  the documentation  for
+Stellarium 0.20.1-1.  In chapter  13, I  found that  the user  can add
+unofficial  novas  to   the  novas  coming  from   the  official  star
+catalogues. This  would answer  my need.  The problem  is that  I have
+Stellarium 0.18.0 and that I did  not succeed in creating "my" nova in
+this  version. So  for  the  moment, it  is  impossible  to check  the
+implementation of the precise algorithm.
+
 =head1 More About The Parameters
 
 Below, I give some detailed explanations about the parameter used when
@@ -1159,7 +1217,7 @@ sunset at 13:05:53.
 
 =head2 C<year> Parameter
 
-Q: Why does C<Astro::Sunrise> need the year to compute sunrise and sunset?
+Q: Why does L<Astro::Sunrise> need the year to compute sunrise and sunset?
 I have seen an algorithm which only needs the month and the day.
 
 A: Let us compute the sunset at the Greenwich observatory at the end
@@ -1202,20 +1260,20 @@ algorithm would be redundant. Then because I do not know which licenses
 apply to these yearless algorithms, while at the same time, Paul Schlyter's
 algorithm is in the public domain.
 
-Q: Another thing, how did you get the seconds in the table? C<Astro::Sunrise>
+Q: Another thing, how did you get the seconds in the table? L<Astro::Sunrise>
 does not provide the seconds.
 
-A: Because I have used C<DateTime::Event::Sunrise> instead of C<Astro::Sunrise>,
-which produces C<DateTime> objects, complete with seconds.
+A: Because I have used L<DateTime::Event::Sunrise> instead of L<Astro::Sunrise>,
+which produces L<DateTime> objects, complete with seconds.
 
-Q: Could we modify C<Astro::Sunrise> to give C<"hh:mm:ss"> results instead
+Q: Could we modify L<Astro::Sunrise> to give C<"hh:mm:ss"> results instead
 of C<"hh:mm">?
 
 A: We could. But would this precision be meaningful? According to Paul 
 Schlyter, the algorithm precision is about 1 or 2 minutes, except at the
 beginning and the end of the Polar Day period when the precision is much
 worse. So it is not worth adding the seconds to the results produced by
-C<Astro::Sunrise>.
+L<Astro::Sunrise>.
 
 Q: And in the discussion above, why did you keep the seconds, if they
 are not significant?
