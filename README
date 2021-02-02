@@ -5,6 +5,33 @@ Astro::Sunrise version 0.99
 
 This module commpute the sunrise and sunset for a given day.
 
+NAME
+
+    Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
+
+SYNOPSIS
+
+  # When will the sun rise on YAPC::Europe 2015?
+  use Astro::Sunrise;
+  my ($sunrise, $sunset) = sunrise( { year => 2015, month => 9, day => 2, # YAPC::EU starts on 2nd September 2015
+                                      lon  => -3.6, lat   => 37.17,       # Granada is 37°10'N, 3°36'W
+                                      tz   => 1,    dst   => 1 } );       # This is still summer, therefore DST
+
+  # When does the sun rise today in Salt Lake City (home to YAPC::NA 2015)?
+  use Astro::Sunrise;
+  use DateTime;
+  $sunrise_today = sun_rise( { lon => -111.88, lat => 40.75 } ); # 40°45'N, 111°53'W
+
+  # And when does it set tomorrow at Salt Lake City?
+  use Astro::Sunrise;
+  use DateTime;
+  $sunset_tomorrow = sun_set( { lat => 40.75,    # 40°45'N,
+                                lon => -111.88,  # 111°53'W
+                                alt => -0.833,   # standard value for the sun altitude at sunset
+                                offset => 1 } ); # day offset up to tomorrow
+
+INSTALLATION
+
 The simplest way to install the module is by using your favorite
 utility: CPAN shell, cpanplus, cpanminus, dist-zilla, etc.
 
@@ -40,31 +67,6 @@ is provided “as is” and without any express or implied warranties. For
 details, see the full text of the licenses in the file LICENSE.
 
 Based on a public domain C program sunriset.c (c) Paul Schlyter, 1989, 1992
-
-NAME
-
-    Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
-
-SYNOPSIS
-
-  # When will the sun rise on YAPC::Europe 2015?
-  use Astro::Sunrise;
-  my ($sunrise, $sunset) = sunrise( { year => 2015, month => 9, day => 2, # YAPC::EU starts on 2nd September 2015
-                                      lon  => -3.6, lat   => 37.17,       # Granada is 37°10'N, 3°36'W
-                                      tz   => 1,    dst   => 1 } );       # This is still summer, therefore DST
-
-  # When does the sun rise today in Salt Lake City (home to YAPC::NA 2015)?
-  use Astro::Sunrise;
-  use DateTime;
-  $sunrise_today = sun_rise( { lon => -111.88, lat => 40.75 } ); # 40°45'N, 111°53'W
-
-  # And when does it set tomorrow at Salt Lake City?
-  use Astro::Sunrise;
-  use DateTime;
-  $sunset_tomorrow = sun_set( { lat => 40.75,    # 40°45'N,
-                                lon => -111.88,  # 111°53'W
-                                alt => -0.833,   # standard value for the sun altitude at sunset
-                                offset => 1 } ); # day offset up to tomorrow
 
 FURTHER DOCUMENTATION
 
