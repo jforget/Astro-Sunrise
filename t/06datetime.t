@@ -39,6 +39,11 @@ BEGIN {
     plan skip_all => "DateTime needed";
     exit;
   }
+  eval "DateTime->now(time_zone => 'local');";
+  if ($@) {
+    plan skip_all => "Unable to find local time zone";
+    exit;
+  }
 }
 plan(tests => 12);
 

@@ -1267,7 +1267,8 @@ already mentioned in the text.
 
 Nevertheless, patches and (justified) bug reports are welcome.
 
-See L<https://rt.cpan.org/Public/Dist/Display.html?Name=Astro-Sunrise>.
+See L<https://github.com/jforget/Astro-Sunrise/issues>
+and L<https://github.com/jforget/Astro-Sunrise/pulls>.
 
 =head2 Astro::Sunrise Bug
 
@@ -1284,9 +1285,14 @@ human reader will admit that this LICENSE paragraph exists and is valid.
 
 =head2 Haiku-OS CPAN Tester
 
-The built-in test F<t/06datetime.t> fails on Haiku-OS because there is no
-way to extract the timezone name from the system parameters. This failure does
-not affect the core functions of L<Astro::Sunrise>.
+The built-in test F<t/06datetime.t> fails on Haiku-OS because there is
+no way to  extract the timezone name from the  system parameters. This
+failure does not affect the core functions of L<Astro::Sunrise>.
+
+Also reported from a user working on a partially configured FreeBSD machine, see
+L<https://github.com/jforget/Astro-Sunrise/issues/16>.
+
+Hopefully, this will be fixed in the current version.
 
 =head1 SEE ALSO
 
