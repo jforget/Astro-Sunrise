@@ -1,7 +1,7 @@
 #!/usr/bin/perl -I../../DateTime-Event-Sunrise/lib
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
-#     Script to check the work-in-progress version of DateTime::Event::Sunrise 
+#     Script to check the work-in-progress version of DateTime::Event::Sunrise
 #     Copyright (c) 2020, 2021 Jean Forget
 #
 #     See the license in the embedded documentation below.
@@ -18,11 +18,11 @@ my $lat =  42.3358; # 42°20'08"
 my $lon = -71.2044; # 71°12'15"
 
 # https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=42.3358&lon=-71.2044&year=2020
-my @noaa_rise = qw/ dummy 06:26 06:25 06:23 06:21 06:20 06:18 06:16 06:15 06:13 06:11 
-                          06:10 06:08 06:06 06:05 06:03 06:02 06:00 05:58 05:57 05:55 
+my @noaa_rise = qw/ dummy 06:26 06:25 06:23 06:21 06:20 06:18 06:16 06:15 06:13 06:11
+                          06:10 06:08 06:06 06:05 06:03 06:02 06:00 05:58 05:57 05:55
                           05:54 05:52 05:51 05:49 05:48 05:46 05:45 05:44 05:42 05:11 /;
-my @noaa_set  = qw/ dummy 19:11 19:12 19:13 19:15 19:16 19:17 19:18 19:19 19:20 19:21 
-                          19:22 19:24 19:25 19:26 19:27 19:28 19:29 19:30 19:32 19:33 
+my @noaa_set  = qw/ dummy 19:11 19:12 19:13 19:15 19:16 19:17 19:18 19:19 19:20 19:21
+                          19:22 19:24 19:25 19:26 19:27 19:28 19:29 19:30 19:32 19:33
                           19:34 19:35 19:36 19:37 19:38 19:39 19:41 19:42 19:43 19:44 /;
 
 my @stel_rise = qw/ dummy 06:26:29 06:24:46 06:23:04 06:21:22 06:19:40 06:17:58 06:16:17 06:14:37 06:12:57 06:11:17
@@ -46,7 +46,7 @@ my $sunriseset1 = DateTime::Event::Sunrise->new(
 
 my $dt = DateTime->new(
                 year      => 2020,
-                month     =>    4, 
+                month     =>    4,
                 day       =>   12,
                 time_zone => 'America/New_York');
 
@@ -171,7 +171,7 @@ and up to 99 seconds for sunrise.
 
 =head1 SEE ALSO
 
-L<https://rt.cpan.org/Public/Bug/Display.html?id=132336>
+L<https://github.com/jforget/DateTime-Event-Sunrise/issues/1>
 
 L<https://www.esrl.noaa.gov/gmd/grad/solcalc/table.php?lat=42.3358&lon=-71.2044&year=2020>
 
