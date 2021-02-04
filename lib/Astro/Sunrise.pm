@@ -125,7 +125,24 @@ sub sunrise  {
   croak "Wrong value of the 'polar' argument: should be either 'warn' or 'retval'"
       if $arg{polar} ne 'warn' and $arg{polar} ne 'retval';
 
-  if ($arg{precise})   {
+  if (! $arg{precise})   {
+    my $revsub = \&rev180; # normalizing angles around 0 degrees
+    if ($trace) {
+      printf $trace "\nBasic computation for %04d-%02d-%02d, lon %.3f, lat %.3f, altitude %.3f, upper limb %d\n"
+                                           , $year, $month, $day
+                                           , $lon
+                                           , $lat
+                                           , $altit
+                                           , $arg{upper_limb};
+    }
+    my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
+    my ($h1, $h2) = sun_rise_set($d, $lon, $lat, $altit, 15.0, $arg{upper_limb}, $arg{polar}, $trace, $revsub);
+    if ($h1 eq 'day' or $h1 eq 'night' or $h2 eq 'day' or $h2 eq 'night') {
+      return ($h1, $h2);
+    }
+    return convert_hour($h1, $h2, $TZ, $isdst);
+  }
+  else {
     my $revsub = sub { _rev_lon($_[0], $lon) }; # normalizing angles around the local longitude
     my $ang_speed = 15.0;
 
@@ -194,23 +211,6 @@ sub sunrise  {
 
     return convert_hour($h1_utc, $h3_utc, $TZ, $isdst);
 
-  }
-  else {
-    my $revsub = \&rev180; # normalizing angles around 0 degrees
-    if ($trace) {
-      printf $trace "\nBasic computation for %04d-%02d-%02d, lon %.3f, lat %.3f, altitude %.3f, upper limb %d\n"
-                                           , $year, $month, $day
-                                           , $lon
-                                           , $lat
-                                           , $altit
-                                           , $arg{upper_limb};
-    }
-    my $d = days_since_2000_Jan_0( $year, $month, $day ) + 0.5 - $lon / 360.0;
-    my ($h1, $h2) = sun_rise_set($d, $lon, $lat, $altit, 15.0, $arg{upper_limb}, $arg{polar}, $trace, $revsub);
-    if ($h1 eq 'day' or $h1 eq 'night' or $h2 eq 'day' or $h2 eq 'night') {
-      return ($h1, $h2);
-    }
-    return convert_hour($h1, $h2, $TZ, $isdst);
   }
 }
 #######################################################################################
