@@ -1,7 +1,7 @@
-#!/usr/bin/perl -I../../DateTime-Event-Sunrise/lib
+#!/usr/bin/perl -I../../DateTime-Event-Sunrise/lib -I../lib
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
-#     Script to check the work-in-progress version of DateTime::Event::Sunrise 
+#     Script to check the work-in-progress version of DateTime::Event::Sunrise
 #     Copyright (c) 2020, 2021 Jean Forget
 #
 #     See the license in the embedded documentation below.
@@ -13,7 +13,7 @@ use warnings;
 use DateTime;
 use DateTime::Event::Sunrise;
 use Astro::Sunrise;
- 
+
 my $lat =   61.2; #  61°12' for  61°13'5.01"
 my $lon = -149.9; # 149°54' for 149°54'1.02"
 
@@ -21,8 +21,8 @@ my $lon = -149.9; # 149°54' for 149°54'1.02"
 my @noaa_rise = qw/ dummy 04:35 04:33 04:32 04:30 04:29 04:28 04:27 04:26 04:25 04:24
                           04:23 04:22 04:22 04:21 04:21 04:21 04:20 04:20 04:20 04:20
                           04:21 04:21 04:21 04:22 04:23 04:23 04:24 04:25 04:26 04:27 /;
-my @noaa_set  = qw/ dummy 23:22 23:23 23:25 23:27 23:29 23:30 23:32 23:33 23:34 23:35 
-                          23:37 23:38 23:39 23:39 23:40 23:41 23:41 23:42 23:42 23:42 
+my @noaa_set  = qw/ dummy 23:22 23:23 23:25 23:27 23:29 23:30 23:32 23:33 23:34 23:35
+                          23:37 23:38 23:39 23:39 23:40 23:41 23:41 23:42 23:42 23:42
                           23:42 23:42 23:42 23:42 23:42 23:41 23:41 23:40 23:40 23:39 /;
 
 my @stel_rise = qw/ dummy 04:34:47 04:33:13 04:31:44 04:30:19 04:28:59 04:27:45 04:26:35 04:25:30 04:24:31 04:23:38
@@ -43,12 +43,11 @@ my $sunriseset1 = DateTime::Event::Sunrise->new(
                      latitude   => $lat,
                      altitude   => -0.833,
                      upper_limb => 0,
-                     algo       => 'Stellarium',
-                     precise   => 1);
+                     precise    => 1);
 
 my $dt = DateTime->new(
                 year   => 2020,
-                month  => 6, 
+                month  => 6,
                 day    => 1,
                 time_zone => 'America/Anchorage');
 

@@ -1,7 +1,7 @@
-#!/usr/bin/perl -I../../DateTime-Event-Sunrise/lib
+#!/usr/bin/perl -I../../DateTime-Event-Sunrise/lib -I../lib
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
-#     Script to check the work-in-progress version of DateTime::Event::Sunrise 
+#     Script to check the work-in-progress version of DateTime::Event::Sunrise
 #     Copyright (c) 2020, 2021 Jean Forget
 #
 #     See the license in the embedded documentation below.
@@ -13,7 +13,7 @@ use warnings;
 use DateTime;
 use DateTime::Event::Sunrise;
 use Astro::Sunrise;
- 
+
 my $lat =   61.2; #  61°12' for  61°13'5.01"
 my $lon = -149.9; # 149°54' for 149°54'1.02"
 
@@ -41,7 +41,7 @@ my $sunriseset1 = DateTime::Event::Sunrise->new(
                      #altitude   => -0.583,
                      #upper_limb => 1,
                      precise   => 1,
-                     algo      => 'Stellarium');
+                     );
 
 my $dt = DateTime->new(
                 year      => 2020,

@@ -1,4 +1,4 @@
-#!/usr/bin/perl -I../../DateTime-Event-Sunrise/lib
+#!/usr/bin/perl -I../../DateTime-Event-Sunrise/lib -I../lib
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Script to check the work-in-progress version of DateTime::Event::Sunrise
@@ -41,7 +41,6 @@ my $sunriseset1 = DateTime::Event::Sunrise->new(
                      longitude => $lon,
                      latitude  => $lat,
                      altitude  => -0.833,
-                     algo      => 'Stellarium',
                      precise   => 1);
 
 my $dt = DateTime->new(
