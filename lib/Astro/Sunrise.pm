@@ -219,7 +219,7 @@ sub sunrise  {
 
 #
 #
-# FUNCTIONAL SEQUENCE for days_since_2000_Jan_0 
+# FUNCTIONAL SEQUENCE for days_since_2000_Jan_0
 #
 # _GIVEN
 # year, month, day
@@ -249,7 +249,7 @@ sub days_since_2000_Jan_0 {
 
 #
 #
-# FUNCTIONAL SEQUENCE for convert_hour 
+# FUNCTIONAL SEQUENCE for convert_hour
 #
 # _GIVEN
 # Hour_rise, Hour_set, Time zone offset, DST setting
@@ -258,11 +258,11 @@ sub days_since_2000_Jan_0 {
 # _THEN
 #
 # convert to local time
-# 
+#
 #
 # _RETURN
 #
-# hour:min rise and set 
+# hour:min rise and set
 #
 
 sub convert_hour {
@@ -323,7 +323,7 @@ sub convert_1_hour {
 
 
 sub sun_rise_set {
-    my ($d, $lon, $lat,$altit, $h, $upper_limb, $polar, $trace, $revsub) = @_;
+    my ($d, $lon, $lat, $altit, $ang_spd, $upper_limb, $polar, $trace, $revsub) = @_;
 
     if ($trace) {
       printf $trace "\n";
@@ -382,7 +382,7 @@ sub sun_rise_set {
     }
     else {
       my $arc = acosd($cost);    # The diurnal arc
-      $t = $arc / $h;            # Time to traverse the diurnal arc, hours
+      $t = $arc / $ang_spd;      # Time to traverse the diurnal arc, hours
       if ($trace) {
         printf $trace "Diurnal arc $arc -> $t hours (%s)\n", _fmt_dur($t);
       }
@@ -440,34 +440,34 @@ sub GMST0 {
 # _THEN
 #
 # compute RA and dec
-# 
+#
 #
 # _RETURN
 #
 # Sun's Right Ascension (RA), Declination (dec) and distance (r)
-# 
+#
 #
 sub sun_RA_dec {
     my ($d, $lon_noon, $trace) = @_;
 
-    # Compute Sun's ecliptical coordinates 
+    # Compute Sun's ecliptical coordinates
     my ( $r, $lon ) = sunpos($d);
     if ($trace) {
       printf $trace "For day $d (%s), solar noon at ecliptic longitude $lon %s\n", _fmt_hr(24 * ($d - int($d)), $lon_noon), _fmt_angle($lon);
     }
 
-    # Compute ecliptic rectangular coordinates (z=0) 
+    # Compute ecliptic rectangular coordinates (z=0)
     my $x = $r * cosd($lon);
     my $y = $r * sind($lon);
 
-    # Compute obliquity of ecliptic (inclination of Earth's axis) 
+    # Compute obliquity of ecliptic (inclination of Earth's axis)
     my $obl_ecl = 23.4393 - 3.563E-7 * $d;
 
-    # Convert to equatorial rectangular coordinates - x is unchanged 
+    # Convert to equatorial rectangular coordinates - x is unchanged
     my $z = $y * sind($obl_ecl);
     $y    = $y * cosd($obl_ecl);
 
-    # Convert to spherical coordinates 
+    # Convert to spherical coordinates
     my $RA  = atan2d( $y, $x );
     my $dec = atan2d( $z, sqrt( $x * $x + $y * $y ) );
 
@@ -573,9 +573,9 @@ sub atan2d {
 #
 # _THEN
 #
-# reduces any angle to within the first revolution 
+# reduces any angle to within the first revolution
 # by subtracting or adding even multiples of 360.0
-# 
+#
 #
 # _RETURN
 #
@@ -613,13 +613,13 @@ sub _rev_lon {
 # FUNCTIONAL SEQUENCE for rev180
 #
 # _GIVEN
-# 
+#
 # any angle
 #
 # _THEN
 #
 # Reduce input to within -180..+180 degrees
-# 
+#
 #
 # _RETURN
 #
@@ -627,7 +627,7 @@ sub _rev_lon {
 #
 sub rev180 {
     my ($x) = @_;
-    
+
     return ( $x - 360.0 * floor( $x * $INV360 + 0.5 ) );
 }
 
@@ -1160,13 +1160,15 @@ Nevertheless, patches and (justified) bug reports are welcome.
 See L<https://github.com/jforget/Astro-Sunrise/issues>
 and L<https://github.com/jforget/Astro-Sunrise/pulls>.
 
-=head2 Astro::Sunrise Bug
+=head2 Precise Algorithm
 
-Ticket #109992 has not been solved properly. For some combinations
-of longitude and date, the precise algorithm does not converge.
-As a stopgap measure, the loop is exited after 10 iterations, so
-your program will not run amok. But the bug will be considered as fixed
-only when we find a way to converge toward a single value.
+The explanations for  the precise algorithm give a  pretty good reason
+for  using  an   angular  speed  of  15.04107  instead   of  15.  Yet,
+computations with 15.04107 do not  give results conforming to what the
+NOAA  website and  Stellarium give,  while computations  with 15  give
+conforming results. The implementation of the precise algorithm should
+be analysed and checked to find  the reason why 15.04107 does not give
+the proper results.
 
 =head2 Kwalitee
 
@@ -1305,6 +1307,6 @@ L<DateTime::Event::Jewish::Sunrise>
 The text F<doc/astronomical-notes.pod> (or its original French version
 F<doc/notes-astronomiques>) in this distribution.
 
-L<https://stjarnhimlen.se/comp/riset.html> 
+L<https://stjarnhimlen.se/comp/riset.html>
 
 =cut
