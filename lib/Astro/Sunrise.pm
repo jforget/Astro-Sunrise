@@ -1148,6 +1148,42 @@ This module requires only core modules: L<POSIX>, L<Math::Trig> and L<Carp>.
 
 If you use the C<sun_rise> and C<sun_set> functions, you will need also L<DateTime>.
 
+=head1 BUGS AND ISSUES
+
+Before reporting a bug, please read the text
+F<doc/astronomical-notes.pod> because the strange behavior you observed
+may be a correct one, or it may be a corner case already known and
+already mentioned in the text.
+
+Nevertheless, patches and (justified) bug reports are welcome.
+
+See L<https://github.com/jforget/Astro-Sunrise/issues>
+and L<https://github.com/jforget/Astro-Sunrise/pulls>.
+
+=head2 Astro::Sunrise Bug
+
+Ticket #109992 has not been solved properly. For some combinations
+of longitude and date, the precise algorithm does not converge.
+As a stopgap measure, the loop is exited after 10 iterations, so
+your program will not run amok. But the bug will be considered as fixed
+only when we find a way to converge toward a single value.
+
+=head2 Kwalitee
+
+The CPANTS tools do not recognize the LICENSE POD paragraph. But any
+human reader will admit that this LICENSE paragraph exists and is valid.
+
+=head2 Haiku-OS CPAN Tester
+
+The built-in test F<t/06datetime.t> fails on Haiku-OS because there is
+no way to  extract the timezone name from the  system parameters. This
+failure does not affect the core functions of L<Astro::Sunrise>.
+
+Also reported from a user working on a partially configured FreeBSD machine, see
+L<https://github.com/jforget/Astro-Sunrise/issues/16>.
+
+Hopefully, this will be fixed in the current version.
+
 =head1 AUTHOR
 
 Ron Hill
@@ -1257,42 +1293,6 @@ THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
 WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
 OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
-
-=head1 BUGS
-
-Before reporting a bug, please read the text
-F<doc/astronomical-notes.pod> because the strange behavior you observed
-may be a correct one, or it may be a corner case already known and
-already mentioned in the text.
-
-Nevertheless, patches and (justified) bug reports are welcome.
-
-See L<https://github.com/jforget/Astro-Sunrise/issues>
-and L<https://github.com/jforget/Astro-Sunrise/pulls>.
-
-=head2 Astro::Sunrise Bug
-
-Ticket #109992 has not been solved properly. For some combinations
-of longitude and date, the precise algorithm does not converge.
-As a stopgap measure, the loop is exited after 10 iterations, so
-your program will not run amok. But the bug will be considered as fixed
-only when we find a way to converge toward a single value.
-
-=head2 Kwalitee
-
-The CPANTS tools do not recognize the LICENSE POD paragraph. But any
-human reader will admit that this LICENSE paragraph exists and is valid.
-
-=head2 Haiku-OS CPAN Tester
-
-The built-in test F<t/06datetime.t> fails on Haiku-OS because there is
-no way to  extract the timezone name from the  system parameters. This
-failure does not affect the core functions of L<Astro::Sunrise>.
-
-Also reported from a user working on a partially configured FreeBSD machine, see
-L<https://github.com/jforget/Astro-Sunrise/issues/16>.
-
-Hopefully, this will be fixed in the current version.
 
 =head1 SEE ALSO
 
