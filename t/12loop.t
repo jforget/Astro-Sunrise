@@ -44,7 +44,7 @@ my ($rise, $set) = sunrise({ year    => 2015,
                              isdst   =>    0,
                              alt     =>    6,
                              precise =>    1 });
-is($rise, "17:24", "Sunrise on 28 November");  # 17:23:26 on Stellarium, actually the day before on 27 nov
+is($rise, "17:23", "Sunrise on 28 November");  # 17:23:26 on Stellarium, actually the day before on 27 nov
 is($set,  "06:36", "Sunset on 28 November");   # 06:36:15 on Stellarium
 
 ($rise, $set) = sunrise({ year    => 2015,
@@ -56,5 +56,5 @@ is($set,  "06:36", "Sunset on 28 November");   # 06:36:15 on Stellarium
                           isdst   =>    0,
                           alt     =>    6,
                           precise =>    1 });
-is($rise, "17:24", "Sunrise on 29 November");  # 17:23:11 on Stellarium, actually the day before on 28 nov
+is($rise, "17:23", "Sunrise on 29 November");  # 17:23:11 on Stellarium, actually the day before on 28 nov
 is($set,  "06:37", "Sunset on 29 November");   # 06:37:10 on Stellarium
