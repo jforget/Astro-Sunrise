@@ -490,14 +490,15 @@ inconditionnels de l'héliocentrisme.
 
 =head2 Les mouvements de base
 
-Dans un repère héliocentrique axé sur les étoiles fixes, la Terre
-tourne autour du Soleil en un an. Ou, ce qui revient au même, dans un
-repère géocentrique, le Soleil tourne autour de la Terre en un an
-avec une vitesse angulaire moyenne de 0,9856 degré par jour.
+Dans  un repère  héliocentrique axé  sur les  étoiles fixes,  la Terre
+tourne autour du Soleil en un an.  Ou, ce qui revient au même, dans un
+repère géocentrique, le Soleil tourne autour de la Terre en un an avec
+une  vitesse angulaire  moyenne de  0,9856 degré  par jour  ou 0,04107
+degré par heure.
 
-D'autre part, la Terre tourne sur elle-même en 23h 56mn 4s,
-avec une vitesse de rotation de 4,178e-3 degré par seconde,
-soit 360,9856 degrés par jour.
+D'autre part, la  Terre tourne sur elle-même en 23h  56mn 4s, avec une
+vitesse  de rotation  de  4,178e-3 degré  par  seconde, soit  360,9856
+degrés par jour ou 15,04107 degrés par heure.
 
 Q: Je croyais que la Terre tournait sur elle-même en 24h !
 

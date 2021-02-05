@@ -470,12 +470,14 @@ by people who believe that heliocentrism is the one and only truth.
 
 =head2 Basic Movements
 
-In an heliocentric system pointing at fixed stars, Earth orbits around the
-Sun in one year. In other words, in a geocentric system, the Sun orbits around
-the Earth in one year, with an average speed of 0.9856 degrees per day.
+In an heliocentric system pointing at fixed stars, Earth orbits around
+the Sun in one  year. In other words, in a  geocentric system, the Sun
+orbits around the  Earth in one year, with an  average speed of 0.9856
+degrees per day or 0.04107 degrees per hour.
 
-Also, the Earth spins around itself, making one turn in 23h 56mn 4s,
-with a speed of 4.178e-3 degrees per second, that is, 360.9856 degrees per day.
+Also, the Earth  spins around itself, making one turn  in 23h 56mn 4s,
+with a speed of 4.178e-3 degrees per second, that is, 360.9856 degrees
+per day or 15.04107 degrees per hour.
 
 Q: I thought that the Earth was spinning in 24h!
 

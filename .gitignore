@@ -1,5 +1,6 @@
 *~
 *gz
+*.lock
 blib
 Makefile
 Makefile.old
