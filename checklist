@@ -6,7 +6,16 @@ https://github.com/Tux/Release-Checklist/blob/master/Checklist.md
 Check version number in:
 -- README
 -- Makefile.PL
--- (2x) lib/Astro/Sunrise.pm, code ($VERSION) and POD (=head1 VERSION)
+-- (2×) lib/Astro/Sunrise.pm, code ($VERSION) and POD (=head1 VERSION)
+
+Check copyright years in:
+-- README
+-- Makefile.PL
+-- lib/Astro:Sunrise.pm top-file comments and POD "COPYRIGHT and LICENSE" paragraph
+-- t/*.t top-file comments
+-- util/check-* top-file comments and POD "COPYRIGHT and LICENSE" paragraph
+-- util/mktest-* top-file comments
+-- doc/*
 
 Check URL, replacing http by https when possible
 
@@ -23,7 +32,7 @@ Changes: Type the proper release date for the latest version
 Build META.{json,yml} and .tar.gz with perlbrew perl-lgdbl (or other? perl-5.20.2?)
 
 Check contents of META.{json,yml}:
-  version number (2x)
+  version number (2×)
   runtime recommends DateTime 0.16
   minimum perl version
   dynamic config 0
@@ -35,8 +44,7 @@ After release
 =============
 
 Github:
-    git tag -m 'Release to CPAN' v0.13
-    git push --tags -u origin master
+    git tag -m 'Release to CPAN' v0.99
 
 Change version number in:
 -- Changes
@@ -45,4 +53,6 @@ Change version number in:
 -- lib/Astro/Sunrise.pm
 -- t/08timezone.t
 
+Github:
+    git push --tags -u origin master
 
