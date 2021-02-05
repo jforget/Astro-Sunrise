@@ -54,5 +54,7 @@ Change version number in:
 -- t/08timezone.t
 
 Github:
+    git add Changes Makefile.PL README lib/Astro/Sunrise.pm t/08timezone.t
+    git commit
     git push --tags -u origin master
 

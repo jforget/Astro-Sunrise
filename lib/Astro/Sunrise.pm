@@ -1,7 +1,7 @@
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Perl extension for computing the sunrise/sunset on a given day
-#     Copyright (C) 1999-2003, 2013, 2015, 2017, 2019, 2021 Ron Hill and Jean Forget
+#     Copyright (C) 1999-2003, 2013, 2015, 2017, 2019, 2021 Ron Hill and Jean Forget, all rights reserved
 #
 #     See the license in the embedded documentation below.
 #
@@ -24,7 +24,7 @@ require Exporter;
         trig      => [ qw/sind cosd tand asind acosd atand atan2d equal/ ],
         );
 
-$VERSION =  '0.99';
+$VERSION =  '1.00';
 $RADEG   = ( 180 / pi );
 $DEGRAD  = ( pi / 180 );
 my $INV360     = ( 1.0 / 360.0 );
@@ -716,7 +716,7 @@ Astro::Sunrise - Perl extension for computing the sunrise/sunset on a given day
 
 =head1 VERSION
 
-This documentation refers to C<Astro::Sunrise> version 0.99.
+This documentation refers to C<Astro::Sunrise> version 1.00.
 
 =head1 SYNOPSIS
 

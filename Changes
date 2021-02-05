@@ -2,7 +2,10 @@
 
 Revision history for Perl extension sunrise.
 
-0.99  ???
+1.00  ???
+      - ???
+
+0.99  Friday 5 February 2021
       - Overhaul the precise algorithm to follow the algorithm in DateTime::Event::Sunrise
       - Bugtracking is done in Github instead of rt.cpan.org.
       - Skip tests using the local timezone if the system does not provide it.
