@@ -103,7 +103,7 @@ Peut-être que le bug a déjà été constaté et qu'il est en attente
 de solution.
 Peut-être que le bug a déjà été constaté et que la solution adoptée
 ne convient pas. Peut-être que l'amélioration suggérée a déjà été
-rejetée parce qu'elle est en contradiction avec le coeur du module.
+rejetée parce qu'elle est en contradiction avec le cœur du module.
 
 ## Pour qui ? pour les utilisateurs intéressés
 
@@ -448,10 +448,10 @@ L'écliptique est le plan qui contient l'orbite de la Terre autour du Soleil
 (avec un modèle héliocentrique) ou l'orbite du Soleil autour de la Terre
 (avec un modèle géocentrique). On définit également le plan équatorial,
 le plan qui contient le cercle de l'équateur terrestre. Ces deux plans ont
-un angle de 23° 26' et leur intersection s'appelle la ligne des noeuds.
+un angle de 23° 26' et leur intersection s'appelle la ligne des nœuds.
 Dans certains cas il est plus intéressant de considérer que la
-ligne des noeuds est une demi-droite plutôt qu'une droite complète.
-On considère alors que la ligne des noeuds est la demi-droite avec
+ligne des nœuds est une demi-droite plutôt qu'une droite complète.
+On considère alors que la ligne des nœuds est la demi-droite avec
 le centre de la Terre pour origine et se dirigeant vers la constellation
 des poissons. Et le point où cette demi-droite rencontre
 la sphère céleste s'appelle _point gamma_ (politiquement correct) ou
@@ -465,7 +465,7 @@ de l'équateur et un second le long d'un méridien (donc, à son origine, perpen
 Les deux angles obtenus sont appelés « longitude » et
 « latitude ». Pour un astre, lorsque l'on utilise les
 _coordonnées équatoriales_, c'est le même principe,
-sauf que l'origine du premier arc se trouve sur la ligne des noeuds
+sauf que l'origine du premier arc se trouve sur la ligne des nœuds
 et que les angles s'appellent 
 « ascension droite » et « déclinaison ».
 À cause d'une tradition, d'une charte ancienne ou de quelque chose comme ça,
@@ -480,7 +480,7 @@ de l'équateur. Et de même, le second arc de cercle est, au point de départ,
 perpendiculaire à l'écliptique. Les deux angles s'appellent
 « longitude écliptique » et « latitude écliptique »
 respectivement. La position origine de la longitude écliptique est la ligne des
-noeuds comme pour l'ascension droite, ce qui permet une simplification appréciable des formules
+nœuds comme pour l'ascension droite, ce qui permet une simplification appréciable des formules
 de conversion d'un système à l'autre. D'un autre côté, l'utilisation 
 d'heures minutes et secondes pour l'ascension droite et de degrés pour
 tous les autres angles introduit une complication superflue à la conversion.
@@ -528,7 +528,7 @@ Et les secondes intercalaires ?
 
 En revenant à la définition "temps sidéral = angle", on constate
 que si l'on prend deux points à la surface de la Terre, éloignés l'un
-de l'autre dans la direction est -> ouest  de quelques kilomètres, ces deux
+de l'autre dans la direction est → ouest  de quelques kilomètres, ces deux
 points ont des temps sidéraux légèrement différents
 Donc, en revenant à la définition "temps sidéral = temps", on en déduit
 que la notion de temps sidéral est incompatible avec le principe des
@@ -801,7 +801,7 @@ et on recalcule l'intersection avec la ligne horizontale représentant le couche
 du Soleil. On obtiendra un point différent de 18:23:59, mais très proche de
 18:23:59 et encore plus proche de la valeur donnée par Stellarium : 18:23:24.
 
-## Mise en Oeuvre de l'Algorithme Simple
+## Mise en Œuvre de l'Algorithme Simple
 
 Faisons d'abord une digression avec l'algorithme simple. Nous prendrons l'exemple
 du coucher du Soleil à Greenwich, le 4 janvier 2018. 
@@ -829,7 +829,7 @@ Ainsi, pour le 4 janvier, l'écart entre le point de midi et le point du coucher
 du Soleil est de 59,9746° (59° 58' 28"). Donc il faut 3,9983 heures (3 h 59 mn 53 s)
 pour parcourir cet angle et le coucher du SVH se produit à 16:04:50.
 
-## Mise en Oeuvre de l'Algorithme Précis
+## Mise en Œuvre de l'Algorithme Précis
 
 Avec l'algorithme précis, on dissocie la rotation de le Terre sur elle-même
 (360,9856 degrés par jour) et la rotation du Soleil autour de la Terre.
@@ -1218,7 +1218,7 @@ et le cercle polaire antarctique, la situation est plus curieuse.
 Le midi solaire vrai correspond à l'ascension droite 0°,
 lorsque le Soleil passe au nord. De plus, comme l'observateur
 doit faire face au nord et non pas au sud, le Soleil progresse
-dans le sens est -> nord -> ouest, c'est-à-dire
+dans le sens est → nord → ouest, c'est-à-dire
 dans le sens des azimuths _décroissants_.
 Donc, lorsque le midi solaire vrai est en avance sur 
 le midi solaire moyen, le point de l'analemme sera à gauche
