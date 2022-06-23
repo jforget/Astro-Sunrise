@@ -672,12 +672,7 @@ by a script using [DateTime::Event::Sunrise](https://metacpan.org/pod/DateTime::
 
 And here is the curve for the equation of time.
 
-<div>
-
-    <p>
-    <img src='equ-time.png' alt='Curve of the equation of time during one year' />
-    </p>
-</div>
+![Curve of the equation of time during one year](equ-time.png)
 
 #### The Analemma
 
@@ -710,12 +705,7 @@ down of the sinusoidal curve (and less obviously, a vertical stretch or compress
 of this curve). The equation of time results in a leftward or rightward shift
 of the curve.
 
-<div>
-
-    <p>
-    <img src='pseudo-analemma.gif' alt="Evolution of the Sun's trajectory during a year" />
-    </p>
-</div>
+![Evolution of the Sun's trajectory during a year](pseudo-analemma.gif)
 
 Q: Wahoo! Impressive!
 
@@ -955,12 +945,7 @@ moves along the pseudo-analemma. But instead of using a location
 at Greenwich, we use a polar location still at longitude zero, but at
 76 degrees and 59 minutes from the equator.
 
-<div>
-
-    <p>
-    <img src='ps-an-pol.gif' alt="Evolution of the Sun's trajectory during a year (arctic variant)" />
-    </p>
-</div>
+![Evolution of the Sun's trajectory during a year (arctic variant)](ps-an-pol.gif)
 
 As you can see, around 21st April and 21st August, the solar course
 is tangent or nearly so with the line of horizon.
@@ -986,12 +971,7 @@ The diagram below shows the effect of a 6' vertical translation on the solar cou
 two cases: 20th April at 76° 59' N and 21st December at Greenwich.
 Warning: it is not to scale.
 
-<div>
-
-    <p>
-    <img src='sunset-slope.png' alt="Sun course, comparison between Greenwich on 21/12 and latitude 76 on 20/04" />
-    </p>
-</div>
+![Sun course, comparison between Greenwich on 21/12 and latitude 76 on 20/04](sunset-slope.png)
 
 Q: And what happens to people living in polar locations when
 the date is far from any transition?

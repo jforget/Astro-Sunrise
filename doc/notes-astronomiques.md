@@ -686,12 +686,7 @@ basé sur [DateTime::Event::Sunrise](https://metacpan.org/pod/DateTime::Event::S
 
 Et voici la courbe correspondante de l'équation du temps.
 
-<div>
-
-    <p>
-    <img src='equ-time.png' alt="Courbe de l'équation du temps pendant un an" />
-    </p>
-</div>
+![Courbe de l'équation du temps pendant un an](equ-time.png)
 
 #### Analemme
 
@@ -727,12 +722,7 @@ journée se traduit par un déplacement haut-bas de la sinusoïde
 haut-bas de la courbe). L'équation du temps se traduit
 par un déplacement horizontal de la sinusoïde.
 
-<div>
-
-    <p>
-    <img src='pseudo-analemma.gif' alt="Evolution de la course du Soleil pendant un an" />
-    </p>
-</div>
+![Evolution de la course du Soleil pendant un an}(pseudo-analemma.gif)
 
 Q : Ouaaaaah ! Impressionnant, ton schéma !
 
@@ -976,12 +966,7 @@ par rapport à la pseudo-analemme. Mais au lieu de nous situer à Greenwich,
 nous nous placerons au-delà du cercle polaire. Nous ne quittons pas le méridien
 de Greenwich, mais nous prenons place à 76 degrés et 59 minutes de l'équateur.
 
-<div>
-
-    <p>
-    <img src='ps-an-pol.gif' alt="Evolution de la course du Soleil pendant un an (variante arctique)" />
-    </p>
-</div>
+![Évolution de la course du Soleil pendant un an (variante arctique)](ps-an-pol.gif)
 
 Comme tu peux le voir, aux alentours du 21 avril et du 21 août,
 la course du Soleil est tangente ou quasiment tangente à la ligne d'horizon.
@@ -1007,12 +992,7 @@ Le diagramme ci-dessous montre l'effet d'une translation verticale de 6' sur la 
 du Soleil dans les deux cas : 20 avril à 76° 59' et 21 décembre à Greenwich.
 Attention, le diagramme n'est pas à l'échelle.
 
-<div>
-
-    <p>
-    <img src='sunset-slope.png' alt="Course du Soleil, comparaison entre Greenwich le 21/12 et la latitude 76 le 20/04" />
-    </p>
-</div>
+![Course du Soleil, comparaison entre Greenwich le 21/12 et la latitude 76 le 20/04](sunset-slope.png)
 
 Q : Et pour ceux qui habitent dans une région polaire, que se passe-t-il
 aux dates éloignées des transitions ?
