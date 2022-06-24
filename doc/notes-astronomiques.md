@@ -392,7 +392,7 @@ polaire arctique.
 Remarquez que, de temps en temps, dans certains paragraphes, je laisserai tomber certains de ces
 mensonges. Toutefois, le plus souvent, la plupart de ces mensonges sont en vigueur.
 
-## Conclusion
+## Conclusion intermédiaire
 
 Tout ça pour dire que dans la suite, j'utiliserai aussi bien le modèle
 géocentrique où le Soleil tourne autour de la Terre en 24 heures
@@ -875,14 +875,20 @@ la période de 3 h, 59 mn et 57 s.
 
 ## Que s'est-il passé au printemps 2020 ?
 
+Au printemps 2020, juste avant la publication de 
+[DateTime::Event::Sunrise version 0.0506](https://metacpan.org/pod/DateTime::Event::Sunrise),
+le 9  juillet 2020, j'ai eu  une période de vide  et de découragement.
+J'ai même failli abandonner le sujet et
+[transmettre le module à ADOPTME](https://metacpan.org/author/ADOPTME/permissions).
+
 Remontons un  peu plus loin. En  janvier 2019, j'ai publié  la version
 0.98 de  [Astro::Sunrise](https://metacpan.org/pod/Astro::Sunrise), avec l'implémentation du  calcul itératif.
 Pour  les  données   de  test,  je  n'ai  pas  cherché   à  faire  des
 vérifications croisées  avec d'autres sources, j'ai  juste vérifié que
 le calcul  itératif aboutissait et  que le  résultat était à  peu près
 correct.    Je    n'ai    pas    cherché    à    mettre    à    niveau
-[DateTime::Event::Sunrise](https://metacpan.org/pod/DateTime::Event::Sunrise), j'estimais  que ce n'était pas  encore le
-moment.
+[DateTime::Event::Sunrise](https://metacpan.org/pod/DateTime::Event::Sunrise),
+j'estimais  que ce n'était pas  encore le moment.
 
 Puis, en avril 2020, un utilisateur  a créé un ticket expliquant qu'il
 avait comparé  les résultats  de [DateTime::Event::Sunrise](https://metacpan.org/pod/DateTime::Event::Sunrise)  avec des

@@ -155,7 +155,7 @@ I cannot control the parameters.
 - The _Institut de Mécanique Céleste et de Calcul des Éphémérides_ (IMCCE, Institute of Celestial Mechanics and Ephemerides Computation)
 
     This [website](https://www.imcce.fr/)
-    (also available in [english](https://www.imcce.fr/langues/en/index.html))
+    (also available in English)
     used to give an HTML form to generate a table giving the sunrise and sunset times
     for a location and a time span  of your choosing. Unfortunately, this webpage
     disappeared.
@@ -373,7 +373,7 @@ on Earth are between the Tropic of Cancer and the Arctic Circle.
 In some paragraphs, I will temporarily set aside some of these lies. But in most
 paragraphs most of these lies will be in effect.
 
-## Conclusion
+## Intermediate Conclusion
 
 All this to explain that in the following text, I will not refrain from using
 the geocentric model where the Sun turns around the Earth in 24 hours or the 
@@ -859,6 +859,11 @@ speed. In the end, it is better than the basic algorithm, which uses an approxim
 but still wrong orbital speed, but for the whole span of 3 h, 59 mn and 57 s.
 
 ## What Happened in Spring 2020?
+
+In Spring 2020, just before the 2020-07-09 release of 
+[DateTime::Event::Sunrise version 0.0506](https://metacpan.org/pod/DateTime::Event::Sunrise),
+I had some discouragement and I nearly let the module go by
+[giving it to ADOPTME](https://metacpan.org/author/ADOPTME/permissions).
 
 Let us look a bit farther into  the past. In January 2019, I published
 version  0.98   of  [Astro::Sunrise](https://metacpan.org/pod/Astro::Sunrise),  with  the   precise  algorithm
