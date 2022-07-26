@@ -37,6 +37,11 @@ très semblable  et dont l'API  est différente. Comme les  deux modules
 évoluent à des vitesses différentes,  le présent texte peut se révéler
 en déphasage avec le module L<Astro::Sunrise>.
 
+Suite à des problèmes avec le convertisseur POD de Github au printemps
+2022, ce texte  a été converti en Markdown. La  version POD n'est plus
+maintenue, même si le convertisseur POD de Github a été réparé. Suivez
+la version Markdown.
+
 =head1 Pourquoi ce texte, et pour qui
 
 Le but principal de ce texte est de donner des

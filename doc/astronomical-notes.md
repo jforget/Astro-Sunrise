@@ -30,6 +30,11 @@ Since both  modules move at different  speeds, it may happen  that the
 text you  are reading is  not synchronised with  the [Astro::Sunrise](https://metacpan.org/pod/Astro::Sunrise)
 module.
 
+During spring  2022, there  has been some  problems with  Github's POD
+converter. So I have decided to convert this text to Markdown. Now POD
+version is  no longer maintained,  even if Github's POD  converter has
+been fixed. So, please refer to the Markdown version.
+
 # Why This Text? For Whom?
 
 The main purpose of this text is to explain how the sunrises

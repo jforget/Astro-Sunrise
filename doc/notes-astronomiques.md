@@ -27,11 +27,17 @@ Du coup, je pense qu'il est absent des paquets `.deb`
 et `.rpm` qui pourraient être construits pour ce module.
 
 Bien  que  ce  texte  fasse   partie  de  la  distribution  du  module
-[Astro::Sunrise](https://metacpan.org/pod/Astro::Sunrise),     il     documente    également     le     module
+[Astro::Sunrise](https://metacpan.org/pod/Astro::Sunrise),
+il documente également le module
 [DateTime::Event::Sunrise](https://metacpan.org/pod/DateTime::Event::Sunrise), dont le noyau (calculs astronomiques) est
 très semblable  et dont l'API  est différente. Comme les  deux modules
 évoluent à des vitesses différentes,  le présent texte peut se révéler
 en déphasage avec le module [Astro::Sunrise](https://metacpan.org/pod/Astro::Sunrise).
+
+Suite à des problèmes avec le convertisseur POD de Github au printemps
+2022, ce texte  a été converti en Markdown. La  version POD n'est plus
+maintenue, même si le convertisseur POD de Github a été réparé. Suivez
+la version Markdown.
 
 # Pourquoi ce texte, et pour qui
 
@@ -722,7 +728,7 @@ journée se traduit par un déplacement haut-bas de la sinusoïde
 haut-bas de la courbe). L'équation du temps se traduit
 par un déplacement horizontal de la sinusoïde.
 
-![Evolution de la course du Soleil pendant un an}(pseudo-analemma.gif)
+![Evolution de la course du Soleil pendant un an](pseudo-analemma.gif)
 
 Q : Ouaaaaah ! Impressionnant, ton schéma !
 
