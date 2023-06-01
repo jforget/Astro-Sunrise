@@ -3,7 +3,7 @@
 This text is published under the _Creative Commons_ license
 CC-BY-ND.
 
-Copyright (c) 2017-2021 Jean Forget. All rights reserved.
+Copyright (c) 2017-2023 Jean Forget. All rights reserved.
 
 I must precise that I am not a professional astronomer. The text
 below may contain errors, be aware of this. I will not be held
@@ -57,10 +57,10 @@ I prefer writing (on GitHub) for my teddy-bear.
 I write this text to tell my teddy-bear which problems I have
 encountered while maintaining this module and how I fixed them.
 But mainly, I write this to give him a detailed description of the
-precise iterative algorithm, because 
+precise iterative algorithm, because
 [Paul Schlyter's explanations](https://www.stjarnhimlen.se/comp/riset.html#3)
 are not detailed enough for my taste and there is no
-compilable source available to check this algorithm (unlike the 
+compilable source available to check this algorithm (unlike the
 [simple version without iteration](https://www.stjarnhimlen.se/comp/sunriset.c)).
 
 ## For Whom? For The Next Module Maintainer
@@ -70,7 +70,7 @@ English version is not for him.
 The second person for whom I write is the next module maintainer. I have read
 [Neil Bowers' message](http://codeverge.com/perl.module-authors/the-module-authors-pledge/744969)
 about _the module authors pledge_. I agree with him and I declare that
-should I stop maintaining my modules for whatever reason, I accept that 
+should I stop maintaining my modules for whatever reason, I accept that
 any volunteer can take charge of them.
 
 What Neil did not explain, is that the new maintainer must obey a few
@@ -109,7 +109,7 @@ Yet, you will find here simple computations and mathematical reasoning.
 
 Some chunks of this text appear as a series of questions and answers.
 This is not a FAQ. Rather, this is a elegant way to give a progressive
-explanation of some subject. This method has already been used by 
+explanation of some subject. This method has already been used by
 many other writers, especially Plato, Galileo and Douglas Hofstadter.
 
 ## Other Remarks
@@ -124,7 +124,7 @@ In a similar way, 21st of March is called the _vernal equinox_ or the
 _spring equinox_, even if it pinpoints the beginning of autumn in the Southern
 hemisphere.
 
-But using politically correct sentences would yield convoluted phrases, 
+But using politically correct sentences would yield convoluted phrases,
 which hinders the pedagogical purpose of the text and the understanding
 of the described phenomena.
 
@@ -175,9 +175,9 @@ I cannot control the parameters.
 
     This [site](https://www.stjarnhimlen.se/english.html)
     provides a
-    [C program](https://stjarnhimlen.se/comp/sunriset.c) 
-    ready to compile and use, giving the 
-    [sunrise and sunset](https://stjarnhimlen.se/comp/riset.html) 
+    [C program](https://stjarnhimlen.se/comp/sunriset.c)
+    ready to compile and use, giving the
+    [sunrise and sunset](https://stjarnhimlen.se/comp/riset.html)
     times. This is the basis of the simple algorithm used in
     [Astro::Sunrise](https://metacpan.org/pod/Astro::Sunrise). Its precision, as stated by the author,
     is one or two minutes, but it can be much less precise depending
@@ -185,7 +185,7 @@ I cannot control the parameters.
     beginning or the end of the period when the midnight sun is visible.
 
     Paul Schlyter's website includes also
-    [many informations](https://stjarnhimlen.se/comp/ppcomp.html) 
+    [many informations](https://stjarnhimlen.se/comp/ppcomp.html)
     about computing the position of various celestial bodies.
     This website is very interesting, but I preferred writing
     my own version, describing the computation of only the sun
@@ -193,14 +193,14 @@ I cannot control the parameters.
 
 - The U.S Naval Observatory
 
-    [The US Naval Observatory](http://aa.usno.navy.mil/faq/index.php) 
+    [The US Naval Observatory](http://aa.usno.navy.mil/faq/index.php)
     gives a
     [HTML form](http://aa.usno.navy.mil/data/docs/RS_OneYear.php)
     to compute the sunrise and sunset times. These times are given
     in HH:MM format. I would have preferred HH:MM:SS, but I will have
     to deal with just HH:MM.
 
-    This website gives also 
+    This website gives also
     [very interesting informations](http://aa.usno.navy.mil/faq/index.php)
     about celestial computations, but without restricting itself to the sun,
     like I am doing here.
@@ -341,7 +341,7 @@ is nearer to the truth than assertions B and C (and A).
 Assertions B and C are what Terry Pratchett, Jack Cohen and Ian Stewart call
 _lies to children_ (_Science of Discworld_, chapter 4, pages 38 and 39). These
 are false assertions, but simple enough to be understood by a child and which, even
-if false, leads children to a better understanding of the described phenomena and brings
+if false, lead children to a better understanding of the described phenomena and bring
 them closer to truth. You cannot tell assertion C to a child and expect him to understand
 it without telling him first assertion B. And it is worse with assertions D and next.
 
@@ -352,12 +352,12 @@ including especially de Broglie's work
 with the duality of wave and particle and the Copenhagen interpretation. Is the ultimate
 nature of the electron (for example) a wave? No. Is it a particle? No. So what? We do not
 care about the ultimate nature of the electron. The aim of Physics is to no longer
-to provide a mathematical _representation_ of the real world, but to build 
+to provide a mathematical _representation_ of the real world, but to build
 several mathematical _models_ of the real world. We know that intrinsically all
-models are false, but each one has it usefulness to lead to make computations about
+models are false, but each one has its usefulness to make computations about
 the real world.
 
-Please note that I was talking about scientific methods. I was not dealing with 
+Please note that I was talking about scientific methods. I was not dealing with
 electoral campaigns and advertisements. Every sane adult knows for
 sure that these are ridden with lies.
 
@@ -366,12 +366,12 @@ hypotheses", you will find in the following:
 
 - the light propagates instantly from one place to another,
 - the celestial bodies outside the Solar System are motionless,
-- they are located on a sphere call the _Celestial Sphere_, 
+- they are located on a sphere call the _Celestial Sphere_,
 - UTC time is equal to GMT time
 - the Earth's surface is a perfect sphere, without any polar flattening and without any equatorial bulge,
 - the Earth's surface is a perfect sphere, without any mountains, valleys or molehills,
 - there is even a place in this text where I imply that the duration of
-an astronomical year is an integer number of days (365, of course), 
+an astronomical year is an integer number of days (365, of course),
 - and, as I have already stated, all interesting locations
 on Earth are between the Tropic of Cancer and the Arctic Circle.
 
@@ -381,7 +381,7 @@ paragraphs most of these lies will be in effect.
 ## Intermediate Conclusion
 
 All this to explain that in the following text, I will not refrain from using
-the geocentric model where the Sun turns around the Earth in 24 hours or the 
+the geocentric model where the Sun turns around the Earth in 24 hours or the
 geocentric model where the Sun turns around the Earth in 365.25 days.
 
 "It is not necessary that the following hypothesis be true or even
@@ -412,7 +412,7 @@ per day or 15.04107 degrees per hour.
 Q: I thought that the Earth was spinning in 24h!
 
 A: While the Earth spins, the Sun orbits around it. And what we see is
-the combination of both movements, which gives a combined speed of 360 degrees per day.
+the combination of both movements, which gives a combined speed of 360 degrees per day on average.
 What the commoner is interested in is to find the Sun at the same place in the
 sky at regular times day after day.  Only after this is achieved, the commoner
 becomes a learned person and is interested in knowing and understanding the
@@ -426,7 +426,7 @@ to this question later.
 ## Coordinates
 
 The ecliptic is the plane where the Earth's orbit around the Sun is located (when
-using an heliocentric model) or where the Sun's orbit around the Earch is 
+using an heliocentric model) or where the Sun's orbit around the Earth is
 located (when using a geocentric model). We define also the equatorial plane,
 the plane which contains the Earth's equator. These two planes intersect with
 a 23° 26' angle. The intersection is a line, named _line of nodes_.
@@ -464,7 +464,7 @@ sun is always zero.
 Lastly, there is the local coordinate system. For a given celestial body, we
 project its location to the ground, or rather to the plane that is tangent to
 the ground. The angle between the North and this location on the tangent plane
-is called _azimuth_ and the angle between the tangent plane and the line to the 
+is called _azimuth_ and the angle between the tangent plane and the line to the
 celestial body is called _altitude_.
 
 ### Sidereal Time
@@ -512,11 +512,11 @@ on the surface of Earth within a few kilometers from each
 other in the E → W direction, these points have a different sidereal
 time. With sidereal time as a time, that would translate as saying
 that sidereal time and the principle of timezones are incompatible.
-Am I right or am I wrong? I found nothing about that in the 
+Am I right or am I wrong? I found nothing about that in the
 "sidereal time as a time" explanations.
 
 So, between a simple and comprehensive definition on one side
-and a convoluted and incomplete definition on the other side, 
+and a convoluted and incomplete definition on the other side,
 I will stick with "sidereal time as an angle" definition.
 
 ## Other Movements
@@ -605,7 +605,7 @@ There are two reasons.
 
 First, there is an angle between the ecliptical plane and the equatorial plane,
 therefore, a constant-speed rotation on the ecliptical plane does not translate
-to a constant-speed rotation when measured by right ascension on the equatorial 
+to a constant-speed rotation when measured by right ascension on the equatorial
 plane. The rate of variation of the right ascension is a variable rate.
 
 If we use the same units for the ecliptic longitude and the right ascension
@@ -626,7 +626,7 @@ And if you prefer hours, here are the values:
 #### Kepler's Second Law
 
 Second, the rotational speed of Sun itself on the ecliptical plane is not a constant.
-It obeys Kepler's second law, with a rotational speed more or less inversely 
+It obeys Kepler's second law, with a rotational speed more or less inversely
 proportional to the Earth-Sun distance.
 
 Q: You cannot apply Kepler's second law to a geocentric model!
@@ -693,10 +693,10 @@ which is more convenient).
 
 The concept of _Mean Sun_ is a virtual Sun like this, calibrated so it crosses
 the meridian at 12:00 (Local Mean Time) each day, and which minimizes the difference
-between the real local noon and the mean local noon. 
+between the real local noon and the mean local noon.
 
 I will also consider several "virtual homocinetic suns" or VHS (no relation with
-magnetic tapes). These virtal suns are synchronised with the real Sun at some 
+magnetic tapes). These virtual suns are synchronised with the real Sun at some
 convenient point and then move with a constant angular speed.
 
 # Computing Sunrise and Sunset
@@ -706,7 +706,7 @@ day's length and the equation of time to pinpoint when the Sun reaches the
 altitude that corresponds to sunrise or sunset.
 
 In the schema below, the variation of day's length results in a bobbing up and
-down of the sinusoidal curve (and less obviously, a vertical stretch or compression 
+down of the sinusoidal curve (and less obviously, a vertical stretch or compression
 of this curve). The equation of time results in a leftward or rightward shift
 of the curve.
 
@@ -714,7 +714,7 @@ of the curve.
 
 Q: Wahoo! Impressive!
 
-A: You should not be impressed. I took some liberties with the reality. First, 
+A: You should not be impressed. I took some liberties with the reality. First,
 I figured the Sun's trajectory as a sinusoidal curve, because it is easy to compute,
 but I did not check whether it was the real curve. And I would bet that it is
 only approximately close to the real curve. Second, the equation of time is very much
@@ -724,18 +724,18 @@ to 13:00. But without this stretching, you would not have seen anything.
 
 Q: And this figure eight, is this the analemma?
 
-A: No. The analemma gives the position of the Sun as azimuth and height at 
+A: No. The analemma gives the position of the Sun as azimuth and height at
 _mean_ solar noon. In the curve above, the abscisse is the mean time of
 _true_ solar noon and the ordinate is the height of the Sun at this instant.
 In other words, the analemma is based on a regular temporal event, the mean solar
-noon, and plots the correlation between two variable spatial phenomena, the 
+noon, and plots the correlation between two variable spatial phenomena, the
 azimuth and the height of the Sun. On the other hand, the curve above is based on
-a precise spatial event, the azimuth 180°, and plots the correlation between a 
+a precise spatial event, the azimuth 180°, and plots the correlation between a
 variable spatial phenomenon, the height of the Sun and a variable temporal event,
 the true solar noon.
 
 I admit that the ordinates of both curves are very similar notions, and it would be
-comparing golden apples with Granny Smiths. On the other hand, the abscisses are 
+comparing golden apples with Granny Smiths. On the other hand, the abscisses are
 a spatial angle in one case and a time of the day in the other case, so it would
 be comparing apples with oranges.
 
@@ -772,7 +772,7 @@ On 11th September, the true solar noon occurs at 11:56:34,
 with an altitude of 42°53'40" and the next day it occurs
 at 11:56:13 with an altitude of 42°30'47".
 
-With the first model, we consider that the 11:56:34 value applies on the 11th from 00:00:01 until 23:59:59, at which time it instantly jumps 
+With the first model, we consider that the 11:56:34 value applies on the 11th from 00:00:01 until 23:59:59, at which time it instantly jumps
 to 11:56:13 for the 12th. In other words, the pseudo-analemma
 is a cloud of 365 discrete points.
 
@@ -800,7 +800,7 @@ We will use the example of the sunset at Greenwich, on 4th January, 2018.
 
 This paragraph and the following are based on the Perl code below:
 
-    for(0, 1) { 
+    for(0, 1) {
       say join( " | ",$_, sunrise({ year =>  2018, month =>  1, day => 4,
                                     lon  =>    0,  lat   => +51.5, tz  =>  0, isdst => 0,
                                     alt  => -.833, upper_limb => 0, precise => $_, polar => 'retval',
@@ -810,12 +810,12 @@ This paragraph and the following are based on the Perl code below:
 The basic algorithm begins by computing the day's true solar noon.
 On 4th Jan, the true solar noon at Greenwich happens at 12:04:56.
 
-Then we apply both Earth's spin (360.9856 degrees per day) and 
+Then we apply both Earth's spin (360.9856 degrees per day) and
 the movement of a VHS ("virtual homocinetic sun"), that is, 0.9856 degrees per
 day. The result is a combined rotational speed of 360 degrees per day, that is,
 15 degrees per hour. And sunset happens when the VHS reaches the target altitude.
 
-So on 4th Jan, the angle between noon and sunset is 59.9746° (59° 58' 28"). 
+So on 4th Jan, the angle between noon and sunset is 59.9746° (59° 58' 28").
 We need 3.9983 hours (3 h 59 mn 53 s) to run this angle and the sunset for
 the VHS occurs at 16:04:50.
 
@@ -823,7 +823,7 @@ the VHS occurs at 16:04:50.
 
 With the precise algorithm, we keep separate Earth's spin (360.9856 degrees
 per day) and the Sun's rotational speed around Earth. In addition, this
-rotational speed is the real speed, spanning from 0.9552 to 1.0166 
+rotational speed is the real speed, spanning from 0.9552 to 1.0166
 degree per day.
 
 First iteration. We start from the true solar noon at 12:04:56 and we apply Earth's spin
@@ -836,7 +836,7 @@ Sun's position at 16:04:11. This virtual solar noon occurs at 12:05:01.
 With this reference, we apply the Earth's rotation and we get a second
 value for sunset, 16:04:23 (16.0731615074431 in decimal hours).
 
-For iteration 3, we determine the virtual solar noon 
+For iteration 3, we determine the virtual solar noon
 that corresponds to the Sun's position at 16:04:23. This new virtual solar
 noon occurs at 12:05:01. And one more time we apply the Earth's rotation
 and we obtain a third value for sunset, 16:04:23, differing from the previous
@@ -857,7 +857,7 @@ And the sunset occurs at 16:04:23.
 
 During iteration 3, between the real solar noon 12:04:56 and the time given
 by iteration 2, 16:04:23, the Sun orbitates with its real speed 1.0166 degree per day.
-Then at 16:04:23, it freezes, letting the Earth continue its spin. And sunset 
+Then at 16:04:23, it freezes, letting the Earth continue its spin. And sunset
 happens 9 milliseconds later, at 16:04:23. So, there are 3 h 59 mn 27 s when we use
 the Sun's real orbital speed and 9 milliseconds when we use an obviously wrong orbital
 speed. In the end, it is better than the basic algorithm, which uses an approximate
@@ -865,7 +865,7 @@ but still wrong orbital speed, but for the whole span of 3 h, 59 mn and 57 s.
 
 ## What Happened in Spring 2020?
 
-In Spring 2020, just before the 2020-07-09 release of 
+In Spring 2020, just before the 2020-07-09 release of
 [DateTime::Event::Sunrise version 0.0506](https://metacpan.org/pod/DateTime::Event::Sunrise),
 I had some discouragement and I nearly let the module go by
 [giving it to ADOPTME](https://metacpan.org/author/ADOPTME/permissions).
@@ -922,7 +922,7 @@ implementation of the precise algorithm.
 # More About The Parameters
 
 Below, I give some detailed explanations about the parameter used when
-calling the module's functions. These explanations would have been too 
+calling the module's functions. These explanations would have been too
 long if they had been included in the module's POD and a casual doc reader
 would have been drowned in a deluge of informations.
 
@@ -967,7 +967,7 @@ to achieve this variation of 6'.
 
 Q: Where does this 6' value come from?
 
-A; This is the value I calculated in the chapter 
+A; This is the value I calculated in the chapter
 ["Principle of the Iterative Computation"](#principle-of-the-iterative-computation).
 
 On the other hand, if you live in a temperate location far from the
@@ -1049,7 +1049,7 @@ And the deviation caused by refraction is highly dependent on the temperature
 profile in the atmosphere, therefore dependent on the current weather.
 
 You can refine the computation by using value -0.583 for the `alt` parameter and
-giving a true value to the `upper_limb`) parameter (usually 1). In this case, the
+giving a true value to the `upper_limb` parameter (usually 1). In this case, the
 radius of the sun disk is computed anew for each day. On the other hand, there is
 no way within the module to refine the computation of the refraction. The answer
 can only come from outside the module computing sunrises and sunsets.
@@ -1057,7 +1057,7 @@ can only come from outside the module computing sunrises and sunsets.
 Q: So using a parameter `alt` with -0.583 and a parameter `upper_limb` with 0 is stupid?
 
 A: No, it is just unusual. As stated by Paul Schlyter
-[in his website](http://www.stjarnhimlen.se/comp/riset.html#2), 
+[in his website](http://www.stjarnhimlen.se/comp/riset.html#2),
 the Swedish national almanacs define sunrise and sunset as the instants when the _centre_
 of the sun disk reaches the optical horizon, not the instants when the _upper limb_ of
 the sun disk reaches the optical horizon.
@@ -1090,15 +1090,15 @@ A: You guessed, it, there is nearly no difference. The example I will take is su
 at Fairbanks on 3rd January 2020. I take 3rd January because it is the time of the year
 when the sun is at its largest. According to Stellarium, the diameter is 32'32", so the
 radius is 16'16". And I take Fairbanks, because near a polar circle, the course of the sun
-at sunset is much shallower than near the equator. So, for 
+at sunset is much shallower than near the equator. So, for
 `alt => -0.833, upper_limb => 0` the sunset occurs when the
-center of the sun dist is at -50' and for 
+center of the sun dist is at -50' and for
 `alt => -0.583, upper_limb => 1` it occurs when the center of the sun disk is at -51'16".
 Stellarium gives 15:59:12 in the first case and 15:59:37 in the second case.
 A meagre 25-second difference.
 
 On the other hand, let us move a few hundred kilometers to the North,
-to 68°01'46" N, 147°42'59" W, beyond the polar circle. The computation with 
+to 68°01'46" N, 147°42'59" W, beyond the polar circle. The computation with
 `alt => -0.833, upper_limb => 0` shows that the sun
 stays below the horizon and neither rises nor sets, while the computation with
 `alt => -0.583, upper_limb => 1` gives a sunrise at 12:45:11 and a
@@ -1132,7 +1132,7 @@ which result should your yearless algorithm give? 17:37:03? Or 17:38:26?
 Q: That means that my algorithm is bad.
 
 A: No. If you want to know the precise instant when the Sun disappear
-from our field of view, your algorithm is wrong indeed. On the other hand; if you are only interested
+from our field of view, your algorithm is wrong indeed. On the other hand, if you are only interested
 in the level of light, your algorithm is OK. I know a person who uses
 a yearless algorithm to activate automated lights in his living room.
 For him, turning on the lights at 17:37:03 or 17:38:26 has no importance.
@@ -1158,7 +1158,7 @@ which produces [DateTime](https://metacpan.org/pod/DateTime) objects, complete w
 Q: Could we modify [Astro::Sunrise](https://metacpan.org/pod/Astro::Sunrise) to give `"hh:mm:ss"` results instead
 of `"hh:mm"`?
 
-A: We could. But would this precision be meaningful? According to Paul 
+A: We could. But would this precision be meaningful? According to Paul
 Schlyter, the algorithm precision is about 1 or 2 minutes, except at the
 beginning and the end of the Polar Day period when the precision is much
 worse. So it is not worth adding the seconds to the results produced by
@@ -1187,13 +1187,13 @@ First, let us deal with observers located north of the Arctic Polar Circle.
 They just have to know that the analemma and the pseudo-analemma cross the horizon
 and are partly hidden by the ground. The hidden part, more or less important depending
 on the observer's latitude, corresponds to the year period when the _polar night_ is
-in effect. You can find an example of the arctic pseudo-analemma in the 
+in effect. You can find an example of the arctic pseudo-analemma in the
 paragraph about the `precise` parameter.
 
 For observers between the Tropic of Capricorn and the Antarctic Polar Circle,
 this is more strange. True solar noon corresponds to a right ascension of 0°,
 when the Sun is exactly northward. As the observer must face north instead of south,
-he sees the sun crossing the sky in the direction E → N → W, that is, in the 
+he sees the sun crossing the sky in the direction E → N → W, that is, in the
 direction of _decreasing_ right ascension values. So, when the true solar noon is
 ahead of the mean solar noon, the point on the analemma will be to the left of the Y-axis,
 and when the true solar noon is later than the mean solar noon, the point on the analemma
@@ -1202,7 +1202,7 @@ will be to the right of the Y-axis.
 On the same time, for the pseudo-analemma, there is no reason to change the way
 the time of day is represented on the abscisses, that is, left to right. Therefore,
 the analemma and the pseudo-analemma will be more or less superposable, without
-an intervening symmetry. 
+an intervening symmetry.
 
 For observer to the south of the Antarctic Polar Circle, the situation is the same,
 with the additional provision that the analemma and the pseudo-analemma will be partly
@@ -1211,7 +1211,7 @@ hidden by the ground.
 And what about observers located between both tropics? An observer facing south
 cannot see the whole analemma, he would miss the part around 21st of June,
 which is located behind his back. And if he faces north, he will miss the
-part around 21st of December. What to do then? Just lie on the ground. If the 
+part around 21st of December. What to do then? Just lie on the ground. If the
 observer lies with the head to the north and the feet to the south, the observed
 analemma will be similar to the curve seen by an observer north of the Tropic of Cancer.
 If the observer lies with the head to the south and the feet to the north, the situation

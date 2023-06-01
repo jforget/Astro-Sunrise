@@ -4,7 +4,7 @@ Ce texte est diffusé sous la licence _Creative Commons_
 CC-BY-ND : avec attribution et me demander avant de modifier
 le contenu.
 
-Copyright (c) 2017--2021 Jean Forget, tous droits réservés.
+Copyright (c) 2017--2023 Jean Forget, tous droits réservés.
 
 Je tiens à signaler que je ne suis pas un astronome professionnel.
 Il est possible que le texte ci-dessous contienne des erreurs.
@@ -48,12 +48,12 @@ dans la documentation POD du module.
 
 ## Pour qui ? pour mon nounours
 
-Avez-vous lu 
+Avez-vous lu
 [Le guide de brian pour résoudre tout problème Perl](http://articles.mongueurs.net/traductions/guide_brian.html) ?
 Même si l'écrasante majorité des conseils concerne le débugage
 d'un programme Perl erroné, quelques conseils s'appliquent à
 n'importe quel problème intellectuel.
-L'un de ces conseils généralistes consiste à 
+L'un de ces conseils généralistes consiste à
 [parler à votre nounours](http://articles.mongueurs.net/traductions/guide_brian.html#item_En_avez_vous_parl__au_nounours_nbsp__).
 Ne vous contentez pas de faire semblant et d'imaginer que vous
 parlez à votre nounours, il faut réellement parler à haute voix
@@ -65,8 +65,8 @@ _écrire_ à mon nounours via GitHub.
 Ainsi donc, j'écris ce texte pour raconter à mon nounours
 les problèmes que j'ai rencontrés lors de la maintenance
 du module et les choix que j'ai faits alors.
-Mais surtout, c'est pour lui expliquer le fonctionnement de l'algorithme itératif, 
-[décrit succintement](https://www.stjarnhimlen.se/comp/riset.html#3) 
+Mais surtout, c'est pour lui expliquer le fonctionnement de l'algorithme itératif,
+[décrit succintement](https://www.stjarnhimlen.se/comp/riset.html#3)
 par Paul Schlyter
 dans son site web et qu'il n'a pas mis à disposition du public
 sous une forme compilable et exécutable (contrairement à la
@@ -75,7 +75,7 @@ sous une forme compilable et exécutable (contrairement à la
 ## Pour qui ? pour le prochain mainteneur du module
 
 Le deuxième destinataire de ce texte, c'est le futur mainteneur
-du module. J'ai lu 
+du module. J'ai lu
 [le message de Neil Bowers](http://codeverge.com/perl.module-authors/the-module-authors-pledge/744969)
 _The module authors pledge_. Je suis d'accord avec le principe
 et je déclare ici que si pour une raison ou pour une autre je cesse
@@ -179,7 +179,7 @@ ou de l'impossibilité de choisir les paramètres de génération.
     levers et couchers du Soleil pour le lieu de votre choix et pour la
     période de votre choix. Hélas, cette page a disparu de leur site.
 
-    Il existe en revanche un 
+    Il existe en revanche un
     [générateur sous forme de service web](http://vo.imcce.fr/webservices/miriade/?rts),
     mais je ne l'ai pas essayé.
 
@@ -189,9 +189,9 @@ ou de l'impossibilité de choisir les paramètres de génération.
 
     Ce [site](https://www.stjarnhimlen.se/english.html)
     fournit un
-    [programme C](https://stjarnhimlen.se/comp/sunriset.c) 
+    [programme C](https://stjarnhimlen.se/comp/sunriset.c)
     prêt à l'emploi donnant les heures
-    de [lever et de coucher](https://stjarnhimlen.se/comp/riset.html) 
+    de [lever et de coucher](https://stjarnhimlen.se/comp/riset.html)
     du Soleil.
     Comme le fait remarquer Paul Schlyter, c'est la version simple de l'algorithme,
     qui peut présenter des erreurs d'une ou deux minutes en général, ou plus si
@@ -199,7 +199,7 @@ ou de l'impossibilité de choisir les paramètres de génération.
     période où le Soleil est visible à minuit.
 
     Le site web de Paul Schlyter propose
-    de [nombreuses informations](https://stjarnhimlen.se/comp/ppcomp.html) 
+    de [nombreuses informations](https://stjarnhimlen.se/comp/ppcomp.html)
     concernant le calcul des positions des corps célestes. Ce site est très
     intéressant, mais j'ai préféré reprendre à ma sauce (et en français) la
     description du calcul de la position du Soleil, en laissant tomber les autres
@@ -207,14 +207,14 @@ ou de l'impossibilité de choisir les paramètres de génération.
 
 - L'observatoire de l'US Navy
 
-    [L'observatoire de l'US Navy](http://aa.usno.navy.mil/faq/index.php) 
+    [L'observatoire de l'US Navy](http://aa.usno.navy.mil/faq/index.php)
     propose un
     [formulaire](http://aa.usno.navy.mil/data/docs/RS_OneYear.php)
     pour calculer l'heure du lever et l'heure du coucher du Soleil.
     L'heure est donnée à la minute près, alors que j'aurais préféré
     une précision à la seconde près, tant pis.
 
-    Notons toutefois que ce site fournit des 
+    Notons toutefois que ce site fournit des
     [informations très intéressantes](http://aa.usno.navy.mil/faq/index.php)
     (en anglais) sur le calcul de la position des corps célestes, mais sans se focaliser sur
     la position du Soleil comme je le fais ici.
@@ -250,7 +250,7 @@ ou de l'impossibilité de choisir les paramètres de génération.
 
     - Dans Stellarium, figer le temps par `7` si ce n'est pas encore fait.
     - Rechercher le Soleil, la fenêtre de recherche s'activant par `<F3>`.
-    - Vous pouvez préférer l'affichage sans le sol ni l'atmosphère. Il faut utiliser les 
+    - Vous pouvez préférer l'affichage sans le sol ni l'atmosphère. Il faut utiliser les
     bascules `g` et `a`. Et `e` ou `z` pour avoir la grille des coordonnées
     équatoriales ou azimuthales, selon vos préférences du moment.
 
@@ -363,7 +363,7 @@ vérité. Il est illusoire de faire comprendre à un enfant l'énoncé C
 s'il n'a pas déjà appris, compris et admis l'énoncé B. Et c'est la même chose, en pire,
 avec les énoncés D et suivants.
 
-Qui plus est, ce sont ce que j'appelerai des « mensonges pour les adultes ». Au début, on considérait
+Qui plus est, ce sont ce que j'appellerai des « mensonges pour les adultes ». Au début, on considérait
 que la physique était une représentation mathématique du monde réel, se rapprochant de plus
 en plus de la vérité ultime. Puis il y a eu la physique quantique, avec
 notamment le principe de dualité onde / corpuscule de de Broglie et son
@@ -389,10 +389,10 @@ simplificatrices », utilisés dans ce texte :
 - le temps UTC et le temps GMT sont identiques
 - la Terre est parfaitement sphérique, sans le moindre aplatissement aux pôles ni le moindre renflement à l'équateur.
 - la Terre est parfaitement sphérique, sans la moindre montagne, la moindre vallée et la moindre taupinière,
-- il y a même un endroit où je laisse entendre que la durée d'une 
+- il y a même un endroit où je laisse entendre que la durée d'une
 année astronomique est un nombre entier de jours (365, bien sûr),
 - et, ainsi que je l'ai déjà signalé, tous les endroits
-dignes d'intérêt sur la Terre se situent entre le tropique du Cancer et le cercle 
+dignes d'intérêt sur la Terre se situent entre le tropique du Cancer et le cercle
 polaire arctique.
 
 Remarquez que, de temps en temps, dans certains paragraphes, je laisserai tomber certains de ces
@@ -410,7 +410,7 @@ même vraisemblables. Une chose suffit : qu'elles offrent des
 calculs conformes à l'observation. »
 
 Extrait de la préface d'Osiander au livre de Copernic, extrait repris
-par Jean-Pierre Petit comme avant-propos à son livre 
+par Jean-Pierre Petit comme avant-propos à son livre
 [« Cosmic Story »](https://www.savoir-sans-frontieres.com/JPP/telechargeables/Francais/cosmic_story.htm).
 À l'époque de Copernic, le but d'Osiander était de faire admettre l'héliocentrisme à des
 lecteurs partisans inconditionnels du géocentrisme. Ironiquement, je reprends
@@ -472,7 +472,7 @@ Les deux angles obtenus sont appelés « longitude » et
 « latitude ». Pour un astre, lorsque l'on utilise les
 _coordonnées équatoriales_, c'est le même principe,
 sauf que l'origine du premier arc se trouve sur la ligne des nœuds
-et que les angles s'appellent 
+et que les angles s'appellent
 « ascension droite » et « déclinaison ».
 À cause d'une tradition, d'une charte ancienne ou de quelque chose comme ça,
 l'ascension droite est exprimée en heures, minutes et secondes
@@ -487,7 +487,7 @@ perpendiculaire à l'écliptique. Les deux angles s'appellent
 « longitude écliptique » et « latitude écliptique »
 respectivement. La position origine de la longitude écliptique est la ligne des
 nœuds comme pour l'ascension droite, ce qui permet une simplification appréciable des formules
-de conversion d'un système à l'autre. D'un autre côté, l'utilisation 
+de conversion d'un système à l'autre. D'un autre côté, l'utilisation
 d'heures minutes et secondes pour l'ascension droite et de degrés pour
 tous les autres angles introduit une complication superflue à la conversion.
 
@@ -517,7 +517,7 @@ Certes, cette notion est exprimée en heures, minutes et secondes, mais c'est d�
 cas pour l'ascension droite dont tout le monde s'accorde à dire que c'est un angle.
 Paul Schlyter appartient à cette école de pensée. Il déclare carrément que le
 temps sidéral est l'ascension droite du méridien local. Il va même jusqu'à
-calculer le temps sidéral en degrés décimaux, comme il le fait pour l'ascension droite. 
+calculer le temps sidéral en degrés décimaux, comme il le fait pour l'ascension droite.
 
 La deuxième école de pensée considère que le temps sidéral est bel et bien une
 mesure du temps. Voir
@@ -553,7 +553,7 @@ Terre et le Soleil, permettez-moi une petite digression.
 ### Météo et climat
 
 J'ai horreur de ces gens qui, chaque fois qu'il neige, s'exclament
-« Et dire qu'on nous parle de réchauffement 
+« Et dire qu'on nous parle de réchauffement
 climatique ! » Le climat et la météo sont deux choses différentes.
 Quand la température relevée sous abri à 5 heures du matin
 varie de 10 degrés du jour au lendemain, c'est un événement
@@ -578,7 +578,7 @@ environ.
 ### Mouvement de nutation
 
 L'angle entre le plan équatorial et le plan de l'écliptique varie très
-légèrement. Dans le programme C de Paul Schlyter, l'angle diminue de 
+légèrement. Dans le programme C de Paul Schlyter, l'angle diminue de
 356 nanodegrés par jour (3,56e-7 °/j, 1,3e-4 °/année).
 
 ### Avance du périhélie
@@ -600,7 +600,7 @@ sidéral). J'ai lu quelque part qu'aux temps paléontologiques, le jour durait
 
 La variation est lente, mais avec nos moyens modernes, il est possible de la mesurer.
 Depuis que les scientifiques ont adopté un étalon atomique pour le temps, abandonnant
-l'étalon astronomique, il a été nécessaire d'ajouter 
+l'étalon astronomique, il a été nécessaire d'ajouter
 27 [secondes intercalaires](http://michel.lalos.free.fr/cadrans_solaires/doc_cadrans/seconde_intercalaire/seconde_intercalaire.html)
 en 47 ans pour resynchroniser l'échelle de temps atomique avec
 l'échelle de temps astronomique.
@@ -631,7 +631,7 @@ la longitude écliptique de 226°20'31". Et pour une longitude
 écliptique de 313°32'52", l'ascension droite est de 316°47", soit le même écart
 en sens inverse, écart que l'on retrouve également pour la longitude écliptique
 de 133°32'52". Ce sont les valeurs extrêmes des écarts pour l'obliquité
-de 23° 26'. Et si vous préférez les heures, minutes, secondes, voici 
+de 23° 26'. Et si vous préférez les heures, minutes, secondes, voici
 un tableau donnant les valeurs dans les deux systèmes :
 
     .   longitude  ascension droite    écart      longitude  ascension droite   écart
@@ -648,8 +648,8 @@ Elle suit la deuxième loi de Kepler, avec une vitesse angulaire inversement pro
 
 Q : Tu ne peux pas appliquer valablement la deuxième loi de Kepler à un modèle géocentrique !
 
-R : Non. La deuxième loi de Kepler s'applique à un modèle barycentrique comme D ci-dessus, 
-ou à la rigueur un modèle héliocentrique comme C. Mais une fois que l'on a pu déterminer 
+R : Non. La deuxième loi de Kepler s'applique à un modèle barycentrique comme D ci-dessus,
+ou à la rigueur un modèle héliocentrique comme C. Mais une fois que l'on a pu déterminer
 la vitesse angulaire de la Terre dans le modèle C, il est très simple de faire le changement
 de coordonnées vers un modèle géocentrique. La valeur obtenue pour la vitesse angulaire du
 Soleil autour de la Terre dans un modèle géocentrique est égale à celle de la vitesse angulaire
@@ -685,9 +685,9 @@ basé sur [DateTime::Event::Sunrise](https://metacpan.org/pod/DateTime::Event::S
     Date          DT::E::S    Stellarium
     2017-11-02    11:43:33    11:43:37   -16mn23s  la valeur la plus tôt
     2017-02-10    12:14:12    12:14:14   +14mn14s  la valeur la plus tardive
-    2017-09-11    11:56:33    11:56:34    -3mn26s 
+    2017-09-11    11:56:33    11:56:34    -3mn26s
     2017-09-12    11:56:11    11:56:13    -3mn47s  la plus forte décroissance : 21 ou 22 secondes
-    2017-12-17    11:56:11    11:56:14    -3mn46s 
+    2017-12-17    11:56:11    11:56:14    -3mn46s
     2017-12-18    11:56:41    11:56:44    -3mn16s  la plus forte croissance : 30 secondes
 
 Et voici la courbe correspondante de l'équation du temps.
@@ -719,7 +719,7 @@ ensuite bougent avec une vitesse angulaire constante.
 
 Le calcul du lever et du coucher du Soleil consiste à tenir compte à
 la fois de la variation de la longueur de la journée et de
-l'équation du temps pour savoir quand le Soleil atteint 
+l'équation du temps pour savoir quand le Soleil atteint
 la hauteur qui correspond au lever ou au coucher du Soleil.
 
 Dans le schéma ci-dessous, la variation de la longueur de la
@@ -745,7 +745,7 @@ Q : Et cette courbe en forme de huit, c'est l'analemme ?
 
 R : Non. L'analemme montre la position en azimuth et hauteur du Soleil au moment du midi
 solaire de temps _moyen_. La courbe ci-dessus donne en abscisse l'heure en temps moyen
-du midi solaire vrai et en ordonnée la hauteur du Soleil à ce instant. 
+du midi solaire vrai et en ordonnée la hauteur du Soleil à ce instant.
 En d'autres termes, l'analemme se base sur un événement temporel régulier, le midi
 solaire moyen, et montre la corrélation de deux phénomènes spatiaux variables,
 l'azimuth et la hauteur. À l'inverse, la courbe ci-dessus se base sur un
@@ -784,7 +784,7 @@ correcte de l'analemme et de la pseudo-analemme.
 ## Principe du calcul itératif
 
 Il y a deux attitudes vis-à-vis de la variation du midi solaire vrai d'un jour à l'autre.
-En prenant un observateur à Greenwich en septembre 2017, 
+En prenant un observateur à Greenwich en septembre 2017,
 le midi solaire du 11 septembre se produit à 11:56:34 à une hauteur de 42°53'40"
 et celui du lendemain se produit à 11:56:13 à une hauteur de 42°30'47".
 
@@ -794,9 +794,9 @@ que la pseudo-analemme est un nuage de 365 points distincts.
 
 Ou alors, on peut considérer que le midi solaire vrai évolue continûment d'un jour à l'autre
 et que la pseudo-analemme est une courbe constituée d'une infinité de points.
-Le calcul du coucher du Soleil en se basant sur le midi solaire vrai de 11:56:34 donne une 
+Le calcul du coucher du Soleil en se basant sur le midi solaire vrai de 11:56:34 donne une
 heure 18:23:59. Puisque le midi solaire vrai a varié de 21 secondes en 86 379 secondes
-(soit 1 jour moyen moins 21 secondes), par interpolation linéaire, à 18:23:59, soit 
+(soit 1 jour moyen moins 21 secondes), par interpolation linéaire, à 18:23:59, soit
 23 225 secondes plus tard le midi solaire moyen aura varié de 5,6 secondes.
 De même, la hauteur, qui varie de 22'53" en 86 379 secondes aura varié de 6'9"
 en 23 225 secondes. On obtient un midi solaire vrai virtuel de 11:56:28 et
@@ -810,11 +810,11 @@ du Soleil. On obtiendra un point différent de 18:23:59, mais très proche de
 ## Mise en Œuvre de l'Algorithme Simple
 
 Faisons d'abord une digression avec l'algorithme simple. Nous prendrons l'exemple
-du coucher du Soleil à Greenwich, le 4 janvier 2018. 
+du coucher du Soleil à Greenwich, le 4 janvier 2018.
 
 Le présent paragraphe et le suivant se basent sur le code Perl suivant :
 
-    for(0, 1) { 
+    for(0, 1) {
       say join( " | ",$_, sunrise({ year =>  2018, month =>  1, day => 4,
                                     lon  =>    0,  lat   => +51.5, tz  =>  0, isdst => 0,
                                     alt  => -.833, upper_limb => 0, precise => $_, polar => 'retval',
@@ -845,7 +845,7 @@ entre 0,9552 degré et 1,0166 degré par jour.
 Première itération. On part du midi solaire vrai du jour à 12:04:56 et on applique
 uniquement la rotation de la Terre sur elle-même (15,04107 degrés par heure).
 La première valeur, très approximative, est le moment où la rotation
-de la Terre amène le Soleil à l'altitude recherchée. 
+de la Terre amène le Soleil à l'altitude recherchée.
 Avec l'exemple du 4 janvier, cette première approximation
 donne l'heure 16:04:11.
 
@@ -857,7 +857,7 @@ En partant de cette position, on applique la rotation de la Terre et on aboutit
 Pour la troisième itération, on détermine le midi solaire virtuel
 correspondant à la position du Soleil à 16:04:23. Ce midi solaire virtuel se produit à 12:05:01. Là encore
 nous appliquons la rotation de la Terre, pour aboutir à une troisième évaluation
-du coucher du Soleil, 16:04:23, différant de la valeur de la seconde itération 
+du coucher du Soleil, 16:04:23, différant de la valeur de la seconde itération
 par une fraction de seconde : 16.0731642391519 au lieu de 16.0731615074431.
 La différence étant 2,73e-6 heure, soit 9 ms, on quitte la boucle de calcul.
 
@@ -881,7 +881,7 @@ la période de 3 h, 59 mn et 57 s.
 
 ## Que s'est-il passé au printemps 2020 ?
 
-Au printemps 2020, juste avant la publication de 
+Au printemps 2020, juste avant la publication de
 [DateTime::Event::Sunrise version 0.0506](https://metacpan.org/pod/DateTime::Event::Sunrise),
 le 9  juillet 2020, j'ai eu  une période de vide  et de découragement.
 J'ai même failli abandonner le sujet et
@@ -960,7 +960,7 @@ l'algorihme de base.
 - Si la date est voisine d'une transition entre la période jour+nuit et
 la période de nuit polaire, utilise l'algorihme de base.
 - Si tu habites dans une zone polaire ET que la date est voisine d'une
-transition entre la période d'alternance jour/nuit et la période 
+transition entre la période d'alternance jour/nuit et la période
 du Soleil de minuit ET si tu t'intéresses
 à la visibilité du disque solaire au-dessus de l'horizon, alors tu
 peux utiliser l'algorithme précis.
@@ -991,7 +991,7 @@ il faut 8 mn 18 s pour que la hauteur diminue de 6'.
 Q : D'où sors-tu cette valeur de 6' ?
 
 R : C'est la valeur que j'ai calculée au chapitre
-["Principe du calcul itératif"](#principe-du-calcul-itératif). C'est juste un exemple pour 
+["Principe du calcul itératif"](#principe-du-calcul-itératif). C'est juste un exemple pour
 faire un calcul concret.
 
 À l'inverse, si tu habites dans un lieu tempéré loin des cercles polaires,
@@ -1023,24 +1023,24 @@ dans ce cas, conseilles-tu quand même l'algorithme de base ?
 
 R : L'algorithme de base et l'algorithme précis essaient tous deux d'estimer
 la longitude écliptique et la hauteur du Soleil au midi solaire virtuel correspondant
-à l'heure du coucher du Soleil. Mais alors que l'algorithme précis utilise 
+à l'heure du coucher du Soleil. Mais alors que l'algorithme précis utilise
 la vitesse réelle du Soleil, qui varie de 0,9552°/j à 1,0166°/j, l'algorithme
 de base utilise une vitesse moyenne de 0,9856°/j, ce qui fait une erreur
 de ±0,0310°/j. À l'occasion de la transition entre jour+nuit et le Soleil
 de minuit, ce taux d'erreur prend effet pendant 11 heures, voire plus,
 ce qui peut donner une erreur de 0,015° sur la longitude écliptique du Soleil.
-En revanche, pour la transition entre jour+nuit et la nuit polaire, 
+En revanche, pour la transition entre jour+nuit et la nuit polaire,
 ce taux d'erreur court sur une heure ou moins, ce qui fait que l'erreur
 sur la longitude écliptique ne peut pas dépasser 0,0013°.
 Donc, même si à ce moment, une faible erreur sur la longitude écliptique
 peut provoquer une grande différence sur l'heure du coucher du Soleil,
-tu n'auras pas une _faible_ erreur, mais une erreur _infime_ sur la 
+tu n'auras pas une _faible_ erreur, mais une erreur _infime_ sur la
 longitude écliptique.
 
 Q : Et le cas des crépuscules ? On peut avoir le cas où la course du Soleil est
 tangente à la ligne d'horizon, si je peux me permettre d'utiliser ce terme pour
 une ligne située 24 degrés sous le plan horizontal. Et nous avons un écart de
-≈12 heures comme dans le cas de la transition avec le Soleil de minuit, 
+≈12 heures comme dans le cas de la transition avec le Soleil de minuit,
 pas un écart d'une heure ou moins comme dans le cas de la transition
 avec la nuit polaire.
 
@@ -1084,7 +1084,7 @@ le module Perl de calcul des levers et couchers du soleil.
 Q: Donc, utiliser un paramètre `alt` à -0,583 et un paramètre `upper_limb` à 0 est stupide ?
 
 A: Non, je dirais que c'est juste inhabituel.  Comme le signale Paul Schlyter
-[dans son site web](http://www.stjarnhimlen.se/comp/riset.html#2), 
+[dans son site web](http://www.stjarnhimlen.se/comp/riset.html#2),
 les almanachs nationaux de Suède définissent le lever et le coucher du soleil comme
 l'instant où le _centre_ du disque solaire atteint l'horizon optique, alors que le consensus
 international les définit comme étant l'instant où le _sommet_ du disque solaire atteint l'horizon
@@ -1108,23 +1108,23 @@ au plan horizontal, mais à un cône faisant un angle de 0,25° avec l'horizonta
 
 C'est donc parfaitement valide, mais douteux parce que cela ne correspond pas à une situation habituelle.
 
-Q: Compte tenu de ce que tu as dit pour le paramètre `precise`, est-ce que la différence entre 
+Q: Compte tenu de ce que tu as dit pour le paramètre `precise`, est-ce que la différence entre
 `alt => -0.833, upper_limb => 0` et `alt => -0.583, upper_limb => 1` est sensible ?
 
 R: Tu t'en doutes, quasiment pas. Prenons comme exemple le coucher du soleil à Fairbanks le 3 janvier 2020.
-Je prends le 3 janvier, parce que c'est le jour où le diamètre apparent est le plus grand, soit 32'32" 
+Je prends le 3 janvier, parce que c'est le jour où le diamètre apparent est le plus grand, soit 32'32"
 selon Stellarium, ce qui donne un rayon de 16'16". Et je prends Fairbanks, car au voisinage d'un cercle polaire,
-la courbe du Soleil est moins pentue qu'au voisinage de l'équateur. Ainsi donc, pour 
+la courbe du Soleil est moins pentue qu'au voisinage de l'équateur. Ainsi donc, pour
 `alt => -0.833, upper_limb => 0`, le coucher du soleil se produit lorsque
 le centre du disque solaire se situe à une hauteur de -50', tandis que pour
-`alt => -0.583, upper_limb => 1` 
+`alt => -0.583, upper_limb => 1`
 il a lieu lorsque le centre du disque solaire est à une hauteur de -51'16".
 Cela correspond aux heures 14:59:12 et 14:59:37 respectivement. À peine 25 secondes de différence.
 
 D'un autre côté, si l'on se déplace de quelques centaines de kilomètres vers le nord,
-au-delà du cercle polaire, jusqu'au point 68°01'46" N, 147°42'59" W, le calcul avec 
+au-delà du cercle polaire, jusqu'au point 68°01'46" N, 147°42'59" W, le calcul avec
 `alt => -0.833, upper_limb => 0` indique que le soleil reste en-dessous de l'horizon,
-tandis que le calcul avec `alt => -0.583, upper_limb => 1` 
+tandis que le calcul avec `alt => -0.583, upper_limb => 1`
 indique un lever du soleil à 12:45:11 et le coucher à 13:05:53.
 
 ## Année, paramètre `year`
@@ -1165,7 +1165,7 @@ d'éclairage dans son salon. Dans ce cas, allumer à 17:37:03 ou à 17:38:26
 n'a pas tellement d'importance. Sous nos latitudes, la variation de luminosité
 due à la variation de la position du Soleil
 en deux minutes est négligeable. En fait, la météo a plus d'importance. Selon
-que le ciel sera dégagé ou bien bouché par de gros nuages pluvieux ou orageux, il faudra 
+que le ciel sera dégagé ou bien bouché par de gros nuages pluvieux ou orageux, il faudra
 attendre l'heure dite ou allumer plus tôt.
 
 Q : Tu sembles dire qu'un algorithme sans année aurait suffi pour calculer les
@@ -1232,7 +1232,7 @@ lorsque le Soleil passe au nord. De plus, comme l'observateur
 doit faire face au nord et non pas au sud, le Soleil progresse
 dans le sens est → nord → ouest, c'est-à-dire
 dans le sens des azimuths _décroissants_.
-Donc, lorsque le midi solaire vrai est en avance sur 
+Donc, lorsque le midi solaire vrai est en avance sur
 le midi solaire moyen, le point de l'analemme sera à gauche
 de l'axe des Y, tandis que pendant les périodes où le
 midi solaire vrai est en retard sur le midi solaire moyen,
