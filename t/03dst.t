@@ -3,7 +3,7 @@
 #
 #     Test script for Astro::Sunrise
 #     Author: Slaven Rezic
-#     Copyright (C) 2015, 2017, 2021 Slaven Rezic, Ron Hill and Jean Forget
+#     Copyright (C) 2015, 2017, 2021, 2023 Slaven Rezic, Ron Hill and Jean Forget
 #
 #     This program is distributed under the same terms as Perl 5.16.3:
 #     GNU Public License version 1 or later and Perl Artistic License
@@ -51,21 +51,21 @@ BEGIN {
 }
 
 my @tests = (
-	     [1288545834, 'sun_rise', '07:00'],
-	     [1288545834, 'sun_set',  '16:39'],
+             [1288545834, 'sun_rise', '07:00'],
+             [1288545834, 'sun_set',  '16:39'],
 
-	     [1269738800, 'sun_rise', '06:50'],
-	     [1269738800, 'sun_set',  '19:32'],
-	    );
+             [1269738800, 'sun_rise', '06:50'],
+             [1269738800, 'sun_set',  '19:32'],
+            );
 
 plan tests => scalar @tests;
 
 for my $test (@tests) {
   my($epoch, $func, $expected) = @$test;
   my @cmd = ($^X, "-Mblib",
-		  "-MTime::Fake=$epoch",
-		  "-MAstro::Sunrise",
-		  "-e", "print $func({ lon => 13.5, lat => 52.5, time_zone => 'Europe/Berlin' })");
+                  "-MTime::Fake=$epoch",
+                  "-MAstro::Sunrise",
+                  "-e", "print $func({ lon => 13.5, lat => 52.5, time_zone => 'Europe/Berlin' })");
   open my $fh, "-|", @cmd or die $!;
   local $/;
   my $res = <$fh>;

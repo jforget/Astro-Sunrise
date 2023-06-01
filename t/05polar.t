@@ -2,7 +2,7 @@
 # -*- perl -*-
 #
 #     Test script for Astro::Sunrise
-#     Copyright (C) 2015, 2017, 2021 Ron Hill and Jean Forget
+#     Copyright (C) 2015, 2017, 2021, 2023 Ron Hill and Jean Forget
 #
 #     This program is distributed under the same terms as Perl 5.16.3:
 #     GNU Public License version 1 or later and Perl Artistic License
@@ -52,14 +52,14 @@ plan tests => (2 + $check_warn) * scalar @tests;
 for (@tests) {
   my ($yyyy, $mm, $dd, $loc, $lat_d, $lat_m, $lat_x, $lon_d, $lon_m, $lon_x, $alt, $upper_limb, $polar_night, $day_and_night, $polar_day, $expect_r, $expect_s)
      = $_ =~ /(\d+)\s+(\d+)\s+(\d+)     # date in YYYY MM DD format $1 $2 $3
-	     \s+(\w+)                   # location $4
-	     \s+(\d+)\s+(\d+)\s+(\w)    # latitude $5 $6 $7
-	     \s+(\d+)\s+(\d+)\s+(\w)    # longitude $8 $9 $10
-	     \s+(\S+)                   # altitude $11
-	     \s+(\d)                    # upper limb $12
-	     \s+(\d)\s+(\d)\s+(\d)      # polar night $13, day and night $14, polar day $15
-	     \s+sunrise:\s+([-\d]+:\d+) # sunrise $16
-	     \s+sunset:\s+(\d+:\d+)/x;  # sunset $17
+             \s+(\w+)                   # location $4
+             \s+(\d+)\s+(\d+)\s+(\w)    # latitude $5 $6 $7
+             \s+(\d+)\s+(\d+)\s+(\w)    # longitude $8 $9 $10
+             \s+(\S+)                   # altitude $11
+             \s+(\d)                    # upper limb $12
+             \s+(\d)\s+(\d)\s+(\d)      # polar night $13, day and night $14, polar day $15
+             \s+sunrise:\s+([-\d]+:\d+) # sunrise $16
+             \s+sunset:\s+(\d+:\d+)/x;  # sunset $17
   if ( $lat_x eq 'N' ) {
     $lat = sprintf( "%.3f", ( $lat_d + ( $lat_m / 60 ) ) );
   }
@@ -86,25 +86,25 @@ for (@tests) {
   if ($check_warn) {
     if ($polar_night) {
       warning_like { sunrise ( { year => $yyyy, month => $mm, day => $dd, tz => 0,
-				 lon => $long, lat => $lat, alt => $alt, upper_limb => $upper_limb, } ); }
-		   qr/sun never rises!!/i,
-		   "Polar night at $loc on $yyyy-$mm-$dd";
+                                 lon => $long, lat => $lat, alt => $alt, upper_limb => $upper_limb, } ); }
+                   qr/sun never rises!!/i,
+                   "Polar night at $loc on $yyyy-$mm-$dd";
     }
     if ($day_and_night) {
       warning_is { sunrise ( { year => $yyyy, month => $mm, day => $dd, tz => 0,
-			       lon => $long, lat => $lat, alt => $alt, upper_limb => $upper_limb, } ); }
-		 undef, # which means "no warning"
-		 "Day and night at $loc on $yyyy-$mm-$dd";
+                               lon => $long, lat => $lat, alt => $alt, upper_limb => $upper_limb, } ); }
+                 undef, # which means "no warning"
+                 "Day and night at $loc on $yyyy-$mm-$dd";
     }
     if ($polar_day) {
       warning_like { sunrise ( { year => $yyyy, month => $mm, day => $dd, tz => 0,
-				 lon => $long, lat => $lat, alt => $alt, upper_limb => $upper_limb, } ); }
-		   qr/sun never sets!!/i,
-		   "Polar day at $loc on $yyyy-$mm-$dd";
+                                 lon => $long, lat => $lat, alt => $alt, upper_limb => $upper_limb, } ); }
+                   qr/sun never sets!!/i,
+                   "Polar day at $loc on $yyyy-$mm-$dd";
     }
   }
   my ($sunrise, $sunset)  = sunrise ( { year => $yyyy, month => $mm, day => $dd, tz => 0,
-				 lon => $long, lat => $lat, alt => $alt, upper_limb => $upper_limb, polar => 'retval', } );
+                                 lon => $long, lat => $lat, alt => $alt, upper_limb => $upper_limb, polar => 'retval', } );
   if ($polar_night) {
     is ($sunrise, 'night', "Polar night at $loc on $yyyy-$mm-$dd");
     is ($sunset , 'night', "Polar night at $loc on $yyyy-$mm-$dd");

@@ -2,7 +2,7 @@
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Test script for Astro::Sunrise
-#     Copyright (C) 2001--2003, 2013, 2015, 2017, 2021 Ron Hill and Jean Forget
+#     Copyright (C) 2001--2003, 2013, 2015, 2017, 2021, 2023 Ron Hill and Jean Forget
 #
 #     This program is distributed under the same terms as Perl 5.16.3:
 #     GNU Public License version 1 or later and Perl Artistic License
@@ -77,10 +77,10 @@ ok( $sunset_5 eq $sunset_6 , "Test using all named parameters");
 
 my $then = DateTime->new (
                     year => 2000,
-		    month => 6,
-		    day => 20,
-		    time_zone =>'America/Los_Angeles',
-		    );
+                    month => 6,
+                    day => 20,
+                    time_zone =>'America/Los_Angeles',
+                    );
 my $offset = ( ($then->offset) /60 /60);
 
 my ($sunrise, $sunset) = sunrise($then->year, $then->mon, $then->mday,
