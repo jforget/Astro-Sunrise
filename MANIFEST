@@ -4,8 +4,8 @@ LICENSE
 MANIFEST
 Makefile.PL
 README
-doc/astronomical-notes.pod
-doc/notes-astronomiques.pod
+doc/astronomical-notes.md
+doc/notes-astronomiques.md
 doc/equ-time.png
 doc/ps-an-pol.gif
 doc/pseudo-analemma.gif

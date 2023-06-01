@@ -1,7 +1,7 @@
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Perl extension for computing the sunrise/sunset on a given day
-#     Copyright (C) 1999-2003, 2013, 2015, 2017, 2019, 2021 Ron Hill and Jean Forget, all rights reserved
+#     Copyright (C) 1999-2003, 2013, 2015, 2017, 2019, 2021, 2023 Ron Hill and Jean Forget, all rights reserved
 #
 #     See the license in the embedded documentation below.
 #
@@ -923,7 +923,7 @@ In the latter case, a few messages are printed to the filehandle, which allows
 the programmer to see step by step how the sunrise and the sunset are computed.
 
 Used for analysis and debugging purposes. You need to read the text
-F<doc/astronomical-notes.pod> to understand what the traced values
+F<doc/astronomical-notes.md> to understand what the traced values
 represent.
 
 This parameter is optional and it can be specified only by keyword.
@@ -1151,7 +1151,7 @@ If you use the C<sun_rise> and C<sun_set> functions, you will need also L<DateTi
 =head1 BUGS AND ISSUES
 
 Before reporting a bug, please read the text
-F<doc/astronomical-notes.pod> because the strange behavior you observed
+F<doc/astronomical-notes.md> because the strange behavior you observed
 may be a correct one, or it may be a corner case already known and
 already mentioned in the text.
 
@@ -1243,7 +1243,7 @@ In addition, checked to be compatible with a C implementation of Paul Schlyter's
 
 =head2 Perl Module
 
-Copyright (C)  1999-2003, 2013,  2015, 2017, 2019,  2021 Ron  Hill and
+Copyright (C)  1999-2003, 2013,  2015, 2017, 2019,  2021, 2023 Ron  Hill and
 Jean Forget,  all rights reserved.  This program is  distributed under
 the same terms  as Perl 5.16.3: GNU Public License  version 1 or later
 and Perl Artistic License
@@ -1306,8 +1306,8 @@ L<DateTime::Event::Sunrise>
 
 L<DateTime::Event::Jewish::Sunrise>
 
-The text F<doc/astronomical-notes.pod> (or its original French version
-F<doc/notes-astronomiques>) in this distribution.
+The text F<doc/astronomical-notes.md> (or its original French version
+F<doc/notes-astronomiques.md>) in this distribution.
 
 L<https://stjarnhimlen.se/comp/riset.html>
 

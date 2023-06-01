@@ -6,7 +6,7 @@ create an issue or submit a pull request.
 
 If your  issue is  about the astronomical  computations which  are the
 core  of this  module,  maybe  you should  read  the documentation  in
-L<https://github.com/jforget/Astro-Sunrise/blob/master/doc/astronomical-notes.pod>
+L<https://github.com/jforget/Astro-Sunrise/blob/master/doc/astronomical-notes.md>
 before writing your issue.
 
 If you have no  feedback after a week or so, try to  reach me by email
