@@ -2,7 +2,7 @@
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Utility script for Astro::Sunrise's astronomical documentation
-#     Copyright (C) 2017, 2021 Jean Forget
+#     Copyright (C) 2017, 2021, 2023 Jean Forget
 #
 #     This program is distributed under the same terms as Perl 5.16.3:
 #     GNU Public License version 1 or later and Perl Artistic License.
@@ -67,7 +67,7 @@ if (defined $step) {
       $ra_1 += 360;
     }
     my $delta_1 = $ra_1 - $lg_1;
-  
+
     # check new values
     my @keys;
     if ($delta_1 < $result{min}{delta_1}) {
@@ -83,20 +83,20 @@ if (defined $step) {
       push @keys, 'decr';
     }
     #printf("%8.4f %8.4f %8.4f %8.4f %8.4f %8.4f -> %8.4f %s\n", $lg_0, $ra_0, $decl_0, $lg_1, $ra_1, $decl_1, $delta_1, join(' ', @keys));
-    
+
     # store best results
     for (@keys) {
-      $result{$_}{lg_0}    = $lg_0; 
-      $result{$_}{ra_0}    = $ra_0; 
-      $result{$_}{decl_0}  = $decl_0; 
+      $result{$_}{lg_0}    = $lg_0;
+      $result{$_}{ra_0}    = $ra_0;
+      $result{$_}{decl_0}  = $decl_0;
       $result{$_}{delta_0} = $delta_0;
-      $result{$_}{lg_1}    = $lg_1; 
-      $result{$_}{ra_1}    = $ra_1; 
-      $result{$_}{decl_1}  = $decl_1; 
+      $result{$_}{lg_1}    = $lg_1;
+      $result{$_}{ra_1}    = $ra_1;
+      $result{$_}{decl_1}  = $decl_1;
       $result{$_}{delta_1} = $delta_1;
       $result{$_}{ddel}    = $delta_1 - $delta_0;
     }
-    
+
     # memo old values for next step
     $lg_0    = $lg_1;
     $ra_0    = $ra_1;
@@ -236,7 +236,7 @@ They consist in an optional minus sign, a mandatory integer degree part ending
 with C<°>, an optional integer minute part ending with C<'> and an optional integer second
 part ending with C<">.
 
-Bad news: if you call this script from shell, you will have trouble mixing 
+Bad news: if you call this script from shell, you will have trouble mixing
 the DMS format with the shell's quoting rules. With only degrees, you can use:
 
   conv-ecl-eq --long=51°

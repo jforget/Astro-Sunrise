@@ -2,7 +2,7 @@
 # -*- encoding: utf-8; indent-tabs-mode: nil -*-
 #
 #     Utility script for Astro::Sunrise's astronomical documentation
-#     Copyright (C) 2017, 2021 Jean Forget
+#     Copyright (C) 2017, 2021, 2023 Jean Forget
 #
 #     This program is distributed under the same terms as Perl 5.16.3:
 #     GNU Public License version 1 or later and Perl Artistic License.
@@ -19,8 +19,8 @@ my $year   = 2017;
 my $plot   = 0;
 my $file   = 'equ-time.tex';
 my $step   = 5;  # plot every <step> days
-my $xscale =  1; # 
-my $yscale = 10; # 
+my $xscale =  1; #
+my $yscale = 10; #
 GetOptions( 'year:n' => \$year,
             'plot'   => \$plot,
             'file:s' => \$file,

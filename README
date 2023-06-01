@@ -56,8 +56,8 @@ The following module is recommended:
 
 COPYRIGHT AND LICENCE
 
-Copyright (C)  2000--2003, 2013, 2015,  2017--2019, 2021 Ron  Hill and
-Jean Forget, all rights reserved.
+Copyright (C) 2000--2003, 2013, 2015,  2017--2019, 2021, 2023 Ron Hill
+and Jean Forget, all rights reserved.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl 5.16.3. For more details, see the full
@@ -71,7 +71,7 @@ Based on a public domain C program sunriset.c (c) Paul Schlyter, 1989, 1992
 
 FURTHER DOCUMENTATION
 
-The distribution contains a "doc" subdirectory with a text giving the 
+The distribution contains a "doc" subdirectory with a text giving the
 astronomical context of this module. This text has a French and an English
 versions. Beware, it is a work in progress.
 

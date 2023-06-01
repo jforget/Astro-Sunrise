@@ -1,7 +1,7 @@
 % -*- encoding: utf-8 -*-
 %
 %     Utility script for Astro::Sunrise's astronomical documentation
-%     Copyright (C) 2019, 2021 Jean Forget
+%     Copyright (C) 2019, 2021, 2023 Jean Forget
 %
 %     This program is distributed under the same terms as Perl 5.16.3:
 %     GNU Public License version 1 or later and Perl Artistic License.
@@ -45,7 +45,7 @@ label.bot(btex 8 mn 18 s          etex, (xpart zma, -15));
 label.top(btex 20/04, lat 76° 59' etex, (xpart zma,  20));
 
 path h_greenw, l_greenw, sl_greenw, sh_greenw;
-l_greenw = (150, 0) -- (180, 0);                   
+l_greenw = (150, 0) -- (180, 0);
 sl_greenw = (150,5){dir -40} .. { dir -10}(180,-12);
 sh_greenw = sl_greenw shifted (0,10);
 draw l_greenw;
