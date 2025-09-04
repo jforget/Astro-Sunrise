@@ -31,7 +31,7 @@ text you  are reading is  not synchronised with  the [Astro::Sunrise](https://me
 module.
 
 During spring  2022, there  has been some  problems with  Github's POD
-converter. So I have decided to convert this text to Markdown. Now POD
+converter. So I have decided to convert this text to Markdown. Now the POD
 version is  no longer maintained,  even if Github's POD  converter has
 been fixed. So, please refer to the Markdown version.
 
@@ -135,6 +135,10 @@ between these cases: `12:28:35` for time instants, `2 h 28 mn 35 s` for
 time durations and `59° 28' 35"` for angles (latitudes, longitudes and others).
 So, even if the hour-part or the degree-part is missing, you will be able
 to distinguish between a `28' 35"` angle and a `28 mn 35 s` duration.
+
+Please note that the proper abbreviation for the time unit minute is "min"
+and not "mn". It may happen that, in the text below, I use the proper
+abbreviation, but there is no guarantee.
 
 # Sources
 
@@ -345,7 +349,7 @@ if false, lead children to a better understanding of the described phenomena and
 them closer to truth. You cannot tell assertion C to a child and expect him to understand
 it without telling him first assertion B. And it is worse with assertions D and next.
 
-Moreover, these are what I would call _lies to adults_. In the beginning, people would consider that
+Moreover, these are what I would call _lies to students_ (*). In the beginning, people would consider that
 the aim of Physics was to build a mathematical representation of the real world,
 getting closer and closer to the ultimate truth. Then, there was quantum physics
 including especially de Broglie's work
@@ -357,11 +361,15 @@ several mathematical _models_ of the real world. We know that intrinsically all
 models are false, but each one has its usefulness to make computations about
 the real world.
 
+(*) Initially, I used the phrase _lies to adults_. But when I read
+_the Science of Discworld II the Globe_, I found on page 291 that this phrase was
+used as a synonym for _politics_.
+
 Please note that I was talking about scientific methods. I was not dealing with
 electoral campaigns and advertisements. Every sane adult knows for
 sure that these are ridden with lies.
 
-Other lies to adults, also known as "simplifying
+Other lies to students, also known as "simplifying
 hypotheses", you will find in the following:
 
 - the light propagates instantly from one place to another,
@@ -863,7 +871,7 @@ the Sun's real orbital speed and 9 milliseconds when we use an obviously wrong o
 speed. In the end, it is better than the basic algorithm, which uses an approximate
 but still wrong orbital speed, but for the whole span of 3 h, 59 mn and 57 s.
 
-## What Happened in Spring 2020?
+## What Happened in Spring 2020 with the maintenance of DateTime::Event::Sunrise?
 
 In Spring 2020, just before the 2020-07-09 release of
 [DateTime::Event::Sunrise version 0.0506](https://metacpan.org/pod/DateTime::Event::Sunrise),

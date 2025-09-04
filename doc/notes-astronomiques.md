@@ -10,7 +10,7 @@ Je tiens à signaler que je ne suis pas un astronome professionnel.
 Il est possible que le texte ci-dessous contienne des erreurs.
 Soyez-en conscients. Je décline toute responsabilité pour les conséquences
 qui résulteraient de votre lecture du texte. La clause de non-responsabilité
-présente dans la GPL et dans la licence _Artistic_ s'appliquent non seulement
+présente dans la GPL et celle dans la licence _Artistic_ s'appliquent non seulement
 au code Perl, mais aussi aux textes français (et anglais).
 
 Le texte est fréquemment (mais irrégulièrement) mis à jour
@@ -150,6 +150,10 @@ formats différents pour favoriser la distinction entre ces cas :
 durées et « 59° 28' 35" » pour les angles (latitudes, longitudes et autres).
 Donc, même s'il n'y a pas d'indication de degré ou d'heure, vous pourrez faire
 la distinction entre un angle « 28' 35" » et une durée « 28 mn 35 s ».
+
+À noter que la véritable abréviation de l'unité de temps minute est « min »
+et non pas « mn ». Il se peut que dans la suite du texte, j'utilise l'abréviation
+correcte, mais ce n'est pas garanti.
 
 # Sources
 
@@ -331,7 +335,7 @@ les phrases B et C (et A).
     La Terre orbite autour du Soleil avec des perturbations notables dues
     à la Lune, à Jupiter, à Saturne, etc.
 
-    Ce qui est une formulation différente du point précédent.
+    Ce qui est une formulation différente du point D.
 
 - F
 
@@ -363,7 +367,7 @@ vérité. Il est illusoire de faire comprendre à un enfant l'énoncé C
 s'il n'a pas déjà appris, compris et admis l'énoncé B. Et c'est la même chose, en pire,
 avec les énoncés D et suivants.
 
-Qui plus est, ce sont ce que j'appellerai des « mensonges pour les adultes ». Au début, on considérait
+Qui plus est, ce sont ce que j'appellerai des « mensonges pour les étudiants » (*). Au début, on considérait
 que la physique était une représentation mathématique du monde réel, se rapprochant de plus
 en plus de la vérité ultime. Puis il y a eu la physique quantique, avec
 notamment le principe de dualité onde / corpuscule de de Broglie et son
@@ -375,12 +379,17 @@ mais de fournir _des modélisations_  mathématiques de la réalité ultime.
 On sait que les modèles proposés sont faux, mais ils permettent de faire
 des calculs.
 
+(*) Initialement, j'avais utilisé l'expression « mensonges pour les adultes »,
+mais en relisant de _la Science du Disque-Monde II : Le Globe_, j'ai constaté
+que cette expression servait à désigner la politique. Dans la version originale
+en anglais, voir la page 291.
+
 Remarquez que je parle ici de méthode scientifique. Mon propos n'était
 pas de caractériser la publicité ou les campagnes électorales.
 Cela ne fait de doute pour personne ou presque que ce sont des tissus
 de mensonges.
 
-Autres mensonges pour les adultes, également appelés « hypothèses
+Autres mensonges pour les étudiants, également appelés « hypothèses
 simplificatrices », utilisés dans ce texte :
 
 - la lumière se propage instantanément d'un point à l'autre de l'espace,
@@ -879,7 +888,7 @@ la vitesse réelle du Soleil et 9 millisecondes où l'on utilise une vitesse fra
 On y gagne par rapport au calcul simple qui utilise une vitesse légèrement erronée pendant toute
 la période de 3 h, 59 mn et 57 s.
 
-## Que s'est-il passé au printemps 2020 ?
+## Que s'est-il passé au printemps 2020 pour le développement du module DateTime::Event::Sunrise ?
 
 Au printemps 2020, juste avant la publication de
 [DateTime::Event::Sunrise version 0.0506](https://metacpan.org/pod/DateTime::Event::Sunrise),
